@@ -17,3 +17,20 @@ export type CategoryTag = {
     name: string;
     alias: string;
 };
+
+export type Subcategory = {
+    name: string;
+    alias: string;
+};
+
+export type Category = {
+    name: string;
+    alias: string;
+    subcategories: Subcategory[];
+};
+
+export const veganCategory: Category = {
+    name: 'Веганская кухня',
+    alias: 'vegan',
+    subcategories: veganTags,
+};
