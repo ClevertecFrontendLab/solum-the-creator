@@ -1,4 +1,27 @@
-import { extendTheme, ThemeConfig } from '@chakra-ui/react';
+import { ComponentStyleConfig, extendTheme, ThemeConfig } from '@chakra-ui/react';
+
+const Breadcrumb: ComponentStyleConfig = {
+    baseStyle: {
+        item: {
+            color: 'blackAlpha.700',
+
+            _hover: {
+                color: 'green.600',
+            },
+            _last: {
+                color: 'black',
+                cursor: 'default',
+                _hover: {
+                    cursor: 'pointer',
+                    color: 'gray.900',
+                },
+            },
+        },
+        separator: {
+            color: 'gray.800',
+        },
+    },
+};
 
 export const theme: ThemeConfig = extendTheme({
     styles: {
@@ -23,6 +46,7 @@ export const theme: ThemeConfig = extendTheme({
                 },
             },
         },
+        Breadcrumb,
     },
 
     colors: {
