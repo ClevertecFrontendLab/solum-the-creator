@@ -11,10 +11,10 @@ export const UserInfoCard: React.FC<UserInfoCardProps> = ({
     fullName = 'Неизвестный пользователь',
     userName = 'username',
 }) => (
-    <Flex gap={3} alignItems='center'>
+    <Flex gap={3} alignItems='center' maxW={{ base: '280px', lg: '360px' }}>
         <Avatar name={fullName} src={avatarUrl} />
-        <Flex direction='column'>
-            <Heading as='h2' size='md' isTruncated={true}>
+        <Flex direction='column' overflow='hidden'>
+            <Heading as='h2' size='md' noOfLines={1}>
                 {fullName}
             </Heading>
             <Text fontSize='sm' color='blackAlpha.700' isTruncated={true}>

@@ -13,7 +13,6 @@ export const BurgerButton: React.FC<BurgerButtonProps> = ({ isOpen, onOpen, onCl
         mx={1}
         icon={isOpen ? <CloseIcon boxSize={3} /> : <HamburgerIcon boxSize={5} />}
         aria-label='Toggle menu'
-        display={{ md: 'none', base: 'flex' }}
         onClick={isOpen ? onClose : onOpen}
         variant='clear'
     />

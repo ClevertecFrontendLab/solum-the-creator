@@ -6,7 +6,7 @@ const Breadcrumb: ComponentStyleConfig = {
             color: 'blackAlpha.700',
 
             _hover: {
-                color: 'green.600',
+                color: 'lime.600',
             },
             _last: {
                 color: 'black',
@@ -43,6 +43,13 @@ export const theme: ThemeConfig = extendTheme({
                 xs: {
                     fontWeight: '400',
                     lineHeight: '1.4',
+                },
+            },
+        },
+        Button: {
+            variants: {
+                clear: {
+                    backgroundColor: 'transparent',
                 },
             },
         },

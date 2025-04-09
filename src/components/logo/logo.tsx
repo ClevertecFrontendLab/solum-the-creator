@@ -19,7 +19,7 @@ export const Logo: React.FC<LogoProps> = ({ isFull = false, responsive = true })
     return (
         <Box>
             <Link to={pathes.home}>
-                <Flex alignItems='flex-end' gap={1}>
+                <Flex alignItems='center' gap={1}>
                     <LogoIcon />
                     <LogoTextIconChakra display={display} />
                 </Flex>
