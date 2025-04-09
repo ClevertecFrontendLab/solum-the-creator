@@ -1,16 +1,16 @@
 import { Navigate, useParams } from 'react-router';
 
-import { subcategoriesMap } from '~/constants/categories';
 import { pathes } from '~/constants/pathes';
+import { getFirstSubcategoryPath } from '~/utils/get-first-subcategory';
 
 export const RedirectToFirstSubcategory = () => {
     const { category } = useParams();
 
-    const firstSubcategory = subcategoriesMap[category!][0].alias;
+    const firstSubcategoryPath = getFirstSubcategoryPath(category!);
 
-    if (!firstSubcategory) {
+    if (!firstSubcategoryPath) {
         return <Navigate to={pathes.home} replace />;
     }
 
-    return <Navigate to={firstSubcategory} replace />;
+    return <Navigate to={firstSubcategoryPath} replace />;
 };

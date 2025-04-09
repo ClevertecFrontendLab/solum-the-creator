@@ -2,6 +2,7 @@ export type RouteNode = {
     path: string;
     name: string;
     children?: RouteNode[];
+    type?: 'category' | 'page';
 };
 
 export type Breadcrumb = {
@@ -13,14 +14,17 @@ export const routeTree: RouteNode[] = [
     {
         path: '',
         name: 'Главная',
+        type: 'page',
     },
     {
         path: 'juiciest',
         name: 'Самое сочное',
+        type: 'page',
     },
     {
         path: 'vegan',
         name: 'Веганская кухня',
+        type: 'category',
         children: [
             {
                 path: 'snacks',
