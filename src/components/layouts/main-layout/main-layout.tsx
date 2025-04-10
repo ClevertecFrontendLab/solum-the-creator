@@ -2,6 +2,7 @@ import { Box } from '@chakra-ui/react';
 import { Outlet } from 'react-router';
 
 import { Header } from '../header/header';
+import { Sidebar } from '../sidebar/sidebar';
 
 export const MainLayout: React.FC = () => (
     <Box>
@@ -10,17 +11,15 @@ export const MainLayout: React.FC = () => (
         </Box>
 
         <Box
-            as='aside'
             position='fixed'
             top={{ base: '4rem', md: '5rem' }}
             left={0}
             bottom={0}
             w='16rem'
             display={{ base: 'none', md: 'block' }}
-            bg='gray.100'
             zIndex={1}
         >
-            menu
+            <Sidebar />
         </Box>
 
         <Box

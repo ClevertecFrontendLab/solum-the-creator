@@ -4,3 +4,5 @@ export const pathes = {
     categories: '/:category',
     subcategories: '/:category/:subcategory',
 };
+
+export const VEGAN_CATEGORY_PATH = 'vegan';
