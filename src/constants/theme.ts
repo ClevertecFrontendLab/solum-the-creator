@@ -36,12 +36,16 @@ const { definePartsStyle, defineMultiStyleConfig } = createMultiStyleConfigHelpe
 const sidebarAccordion = definePartsStyle({
     button: {
         bg: 'transparent',
+        fontWeight: '500',
         _hover: {
             bg: 'lime.50',
         },
         _active: {
             bg: 'lime.100',
         },
+    },
+    panel: {
+        p: 0,
     },
 });
 

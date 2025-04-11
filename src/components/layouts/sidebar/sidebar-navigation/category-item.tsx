@@ -30,7 +30,7 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({ category, pathname }
                     py={3}
                     px={2}
                     bg={isActive ? 'lime.100' : 'transparent'}
-                    fontWeight={isActive ? '700' : 'normal'}
+                    fontWeight={isActive ? '700' : '500'}
                 >
                     <Box as='span' boxSize={6} mr={3}>
                         {categoryIcons[category.path] ?? null}
@@ -43,7 +43,7 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({ category, pathname }
             </Link>
 
             <AccordionPanel>
-                <List>
+                <List ml={10}>
                     {category.children?.map((child) => {
                         const subPath = getSubcategoryPath(category.path, child.path);
                         return (
