@@ -5,7 +5,7 @@ import { SidebarNavigation } from './sidebar-navigation/sidebar-navigation';
 
 export const Sidebar: React.FC = () => (
     <Flex as='aside' direction='column' h='100%' overflow='hidden' boxShadow='right' pt={6}>
-        <Box overflowY='auto' maxH='100%'>
+        <Box overflowY='auto' maxH='100%' pr={4} layerStyle='customScrollbar'>
             <SidebarNavigation />
         </Box>
 

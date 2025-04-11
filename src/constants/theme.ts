@@ -84,6 +84,27 @@ export const theme: ThemeConfig = extendTheme({
         Breadcrumb,
         Accordion,
     },
+    layerStyles: {
+        customScrollbar: {
+            '&::-webkit-scrollbar': {
+                width: '8px',
+            },
+            '&::-webkit-scrollbar-track': {
+                bg: 'transparent',
+            },
+            '&::-webkit-scrollbar-thumb': {
+                bg: 'blackAlpha.300',
+                borderRadius: '8px',
+            },
+            '&::-webkit-scrollbar-button': {
+                display: 'none',
+                height: 0,
+                width: 0,
+            },
+            scrollbarWidth: 'thin',
+            scrollbarColor: 'var(--chakra-colors-blackAlpha-300) transparent',
+        },
+    },
 
     colors: {
         black: '#000000',
