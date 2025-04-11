@@ -110,7 +110,6 @@ export const theme: ThemeConfig = extendTheme({
                 'var(--chakra-colors-blackAlpha-300) var(--chakra-colors-blackAlpha-50)',
         },
     },
-
     colors: {
         black: '#000000',
         white: '#ffffff',

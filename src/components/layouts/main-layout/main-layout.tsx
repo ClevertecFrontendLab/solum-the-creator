@@ -2,6 +2,7 @@ import { Box } from '@chakra-ui/react';
 import { Outlet } from 'react-router';
 
 import { Header } from '../header/header';
+import { RightSidebar } from '../right-sidebar/right-sidebar';
 import { Sidebar } from '../sidebar/sidebar';
 
 export const MainLayout: React.FC = () => (
@@ -30,10 +31,9 @@ export const MainLayout: React.FC = () => (
             bottom={0}
             w='13rem'
             display={{ base: 'none', md: 'block' }}
-            bg='gray.200'
             zIndex={1}
         >
-            sidebar
+            <RightSidebar />
         </Box>
 
         <Box
