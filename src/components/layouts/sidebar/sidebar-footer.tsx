@@ -7,12 +7,19 @@ export const SidebarFooter: React.FC = () => (
         <Text as='span' fontSize='xs' color='blackAlpha.400' fontWeight='500'>
             Версия программы 03.25
         </Text>
-        <Text fontSize='xs' color='blackAlpha.700' fontWeight='400'>
+        <Text fontSize='xs' color='blackAlpha.700' fontWeight='400' lineHeight='133%'>
             Все права защищены, ученический файл, <br />
             ©Клевер Технолоджи, 2025
         </Text>
         <Flex>
-            <Button size='xs' leftIcon={<ExitIcon />} colorScheme='black' variant='ghost' px={0}>
+            <Button
+                size='xs'
+                leftIcon={<ExitIcon />}
+                colorScheme='black'
+                variant='ghost'
+                p={0}
+                h={4}
+            >
                 Выйти
             </Button>
         </Flex>

@@ -90,11 +90,15 @@ export const theme: ThemeConfig = extendTheme({
                 width: '8px',
             },
             '&::-webkit-scrollbar-track': {
-                bg: 'transparent',
+                bg: 'blackAlpha.50',
+                borderRadius: '8px',
             },
             '&::-webkit-scrollbar-thumb': {
                 bg: 'blackAlpha.300',
                 borderRadius: '8px',
+                minHeight: '20px',
+                border: '2px solid transparent',
+                backgroundClip: 'padding-box',
             },
             '&::-webkit-scrollbar-button': {
                 display: 'none',
@@ -102,7 +106,8 @@ export const theme: ThemeConfig = extendTheme({
                 width: 0,
             },
             scrollbarWidth: 'thin',
-            scrollbarColor: 'var(--chakra-colors-blackAlpha-300) transparent',
+            scrollbarColor:
+                'var(--chakra-colors-blackAlpha-300) var(--chakra-colors-blackAlpha-50)',
         },
     },
 

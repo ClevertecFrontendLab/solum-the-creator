@@ -10,7 +10,7 @@ type SubcategoryItemProps = {
 export const SubcategoryItem: React.FC<SubcategoryItemProps> = ({ to, name, isActive }) => (
     <ListItem position='relative'>
         <Link to={to}>
-            <Box position='relative' py='6px' pl='10px'>
+            <Box position='relative' py='6px' pl='12px'>
                 <Box
                     position='absolute'
                     right='100%'
@@ -21,7 +21,7 @@ export const SubcategoryItem: React.FC<SubcategoryItemProps> = ({ to, name, isAc
                     bg='lime.300'
                     transition='width 0.2s'
                 />
-                <Text as='span' fontWeight={isActive ? '700' : '500'}>
+                <Text as='span' fontWeight={isActive ? '700' : '500'} noOfLines={1}>
                     {name}
                 </Text>
             </Box>

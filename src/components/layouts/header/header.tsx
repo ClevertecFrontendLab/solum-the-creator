@@ -12,7 +12,7 @@ export const Header: React.FC = () => {
 
     return (
         <Box as='header' bg='lime.50' px={{ base: 4, md: 4, sm: 5 }} py={4} top={0}>
-            <Flex h={{ base: 8, md: 12 }} alignItems='center' gap={2}>
+            <Flex h={{ base: 8, md: 12 }} alignItems='center'>
                 <Logo isFull={true} />
 
                 <Spacer maxW={{ base: 0, md: 32 }} />
