@@ -26,7 +26,12 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({ category, pathname }
     return (
         <AccordionItem key={category.path} border='none'>
             <Link to={category.path}>
-                <AccordionButton py={3} px={2} bg={isActive ? 'gray.100' : 'transparent'}>
+                <AccordionButton
+                    py={3}
+                    px={2}
+                    bg={isActive ? 'lime.100' : 'transparent'}
+                    fontWeight={isActive ? '700' : 'normal'}
+                >
                     <Box as='span' boxSize={6} mr={3}>
                         {categoryIcons[category.path] ?? null}
                     </Box>

@@ -1,4 +1,10 @@
-import { ComponentStyleConfig, extendTheme, ThemeConfig } from '@chakra-ui/react';
+import { accordionAnatomy } from '@chakra-ui/anatomy';
+import {
+    ComponentStyleConfig,
+    createMultiStyleConfigHelpers,
+    extendTheme,
+    ThemeConfig,
+} from '@chakra-ui/react';
 
 const Breadcrumb: ComponentStyleConfig = {
     baseStyle: {
@@ -22,6 +28,24 @@ const Breadcrumb: ComponentStyleConfig = {
         },
     },
 };
+
+const { definePartsStyle, defineMultiStyleConfig } = createMultiStyleConfigHelpers(
+    accordionAnatomy.keys,
+);
+
+const sidebarAccordion = definePartsStyle({
+    button: {
+        bg: 'transparent',
+        _hover: {
+            bg: 'lime.50',
+        },
+        _active: {
+            bg: 'lime.100',
+        },
+    },
+});
+
+export const Accordion = defineMultiStyleConfig({ variants: { sidebar: sidebarAccordion } });
 
 export const theme: ThemeConfig = extendTheme({
     styles: {
@@ -54,6 +78,7 @@ export const theme: ThemeConfig = extendTheme({
             },
         },
         Breadcrumb,
+        Accordion,
     },
 
     colors: {
