@@ -78,7 +78,7 @@ export const routeTree: RouteNode[] = [
     },
     {
         path: 'desserts-and-baking',
-        name: 'Десерты и выпечка',
+        name: 'Десерты, выпечка',
         type: 'category',
         children: [
             { path: 'pancakes', name: 'Блины и оладьи' },
@@ -164,7 +164,7 @@ export const routeTree: RouteNode[] = [
     },
     {
         path: 'national',
-        name: 'Национальные блюда',
+        name: 'Национальные',
         type: 'category',
         children: [
             { path: 'american', name: 'Американская кухня' },
@@ -194,21 +194,7 @@ export const routeTree: RouteNode[] = [
             { path: 'marinades', name: 'Маринады' },
         ],
     },
-    {
-        path: 'preserves',
-        name: 'Домашние заготовки',
-        type: 'category',
-        children: [
-            { path: 'meat', name: 'Мясные заготовки' },
-            { path: 'fish', name: 'Рыбные заготовки' },
-            { path: 'cucumber', name: 'Из огурцов' },
-            { path: 'tomato', name: 'Из томатов' },
-            { path: 'mushroom', name: 'Из грибов' },
-            { path: 'vegetable', name: 'Овощные заготовки' },
-            { path: 'salads', name: 'Салаты, икра' },
-            { path: 'fruits', name: 'Из фруктов и ягод' },
-        ],
-    },
+
     {
         path: 'drinks',
         name: 'Напитки',
@@ -223,6 +209,21 @@ export const routeTree: RouteNode[] = [
             { path: 'kvass', name: 'Квас' },
             { path: 'cocktails', name: 'Коктейли' },
             { path: 'alcohol', name: 'Алкогольные' },
+        ],
+    },
+    {
+        path: 'preserves',
+        name: 'Заготовки',
+        type: 'category',
+        children: [
+            { path: 'meat', name: 'Мясные заготовки' },
+            { path: 'fish', name: 'Рыбные заготовки' },
+            { path: 'cucumber', name: 'Из огурцов' },
+            { path: 'tomato', name: 'Из томатов' },
+            { path: 'mushroom', name: 'Из грибов' },
+            { path: 'vegetable', name: 'Овощные заготовки' },
+            { path: 'salads', name: 'Салаты, икра' },
+            { path: 'fruits', name: 'Из фруктов и ягод' },
         ],
     },
 ];
