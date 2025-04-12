@@ -1,6 +1,7 @@
 import { Box } from '@chakra-ui/react';
 import { Outlet } from 'react-router';
 
+import { Footer } from '../footer/footer';
 import { Header } from '../header/header';
 import { RightSidebar } from '../right-sidebar/right-sidebar';
 import { Sidebar } from '../sidebar/sidebar';
@@ -56,13 +57,9 @@ export const MainLayout: React.FC = () => (
             left={0}
             right={0}
             display={{ base: 'flex', md: 'none' }}
-            h='56px'
-            bg='white'
-            borderTop='1px solid'
-            borderColor='gray.200'
-            zIndex={10}
+            zIndex={1}
         >
-            Footer
+            <Footer />
         </Box>
     </Box>
 );

@@ -1,8 +1,8 @@
-import { Box, Flex, Icon, IconButton, Text } from '@chakra-ui/react';
+import { Avatar, Box, Flex, IconButton, Text } from '@chakra-ui/react';
 
-type MenuButtonProps = {
+type AvatarMenuButtonProps = {
     label: string;
-    icon: React.FC<React.SVGProps<SVGSVGElement>>;
+    avatarUrl: string;
     isActive?: boolean;
     onClick?: () => void;
     size?: 'sm' | 'md';
@@ -13,26 +13,26 @@ const sizeMap = {
     sm: {
         textMt: 1,
         boxSize: '40px',
-        iconSize: 5,
+        avatarSize: '40px',
         gradientInset: '50%',
     },
     md: {
         textMt: 3,
         boxSize: '52px',
-        iconSize: 6,
+        avatarSize: '52px',
         gradientInset: '100%',
     },
 };
 
-export const MenuButton: React.FC<MenuButtonProps> = ({
+export const AvatarMenuButton: React.FC<AvatarMenuButtonProps> = ({
+    label,
+    avatarUrl,
     isActive = false,
     onClick,
-    icon,
-    label,
-    activeLabelBold = false,
     size = 'md',
+    activeLabelBold = false,
 }) => {
-    const { boxSize, gradientInset, iconSize, textMt } = sizeMap[size];
+    const { boxSize, avatarSize, gradientInset, textMt } = sizeMap[size];
 
     return (
         <Flex direction='column' align='center' justify='center' position='relative'>
@@ -59,13 +59,12 @@ export const MenuButton: React.FC<MenuButtonProps> = ({
                     minW={boxSize}
                     minH={boxSize}
                     rounded='full'
+                    p={0}
                     bg={isActive ? 'black' : 'none'}
                     _hover={{ bg: 'blackAlpha.600' }}
-                    icon={
-                        <Icon as={icon} color={isActive ? 'lime.50' : 'black'} boxSize={iconSize} />
-                    }
-                    onClick={onClick}
                     aria-label={label}
+                    onClick={onClick}
+                    icon={<Avatar src={avatarUrl} name={label} boxSize={avatarSize} />}
                 />
             </Box>
 
