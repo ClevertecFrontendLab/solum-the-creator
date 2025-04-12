@@ -2,6 +2,7 @@ import { accordionAnatomy } from '@chakra-ui/anatomy';
 import {
     ComponentStyleConfig,
     createMultiStyleConfigHelpers,
+    defineStyleConfig,
     extendTheme,
     ThemeConfig,
 } from '@chakra-ui/react';
@@ -28,6 +29,17 @@ const Breadcrumb: ComponentStyleConfig = {
         },
     },
 };
+
+export const Switch = defineStyleConfig({
+    baseStyle: {
+        track: {
+            bg: 'blackAlpha.300',
+            _checked: {
+                bg: 'lime.400',
+            },
+        },
+    },
+});
 
 const { definePartsStyle, defineMultiStyleConfig } = createMultiStyleConfigHelpers(
     accordionAnatomy.keys,
@@ -83,6 +95,7 @@ export const theme: ThemeConfig = extendTheme({
         },
         Breadcrumb,
         Accordion,
+        Switch,
     },
     layerStyles: {
         customScrollbar: {

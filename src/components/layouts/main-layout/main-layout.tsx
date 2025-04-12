@@ -41,11 +41,12 @@ export const MainLayout: React.FC = () => (
             as='main'
             pt={{ base: '4rem', md: '5rem' }}
             pb={{ base: '84px', md: 0 }}
-            px={4}
+            px={{ base: 4, sm: 5, md: 6 }}
             ml={{ base: 0, md: '16rem' }}
             mr={{ base: 0, md: '13rem' }}
             overflowY='auto'
             minH='100vh'
+            maxW='88rem'
         >
             <Outlet />
         </Box>

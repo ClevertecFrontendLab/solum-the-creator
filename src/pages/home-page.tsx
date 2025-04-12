@@ -1,11 +1,9 @@
 import { Flex } from '@chakra-ui/react';
 
-import { ProfileNotification } from '~/components/profile-notification/profile-notification';
+import { HeroSection } from '~/components/shared/hero-section/hero-section';
 
 export const HomePage = () => (
-    <>
-        <Flex>
-            <ProfileNotification direction='column' size='md' />
-        </Flex>
-    </>
+    <Flex direction='column' align='center'>
+        <HeroSection title='Приятного аппетита!' />
+    </Flex>
 );
