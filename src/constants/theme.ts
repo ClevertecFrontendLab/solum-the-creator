@@ -7,6 +7,8 @@ import {
     ThemeConfig,
 } from '@chakra-ui/react';
 
+import { cardTheme } from './theme/card-theme';
+
 const Breadcrumb: ComponentStyleConfig = {
     baseStyle: {
         item: {
@@ -30,7 +32,23 @@ const Breadcrumb: ComponentStyleConfig = {
     },
 };
 
-export const Switch = defineStyleConfig({
+const Badge = defineStyleConfig({
+    variants: {
+        brand: {
+            bgColor: 'lime.200',
+            color: 'black',
+            fontSize: 'sm',
+            lineHeight: '150%',
+            fontWeight: '400',
+            px: 2,
+            py: 0.5,
+            textTransform: 'none',
+            borderRadius: 'md',
+        },
+    },
+});
+
+const Switch = defineStyleConfig({
     baseStyle: {
         track: {
             bg: 'blackAlpha.300',
@@ -61,7 +79,7 @@ const sidebarAccordion = definePartsStyle({
     },
 });
 
-export const Accordion = defineMultiStyleConfig({ variants: { sidebar: sidebarAccordion } });
+const Accordion = defineMultiStyleConfig({ variants: { sidebar: sidebarAccordion } });
 
 export const theme: ThemeConfig = extendTheme({
     styles: {
@@ -96,6 +114,8 @@ export const theme: ThemeConfig = extendTheme({
         Breadcrumb,
         Accordion,
         Switch,
+        Card: cardTheme,
+        Badge,
     },
     layerStyles: {
         customScrollbar: {
