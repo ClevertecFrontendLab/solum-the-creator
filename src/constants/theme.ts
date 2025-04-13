@@ -109,6 +109,20 @@ export const theme: ThemeConfig = extendTheme({
                 clear: {
                     backgroundColor: 'transparent',
                 },
+                black: {
+                    bg: 'black',
+                    color: 'white',
+                    _hover: {
+                        bg: 'black.700',
+                    },
+                    _active: {
+                        bg: 'black.800',
+                    },
+                    _disabled: {
+                        bg: 'blackAlpha.200',
+                        color: 'blackAlpha.400',
+                    },
+                },
             },
         },
         Breadcrumb,
@@ -144,7 +158,18 @@ export const theme: ThemeConfig = extendTheme({
         },
     },
     colors: {
-        black: '#000000',
+        black: {
+            50: '#f2f2f2',
+            100: '#d9d9d9',
+            200: '#bfbfbf',
+            300: '#a6a6a6',
+            400: '#8c8c8c',
+            500: '#737373',
+            600: '#595959',
+            700: '#404040',
+            800: '#262626',
+            900: '#000000',
+        },
         white: '#ffffff',
         lime: {
             50: '#ffffd3',

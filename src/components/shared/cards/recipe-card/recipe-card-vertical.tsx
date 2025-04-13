@@ -35,8 +35,9 @@ export const RecipeCardVertical: React.FC<RecipeCardVerticalProps> = ({
     saved = 0,
 }) => (
     <Card
-        maxW='20rem'
-        w='full'
+        maxW={{ base: '9.875rem', md: '17.5rem', '2xl': '20rem' }}
+        w='100%'
+        minW={{ base: '9.875rem', xl: '17.5rem', '2xl': '20rem' }}
         overflow='hidden'
         borderRadius='lg'
         variant='outline'
@@ -46,8 +47,8 @@ export const RecipeCardVertical: React.FC<RecipeCardVerticalProps> = ({
             <Image
                 src={image}
                 alt={title}
-                w='full'
-                h={{ base: '8rem', sm: '14.375rem' }}
+                w='100%'
+                h={{ base: '8rem', md: '14.375rem' }}
                 objectFit='cover'
             />
 
@@ -57,7 +58,7 @@ export const RecipeCardVertical: React.FC<RecipeCardVerticalProps> = ({
                     top={2}
                     left={2}
                     zIndex={1}
-                    display={{ base: 'inline-flex', sm: 'none' }}
+                    display={{ base: 'inline-flex', md: 'none' }}
                 >
                     <CategoryBadge category={category} />
                 </Box>
@@ -68,9 +69,9 @@ export const RecipeCardVertical: React.FC<RecipeCardVerticalProps> = ({
             <VStack spacing={2} align='start'>
                 <Heading
                     as='h3'
-                    fontSize={{ base: 'md', sm: 'lg' }}
+                    fontSize={{ base: 'md', md: 'lg' }}
                     fontWeight='500'
-                    noOfLines={{ base: 2, sm: 1 }}
+                    noOfLines={{ base: 2, md: 1 }}
                 >
                     {title}
                 </Heading>
@@ -80,7 +81,7 @@ export const RecipeCardVertical: React.FC<RecipeCardVerticalProps> = ({
                         fontSize='sm'
                         noOfLines={3}
                         h='4rem'
-                        display={{ base: 'none', sm: '-webkit-box' }}
+                        display={{ base: 'none', md: '-webkit-box' }}
                     >
                         {description}
                     </Text>
@@ -98,7 +99,7 @@ export const RecipeCardVertical: React.FC<RecipeCardVerticalProps> = ({
             flexWrap='wrap'
         >
             {category && (
-                <Box display={{ base: 'none', sm: 'inline-flex' }}>
+                <Box display={{ base: 'none', md: 'inline-flex' }}>
                     <CategoryBadge category={category} />
                 </Box>
             )}

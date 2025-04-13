@@ -8,6 +8,11 @@ const { definePartsStyle, defineMultiStyleConfig } = createMultiStyleConfigHelpe
 const cardVariant = definePartsStyle({
     container: {
         borderColor: 'blackAlpha.200',
+        transition: 'box-shadow 0.2s ease-in-out',
+        _hover: {
+            boxShadow:
+                '0 2px 4px -1px rgba(32, 126, 0, 0.06), 0 4px 6px -1px rgba(32, 126, 0, 0.1);',
+        },
     },
 });
 
