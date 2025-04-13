@@ -4,6 +4,7 @@ import {
     AccordionItem,
     AccordionPanel,
     Box,
+    Image,
     List,
 } from '@chakra-ui/react';
 import { Link } from 'react-router';
@@ -11,7 +12,7 @@ import { Link } from 'react-router';
 import ChevronDownIcon from '~/assets/icons/chevron-down-icon.svg?react';
 import { categoryIcons } from '~/constants/category-icons';
 import { RouteNode } from '~/constants/route-tree';
-import { getSubcategoryPath, isCategoryActive } from '~/utils/categories';
+import { getSubcategoryPath, isCategoryActive, isCategoryKey } from '~/utils/categories';
 
 import { SubcategoryItem } from './subcategory-item';
 
@@ -22,6 +23,7 @@ type CategoryItemProps = {
 
 export const CategoryItem: React.FC<CategoryItemProps> = ({ category, pathname }) => {
     const isActive = isCategoryActive(category.path, pathname);
+    const icon = isCategoryKey(category.path) ? categoryIcons[category.path] : undefined;
 
     return (
         <AccordionItem key={category.path} border='none'>
@@ -33,7 +35,7 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({ category, pathname }
                     fontWeight={isActive ? '700' : '500'}
                 >
                     <Box as='span' boxSize={6} mr={3}>
-                        {categoryIcons[category.path] ?? null}
+                        <Image src={icon} alt={category.name} boxSize={6} />
                     </Box>
                     <Box as='span' flex={1} textAlign='left'>
                         {category.name}
