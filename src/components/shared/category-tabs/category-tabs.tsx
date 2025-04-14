@@ -35,7 +35,7 @@ export const CategoryTabs = () => {
         >
             <Box
                 overflowX='auto'
-                w='full'
+                w='100%'
                 css={{
                     scrollbarWidth: 'none',
                     msOverflowStyle: 'none',
@@ -47,6 +47,8 @@ export const CategoryTabs = () => {
                 <TabList
                     whiteSpace='nowrap'
                     display='flex'
+                    justifyContent='center'
+                    w='100%'
                     gap={0}
                     borderBottom='1px solid'
                     borderColor='blackAlpha.200'
