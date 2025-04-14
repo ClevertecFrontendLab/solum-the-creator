@@ -7,7 +7,7 @@ import { MenuPrescribeButton } from '~/components/buttons/menu-button/menu-presc
 import { MenuSearchButton } from '~/components/buttons/menu-button/menu-search-button';
 
 export const Footer: React.FC = () => (
-    <Grid as='footer' templateColumns='repeat(4, 1fr)' w='100%' bg='lime.50' pt='14px' pb='10px'>
+    <Grid templateColumns='repeat(4, 1fr)' w='100%' bg='lime.50' pt='14px' pb='10px'>
         <Flex justify='center'>
             <MenuHomeButton />
         </Flex>

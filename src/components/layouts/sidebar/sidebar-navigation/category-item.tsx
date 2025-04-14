@@ -33,6 +33,7 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({ category, pathname }
                     px={2}
                     bg={isActive ? 'lime.100' : 'transparent'}
                     fontWeight={isActive ? '700' : '500'}
+                    data-test-id={category.path === 'vegan' && 'vegan-cuisine'}
                 >
                     <Box as='span' boxSize={6} mr={3}>
                         <Image src={icon} alt={category.name} boxSize={6} />

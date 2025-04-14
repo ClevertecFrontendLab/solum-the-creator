@@ -17,7 +17,10 @@ export const JuiciestSection = () => (
             <Heading fontSize={{ base: '2xl', lg: '4xl', '2xl': '5xl' }} fontWeight='500'>
                 Самое сочное
             </Heading>
-            <JuiciestButton display={{ base: 'none', lg: 'inline-flex' }} />
+            <JuiciestButton
+                display={{ base: 'none', lg: 'inline-flex' }}
+                data-test-id='juiciest-link'
+            />
         </HStack>
 
         <SimpleGrid
@@ -30,6 +33,9 @@ export const JuiciestSection = () => (
             ))}
         </SimpleGrid>
 
-        <JuiciestButton display={{ base: 'inline-flex', lg: 'none' }} />
+        <JuiciestButton
+            display={{ base: 'inline-flex', lg: 'none' }}
+            data-test-id='juiciest-link-mobile'
+        />
     </VStack>
 );

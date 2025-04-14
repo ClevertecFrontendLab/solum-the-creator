@@ -7,7 +7,7 @@ import { RightSidebar } from '../right-sidebar/right-sidebar';
 import { Sidebar } from '../sidebar/sidebar';
 
 export const MainLayout: React.FC = () => (
-    <Box>
+    <Box position='relative'>
         <Box position='fixed' top={0} left={0} right={0} zIndex={5}>
             <Header />
         </Box>
@@ -53,12 +53,14 @@ export const MainLayout: React.FC = () => (
 
         <Box
             as='footer'
-            position='fixed'
+            position='absolute'
             bottom={0}
             left={0}
             right={0}
             display={{ base: 'flex', md: 'none' }}
             zIndex={1}
+            data-test-id='footer'
+            width='100%'
         >
             <Footer />
         </Box>
