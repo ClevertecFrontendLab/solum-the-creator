@@ -3,6 +3,7 @@ import recipeImg1 from '~/assets/recipes/recipe-1.jpg';
 import { CategoryKey } from '~/constants/category-icons';
 
 export type Recipe = {
+    id: number;
     image: string;
     title: string;
     description: string;
@@ -18,6 +19,7 @@ export type Recipe = {
 
 export const recipes: Recipe[] = [
     {
+        id: 1,
         image: recipeImg1,
         title: 'Паста с соусом',
         description: 'Очень вкусная и быстрая в приготовлении паста.',
@@ -32,6 +34,7 @@ export const recipes: Recipe[] = [
         },
     },
     {
+        id: 2,
         image: recipeImg1,
         title: 'Паста с соусом',
         description: 'Очень вкусная и быстрая в приготовлении паста.',
@@ -42,6 +45,7 @@ export const recipes: Recipe[] = [
         saved: 90,
     },
     {
+        id: 3,
         image: recipeImg1,
         title: 'Паста с соусом',
         description: 'Очень вкусная и быстрая в приготовлении паста.',
@@ -54,6 +58,7 @@ export const recipes: Recipe[] = [
         },
     },
     {
+        id: 4,
         image: recipeImg1,
         title: 'Паста с соусом',
         description: 'Очень вкусная и быстрая в приготовлении паста.',
@@ -62,6 +67,34 @@ export const recipes: Recipe[] = [
         saved: 90,
     },
     {
+        id: 5,
+        image: recipeImg1,
+        title: 'Паста с соусом',
+        description: 'Очень вкусная и быстрая в приготовлении паста.',
+        category: 'vegan',
+        likes: 120,
+        saved: 90,
+    },
+    {
+        id: 6,
+        image: recipeImg1,
+        title: 'Паста с соусом',
+        description: 'Очень вкусная и быстрая в приготовлении паста.',
+        category: 'vegan',
+        likes: 120,
+        saved: 90,
+    },
+    {
+        id: 7,
+        image: recipeImg1,
+        title: 'Паста с соусом',
+        description: 'Очень вкусная и быстрая в приготовлении паста.',
+        category: 'vegan',
+        likes: 120,
+        saved: 90,
+    },
+    {
+        id: 8,
         image: recipeImg1,
         title: 'Паста с соусом',
         description: 'Очень вкусная и быстрая в приготовлении паста.',
