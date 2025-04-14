@@ -1,4 +1,4 @@
-import { Flex } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 
 import { CulinaryBlogsSection } from '~/components/home/culinary-blogs-section';
 import { JuiciestSection } from '~/components/home/juiciest-section';
@@ -9,7 +9,9 @@ import { recipes } from '~/constants/recipes';
 
 export const HomePage = () => (
     <Flex direction='column' align='center'>
-        <HeroSection title='Приятного аппетита!' />
+        <Box pb={{ base: 0, xl: 6 }}>
+            <HeroSection title='Приятного аппетита!' />
+        </Box>
         <NewRecipesSection />
         <JuiciestSection />
         <CulinaryBlogsSection />

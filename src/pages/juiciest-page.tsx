@@ -1,5 +1,9 @@
+import { Flex } from '@chakra-ui/react';
+
+import { HeroSection } from '~/components/shared/hero-section/hero-section';
+
 export const JuiciestPage = () => (
-    <>
-        <h1>Juiciest Page</h1>
-    </>
+    <Flex direction='column' align='center'>
+        <HeroSection title='Самое сочное' />
+    </Flex>
 );
