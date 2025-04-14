@@ -1,3 +1,4 @@
+import avatarImg from '~/assets/images/avatar-sm.jpg';
 import recipeImg1 from '~/assets/recipes/recipe-1.jpg';
 import { CategoryKey } from '~/constants/category-icons';
 
@@ -8,6 +9,10 @@ export type Recipe = {
     category: CategoryKey;
     likes?: number;
     saved?: number;
+    reccomendedBy?: {
+        avatarUrl: string;
+        fullName: string;
+    };
 };
 
 export const recipes: Recipe[] = [
@@ -18,6 +23,10 @@ export const recipes: Recipe[] = [
         category: 'vegan',
         likes: 120,
         saved: 90,
+        reccomendedBy: {
+            avatarUrl: avatarImg,
+            fullName: 'Alex Cook',
+        },
     },
     {
         image: recipeImg1,
@@ -34,6 +43,10 @@ export const recipes: Recipe[] = [
         category: 'vegan',
         likes: 120,
         saved: 90,
+        reccomendedBy: {
+            avatarUrl: avatarImg,
+            fullName: 'Alex Cook',
+        },
     },
     {
         image: recipeImg1,

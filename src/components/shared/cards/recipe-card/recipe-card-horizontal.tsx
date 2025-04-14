@@ -20,6 +20,7 @@ import { CategoryKey } from '~/constants/category-icons';
 
 import { StatButton } from '../../buttons/stat-button';
 import { CategoryBadge } from '../../category-badge/category-badge';
+import { RecommendBadge } from '../../recommend-badge/recommend-badge';
 
 type RecipeCardHorizontalProps = {
     image: string;
@@ -28,6 +29,10 @@ type RecipeCardHorizontalProps = {
     category?: CategoryKey;
     likes?: number;
     saved?: number;
+    reccomendedBy?: {
+        avatarUrl: string;
+        fullName: string;
+    };
 };
 
 export const RecipeCardHorizontal: React.FC<RecipeCardHorizontalProps> = ({
@@ -35,10 +40,11 @@ export const RecipeCardHorizontal: React.FC<RecipeCardHorizontalProps> = ({
     title,
     description,
     category,
+    reccomendedBy,
     likes = 0,
     saved = 0,
 }) => {
-    const smallerThanLg = useBreakpointValue({ base: false, md: true });
+    const smallerThanLg = useBreakpointValue({ base: true, lg: false });
 
     return (
         <Card w='100%' borderRadius='lg' variant='outline'>
@@ -47,7 +53,7 @@ export const RecipeCardHorizontal: React.FC<RecipeCardHorizontalProps> = ({
                     position='relative'
                     w='100%'
                     maxW={{ base: '10rem', lg: '21.625rem' }}
-                    minW={{ base: '9.875rem', lg: '16rem' }}
+                    minW={{ base: '9.875rem', lg: '14.375rem' }}
                 >
                     <Image src={image} alt={title} w='100%' h='100%' objectFit='cover' />
 
@@ -60,6 +66,21 @@ export const RecipeCardHorizontal: React.FC<RecipeCardHorizontalProps> = ({
                             display={{ base: 'inline-flex', lg: 'none' }}
                         >
                             <CategoryBadge category={category} bgColor='lime.50' />
+                        </Box>
+                    )}
+
+                    {reccomendedBy && (
+                        <Box
+                            position='absolute'
+                            bottom={5}
+                            left={6}
+                            zIndex={1}
+                            display={{ base: 'none', lg: 'inline-flex' }}
+                        >
+                            <RecommendBadge
+                                avatarUrl={reccomendedBy.avatarUrl}
+                                fullName={reccomendedBy.fullName}
+                            />
                         </Box>
                     )}
                 </Box>

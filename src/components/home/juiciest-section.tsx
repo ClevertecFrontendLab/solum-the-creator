@@ -15,7 +15,7 @@ export const JuiciestSection = () => (
         </Heading>
 
         <VStack align='center' spacing={4} width='100%'>
-            {recipes.map((recipe, index) => (
+            {recipes.slice(0, 4).map((recipe, index) => (
                 <RecipeCardHorizontal key={index} {...recipe} />
             ))}
         </VStack>
