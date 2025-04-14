@@ -5,6 +5,7 @@ import { JuiciestSection } from '~/components/home/juiciest-section';
 import { NewRecipesSection } from '~/components/home/new-recipes-section';
 import { HeroSection } from '~/components/shared/hero-section/hero-section';
 import { RelevantKitchenSection } from '~/components/shared/relevant-kitchen-section/relevant-kitchen-section';
+import { recipes } from '~/constants/recipes';
 
 export const HomePage = () => (
     <Flex direction='column' align='center'>
@@ -12,6 +13,11 @@ export const HomePage = () => (
         <NewRecipesSection />
         <JuiciestSection />
         <CulinaryBlogsSection />
-        <RelevantKitchenSection />
+        <RelevantKitchenSection
+            title='Веганская кухня'
+            description='Интересны не только убеждённым вегетарианцам, но и тем, кто хочет  попробовать вегетарианскую диету и готовить вкусные  вегетарианские блюда.'
+            recipesTextCards={recipes.slice(0, 2)}
+            recipesSimpleCards={recipes.slice(2, 5)}
+        />
     </Flex>
 );

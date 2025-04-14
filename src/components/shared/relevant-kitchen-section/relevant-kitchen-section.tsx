@@ -1,46 +1,91 @@
-import { Box, Heading, HStack, VStack } from '@chakra-ui/react';
+import { Box, Grid, GridItem, Heading, Text } from '@chakra-ui/react';
 
-import { recipes } from '~/constants/recipes';
+import { Recipe } from '~/constants/recipes';
 
 import { RecipeTextCard } from '../cards/recipe-card/recipe-text-card';
 import { SimpleRecipeCard } from '../cards/recipe-card/simple-recipe-card';
 
-export const RelevantKitchenSection = () => (
-    <Box as='section' pt={{ base: 4, md: 8 }} pb={{ base: 8, md: 14 }} width='100%'>
-        <Heading fontSize={{ base: '2xl', lg: '4xl', '2xl': '5xl' }} fontWeight='500'>
-            Веганская кухня
-        </Heading>
+type RelevantKitchenSectionProps = {
+    title: string;
+    description: string;
+    recipesTextCards: Recipe[];
+    recipesSimpleCards: Recipe[];
+};
 
-        <HStack
-            justify='space-between'
-            align='center'
-            width='50%'
-            pt={{ base: 3, md: 4, '2xl': 6 }}
+export const RelevantKitchenSection: React.FC<RelevantKitchenSectionProps> = ({
+    title,
+    description,
+    recipesTextCards: [recipesTextCard1, recipesTextCard2],
+    recipesSimpleCards,
+}) => (
+    <Box
+        as='section'
+        mt={{ base: 8, md: 10 }}
+        mb={4}
+        borderTop='1px solid'
+        borderColor='blackAlpha.200'
+        width='100%'
+    >
+        <Grid
+            templateColumns={{
+                base: '1fr',
+                sm: 'repeat(3, 1fr)',
+                xl: 'repeat(3, 1fr)',
+                '2xl': 'repeat(4, 1fr)',
+            }}
+            gap={{ base: 3, md: 4, xl: 4, '2xl': 6 }}
+            mb={{ base: 4, lg: 6 }}
         >
-            <RecipeTextCard
-                title={recipes[0].title}
-                recipeText={recipes[0].recipeText!}
-                category={recipes[0].category}
-                likes={recipes[0].likes}
-                saved={recipes[0].saved}
-            />
+            <GridItem colSpan={{ base: 1, sm: 3, xl: 1, '2xl': 2 }} minW={0}>
+                <Heading fontSize={{ base: '2xl', xl: '4xl', '2xl': '5xl' }} fontWeight='500'>
+                    {title}
+                </Heading>
+            </GridItem>
+            <GridItem colSpan={{ base: 1, sm: 3, xl: 2, '2xl': 2 }} minW={0}>
+                <Text fontSize={{ base: 'sm', md: 'md' }} fontWeight='500' color='blackAlpha.700'>
+                    {description}
+                </Text>
+            </GridItem>
+        </Grid>
 
-            <RecipeTextCard
-                title={recipes[0].title}
-                recipeText={recipes[0].recipeText!}
-                category={recipes[0].category}
-                likes={recipes[0].likes}
-                saved={recipes[0].saved}
-            />
-        </HStack>
-        <VStack
-            align='center'
-            spacing={{ base: 3, md: 4, '2xl': 6 }}
-            pt={{ base: 3, md: 4, '2xl': 6 }}
+        <Grid
+            templateColumns={{
+                base: '1fr',
+                sm: 'repeat(3, 1fr)',
+                md: 'repeat(2, 1fr)',
+                xl: 'repeat(3, 1fr)',
+                '2xl': 'repeat(4, 1fr)',
+            }}
+            gap={{ base: 3, lg: 4, '2xl': 6 }}
+            alignItems='start'
         >
-            {recipes.slice(1, 4).map(({ category, title }, index) => (
-                <SimpleRecipeCard key={index} category={category} title={title} />
-            ))}
-        </VStack>
+            <GridItem colSpan={1} minW={0}>
+                <RecipeTextCard
+                    category={recipesTextCard1.category}
+                    title={recipesTextCard1.title}
+                    recipeText={recipesTextCard1.recipeText!}
+                    likes={recipesTextCard1.likes}
+                    saved={recipesTextCard1.saved}
+                />
+            </GridItem>
+
+            <GridItem colSpan={1} minW={0}>
+                <RecipeTextCard
+                    category={recipesTextCard2.category}
+                    title={recipesTextCard2.title}
+                    recipeText={recipesTextCard2.recipeText!}
+                    likes={recipesTextCard2.likes}
+                    saved={recipesTextCard2.saved}
+                />
+            </GridItem>
+
+            <GridItem colSpan={{ base: 1, sm: 1, md: 2, xl: 1, '2xl': 2 }} minW={0}>
+                <Grid gap={3} w='100%'>
+                    {recipesSimpleCards.map(({ title, category }, index) => (
+                        <SimpleRecipeCard key={index} title={title} category={category} />
+                    ))}
+                </Grid>
+            </GridItem>
+        </Grid>
     </Box>
 );
