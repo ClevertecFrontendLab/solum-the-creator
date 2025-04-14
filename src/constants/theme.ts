@@ -81,7 +81,17 @@ const sidebarAccordion = definePartsStyle({
 
 const Accordion = defineMultiStyleConfig({ variants: { sidebar: sidebarAccordion } });
 
+export const breakpoints = {
+    base: '0rem',
+    sm: '38rem', // 600px
+    md: '52rem', // 832px
+    lg: '64rem', // 1024px
+    xl: '80rem', // 1280px
+    '2xl': '96rem', // 1536px
+};
+
 export const theme: ThemeConfig = extendTheme({
+    breakpoints,
     styles: {
         global: {
             body: {
@@ -117,6 +127,20 @@ export const theme: ThemeConfig = extendTheme({
                     },
                     _active: {
                         bg: 'black.800',
+                    },
+                    _disabled: {
+                        bg: 'blackAlpha.200',
+                        color: 'blackAlpha.400',
+                    },
+                },
+                brand: {
+                    bg: 'lime.400',
+                    color: 'black',
+                    _hover: {
+                        bg: 'lime.500',
+                    },
+                    _active: {
+                        bg: 'lime.550',
                     },
                     _disabled: {
                         bg: 'blackAlpha.200',
@@ -178,6 +202,7 @@ export const theme: ThemeConfig = extendTheme({
             300: '#c4ff61',
             400: '#bdff3d',
             500: '#b1ff2e',
+            550: '#a5ff1f',
             600: '#2db100',
             700: '#207e00',
             800: '#134b00',
