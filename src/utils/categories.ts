@@ -15,4 +15,7 @@ export const getCategoryNameByKey = (key: CategoryKey): string | undefined => {
     return node?.name;
 };
 
+export const getCurrentCategory = (category?: string): RouteNode | undefined =>
+    routeTree.find((node) => node.path === category && node.type === 'category');
+
 export const isCategoryKey = (key: string): key is CategoryKey => key in categoryIcons;
