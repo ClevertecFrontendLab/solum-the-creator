@@ -8,9 +8,9 @@ import { RecipeCardHorizontal } from '../shared/cards/recipe-card/recipe-card-ho
 export const JuiciestSection = () => (
     <VStack
         as='section'
-        pt={{ base: 4, md: 8 }}
-        pb={{ base: 8, md: 14 }}
-        spacing={{ base: 3, lg: 6 }}
+        pt={{ base: 6, md: 8 }}
+        pb={{ base: 8, md: 10 }}
+        spacing={{ base: 3, lg: 4, '2xl': 6 }}
         width='100%'
     >
         <HStack justify='space-between' align='center' width='100%'>

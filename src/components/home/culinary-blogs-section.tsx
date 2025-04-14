@@ -16,7 +16,7 @@ export const CulinaryBlogsSection = () => (
         bgColor='lime.300'
         rounded='2xl'
     >
-        <HStack justify='space-between' align='center' width='100%'>
+        <HStack justify='space-between' align='flex-start' width='100%'>
             <Heading fontSize={{ base: '2xl', lg: '3xl', '2xl': '4xl' }} fontWeight='500'>
                 Кулинарные блоги
             </Heading>

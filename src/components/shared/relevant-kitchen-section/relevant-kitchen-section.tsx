@@ -22,6 +22,7 @@ export const RelevantKitchenSection: React.FC<RelevantKitchenSectionProps> = ({
         as='section'
         mt={{ base: 8, md: 10 }}
         mb={4}
+        pt={{ base: 2, md: 6 }}
         borderTop='1px solid'
         borderColor='blackAlpha.200'
         width='100%'
@@ -37,7 +38,11 @@ export const RelevantKitchenSection: React.FC<RelevantKitchenSectionProps> = ({
             mb={{ base: 4, lg: 6 }}
         >
             <GridItem colSpan={{ base: 1, sm: 3, xl: 1, '2xl': 2 }} minW={0}>
-                <Heading fontSize={{ base: '2xl', xl: '4xl', '2xl': '5xl' }} fontWeight='500'>
+                <Heading
+                    fontSize={{ base: '2xl', xl: '4xl', '2xl': '5xl' }}
+                    fontWeight='500'
+                    lineHeight={1}
+                >
                     {title}
                 </Heading>
             </GridItem>
@@ -79,8 +84,8 @@ export const RelevantKitchenSection: React.FC<RelevantKitchenSectionProps> = ({
                 />
             </GridItem>
 
-            <GridItem colSpan={{ base: 1, sm: 1, md: 2, xl: 1, '2xl': 2 }} minW={0}>
-                <Grid gap={3} w='100%'>
+            <GridItem colSpan={{ base: 1, sm: 1, md: 2, xl: 1, '2xl': 2 }} minW={0} height='100%'>
+                <Grid gap={3} w='100%' height='100%'>
                     {recipesSimpleCards.map(({ title, category }, index) => (
                         <SimpleRecipeCard key={index} title={title} category={category} />
                     ))}

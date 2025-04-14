@@ -46,7 +46,7 @@ export const MainLayout: React.FC = () => (
             mr={{ base: 0, md: '13rem' }}
             overflowY='auto'
             minH='100vh'
-            maxW='88rem'
+            maxW={{ base: '100%', lg: '58rem', '2xl': '88rem' }}
         >
             <Outlet />
         </Box>

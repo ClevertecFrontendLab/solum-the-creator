@@ -28,7 +28,7 @@ export const RecipeTextCard: React.FC<RecipeTextCardProps> = ({
         w='100%'
         px={{ base: 3, lg: 4, '2xl': 6 }}
         py={{ base: 3, lg: 4, '2xl': 6 }}
-        pb={{ '2xl': 5 }}
+        pb={{ base: 3, lg: 4, '2xl': 5 }}
         display='flex'
         flexDir='column'
         gap={6}
@@ -39,6 +39,7 @@ export const RecipeTextCard: React.FC<RecipeTextCardProps> = ({
                     as='h3'
                     fontSize={{ base: 'md', lg: 'xl' }}
                     fontWeight='500'
+                    lineHeight={1.4}
                     noOfLines={1}
                     wordBreak='break-all'
                 >

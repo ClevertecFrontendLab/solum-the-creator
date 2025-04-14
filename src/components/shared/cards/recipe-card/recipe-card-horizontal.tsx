@@ -47,8 +47,8 @@ export const RecipeCardHorizontal: React.FC<RecipeCardHorizontalProps> = ({
     const smallerThanLg = useBreakpointValue({ base: true, lg: false });
 
     return (
-        <Card w='100%' borderRadius='lg' variant='outline'>
-            <Flex direction='row'>
+        <Card w='100%' borderRadius='lg' variant='outline' minH='8rem'>
+            <Flex direction='row' height='100%'>
                 <Box
                     position='relative'
                     w='100%'

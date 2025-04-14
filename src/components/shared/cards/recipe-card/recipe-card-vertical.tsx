@@ -35,13 +35,14 @@ export const RecipeCardVertical: React.FC<RecipeCardVerticalProps> = ({
     saved = 0,
 }) => (
     <Card
-        maxW={{ base: '9.875rem', md: '17.5rem', '2xl': '20rem' }}
+        maxW={{ base: '9.875rem', xl: '17.3rem', '2xl': '20rem' }}
         w='100%'
-        minW={{ base: '9.875rem', xl: '17.5rem', '2xl': '20rem' }}
+        minW={{ base: '9.875rem', xl: '17.3rem', '2xl': '20rem' }}
         overflow='hidden'
         borderRadius='lg'
         variant='outline'
         position='relative'
+        minH='13.75rem'
     >
         <Box position='relative'>
             <Image
@@ -90,9 +91,9 @@ export const RecipeCardVertical: React.FC<RecipeCardVerticalProps> = ({
         </CardBody>
 
         <CardFooter
-            pt={{ base: 2, sm: 6 }}
-            pb={{ base: 1, sm: 3, '2xl': 5 }}
-            px={{ base: 2, sm: 3, '2xl': 6 }}
+            pt={{ base: 2, md: 6 }}
+            pb={{ base: 1, md: 3, '2xl': 5 }}
+            px={{ base: 2, md: 3, '2xl': 6 }}
             display='flex'
             justifyContent='space-between'
             alignItems='center'

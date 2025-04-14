@@ -15,7 +15,7 @@ export const AuthorCard: React.FC<AuthorCardProps> = ({
     userName,
     description,
 }) => (
-    <Card w='100%' borderRadius='lg' variant='outline' h={{ base: '10rem', '2xl': '11.5rem' }}>
+    <Card w='100%' borderRadius='lg' variant='outline' h={{ base: '9.5rem', '2xl': '11.5rem' }}>
         <VStack
             align='start'
             spacing={{ base: 4, '2xl': 7 }}

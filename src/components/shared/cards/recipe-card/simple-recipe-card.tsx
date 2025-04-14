@@ -21,8 +21,12 @@ export const SimpleRecipeCard: React.FC<SimpleRecipeCardProps> = ({
         px={{ base: 3, md: 6 }}
         py={{ base: 2.5, md: 3 }}
         w='100%'
+        h='3.25rem'
+        display='flex'
+        flexDir='column'
+        justifyContent='center'
     >
-        <CardBody p={0}>
+        <CardBody p={0} display='flex' alignItems='center'>
             <Flex align='center' justify='space-between' w='100%' gap={2}>
                 <Flex align='center' gap={{ base: 2, md: 3 }} overflow='hidden'>
                     <CategoryIcon category={category} boxSize={6} />

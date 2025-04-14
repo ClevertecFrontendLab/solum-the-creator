@@ -25,7 +25,7 @@ export const NewRecipesSection = () => {
                         <Button
                             position='absolute'
                             left={0}
-                            top='50%'
+                            top='40%'
                             transform='translateY(-50%)'
                             zIndex={1}
                             variant='black'
@@ -38,7 +38,7 @@ export const NewRecipesSection = () => {
                         <Button
                             position='absolute'
                             right={0}
-                            top='50%'
+                            top='40%'
                             transform='translateY(-50%)'
                             zIndex={1}
                             variant='black'
@@ -50,7 +50,7 @@ export const NewRecipesSection = () => {
                     </>
                 )}
 
-                <Flex gap={{ base: 3, md: 6 }} w='max-content' minW='100%'>
+                <Flex gap={{ base: 3, '2xl': 6 }} w='max-content' minW='100%'>
                     {recipes.map((recipe, idx) => (
                         <RecipeCardVertical key={idx} {...recipe} />
                     ))}

@@ -9,7 +9,7 @@ export const HeroSearch: React.FC = () => (
             aria-label='Search'
             variant='outline'
             colorScheme='blackAlpha'
-            boxSize={{ base: 8, md: 12 }}
+            size={{ base: 'sm', md: 'md' }}
             icon={<Icon boxSize={{ base: 3.5, md: 6 }} as={FilterIcon} />}
             flexShrink={0}
         />
