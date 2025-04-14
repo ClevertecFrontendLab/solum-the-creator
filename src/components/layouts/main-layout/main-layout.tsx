@@ -8,7 +8,7 @@ import { Sidebar } from '../sidebar/sidebar';
 
 export const MainLayout: React.FC = () => (
     <Box>
-        <Box position='fixed' top={0} left={0} right={0} zIndex={1}>
+        <Box position='fixed' top={0} left={0} right={0} zIndex={5}>
             <Header />
         </Box>
 
