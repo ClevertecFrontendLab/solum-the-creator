@@ -9,6 +9,7 @@ export type Recipe = {
     category: CategoryKey;
     likes?: number;
     saved?: number;
+    recipeText?: string;
     reccomendedBy?: {
         avatarUrl: string;
         fullName: string;
@@ -20,9 +21,11 @@ export const recipes: Recipe[] = [
         image: recipeImg1,
         title: 'Паста с соусом',
         description: 'Очень вкусная и быстрая в приготовлении паста.',
-        category: 'vegan',
+        category: 'second-dishes',
         likes: 120,
         saved: 90,
+        recipeText:
+            'Картошка, тушенная с болгарским перцем, фасолью, морковью и луком, -  вариант сытного блюда на каждый день. Фасоль в данном случае заменяет мясо, делая рагу сытным и питательным. Чтобы сократить время  приготовления, возьмём консервированную фасоль. Блюдо хоть и простое, но в полной мере наполнено ароматами и имеет выразительный вкус за счёт  добавления томатной пасты.',
         reccomendedBy: {
             avatarUrl: avatarImg,
             fullName: 'Alex Cook',
