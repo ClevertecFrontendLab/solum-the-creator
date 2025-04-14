@@ -98,6 +98,21 @@ export const theme: ThemeConfig = extendTheme({
                 bg: '#ffffff',
                 color: '#000000',
             },
+            'html, body, *': {
+                '&::-webkit-scrollbar': {
+                    width: 2,
+                    borderRadius: '10',
+                    backgroundColor: 'blackAlpha.50',
+                },
+                '&::-webkit-scrollbar-track': {
+                    borderRadius: '10',
+                    bgColor: 'transparent',
+                },
+                '&::-webkit-scrollbar-thumb': {
+                    borderRadius: '10',
+                    bg: `blackAlpha.300`,
+                },
+            },
         },
     },
     components: {
@@ -154,32 +169,6 @@ export const theme: ThemeConfig = extendTheme({
         Switch,
         Card: cardTheme,
         Badge,
-    },
-    layerStyles: {
-        customScrollbar: {
-            '&::-webkit-scrollbar': {
-                width: '8px',
-            },
-            '&::-webkit-scrollbar-track': {
-                bg: 'blackAlpha.50',
-                borderRadius: '8px',
-            },
-            '&::-webkit-scrollbar-thumb': {
-                bg: 'blackAlpha.300',
-                borderRadius: '8px',
-                minHeight: '20px',
-                border: '2px solid transparent',
-                backgroundClip: 'padding-box',
-            },
-            '&::-webkit-scrollbar-button': {
-                display: 'none',
-                height: 0,
-                width: 0,
-            },
-            scrollbarWidth: 'thin',
-            scrollbarColor:
-                'var(--chakra-colors-blackAlpha-300) var(--chakra-colors-blackAlpha-50)',
-        },
     },
     colors: {
         black: {
