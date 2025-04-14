@@ -1,8 +1,9 @@
-import { Box, Heading, HStack } from '@chakra-ui/react';
+import { Box, Heading, HStack, VStack } from '@chakra-ui/react';
 
 import { recipes } from '~/constants/recipes';
 
 import { RecipeTextCard } from '../cards/recipe-card/recipe-text-card';
+import { SimpleRecipeCard } from '../cards/recipe-card/simple-recipe-card';
 
 export const RelevantKitchenSection = () => (
     <Box as='section' pt={{ base: 4, md: 8 }} pb={{ base: 8, md: 14 }} width='100%'>
@@ -32,5 +33,14 @@ export const RelevantKitchenSection = () => (
                 saved={recipes[0].saved}
             />
         </HStack>
+        <VStack
+            align='center'
+            spacing={{ base: 3, md: 4, '2xl': 6 }}
+            pt={{ base: 3, md: 4, '2xl': 6 }}
+        >
+            {recipes.slice(1, 4).map(({ category, title }, index) => (
+                <SimpleRecipeCard key={index} category={category} title={title} />
+            ))}
+        </VStack>
     </Box>
 );

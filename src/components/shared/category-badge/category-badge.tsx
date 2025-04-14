@@ -1,7 +1,9 @@
-import { Badge, Box, HStack, Image } from '@chakra-ui/react';
+import { Badge, Box, HStack } from '@chakra-ui/react';
 
-import { categoryIcons, CategoryKey } from '~/constants/category-icons';
+import { CategoryKey } from '~/constants/category-icons';
 import { getCategoryNameByKey } from '~/utils/categories';
+
+import { CategoryIcon } from '../category-icon/category-icon';
 
 type CategoryBadgeProps = {
     category: CategoryKey;
@@ -9,13 +11,12 @@ type CategoryBadgeProps = {
 };
 
 export const CategoryBadge: React.FC<CategoryBadgeProps> = ({ category, bgColor = 'lime.200' }) => {
-    const categoryIcon = categoryIcons[category];
     const categoryName = getCategoryNameByKey(category);
 
     return (
         <Badge variant='brand' display='inline-flex' bgColor={bgColor} alignItems='center'>
             <HStack spacing={{ base: 1, md: 2 }}>
-                <Image src={categoryIcon} alt={categoryName} boxSize={4} />
+                <CategoryIcon category={category} boxSize={4} />
                 <Box as='span'>{categoryName}</Box>
             </HStack>
         </Badge>
