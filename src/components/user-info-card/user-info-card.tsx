@@ -14,7 +14,7 @@ export const UserInfoCard: React.FC<UserInfoCardProps> = ({
     <Flex gap={3} alignItems='center' maxW={{ base: '280px', lg: '360px' }}>
         <Avatar name={fullName} src={avatarUrl} />
         <Flex direction='column' overflow='hidden'>
-            <Heading as='h2' size='md' noOfLines={1}>
+            <Heading as='h2' size='md' noOfLines={1} wordBreak='break-all'>
                 {fullName}
             </Heading>
             <Text fontSize='sm' color='blackAlpha.700' isTruncated={true}>
