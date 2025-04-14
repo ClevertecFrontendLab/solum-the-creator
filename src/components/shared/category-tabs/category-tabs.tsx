@@ -30,6 +30,8 @@ export const CategoryTabs = () => {
             isLazy={true}
             variant='line'
             colorScheme='lime'
+            pb={3}
+            mb={3}
         >
             <Box
                 overflowX='auto'
