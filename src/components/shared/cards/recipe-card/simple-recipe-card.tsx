@@ -1,7 +1,7 @@
 import { Button, Card, CardBody, Flex, Heading } from '@chakra-ui/react';
 
 import { CategoryIcon } from '~/components/widgets/category-icon/category-icon';
-import { CategoryKey } from '~/constants/category-icons';
+import { CategoryKey } from '~/constants/ui/category-icons';
 
 type SimpleRecipeCardProps = {
     category: CategoryKey;

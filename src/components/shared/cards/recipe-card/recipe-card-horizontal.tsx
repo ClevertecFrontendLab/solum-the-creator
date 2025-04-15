@@ -19,7 +19,7 @@ import EmojiHeartIcon from '~/assets/icons/emoji-heart-icon.svg?react';
 import { StatButton } from '~/components/ui/buttons/shared/stat-button';
 import { CategoryBadge } from '~/components/widgets/category-badge/category-badge';
 import { RecommendBadge } from '~/components/widgets/recommend-badge/recommend-badge';
-import { CategoryKey } from '~/constants/category-icons';
+import { CategoryKey } from '~/constants/ui/category-icons';
 
 type RecipeCardHorizontalProps = {
     image: string;

@@ -3,7 +3,7 @@ import { Flex } from '@chakra-ui/react';
 import { HeroSection } from '~/components/shared/hero-section/hero-section';
 import { RecipeHorizontalGridSection } from '~/components/widgets/recipe-horizontal-grid-section/recipe-horizontal-grid-section';
 import { RelevantKitchenSection } from '~/components/widgets/relevant-kitchen-section/relevant-kitchen-section';
-import { recipes } from '~/constants/recipes';
+import { recipes } from '~/constants/data/recipes';
 
 export const JuiciestPage = () => (
     <Flex direction='column' align='center'>

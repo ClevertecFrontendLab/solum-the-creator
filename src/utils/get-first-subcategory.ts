@@ -1,4 +1,4 @@
-import { routeTree } from '~/constants/route-tree';
+import { routeTree } from '~/constants/navigation/route-tree';
 
 export const getFirstSubcategoryPath = (category: string): string | null => {
     const categoryNode = routeTree.find(

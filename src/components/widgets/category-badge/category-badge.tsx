@@ -1,6 +1,6 @@
 import { Badge, Box, HStack } from '@chakra-ui/react';
 
-import { CategoryKey } from '~/constants/category-icons';
+import { CategoryKey } from '~/constants/ui/category-icons';
 import { getCategoryNameByKey } from '~/utils/categories';
 
 import { CategoryIcon } from '../category-icon/category-icon';

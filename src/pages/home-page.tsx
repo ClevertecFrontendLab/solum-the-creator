@@ -5,7 +5,7 @@ import { JuiciestSection } from '~/components/features/home/juiciest-section';
 import { NewRecipesSection } from '~/components/features/home/new-recipes-section';
 import { HeroSection } from '~/components/shared/hero-section/hero-section';
 import { RelevantKitchenSection } from '~/components/widgets/relevant-kitchen-section/relevant-kitchen-section';
-import { recipes } from '~/constants/recipes';
+import { recipes } from '~/constants/data/recipes';
 
 export const HomePage = () => (
     <Flex direction='column' align='center'>

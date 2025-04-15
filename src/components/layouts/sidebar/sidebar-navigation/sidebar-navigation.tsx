@@ -1,6 +1,6 @@
 import { Accordion } from '@chakra-ui/react';
 
-import { routeTree } from '~/constants/route-tree';
+import { routeTree } from '~/constants/navigation/route-tree';
 import { useActiveCategoryIndex } from '~/hooks/use-active-category-index';
 import { getCategories } from '~/utils/categories';
 

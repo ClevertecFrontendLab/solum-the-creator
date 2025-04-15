@@ -2,7 +2,7 @@ import { Heading, HStack, SimpleGrid, VStack } from '@chakra-ui/react';
 
 import { AuthorCard } from '~/components/shared/cards/author-card/author-card';
 import { AllAuthorsButton } from '~/components/ui/buttons/shared/all-authors-button';
-import { authors } from '~/constants/authors';
+import { authors } from '~/constants/data/authors';
 
 export const CulinaryBlogsSection = () => (
     <VStack

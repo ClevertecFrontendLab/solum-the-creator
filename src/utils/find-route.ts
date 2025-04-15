@@ -1,4 +1,4 @@
-import { Breadcrumb, RouteNode } from '~/constants/route-tree';
+import { Breadcrumb, RouteNode } from '~/constants/navigation/route-tree';
 
 export const findRoute = (
     nodes: RouteNode[],

@@ -2,7 +2,7 @@ import { Button, Icon, SystemProps } from '@chakra-ui/react';
 import { useNavigate } from 'react-router';
 
 import RightArrowIcon from '~/assets/icons/arrow-right-icon.svg?react';
-import { pathes } from '~/constants/pathes';
+import { pathes } from '~/constants/navigation/pathes';
 
 type JuiciestButtonProps = {
     display?: SystemProps['display'];

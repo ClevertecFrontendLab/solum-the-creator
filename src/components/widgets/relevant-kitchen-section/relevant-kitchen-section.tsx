@@ -2,7 +2,7 @@ import { Box, Grid, GridItem, Heading, Text } from '@chakra-ui/react';
 
 import { RecipeTextCard } from '~/components/shared/cards/recipe-card/recipe-text-card';
 import { SimpleRecipeCard } from '~/components/shared/cards/recipe-card/simple-recipe-card';
-import { Recipe } from '~/constants/recipes';
+import { Recipe } from '~/constants/data/recipes';
 
 type RelevantKitchenSectionProps = {
     title: string;

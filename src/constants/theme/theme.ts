@@ -7,7 +7,7 @@ import {
     ThemeConfig,
 } from '@chakra-ui/react';
 
-import { cardTheme } from './theme/card-theme';
+import { cardTheme } from './card-theme';
 
 const Breadcrumb: ComponentStyleConfig = {
     baseStyle: {

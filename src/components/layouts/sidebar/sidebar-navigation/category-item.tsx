@@ -10,8 +10,8 @@ import {
 import { Link } from 'react-router';
 
 import ChevronDownIcon from '~/assets/icons/chevron-down-icon.svg?react';
-import { categoryIcons } from '~/constants/category-icons';
-import { RouteNode } from '~/constants/route-tree';
+import { RouteNode } from '~/constants/navigation/route-tree';
+import { categoryIcons } from '~/constants/ui/category-icons';
 import { getSubcategoryPath, isCategoryActive, isCategoryKey } from '~/utils/categories';
 
 import { SubcategoryItem } from './subcategory-item';

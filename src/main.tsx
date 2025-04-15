@@ -6,9 +6,9 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router';
 
+import { theme } from '~/constants/theme/theme';
 import { store } from '~/store/configure-store.ts';
 
-import { theme } from './constants/theme';
 import AppRoutes from './router/app-routes';
 
 createRoot(document.getElementById('root')!).render(

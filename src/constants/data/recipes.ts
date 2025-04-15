@@ -1,6 +1,6 @@
 import avatarImg from '~/assets/images/avatar-sm.jpg';
 import recipeImg1 from '~/assets/recipes/recipe-1.jpg';
-import { CategoryKey } from '~/constants/category-icons';
+import { CategoryKey } from '~/constants/ui/category-icons';
 
 export type Recipe = {
     id: number;

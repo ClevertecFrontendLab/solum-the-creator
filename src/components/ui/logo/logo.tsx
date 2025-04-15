@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 
 import LogoIcon from '~/assets/icons/logo-icon.svg?react';
 import LogoTextIcon from '~/assets/icons/logo-text.svg?react';
-import { pathes } from '~/constants/pathes';
+import { pathes } from '~/constants/navigation/pathes';
 import { getDisplay } from '~/utils/get-display-logo';
 
 type LogoProps = {

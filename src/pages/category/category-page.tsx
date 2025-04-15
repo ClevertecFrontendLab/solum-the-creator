@@ -4,7 +4,7 @@ import { Outlet } from 'react-router';
 import { HeroSection } from '~/components/shared/hero-section/hero-section';
 import { CategoryTabs } from '~/components/widgets/category-tabs/category-tabs';
 import { RelevantKitchenSection } from '~/components/widgets/relevant-kitchen-section/relevant-kitchen-section';
-import { recipes } from '~/constants/recipes';
+import { recipes } from '~/constants/data/recipes';
 
 export const CategoryPage = () => (
     <Flex direction='column' align='center'>

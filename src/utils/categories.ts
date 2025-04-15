@@ -1,5 +1,5 @@
-import { categoryIcons, CategoryKey } from '~/constants/category-icons';
-import { RouteNode, routeTree } from '~/constants/route-tree';
+import { RouteNode, routeTree } from '~/constants/navigation/route-tree';
+import { categoryIcons, CategoryKey } from '~/constants/ui/category-icons';
 
 export const getCategories = (routeTree: RouteNode[]) =>
     routeTree.filter((route) => route.type === 'category');
