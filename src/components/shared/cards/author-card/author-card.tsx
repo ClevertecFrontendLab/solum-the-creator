@@ -1,6 +1,6 @@
 import { Card, Text, VStack } from '@chakra-ui/react';
 
-import { UserInfoCard } from '~/components/user-info-card/user-info-card';
+import { UserInfoCard } from '~/components/entities/user-info-card/user-info-card';
 
 type AuthorCardProps = {
     avatarUrl: string;

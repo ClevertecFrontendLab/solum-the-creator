@@ -12,10 +12,9 @@ import {
 
 import SavedIcon from '~/assets/icons/bookmarkHeart-icon.svg?react';
 import EmojiHeartIcon from '~/assets/icons/emoji-heart-icon.svg?react';
+import { StatButton } from '~/components/ui/buttons/shared/stat-button';
+import { CategoryBadge } from '~/components/widgets/category-badge/category-badge';
 import { CategoryKey } from '~/constants/category-icons';
-
-import { StatButton } from '../../buttons/stat-button';
-import { CategoryBadge } from '../../category-badge/category-badge';
 
 type RecipeCardVerticalProps = {
     image: string;

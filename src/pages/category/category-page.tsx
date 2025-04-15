@@ -1,9 +1,9 @@
 import { Flex } from '@chakra-ui/react';
 import { Outlet } from 'react-router';
 
-import { CategoryTabs } from '~/components/shared/category-tabs/category-tabs';
 import { HeroSection } from '~/components/shared/hero-section/hero-section';
-import { RelevantKitchenSection } from '~/components/shared/relevant-kitchen-section/relevant-kitchen-section';
+import { CategoryTabs } from '~/components/widgets/category-tabs/category-tabs';
+import { RelevantKitchenSection } from '~/components/widgets/relevant-kitchen-section/relevant-kitchen-section';
 import { recipes } from '~/constants/recipes';
 
 export const CategoryPage = () => (

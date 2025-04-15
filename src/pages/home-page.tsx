@@ -1,10 +1,10 @@
 import { Box, Flex } from '@chakra-ui/react';
 
-import { CulinaryBlogsSection } from '~/components/home/culinary-blogs-section';
-import { JuiciestSection } from '~/components/home/juiciest-section';
-import { NewRecipesSection } from '~/components/home/new-recipes-section';
+import { CulinaryBlogsSection } from '~/components/features/home/culinary-blogs-section';
+import { JuiciestSection } from '~/components/features/home/juiciest-section';
+import { NewRecipesSection } from '~/components/features/home/new-recipes-section';
 import { HeroSection } from '~/components/shared/hero-section/hero-section';
-import { RelevantKitchenSection } from '~/components/shared/relevant-kitchen-section/relevant-kitchen-section';
+import { RelevantKitchenSection } from '~/components/widgets/relevant-kitchen-section/relevant-kitchen-section';
 import { recipes } from '~/constants/recipes';
 
 export const HomePage = () => (

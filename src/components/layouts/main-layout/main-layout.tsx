@@ -1,8 +1,9 @@
 import { Box } from '@chakra-ui/react';
 import { Outlet } from 'react-router';
 
+import { Header } from '~/components/layouts/header/header';
+
 import { Footer } from '../footer/footer';
-import { Header } from '../header/header';
 import { RightSidebar } from '../right-sidebar/right-sidebar';
 import { Sidebar } from '../sidebar/sidebar';
 

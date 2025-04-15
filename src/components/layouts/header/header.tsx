@@ -1,11 +1,11 @@
 import { Box, Flex, Spacer, useDisclosure } from '@chakra-ui/react';
 
 import avatarUrl from '~/assets/images/avatar.jpg';
-import { Breadcrumbs } from '~/components/breadcrumbs/breadcrumbs';
-import { BurgerButton } from '~/components/burger-button/burger-button';
-import { Logo } from '~/components/logo/logo';
-import { ProfileNotification } from '~/components/profile-notification/profile-notification';
-import { UserInfoCard } from '~/components/user-info-card/user-info-card';
+import { ProfileNotification } from '~/components/entities/profile-notification/profile-notification';
+import { UserInfoCard } from '~/components/entities/user-info-card/user-info-card';
+import { BurgerButton } from '~/components/ui/burger-button/burger-button';
+import { Logo } from '~/components/ui/logo/logo';
+import { Breadcrumbs } from '~/components/widgets/breadcrumbs/breadcrumbs';
 
 export const Header: React.FC = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();

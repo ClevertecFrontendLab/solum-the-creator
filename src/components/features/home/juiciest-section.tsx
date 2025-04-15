@@ -1,9 +1,8 @@
 import { Heading, HStack, SimpleGrid, VStack } from '@chakra-ui/react';
 
+import { RecipeCardHorizontal } from '~/components/shared/cards/recipe-card/recipe-card-horizontal';
+import { JuiciestButton } from '~/components/ui/buttons/shared/juiciest-button';
 import { recipes } from '~/constants/recipes';
-
-import { JuiciestButton } from '../shared/buttons/juiciest-button';
-import { RecipeCardHorizontal } from '../shared/cards/recipe-card/recipe-card-horizontal';
 
 export const JuiciestSection = () => (
     <VStack

@@ -1,7 +1,7 @@
 import { Flex } from '@chakra-ui/react';
 
-import { PrescribeButton } from '~/components/buttons/menu-button/prescribe-button';
-import { ProfileNotification } from '~/components/profile-notification/profile-notification';
+import { ProfileNotification } from '~/components/entities/profile-notification/profile-notification';
+import { PrescribeButton } from '~/components/ui/buttons/menu-button/prescribe-button';
 
 export const RightSidebar: React.FC = () => (
     <Flex as='aside' direction='column' h='100%' overflow='hidden' justify='space-between'>
