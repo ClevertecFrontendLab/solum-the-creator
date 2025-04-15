@@ -1,5 +1,7 @@
 import { Avatar, Box, Flex, IconButton, Text } from '@chakra-ui/react';
 
+import { ActiveGradient } from './active-gradient';
+
 type AvatarMenuButtonProps = {
     label: string;
     avatarUrl: string;
@@ -34,22 +36,15 @@ export const AvatarMenuButton: React.FC<AvatarMenuButtonProps> = ({
 }) => {
     const { boxSize, avatarSize, gradientInset, textMt } = sizeMap[size];
 
+    const textColor = isActive && activeLabelBold ? 'black' : 'blackAlpha.700';
+    const textFontWeight = isActive && activeLabelBold ? '500' : '400';
+
+    const bgColor = isActive ? 'black' : 'none';
+
     return (
         <Flex direction='column' align='center' justify='center' position='relative'>
             <Box position='relative' w={boxSize} h={boxSize}>
-                {isActive && (
-                    <Box
-                        position='absolute'
-                        top={`-${gradientInset}`}
-                        left={`-${gradientInset}`}
-                        right={`-${gradientInset}`}
-                        bottom={`-${gradientInset}`}
-                        borderRadius='full'
-                        bg='radial-gradient(50% 50% at 50% 50%, rgba(196, 255, 97, 0.7) 0%, rgba(255, 255, 255, 0) 100%)'
-                        zIndex={0}
-                        pointerEvents='none'
-                    />
-                )}
+                {isActive && <ActiveGradient inset={gradientInset} />}
 
                 <IconButton
                     position='relative'
@@ -60,7 +55,7 @@ export const AvatarMenuButton: React.FC<AvatarMenuButtonProps> = ({
                     minH={boxSize}
                     rounded='full'
                     p={0}
-                    bg={isActive ? 'black' : 'none'}
+                    bg={bgColor}
                     _hover={{ bg: 'blackAlpha.600' }}
                     aria-label={label}
                     onClick={onClick}
@@ -72,8 +67,8 @@ export const AvatarMenuButton: React.FC<AvatarMenuButtonProps> = ({
                 mt={textMt}
                 zIndex={1}
                 fontSize='xs'
-                color={isActive && activeLabelBold ? 'black' : 'blackAlpha.700'}
-                fontWeight={isActive && activeLabelBold ? '500' : '400'}
+                color={textColor}
+                fontWeight={textFontWeight}
             >
                 {label}
             </Text>

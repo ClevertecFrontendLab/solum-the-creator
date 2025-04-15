@@ -1,23 +1,36 @@
 import { Box, Flex, Icon, IconButton, Text } from '@chakra-ui/react';
 
+import { ActiveGradient } from './active-gradient';
+
 type MenuButtonProps = {
     label: string;
     icon: React.FC<React.SVGProps<SVGSVGElement>>;
     isActive?: boolean;
     onClick?: () => void;
     size?: 'sm' | 'md';
+    hoverColor?: string;
     activeLabelBold?: boolean;
 };
 
-const sizeMap = {
+type MenuButtonSize = 'sm' | 'md';
+
+const SIZE_PROPS: Record<
+    MenuButtonSize,
+    {
+        textMarginTop: number;
+        boxSize: string;
+        iconSize: number;
+        gradientInset: string;
+    }
+> = {
     sm: {
-        textMt: 1,
+        textMarginTop: 1,
         boxSize: '40px',
         iconSize: 5,
         gradientInset: '50%',
     },
     md: {
-        textMt: 3,
+        textMarginTop: 3,
         boxSize: '52px',
         iconSize: 6,
         gradientInset: '100%',
@@ -25,56 +38,49 @@ const sizeMap = {
 };
 
 export const MenuButton: React.FC<MenuButtonProps> = ({
-    isActive = false,
-    onClick,
-    icon,
     label,
+    icon,
+    onClick,
+    hoverColor = 'blackAlpha.600',
+    isActive = false,
     activeLabelBold = false,
     size = 'md',
 }) => {
-    const { boxSize, gradientInset, iconSize, textMt } = sizeMap[size];
+    const { boxSize, iconSize, textMarginTop, gradientInset } = SIZE_PROPS[size];
+
+    const iconColor = isActive ? 'lime.50' : 'black';
+    const bgColor = isActive ? 'black' : 'none';
+
+    const textColor = isActive && activeLabelBold ? 'black' : 'blackAlpha.700';
+    const textFontWeight = isActive && activeLabelBold ? '500' : '400';
 
     return (
         <Flex direction='column' align='center' justify='center' position='relative'>
             <Box position='relative' w={boxSize} h={boxSize}>
-                {isActive && (
-                    <Box
-                        position='absolute'
-                        top={`-${gradientInset}`}
-                        left={`-${gradientInset}`}
-                        right={`-${gradientInset}`}
-                        bottom={`-${gradientInset}`}
-                        borderRadius='full'
-                        bg='radial-gradient(50% 50% at 50% 50%, rgba(196, 255, 97, 0.7) 0%, rgba(255, 255, 255, 0) 100%)'
-                        zIndex={0}
-                        pointerEvents='none'
-                    />
-                )}
+                {isActive && <ActiveGradient inset={gradientInset} />}
 
                 <IconButton
                     position='relative'
                     zIndex={1}
+                    aria-label={label}
+                    onClick={onClick}
                     w={boxSize}
                     h={boxSize}
                     minW={boxSize}
                     minH={boxSize}
                     rounded='full'
-                    bg={isActive ? 'black' : 'none'}
-                    _hover={{ bg: 'blackAlpha.600' }}
-                    icon={
-                        <Icon as={icon} color={isActive ? 'lime.50' : 'black'} boxSize={iconSize} />
-                    }
-                    onClick={onClick}
-                    aria-label={label}
+                    bg={bgColor}
+                    _hover={{ bg: hoverColor }}
+                    icon={<Icon as={icon} color={iconColor} boxSize={iconSize} />}
                 />
             </Box>
 
             <Text
-                mt={textMt}
+                mt={textMarginTop}
                 zIndex={1}
                 fontSize='xs'
-                color={isActive && activeLabelBold ? 'black' : 'blackAlpha.700'}
-                fontWeight={isActive && activeLabelBold ? '500' : '400'}
+                color={textColor}
+                fontWeight={textFontWeight}
             >
                 {label}
             </Text>
