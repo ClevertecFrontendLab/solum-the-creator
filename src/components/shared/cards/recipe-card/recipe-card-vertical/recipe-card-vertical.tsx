@@ -1,20 +1,12 @@
-import {
-    Box,
-    Card,
-    CardBody,
-    CardFooter,
-    Heading,
-    HStack,
-    Image,
-    Text,
-    VStack,
-} from '@chakra-ui/react';
+import { Card, CardBody, CardFooter, Heading, Hide, HStack, Text, VStack } from '@chakra-ui/react';
 
 import SavedIcon from '~/assets/icons/bookmarkHeart-icon.svg?react';
 import EmojiHeartIcon from '~/assets/icons/emoji-heart-icon.svg?react';
 import { StatButton } from '~/components/ui/buttons/shared/stat-button';
 import { CategoryBadge } from '~/components/widgets/category-badge/category-badge';
 import { CategoryKey } from '~/constants/ui/category-icons';
+
+import { ImageSection } from './image-section';
 
 type RecipeCardVerticalProps = {
     image: string;
@@ -34,36 +26,14 @@ export const RecipeCardVertical: React.FC<RecipeCardVerticalProps> = ({
     saved = 0,
 }) => (
     <Card
-        maxW={{ base: '9.875rem', xl: '17.3rem', '2xl': '20rem' }}
         w='100%'
-        minW={{ base: '9.875rem', xl: '17.3rem', '2xl': '20rem' }}
         overflow='hidden'
         borderRadius='lg'
         variant='outline'
         position='relative'
         minH='13.75rem'
     >
-        <Box position='relative'>
-            <Image
-                src={image}
-                alt={title}
-                w='100%'
-                h={{ base: '8rem', md: '14.375rem' }}
-                objectFit='cover'
-            />
-
-            {category && (
-                <Box
-                    position='absolute'
-                    top={2}
-                    left={2}
-                    zIndex={1}
-                    display={{ base: 'inline-flex', md: 'none' }}
-                >
-                    <CategoryBadge category={category} />
-                </Box>
-            )}
-        </Box>
+        <ImageSection image={image} category={category} />
 
         <CardBody pt={{ base: 2, sm: 3, '2xl': 4 }} pb={0} px={{ base: 2, sm: 3, '2xl': 6 }}>
             <VStack spacing={2} align='start'>
@@ -99,9 +69,9 @@ export const RecipeCardVertical: React.FC<RecipeCardVerticalProps> = ({
             flexWrap='wrap'
         >
             {category && (
-                <Box display={{ base: 'none', md: 'inline-flex' }}>
+                <Hide below='md'>
                     <CategoryBadge category={category} />
-                </Box>
+                </Hide>
             )}
 
             <HStack spacing={2}>
