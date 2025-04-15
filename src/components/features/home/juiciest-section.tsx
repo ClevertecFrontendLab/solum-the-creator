@@ -1,6 +1,6 @@
 import { Heading, Hide, HStack, Show, SimpleGrid, VStack } from '@chakra-ui/react';
 
-import { RecipeCardHorizontal } from '~/components/shared/cards/recipe-card/recipe-card-horizontal';
+import { RecipeCardHorizontal } from '~/components/shared/cards/recipe-card/recipe-card-horizontal/recipe-card-horizontal';
 import { JuiciestButton } from '~/components/ui/buttons/shared/juiciest-button';
 import { recipes } from '~/constants/data/recipes';
 

@@ -11,7 +11,7 @@ export type Recipe = {
     likes?: number;
     saved?: number;
     recipeText?: string;
-    reccomendedBy?: {
+    recommendedBy?: {
         avatarUrl: string;
         fullName: string;
     };
@@ -28,7 +28,7 @@ export const recipes: Recipe[] = [
         saved: 90,
         recipeText:
             'Картошка, тушенная с болгарским перцем, фасолью, морковью и луком, -  вариант сытного блюда на каждый день. Фасоль в данном случае заменяет мясо, делая рагу сытным и питательным. Чтобы сократить время  приготовления, возьмём консервированную фасоль. Блюдо хоть и простое, но в полной мере наполнено ароматами и имеет выразительный вкус за счёт  добавления томатной пасты.',
-        reccomendedBy: {
+        recommendedBy: {
             avatarUrl: avatarImg,
             fullName: 'Alex Cook',
         },
@@ -52,7 +52,7 @@ export const recipes: Recipe[] = [
         category: 'vegan',
         likes: 120,
         saved: 90,
-        reccomendedBy: {
+        recommendedBy: {
             avatarUrl: avatarImg,
             fullName: 'Alex Cook',
         },

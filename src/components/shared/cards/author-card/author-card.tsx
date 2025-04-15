@@ -1,4 +1,4 @@
-import { Card, Text, VStack } from '@chakra-ui/react';
+import { Card, CardBody, Text, VStack } from '@chakra-ui/react';
 
 import { UserInfoCard } from '~/components/entities/user-info-card/user-info-card';
 
@@ -16,7 +16,8 @@ export const AuthorCard: React.FC<AuthorCardProps> = ({
     description,
 }) => (
     <Card w='100%' borderRadius='lg' variant='outline' h={{ base: '9.5rem', '2xl': '11.5rem' }}>
-        <VStack
+        <CardBody
+            as={VStack}
             align='start'
             spacing={{ base: 4, '2xl': 7 }}
             px={{ base: 4, '2xl': 6 }}
@@ -33,6 +34,6 @@ export const AuthorCard: React.FC<AuthorCardProps> = ({
             <Text fontSize='sm' color='blackAlpha.800' noOfLines={3}>
                 {description}
             </Text>
-        </VStack>
+        </CardBody>
     </Card>
 );
