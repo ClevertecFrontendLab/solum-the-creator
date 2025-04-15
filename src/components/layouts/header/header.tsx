@@ -24,6 +24,7 @@ export const Header: React.FC = () => {
                 <Logo isFull={true} />
 
                 <Show above='md'>
+                    <Spacer maxW={{ base: 4, md: '8rem' }} />
                     <Breadcrumbs />
                 </Show>
 
