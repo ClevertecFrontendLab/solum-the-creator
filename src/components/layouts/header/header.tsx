@@ -44,7 +44,7 @@ export const Header: React.FC = () => {
                     align='center'
                     gap={{ base: 2, sm: 4 }}
                 >
-                    <ProfileNotification />
+                    <ProfileNotification values={[121, 23, 49]} />
                     <BurgerButton isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
                 </Flex>
             </Flex>

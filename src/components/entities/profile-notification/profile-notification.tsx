@@ -9,15 +9,25 @@ import { ProfileNotificationItem } from './profile-notification-item/profile-not
 type ProfileNotificationProps = {
     direction?: 'row' | 'column';
     size?: 'xs' | 'md';
+    values: [number, number, number];
+};
+
+const GAP_BY_SIZE: Record<NonNullable<ProfileNotificationProps['size']>, number> = {
+    xs: 0.5,
+    md: 6,
 };
 
 export const ProfileNotification: React.FC<ProfileNotificationProps> = ({
     direction = 'row',
     size = 'xs',
-}) => (
-    <Flex direction={direction} gap={size === 'xs' ? 0.5 : 6}>
-        <ProfileNotificationItem icon={BookmarkIcon} label='185' size={size} />
-        <ProfileNotificationItem icon={PeopleIcon} label='589' size={size} />
-        <ProfileNotificationItem icon={EmojiHeartIcon} label='587' size={size} />
-    </Flex>
-);
+    values,
+}) => {
+    const [favorites, followers, likes] = values;
+    return (
+        <Flex direction={direction} gap={GAP_BY_SIZE[size]}>
+            <ProfileNotificationItem icon={BookmarkIcon} label={favorites} size={size} />
+            <ProfileNotificationItem icon={PeopleIcon} label={followers} size={size} />
+            <ProfileNotificationItem icon={EmojiHeartIcon} label={likes} size={size} />
+        </Flex>
+    );
+};
