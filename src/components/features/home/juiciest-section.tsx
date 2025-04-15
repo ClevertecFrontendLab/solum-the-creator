@@ -1,4 +1,4 @@
-import { Heading, HStack, SimpleGrid, VStack } from '@chakra-ui/react';
+import { Heading, Hide, HStack, Show, SimpleGrid, VStack } from '@chakra-ui/react';
 
 import { RecipeCardHorizontal } from '~/components/shared/cards/recipe-card/recipe-card-horizontal';
 import { JuiciestButton } from '~/components/ui/buttons/shared/juiciest-button';
@@ -13,28 +13,24 @@ export const JuiciestSection = () => (
         width='100%'
     >
         <HStack justify='space-between' align='center' width='100%'>
-            <Heading fontSize={{ base: '2xl', lg: '4xl', '2xl': '5xl' }} fontWeight='500'>
-                Самое сочное
-            </Heading>
-            <JuiciestButton
-                display={{ base: 'none', lg: 'inline-flex' }}
-                data-test-id='juiciest-link'
-            />
+            <Heading variant='section-title'>Самое сочное</Heading>
+            <Hide below='lg'>
+                <JuiciestButton data-test-id='juiciest-link' />
+            </Hide>
         </HStack>
 
         <SimpleGrid
-            spacing={{ base: 3, sm: 4, '2xl': 6 }}
             width='100%'
+            spacing={{ base: 3, sm: 4, '2xl': 6 }}
             columns={{ base: 1, sm: 2, md: 1, '2xl': 2 }}
         >
-            {recipes.slice(0, 4).map((recipe, index) => (
-                <RecipeCardHorizontal key={index} {...recipe} />
+            {recipes.slice(0, 4).map((recipe) => (
+                <RecipeCardHorizontal key={recipe.id} {...recipe} />
             ))}
         </SimpleGrid>
 
-        <JuiciestButton
-            display={{ base: 'inline-flex', lg: 'none' }}
-            data-test-id='juiciest-link-mobile'
-        />
+        <Show below='lg'>
+            <JuiciestButton data-test-id='juiciest-link-mobile' />
+        </Show>
     </VStack>
 );

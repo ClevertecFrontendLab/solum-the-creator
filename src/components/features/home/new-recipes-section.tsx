@@ -10,11 +10,7 @@ export const NewRecipesSection = () => {
 
     return (
         <Box as='section' position='relative' width='100%'>
-            <Heading
-                mb={{ base: 3, md: 6 }}
-                fontSize={{ base: '2xl', lg: '4xl', '2xl': '5xl' }}
-                fontWeight='500'
-            >
+            <Heading mb={{ base: 3, md: 6 }} variant='section-title'>
                 Новые рецепты
             </Heading>
 

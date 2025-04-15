@@ -37,11 +37,7 @@ export const RelevantKitchenSection: React.FC<RelevantKitchenSectionProps> = ({
             mb={{ base: 4, lg: 6 }}
         >
             <GridItem colSpan={{ base: 1, sm: 3, xl: 1, '2xl': 2 }} minW={0}>
-                <Heading
-                    fontSize={{ base: '2xl', xl: '4xl', '2xl': '5xl' }}
-                    fontWeight='500'
-                    lineHeight={1}
-                >
+                <Heading variant='section-title' lineHeight={1}>
                     {title}
                 </Heading>
             </GridItem>

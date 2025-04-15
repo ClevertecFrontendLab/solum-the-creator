@@ -1,4 +1,4 @@
-import { Heading, HStack, SimpleGrid, VStack } from '@chakra-ui/react';
+import { Heading, Hide, HStack, Show, SimpleGrid, VStack } from '@chakra-ui/react';
 
 import { AuthorCard } from '~/components/shared/cards/author-card/author-card';
 import { AllAuthorsButton } from '~/components/ui/buttons/shared/all-authors-button';
@@ -19,7 +19,9 @@ export const CulinaryBlogsSection = () => (
             <Heading fontSize={{ base: '2xl', lg: '3xl', '2xl': '4xl' }} fontWeight='500'>
                 Кулинарные блоги
             </Heading>
-            <AllAuthorsButton display={{ base: 'none', lg: 'inline-flex' }} />
+            <Hide below='lg'>
+                <AllAuthorsButton />
+            </Hide>
         </HStack>
 
         <SimpleGrid columns={{ base: 1, sm: 3, md: 1, xl: 3 }} spacing={{ base: 3, md: 4 }}>
@@ -34,6 +36,8 @@ export const CulinaryBlogsSection = () => (
             ))}
         </SimpleGrid>
 
-        <AllAuthorsButton display={{ base: 'inline-flex', lg: 'none' }} />
+        <Show below='lg'>
+            <AllAuthorsButton />
+        </Show>
     </VStack>
 );

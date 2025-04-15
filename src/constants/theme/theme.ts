@@ -128,6 +128,12 @@ export const theme: ThemeConfig = extendTheme({
                     lineHeight: '1.4',
                 },
             },
+            variants: {
+                'section-title': {
+                    fontSize: ['2xl', '2xl', '2xl', '4xl', '4xl', '5xl'],
+                    fontWeight: '500',
+                },
+            },
         },
         Button: {
             variants: {
