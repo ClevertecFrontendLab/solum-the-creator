@@ -23,7 +23,12 @@ export const AuthorCard: React.FC<AuthorCardProps> = ({
             pt={{ base: 4, '2xl': 6 }}
             pb={{ base: 4, '2xl': 5 }}
         >
-            <UserInfoCard avatarUrl={avatarUrl} fullName={fullName} userName={userName} />
+            <UserInfoCard
+                avatarUrl={avatarUrl}
+                fullName={fullName}
+                userName={userName}
+                size={{ base: 'sm', '2xl': 'md' }}
+            />
 
             <Text fontSize='sm' color='blackAlpha.800' noOfLines={3}>
                 {description}
