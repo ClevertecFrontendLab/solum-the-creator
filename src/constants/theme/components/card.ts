@@ -17,4 +17,4 @@ const cardVariant = definePartsStyle({
     },
 });
 
-export const cardTheme = defineMultiStyleConfig({ variants: { outline: cardVariant } });
+export const Card = defineMultiStyleConfig({ variants: { outline: cardVariant } });
