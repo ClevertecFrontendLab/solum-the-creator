@@ -9,7 +9,7 @@ import { recipes } from '~/constants/recipes';
 
 export const HomePage = () => (
     <Flex direction='column' align='center'>
-        <Box pb={{ base: 0, xl: 6 }}>
+        <Box pb={{ base: 0, xl: 6 }} width='100%'>
             <HeroSection title='Приятного аппетита!' />
         </Box>
         <NewRecipesSection />

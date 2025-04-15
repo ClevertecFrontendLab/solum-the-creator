@@ -1,8 +1,15 @@
 import { FormControl, FormLabel, HStack, Select, Switch } from '@chakra-ui/react';
 
 export const HeroFilters: React.FC = () => (
-    <HStack spacing={4} w='100%' maxW='32.375rem'>
-        <FormControl display='flex' alignItems='center' justifyContent='center' pl={2} py={1.5}>
+    <HStack spacing={4} w='100%' justify='center'>
+        <FormControl
+            display='flex'
+            alignItems='center'
+            justifyContent='center'
+            pl={2}
+            py={1.5}
+            w='auto'
+        >
             <FormLabel htmlFor='exclude-allergens' mb='0'>
                 Исключить мои аллергены
             </FormLabel>
