@@ -25,29 +25,35 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({ category, pathname }
     const isActive = isCategoryActive(category.path, pathname);
     const icon = isCategoryKey(category.path) ? categoryIcons[category.path] : undefined;
 
+    const subcategories = category.children ?? [];
+    const dataTestId = category.path === 'vegan' ? 'vegan-cuisine' : undefined;
+
+    const bgColor = isActive ? 'lime.100' : 'transparent';
+    const fontWeight = isActive ? '700' : '500';
+
     return (
-        <AccordionItem key={category.path} border='none'>
-            <Link to={category.path}>
-                <AccordionButton
-                    py={3}
-                    px={2}
-                    bg={isActive ? 'lime.100' : 'transparent'}
-                    fontWeight={isActive ? '700' : '500'}
-                    data-test-id={category.path === 'vegan' && 'vegan-cuisine'}
-                >
-                    <Box as='span' boxSize={6} mr={3}>
-                        <Image src={icon} alt={category.name} boxSize={6} />
-                    </Box>
-                    <Box as='span' flex={1} textAlign='left'>
-                        {category.name}
-                    </Box>
-                    <AccordionIcon boxSize={4} as={ChevronDownIcon} />
-                </AccordionButton>
-            </Link>
+        <AccordionItem border='none'>
+            <AccordionButton
+                as={Link}
+                to={category.path}
+                py={3}
+                px={2}
+                bg={bgColor}
+                fontWeight={fontWeight}
+                data-test-id={dataTestId}
+            >
+                <Box as='span' boxSize={6} mr={3}>
+                    <Image src={icon} alt={category.name} boxSize={6} />
+                </Box>
+                <Box as='span' flex={1} textAlign='left'>
+                    {category.name}
+                </Box>
+                <AccordionIcon boxSize={4} as={ChevronDownIcon} />
+            </AccordionButton>
 
             <AccordionPanel>
                 <List ml={10}>
-                    {category.children?.map((child) => {
+                    {subcategories.map((child) => {
                         const subPath = getSubcategoryPath(category.path, child.path);
                         return (
                             <SubcategoryItem

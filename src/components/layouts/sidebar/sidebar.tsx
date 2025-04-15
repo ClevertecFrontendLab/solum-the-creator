@@ -1,4 +1,4 @@
-import { Box, Flex } from '@chakra-ui/react';
+import { Box, Flex, Spacer } from '@chakra-ui/react';
 
 import { SidebarFooter } from './sidebar-footer';
 import { SidebarNavigation } from './sidebar-navigation/sidebar-navigation';
@@ -9,8 +9,7 @@ export const Sidebar: React.FC = () => (
             <SidebarNavigation />
         </Box>
 
-        <Box mt='auto'>
-            <SidebarFooter />
-        </Box>
+        <Spacer />
+        <SidebarFooter />
     </Flex>
 );

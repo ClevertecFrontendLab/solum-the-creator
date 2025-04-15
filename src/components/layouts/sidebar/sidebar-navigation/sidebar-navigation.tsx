@@ -12,14 +12,7 @@ export const SidebarNavigation: React.FC = () => {
     const { activeIndex: defaultIndex, pathname } = useActiveCategoryIndex(categories);
 
     return (
-        <Accordion
-            as='nav'
-            py='10px'
-            pr='4px'
-            pl='10px'
-            defaultIndex={defaultIndex}
-            variant='sidebar'
-        >
+        <Accordion as='nav' py={2.5} pl={2.5} pr={1} defaultIndex={defaultIndex} variant='sidebar'>
             {categories.map((category) => (
                 <CategoryItem key={category.path} category={category} pathname={pathname} />
             ))}
