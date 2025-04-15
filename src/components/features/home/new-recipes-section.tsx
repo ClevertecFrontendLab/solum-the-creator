@@ -2,7 +2,7 @@ import { Box, Button, Flex, Heading, Icon, useBreakpointValue } from '@chakra-ui
 
 import ArrowLeftIcon from '~/assets/icons/arrow-left-icon.svg?react';
 import ArrowRightIcon from '~/assets/icons/arrow-right-icon.svg?react';
-import { RecipeCardVertical } from '~/components/shared/cards/recipe-card/recipe-card-vertical';
+import { RecipeCardVertical } from '~/components/shared/cards/recipe-card/recipe-card-vertical/recipe-card-vertical';
 import { recipes } from '~/constants/data/recipes';
 
 export const NewRecipesSection = () => {
