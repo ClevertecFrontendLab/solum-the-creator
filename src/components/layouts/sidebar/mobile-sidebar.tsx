@@ -1,5 +1,8 @@
-import { Box, Portal, useToken, VStack } from '@chakra-ui/react';
+import { Box, HStack, Portal, useToken, VStack } from '@chakra-ui/react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect } from 'react';
+
+import { Breadcrumbs } from '~/components/widgets/breadcrumbs/breadcrumbs';
 
 import { SidebarContent } from './sidebar-content';
 
@@ -12,6 +15,18 @@ type MobileSidebarProps = {
 
 export const MobileSidebar: React.FC<MobileSidebarProps> = ({ isOpen, onClose }) => {
     const [headerHeight] = useToken('sizes', ['16']);
+
+    useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, [isOpen]);
 
     return (
         <AnimatePresence>
@@ -43,17 +58,18 @@ export const MobileSidebar: React.FC<MobileSidebarProps> = ({ isOpen, onClose })
                         top={headerHeight}
                         right={2}
                         zIndex={12}
-                        px={4}
-                        pb={4}
-                        pt={2}
                         bg='white'
                         borderBottomRadius='xl'
                         boxShadow='lg'
+                        w='100%'
                         maxW='21.5rem'
                         maxH='calc(100vh - 9.25rem)'
-                        overflowY='auto'
+                        overflow='hidden'
                     >
-                        <VStack spacing={4} w='100%'>
+                        <VStack gap={0} w='100%' maxH='calc(100vh - 9.25rem)'>
+                            <HStack px={5} justify='start' w='100%' py={4}>
+                                <Breadcrumbs />
+                            </HStack>
                             <SidebarContent />
                         </VStack>
                     </MotionBox>

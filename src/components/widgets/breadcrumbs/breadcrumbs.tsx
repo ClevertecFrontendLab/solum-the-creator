@@ -25,7 +25,14 @@ export const Breadcrumbs: React.FC = () => {
     });
 
     return (
-        <Breadcrumb spacing='0' separator={separator}>
+        <Breadcrumb
+            spacing='0'
+            separator={separator}
+            display='flex'
+            flexWrap='wrap'
+            rowGap={1}
+            listProps={{ flexWrap: 'wrap' }}
+        >
             {breadcrumbsItems}
         </Breadcrumb>
     );
