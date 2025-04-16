@@ -10,9 +10,11 @@ import {
 import { Link } from 'react-router';
 
 import ChevronDownIcon from '~/assets/icons/chevron-down-icon.svg?react';
+import { pathes } from '~/constants/navigation/pathes';
 import { RouteNode } from '~/constants/navigation/route-tree';
 import { categoryIcons } from '~/constants/ui/category-icons';
 import { getSubcategoryPath, isCategoryActive, isCategoryKey } from '~/utils/categories';
+import { getFirstSubcategoryPath } from '~/utils/get-first-subcategory';
 
 import { SubcategoryItem } from './subcategory-item';
 
@@ -31,11 +33,13 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({ category, pathname }
     const bgColor = isActive ? 'lime.100' : 'transparent';
     const fontWeight = isActive ? '700' : '500';
 
+    const firstSubcategoryPath = getFirstSubcategoryPath(category.path);
+
     return (
         <AccordionItem border='none'>
             <AccordionButton
                 as={Link}
-                to={category.path}
+                to={firstSubcategoryPath || pathes.home}
                 py={3}
                 px={2}
                 bg={bgColor}

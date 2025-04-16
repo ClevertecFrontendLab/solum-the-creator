@@ -9,7 +9,7 @@ import { JuiciestPage } from '~/pages/juiciest-page';
 
 import { RedirectToFirstSubcategory } from './redirect-to-first-subcategory';
 
-const AppRoutes = () => (
+export const AppRoutes = () => (
     <Routes>
         <Route path={pathes.home} element={<MainLayout />}>
             <Route index element={<HomePage />} />
@@ -22,5 +22,3 @@ const AppRoutes = () => (
         </Route>
     </Routes>
 );
-
-export default AppRoutes;

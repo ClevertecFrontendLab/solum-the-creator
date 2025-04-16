@@ -9,7 +9,7 @@ import { BrowserRouter } from 'react-router';
 import { theme } from '~/constants/theme/theme';
 import { store } from '~/store/configure-store.ts';
 
-import AppRoutes from './router/app-routes';
+import { AppRoutes } from './router/app-routes';
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
