@@ -226,4 +226,4 @@ export const routeTree: RouteNode[] = [
             { path: 'fruits', name: 'Из фруктов и ягод' },
         ],
     },
-];
+] as const;

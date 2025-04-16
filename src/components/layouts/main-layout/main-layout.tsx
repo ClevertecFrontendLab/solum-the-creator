@@ -9,7 +9,7 @@ import { Sidebar } from '../sidebar/sidebar';
 
 export const MainLayout: React.FC = () => (
     <Box position='relative'>
-        <Box position='fixed' top={0} left={0} right={0} zIndex={5}>
+        <Box position='fixed' top={0} left={0} right={0} zIndex={8}>
             <Header />
         </Box>
 
@@ -57,7 +57,7 @@ export const MainLayout: React.FC = () => (
         <Hide above='md'>
             <Box
                 as='footer'
-                position='absolute'
+                position='fixed'
                 bottom={0}
                 left={0}
                 right={0}

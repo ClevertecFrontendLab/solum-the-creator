@@ -1,15 +1,9 @@
-import { Box, Flex, Spacer } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 
-import { SidebarFooter } from './sidebar-footer';
-import { SidebarNavigation } from './sidebar-navigation/sidebar-navigation';
+import { SidebarContent } from './sidebar-content';
 
 export const Sidebar: React.FC = () => (
     <Flex as='aside' direction='column' h='100%' overflow='hidden' boxShadow='right' pt={6}>
-        <Box overflowY='auto' maxH='100%' pb={3}>
-            <SidebarNavigation />
-        </Box>
-
-        <Spacer />
-        <SidebarFooter />
+        <SidebarContent />
     </Flex>
 );

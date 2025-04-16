@@ -7,13 +7,17 @@ import { BurgerButton } from '~/components/ui/burger-button/burger-button';
 import { Logo } from '~/components/ui/logo/logo';
 import { Breadcrumbs } from '~/components/widgets/breadcrumbs/breadcrumbs';
 
+import { MobileSidebar } from '../sidebar/mobile-sidebar';
+
 export const Header: React.FC = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
+
+    const bgColor = isOpen ? 'white' : 'lime.50';
 
     return (
         <Box
             as='header'
-            bg='lime.50'
+            bg={bgColor}
             px={{ base: 4, sm: 5 }}
             py={4}
             top={0}
@@ -42,8 +46,13 @@ export const Header: React.FC = () => {
 
                 <Hide above='md'>
                     <Flex align='center' gap={{ base: 2, sm: 4 }}>
-                        <ProfileNotification values={[121, 23, 49]} />
-                        <BurgerButton isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
+                        {!isOpen && <ProfileNotification values={[121, 23, 49]} />}
+
+                        <Box>
+                            <BurgerButton isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
+
+                            <MobileSidebar isOpen={isOpen} onClose={onClose} />
+                        </Box>
                     </Flex>
                 </Hide>
             </Flex>

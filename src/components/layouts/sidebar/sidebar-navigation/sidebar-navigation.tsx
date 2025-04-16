@@ -1,4 +1,5 @@
 import { Accordion } from '@chakra-ui/react';
+import { useMemo } from 'react';
 
 import { routeTree } from '~/constants/navigation/route-tree';
 import { useActiveCategoryIndex } from '~/hooks/use-active-category-index';
@@ -7,7 +8,7 @@ import { getCategories } from '~/utils/categories';
 import { CategoryItem } from './category-item';
 
 export const SidebarNavigation: React.FC = () => {
-    const categories = getCategories(routeTree);
+    const categories = useMemo(() => getCategories(routeTree), []);
 
     const { activeIndex: defaultIndex, pathname } = useActiveCategoryIndex(categories);
 
