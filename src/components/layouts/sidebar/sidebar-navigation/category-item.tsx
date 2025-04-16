@@ -5,7 +5,8 @@ import {
     AccordionPanel,
     Box,
     Image,
-    List,
+    TabList,
+    Tabs,
 } from '@chakra-ui/react';
 import { Link } from 'react-router';
 
@@ -13,7 +14,12 @@ import ChevronDownIcon from '~/assets/icons/chevron-down-icon.svg?react';
 import { pathes } from '~/constants/navigation/pathes';
 import { RouteNode } from '~/constants/navigation/route-tree';
 import { categoryIcons } from '~/constants/ui/category-icons';
-import { getSubcategoryPath, isCategoryActive, isCategoryKey } from '~/utils/categories';
+import {
+    getActiveSubcategoryIndex,
+    getSubcategoryPath,
+    isCategoryActive,
+    isCategoryKey,
+} from '~/utils/categories';
 import { getFirstSubcategoryPath } from '~/utils/get-first-subcategory';
 
 import { SubcategoryItem } from './subcategory-item';
@@ -34,6 +40,7 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({ category, pathname }
     const fontWeight = isActive ? '700' : '500';
 
     const firstSubcategoryPath = getFirstSubcategoryPath(category.path);
+    const activeTabIndex = getActiveSubcategoryIndex(category, subcategories, pathname);
 
     return (
         <AccordionItem border='none'>
@@ -55,21 +62,29 @@ export const CategoryItem: React.FC<CategoryItemProps> = ({ category, pathname }
                 <AccordionIcon boxSize={4} as={ChevronDownIcon} />
             </AccordionButton>
 
-            <AccordionPanel>
-                <List ml={10}>
-                    {subcategories.map((child) => {
-                        const subPath = getSubcategoryPath(category.path, child.path);
-                        return (
-                            <SubcategoryItem
-                                key={child.path}
-                                to={subPath}
-                                name={child.name}
-                                isActive={subPath === pathname}
-                            />
-                        );
-                    })}
-                </List>
-            </AccordionPanel>
+            {subcategories.length > 0 && (
+                <AccordionPanel>
+                    <Tabs
+                        ml={10}
+                        variant='subcategory'
+                        index={activeTabIndex >= 0 ? activeTabIndex : 0}
+                    >
+                        <TabList display='flex' flexDirection='column'>
+                            {subcategories.map((child) => {
+                                const subPath = getSubcategoryPath(category.path, child.path);
+
+                                return (
+                                    <SubcategoryItem
+                                        key={child.path}
+                                        to={subPath}
+                                        name={child.name}
+                                    />
+                                );
+                            })}
+                        </TabList>
+                    </Tabs>
+                </AccordionPanel>
+            )}
         </AccordionItem>
     );
 };

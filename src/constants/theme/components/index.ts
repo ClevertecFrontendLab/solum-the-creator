@@ -7,6 +7,7 @@ import { Heading } from './heading';
 import { Input } from './input';
 import { Select } from './select';
 import { Switch } from './switch';
+import { Tabs } from './tabs';
 
 export const components = {
     Button,
@@ -17,5 +18,6 @@ export const components = {
     Input,
     Select,
     Switch,
+    Tabs,
     Accordion,
 };

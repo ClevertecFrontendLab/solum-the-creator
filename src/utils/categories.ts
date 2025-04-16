@@ -19,3 +19,13 @@ export const getCurrentCategory = (category?: string): RouteNode | undefined =>
     routeTree.find((node) => node.path === category && node.type === 'category');
 
 export const isCategoryKey = (key: string): key is CategoryKey => key in categoryIcons;
+
+export const getActiveSubcategoryIndex = (
+    category: RouteNode,
+    subcategories: RouteNode[],
+    pathname: string,
+) =>
+    subcategories.findIndex((child) => {
+        const subPath = getSubcategoryPath(category.path, child.path);
+        return subPath === pathname;
+    });
