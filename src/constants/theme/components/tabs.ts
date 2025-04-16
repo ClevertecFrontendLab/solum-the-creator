@@ -39,8 +39,26 @@ const subcategoryVariant = defineStyle({
     },
 });
 
+const categoryVariant = defineStyle({
+    tab: {
+        bg: 'transparent',
+        fontWeight: '500',
+        color: 'lime.800',
+        _selected: {
+            color: 'lime.600',
+            borderBottom: '2px solid',
+            borderBottomColor: 'lime.600',
+        },
+    },
+    tablist: {
+        borderBottom: '1px solid',
+        borderBottomColor: 'blackAlpha.200',
+    },
+});
+
 const variants = {
     subcategory: subcategoryVariant,
+    'category-horizontal': categoryVariant,
 };
 
 export const Tabs = { variants };
