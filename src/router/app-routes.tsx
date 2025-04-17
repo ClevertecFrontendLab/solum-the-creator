@@ -6,6 +6,7 @@ import { CategoryPage } from '~/pages/category/category-page';
 import { SubcategoryPage } from '~/pages/category/subcategory/subcategory-page';
 import { HomePage } from '~/pages/home-page';
 import { JuiciestPage } from '~/pages/juiciest-page';
+import { RecipePage } from '~/pages/recipe/recipe-page';
 
 import { RedirectToFirstSubcategory } from './redirect-to-first-subcategory';
 
@@ -19,6 +20,8 @@ export const AppRoutes = () => (
                 <Route index element={<RedirectToFirstSubcategory />} />
                 <Route path={pathes.subcategories} element={<SubcategoryPage />} />
             </Route>
+
+            <Route path={pathes.recipes} element={<RecipePage />} />
         </Route>
     </Routes>
 );
