@@ -1,8 +1,10 @@
 import { Box, HStack, Portal, useToken, VStack } from '@chakra-ui/react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect } from 'react';
 
+import { Overlay } from '~/components/shared/overlay/overlay';
 import { Breadcrumbs } from '~/components/widgets/breadcrumbs/breadcrumbs';
+import { heightExpand } from '~/constants/motions/motion-presets';
+import { useScrollLock } from '~/hooks/use-scroll-lock';
 
 import { SidebarContent } from './sidebar-content';
 
@@ -14,46 +16,21 @@ type MobileSidebarProps = {
 };
 
 export const MobileSidebar: React.FC<MobileSidebarProps> = ({ isOpen, onClose }) => {
-    const [headerHeight] = useToken('sizes', ['16']);
+    const [headerHeight, sidebarWidth, sidebarHeight] = useToken('sizes', [
+        'mobileHeader',
+        'mobileSidebarWidth',
+        'mobileSidebarHeight',
+    ]);
 
-    useEffect(() => {
-        if (isOpen) {
-            document.body.style.overflow = 'hidden';
-        } else {
-            document.body.style.overflow = '';
-        }
-
-        return () => {
-            document.body.style.overflow = '';
-        };
-    }, [isOpen]);
+    useScrollLock(isOpen);
 
     return (
         <AnimatePresence>
             {isOpen && (
                 <Portal>
-                    <MotionBox
-                        position='fixed'
-                        top={0}
-                        left={0}
-                        right={0}
-                        bottom={0}
-                        bg='blackAlpha.400'
-                        zIndex={5}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.2 }}
-                        onClick={onClose}
-                    />
+                    <Overlay onClick={onClose} />
 
                     <MotionBox
-                        initial={{ height: 0 }}
-                        animate={{ height: 'auto' }}
-                        exit={{ height: 0 }}
-                        transition={{
-                            duration: 0.2,
-                        }}
                         position='fixed'
                         top={headerHeight}
                         right={2}
@@ -62,11 +39,12 @@ export const MobileSidebar: React.FC<MobileSidebarProps> = ({ isOpen, onClose })
                         borderBottomRadius='xl'
                         boxShadow='lg'
                         w='100%'
-                        maxW='21.5rem'
-                        maxH='calc(100vh - 9.25rem)'
+                        maxW={sidebarWidth}
+                        maxH={sidebarHeight}
                         overflow='hidden'
+                        {...heightExpand}
                     >
-                        <VStack gap={0} w='100%' maxH='calc(100vh - 9.25rem)'>
+                        <VStack gap={0} w='100%' maxH={sidebarHeight}>
                             <HStack px={5} justify='start' w='100%' py={4}>
                                 <Breadcrumbs />
                             </HStack>
