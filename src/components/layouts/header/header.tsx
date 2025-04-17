@@ -25,7 +25,7 @@ export const Header: React.FC = () => {
             data-test-id='header'
         >
             <Flex h={{ base: 8, md: 12 }} alignItems='center' width='100%'>
-                <Logo isFull={true} />
+                <Logo isFull={true} onClick={onClose} />
 
                 <Show above='md'>
                     <Spacer maxW={{ base: 4, md: '8rem' }} />
@@ -50,7 +50,6 @@ export const Header: React.FC = () => {
 
                         <Box>
                             <BurgerButton isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
-
                             <MobileSidebar isOpen={isOpen} onClose={onClose} />
                         </Box>
                     </Flex>

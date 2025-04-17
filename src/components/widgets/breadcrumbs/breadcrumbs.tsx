@@ -1,11 +1,16 @@
 import { ChevronRightIcon } from '@chakra-ui/icons';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Center } from '@chakra-ui/react';
-import { Link } from 'react-router';
+import { Link, useLocation } from 'react-router';
 
 import { useBreadcrumbs } from '~/hooks/use-breadcrumbs';
 
-export const Breadcrumbs: React.FC = () => {
+type BreadcrumbsProps = {
+    onNavigate?: () => void;
+};
+
+export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ onNavigate }) => {
     const breadcrumbs = useBreadcrumbs();
+    const location = useLocation();
 
     const separator = (
         <Center>
@@ -15,9 +20,16 @@ export const Breadcrumbs: React.FC = () => {
 
     const breadcrumbsItems = breadcrumbs.map((crumb, index) => {
         const isCurrent = index === breadcrumbs.length - 1;
+
+        const handleClick = () => {
+            if (crumb.href !== location.pathname) {
+                onNavigate?.();
+            }
+        };
+
         return (
             <BreadcrumbItem key={crumb.href} isCurrentPage={isCurrent}>
-                <BreadcrumbLink as={Link} to={crumb.href}>
+                <BreadcrumbLink as={Link} to={crumb.href} onClick={handleClick}>
                     {crumb.label}
                 </BreadcrumbLink>
             </BreadcrumbItem>

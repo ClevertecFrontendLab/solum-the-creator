@@ -16,8 +16,9 @@ export const Overlay: React.FC<OverlayProps> = ({ onClick }) => (
         left={0}
         right={0}
         bottom={0}
-        bg='blackAlpha.400'
-        zIndex={5}
+        bg='blackAlpha.300'
+        backdropFilter='blur(2px)'
+        zIndex={3}
         onClick={onClick}
         {...fadeIn}
     />

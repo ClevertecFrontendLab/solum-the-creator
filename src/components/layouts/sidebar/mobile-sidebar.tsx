@@ -46,7 +46,7 @@ export const MobileSidebar: React.FC<MobileSidebarProps> = ({ isOpen, onClose })
                     >
                         <VStack gap={0} w='100%' maxH={sidebarHeight}>
                             <HStack px={5} justify='start' w='100%' py={4}>
-                                <Breadcrumbs />
+                                <Breadcrumbs onNavigate={onClose} />
                             </HStack>
                             <SidebarContent />
                         </VStack>

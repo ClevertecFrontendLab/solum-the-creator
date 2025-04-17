@@ -9,16 +9,17 @@ import { getDisplay } from '~/utils/get-display-logo';
 type LogoProps = {
     isFull?: boolean;
     responsive?: boolean;
+    onClick?: () => void;
 };
 
 const LogoTextIconChakra = chakra(LogoTextIcon);
 
-export const Logo: React.FC<LogoProps> = ({ isFull = false, responsive = true }) => {
+export const Logo: React.FC<LogoProps> = ({ onClick, isFull = false, responsive = true }) => {
     const display = getDisplay(isFull, responsive);
 
     return (
         <Box>
-            <Link to={pathes.home}>
+            <Link to={pathes.home} onClick={onClick}>
                 <Flex alignItems='center' gap={1}>
                     <LogoIcon />
                     <LogoTextIconChakra display={display} />
