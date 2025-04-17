@@ -3,6 +3,7 @@ import { Box, Button, Flex, Heading, Icon, useBreakpointValue } from '@chakra-ui
 import ArrowLeftIcon from '~/assets/icons/arrow-left-icon.svg?react';
 import ArrowRightIcon from '~/assets/icons/arrow-right-icon.svg?react';
 import { RecipeCardVertical } from '~/components/shared/cards/recipe-card/recipe-card-vertical/recipe-card-vertical';
+import { HorizontalSlider } from '~/components/ui/horizontal-slider/horizontal-slider';
 import { recipes } from '~/constants/data/recipes';
 
 export const NewRecipesSection = () => {
@@ -46,11 +47,16 @@ export const NewRecipesSection = () => {
                 )}
 
                 <Flex gap={{ base: 3, '2xl': 6 }} w='max-content' minW='100%'>
-                    {recipes.map((recipe, idx) => (
-                        <RecipeCardVertical key={idx} {...recipe} />
+                    {recipes.map((recipe) => (
+                        <RecipeCardVertical key={recipe.id} {...recipe} />
                     ))}
                 </Flex>
             </Box>
+
+            <HorizontalSlider
+                items={recipes}
+                renderItem={(recipe) => <RecipeCardVertical key={recipe.id} {...recipe} />}
+            />
         </Box>
     );
 };
