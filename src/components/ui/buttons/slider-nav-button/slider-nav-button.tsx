@@ -31,6 +31,8 @@ export const SliderNavButton = forwardRef<HTMLButtonElement, SliderNavButtonProp
                 zIndex={5}
                 left={isLeft ? 0 : undefined}
                 right={!isLeft ? 0 : undefined}
+                ml={isLeft ? -2 : undefined}
+                mr={isLeft ? undefined : -2}
                 aria-label={isLeft ? 'Previous slide' : 'Next slide'}
                 {...props}
             />

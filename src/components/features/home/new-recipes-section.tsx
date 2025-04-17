@@ -1,62 +1,21 @@
-import { Box, Button, Flex, Heading, Icon, useBreakpointValue } from '@chakra-ui/react';
+import { Box, Heading } from '@chakra-ui/react';
 
-import ArrowLeftIcon from '~/assets/icons/arrow-left-icon.svg?react';
-import ArrowRightIcon from '~/assets/icons/arrow-right-icon.svg?react';
 import { RecipeCardVertical } from '~/components/shared/cards/recipe-card/recipe-card-vertical/recipe-card-vertical';
+import { FullBleed } from '~/components/shared/full-bleed/full-bleed';
 import { HorizontalSlider } from '~/components/ui/horizontal-slider/horizontal-slider';
 import { recipes } from '~/constants/data/recipes';
 
-export const NewRecipesSection = () => {
-    const showControls = useBreakpointValue({ base: false, md: true });
+export const NewRecipesSection = () => (
+    <Box as='section' position='relative' width='100%'>
+        <Heading mb={{ base: 3, md: 6 }} variant='section-title'>
+            Новые рецепты
+        </Heading>
 
-    return (
-        <Box as='section' position='relative' width='100%'>
-            <Heading mb={{ base: 3, md: 6 }} variant='section-title'>
-                Новые рецепты
-            </Heading>
-
-            <Box position='relative' overflowX='hidden' overflowY='hidden' pb={2}>
-                {showControls && (
-                    <>
-                        <Button
-                            position='absolute'
-                            left={0}
-                            top='40%'
-                            transform='translateY(-50%)'
-                            zIndex={1}
-                            variant='black'
-                            boxSize={12}
-                            borderRadius='md'
-                        >
-                            <Icon as={ArrowLeftIcon} color='lime.50' boxSize={6} />
-                        </Button>
-
-                        <Button
-                            position='absolute'
-                            right={0}
-                            top='40%'
-                            transform='translateY(-50%)'
-                            zIndex={1}
-                            variant='black'
-                            boxSize={12}
-                            borderRadius='md'
-                        >
-                            <Icon as={ArrowRightIcon} color='lime.50' boxSize={6} />
-                        </Button>
-                    </>
-                )}
-
-                <Flex gap={{ base: 3, '2xl': 6 }} w='max-content' minW='100%'>
-                    {recipes.map((recipe) => (
-                        <RecipeCardVertical key={recipe.id} {...recipe} />
-                    ))}
-                </Flex>
-            </Box>
-
+        <FullBleed>
             <HorizontalSlider
                 items={recipes}
                 renderItem={(recipe) => <RecipeCardVertical key={recipe.id} {...recipe} />}
             />
-        </Box>
-    );
-};
+        </FullBleed>
+    </Box>
+);
