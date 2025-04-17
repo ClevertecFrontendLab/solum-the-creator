@@ -9,12 +9,12 @@ import { CategoryKey } from '~/constants/ui/category-icons';
 import { ImageSection } from './image-section';
 
 type RecipeCardVerticalProps = {
-    image: string;
     title: string;
+    image: string;
     description?: string;
     category?: CategoryKey;
     likes?: number;
-    saved?: number;
+    bookmarks?: number;
 };
 
 export const RecipeCardVertical: React.FC<RecipeCardVerticalProps> = ({
@@ -23,7 +23,7 @@ export const RecipeCardVertical: React.FC<RecipeCardVerticalProps> = ({
     description,
     category,
     likes = 0,
-    saved = 0,
+    bookmarks = 0,
 }) => (
     <Card
         w='100%'
@@ -75,7 +75,7 @@ export const RecipeCardVertical: React.FC<RecipeCardVerticalProps> = ({
             )}
 
             <HStack spacing={2}>
-                <StatButton icon={SavedIcon} count={saved} />
+                <StatButton icon={SavedIcon} count={bookmarks} />
                 <StatButton icon={EmojiHeartIcon} count={likes} />
             </HStack>
         </CardFooter>

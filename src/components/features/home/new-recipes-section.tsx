@@ -14,7 +14,17 @@ export const NewRecipesSection = () => (
         <FullBleed>
             <HorizontalSlider
                 items={recipes}
-                renderItem={(recipe) => <RecipeCardVertical key={recipe.id} {...recipe} />}
+                renderItem={(recipe) => (
+                    <RecipeCardVertical
+                        key={recipe.id}
+                        title={recipe.title}
+                        description={recipe.description}
+                        image={recipe.image}
+                        category={recipe.category[0]}
+                        likes={recipe.likes}
+                        bookmarks={recipe.bookmarks}
+                    />
+                )}
             />
         </FullBleed>
     </Box>

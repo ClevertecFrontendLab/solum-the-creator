@@ -25,7 +25,15 @@ export const JuiciestSection = () => (
             columns={{ base: 1, sm: 2, md: 1, '2xl': 2 }}
         >
             {recipes.slice(0, 4).map((recipe) => (
-                <RecipeCardHorizontal key={recipe.id} {...recipe} />
+                <RecipeCardHorizontal
+                    key={recipe.id}
+                    image={recipe.image}
+                    title={recipe.title}
+                    description={recipe.description}
+                    category={recipe.category[0]}
+                    likes={recipe.likes}
+                    bookmarks={recipe.bookmarks}
+                />
             ))}
         </SimpleGrid>
 

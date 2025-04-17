@@ -22,8 +22,16 @@ export const RecipeHorizontalGridSection: React.FC<RecipeHorizontalGridSectionPr
             columnGap={{ base: 4, '2xl': 6 }}
             rowGap={4}
         >
-            {recipes.map((recipe, index) => (
-                <RecipeCardHorizontal key={index} {...recipe} />
+            {recipes.map((recipe) => (
+                <RecipeCardHorizontal
+                    key={recipe.id}
+                    title={recipe.title}
+                    image={recipe.image}
+                    bookmarks={recipe.bookmarks}
+                    likes={recipe.likes}
+                    category={recipe.category[0]}
+                    description={recipe.description}
+                />
             ))}
         </Grid>
 

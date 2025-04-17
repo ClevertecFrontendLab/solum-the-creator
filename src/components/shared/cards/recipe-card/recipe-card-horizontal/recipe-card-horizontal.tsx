@@ -26,7 +26,7 @@ type RecipeCardHorizontalProps = {
     description?: string;
     category?: CategoryKey;
     likes?: number;
-    saved?: number;
+    bookmarks?: number;
     recommendedBy?: {
         avatarUrl: string;
         fullName: string;
@@ -40,7 +40,7 @@ export const RecipeCardHorizontal: React.FC<RecipeCardHorizontalProps> = ({
     category,
     recommendedBy,
     likes = 0,
-    saved = 0,
+    bookmarks = 0,
 }) => (
     <Card w='100%' borderRadius='lg' variant='outline' minH='8rem'>
         <Flex direction='row' height='100%'>
@@ -55,7 +55,7 @@ export const RecipeCardHorizontal: React.FC<RecipeCardHorizontalProps> = ({
                 pb={{ base: 1, lg: 6 }}
             >
                 <CardBody as={VStack} align='stretch' spacing={{ base: 0, lg: 6 }} px={0} py={0}>
-                    <TopRow category={category} likes={likes} saved={saved} />
+                    <TopRow category={category} likes={likes} bookmarks={bookmarks} />
 
                     <VStack spacing={2} align='stretch'>
                         <Heading
@@ -63,6 +63,7 @@ export const RecipeCardHorizontal: React.FC<RecipeCardHorizontalProps> = ({
                             fontSize={{ base: 'md', lg: 'xl' }}
                             fontWeight='500'
                             noOfLines={{ base: 2, lg: 1 }}
+                            wordBreak='break-all'
                         >
                             {title}
                         </Heading>

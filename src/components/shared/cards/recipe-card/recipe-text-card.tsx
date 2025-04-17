@@ -8,18 +8,18 @@ import { CategoryKey } from '~/constants/ui/category-icons';
 
 type RecipeTextCardProps = {
     title: string;
-    recipeText: string;
+    description: string;
     category: CategoryKey;
     likes?: number;
-    saved?: number;
+    bookmarks?: number;
 };
 
 export const RecipeTextCard: React.FC<RecipeTextCardProps> = ({
     title,
-    recipeText,
+    description,
     category,
     likes = 0,
-    saved = 0,
+    bookmarks = 0,
 }) => (
     <Card
         borderRadius='lg'
@@ -45,7 +45,7 @@ export const RecipeTextCard: React.FC<RecipeTextCardProps> = ({
                     {title}
                 </Heading>
                 <Text fontSize='sm' noOfLines={3}>
-                    {recipeText}
+                    {description}
                 </Text>
             </VStack>
         </CardBody>
@@ -55,7 +55,7 @@ export const RecipeTextCard: React.FC<RecipeTextCardProps> = ({
                 <CategoryBadge category={category} bgColor='lime.50' />
 
                 <HStack spacing={2}>
-                    <StatButton icon={SavedIcon} count={saved} />
+                    <StatButton icon={SavedIcon} count={bookmarks} />
                     <StatButton icon={EmojiHeartIcon} count={likes} />
                 </HStack>
             </Flex>

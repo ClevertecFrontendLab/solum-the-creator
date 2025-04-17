@@ -15,7 +15,7 @@ type HorizontalSliderProps<T> = {
     renderItem: (item: T) => React.ReactNode;
 };
 
-export const HorizontalSlider = <T extends { id: number }>({
+export const HorizontalSlider = <T extends { id: string }>({
     items,
     renderItem,
 }: HorizontalSliderProps<T>) => {
@@ -37,6 +37,12 @@ export const HorizontalSlider = <T extends { id: number }>({
                 }}
                 modules={[Navigation]}
                 breakpoints={sliderBreakpoints}
+                onBeforeInit={(swiper) => {
+                    if (swiper.params.navigation && typeof swiper.params.navigation !== 'boolean') {
+                        swiper.params.navigation.prevEl = prevRef.current;
+                        swiper.params.navigation.nextEl = nextRef.current;
+                    }
+                }}
             >
                 {items.map((item) => (
                     <SwiperSlide key={item.id} style={{ width: 'auto' }}>

@@ -61,28 +61,28 @@ export const RelevantKitchenSection: React.FC<RelevantKitchenSectionProps> = ({
         >
             <GridItem colSpan={1} minW={0}>
                 <RecipeTextCard
-                    category={recipesTextCard1.category}
+                    category={recipesTextCard1.category[0]}
                     title={recipesTextCard1.title}
-                    recipeText={recipesTextCard1.recipeText!}
+                    description={recipesTextCard1.description}
                     likes={recipesTextCard1.likes}
-                    saved={recipesTextCard1.saved}
+                    bookmarks={recipesTextCard1.bookmarks}
                 />
             </GridItem>
 
             <GridItem colSpan={1} minW={0}>
                 <RecipeTextCard
-                    category={recipesTextCard2.category}
+                    category={recipesTextCard2.category[0]}
                     title={recipesTextCard2.title}
-                    recipeText={recipesTextCard2.recipeText!}
+                    description={recipesTextCard2.description}
                     likes={recipesTextCard2.likes}
-                    saved={recipesTextCard2.saved}
+                    bookmarks={recipesTextCard2.bookmarks}
                 />
             </GridItem>
 
             <GridItem colSpan={{ base: 1, sm: 1, md: 2, xl: 1, '2xl': 2 }} minW={0} height='100%'>
                 <Grid gap={3} w='100%' height='100%'>
                     {recipesSimpleCards.map(({ title, category }, index) => (
-                        <SimpleRecipeCard key={index} title={title} category={category} />
+                        <SimpleRecipeCard key={index} title={title} category={category[0]} />
                     ))}
                 </Grid>
             </GridItem>
