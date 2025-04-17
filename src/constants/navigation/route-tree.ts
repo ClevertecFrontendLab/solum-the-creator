@@ -58,7 +58,7 @@ export const routeTree: RouteNode[] = [
         ],
     },
     {
-        path: 'second-dishes',
+        path: 'second-dish',
         name: 'Вторые блюда',
         type: 'category',
         children: [

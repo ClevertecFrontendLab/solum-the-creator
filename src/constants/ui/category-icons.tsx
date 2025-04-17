@@ -18,7 +18,7 @@ export const categoryIcons = {
     drinks: DrinksIcon,
     snacks: SnacksIcon,
     'first-dishes': FirstIcon,
-    'second-dishes': SecondIcon,
+    'second-dish': SecondIcon,
     grill: GrillIcon,
     'desserts-and-baking': DesertsIcon,
     preserves: BiletsIcon,
