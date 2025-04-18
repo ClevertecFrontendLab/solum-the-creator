@@ -424,4 +424,43 @@ export const recipes: Recipe[] = [
             },
         ],
     },
+    {
+        id: '9',
+        title: 'Картофельные рулетики с грибами',
+        description:
+            'Рекомендую всем приготовить постное блюдо из картофеля и грибов. Готовится это блюдо без яиц, без мяса и без сыра, из самых простых ингредиентов, а получается очень вкусно и сытно. Постный рецепт картофельных рулетиков с грибами, в томатном соусе, - на обед, ужин и даже на праздничный стол!',
+        category: ['vegan', 'snacks'],
+        subcategory: ['snacks', 'warm-snacks'],
+        image: recipe2Img,
+        bookmarks: 85,
+        likes: 1152,
+        date: '2024-02-20T00:00:00Z',
+        time: '30 минут',
+        portions: 2,
+        nutritionValue: { calories: 180, proteins: 4, fats: 6, carbohydrates: 28 },
+        ingredients: [
+            { title: 'картошка', count: '3', measureUnit: 'шт.' },
+            { title: 'грибы', count: '200', measureUnit: 'г' },
+            { title: 'мука', count: '100', measureUnit: 'г' },
+            { title: 'специи', count: '0', measureUnit: 'по вкусу' },
+        ],
+        steps: [
+            {
+                stepNumber: 1,
+                description: 'Отварить картошку и сделать пюре.',
+                image: recipe2Step1,
+            },
+            {
+                stepNumber: 2,
+                description: 'Обжарить грибы до готовности.',
+                image: recipe2Step2,
+            },
+            {
+                stepNumber: 3,
+                description: 'Сформировать рулетики и обжарить.',
+                image: recipe2Step3,
+            },
+        ],
+        side: 'potatoes',
+    },
 ];

@@ -17,6 +17,7 @@ export const ImageSection: React.FC<ImageSectionProps> = ({ image, category, rec
         maxW={{ base: '10rem', lg: '21.625rem' }}
         minW={{ base: '9.875rem', lg: '14.375rem' }}
         maxH={{ base: '8rem', lg: '15.25rem' }}
+        h='100%'
     >
         <Image src={image} alt='Recipe image' w='100%' h='100%' objectFit='cover' />
 

@@ -1,9 +1,7 @@
-import { Card, CardBody, CardFooter, Heading, Hide, HStack, Text, VStack } from '@chakra-ui/react';
+import { Card, CardBody, CardFooter, Heading, Hide, Text, VStack } from '@chakra-ui/react';
 
-import SavedIcon from '~/assets/icons/bookmarkHeart-icon.svg?react';
-import EmojiHeartIcon from '~/assets/icons/emoji-heart-icon.svg?react';
-import { StatButton } from '~/components/ui/buttons/shared/stat-button';
 import { CategoryBadge } from '~/components/widgets/category-badge/category-badge';
+import { RateButtons } from '~/components/widgets/rate-buttons/rate-buttons';
 import { CategoryKey } from '~/constants/ui/category-icons';
 
 import { ImageSection } from './image-section';
@@ -74,10 +72,7 @@ export const RecipeCardVertical: React.FC<RecipeCardVerticalProps> = ({
                 </Hide>
             )}
 
-            <HStack spacing={2}>
-                <StatButton icon={SavedIcon} count={bookmarks} />
-                <StatButton icon={EmojiHeartIcon} count={likes} />
-            </HStack>
+            <RateButtons bookmarks={bookmarks} likes={likes} />
         </CardFooter>
     </Card>
 );

@@ -24,7 +24,7 @@ export const JuiciestSection = () => (
             spacing={{ base: 3, sm: 4, '2xl': 6 }}
             columns={{ base: 1, sm: 2, md: 1, '2xl': 2 }}
         >
-            {recipes.slice(0, 4).map((recipe) => (
+            {recipes.slice(5, 9).map((recipe) => (
                 <RecipeCardHorizontal
                     key={recipe.id}
                     image={recipe.image}

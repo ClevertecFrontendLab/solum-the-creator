@@ -42,8 +42,8 @@ export const RecipeCardHorizontal: React.FC<RecipeCardHorizontalProps> = ({
     likes = 0,
     bookmarks = 0,
 }) => (
-    <Card w='100%' borderRadius='lg' variant='outline' minH='8rem'>
-        <Flex direction='row' height='100%'>
+    <Card w='100%' borderRadius='lg' variant='outline' minH={{ base: '8rem', lg: '15.25rem' }}>
+        <Flex direction='row' h='100%' align='stretch'>
             <ImageSection image={image} category={category} recommendedBy={recommendedBy} />
 
             <Flex
@@ -57,7 +57,7 @@ export const RecipeCardHorizontal: React.FC<RecipeCardHorizontalProps> = ({
                 <CardBody as={VStack} align='stretch' spacing={{ base: 0, lg: 6 }} px={0} py={0}>
                     <TopRow category={category} likes={likes} bookmarks={bookmarks} />
 
-                    <VStack spacing={2} align='stretch'>
+                    <VStack spacing={2} align='stretch' maxH={{ base: 'none', lg: '6.25rem' }}>
                         <Heading
                             as='h3'
                             fontSize={{ base: 'md', lg: 'xl' }}

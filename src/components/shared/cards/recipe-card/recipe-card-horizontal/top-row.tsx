@@ -1,9 +1,7 @@
-import { Flex, Hide, HStack } from '@chakra-ui/react';
+import { Flex, Hide } from '@chakra-ui/react';
 
-import SavedIcon from '~/assets/icons/bookmarkHeart-icon.svg?react';
-import EmojiHeartIcon from '~/assets/icons/emoji-heart-icon.svg?react';
-import { StatButton } from '~/components/ui/buttons/shared/stat-button';
 import { CategoryBadge } from '~/components/widgets/category-badge/category-badge';
+import { RateButtons } from '~/components/widgets/rate-buttons/rate-buttons';
 import { CategoryKey } from '~/constants/ui/category-icons';
 
 type TopRowProps = {
@@ -20,9 +18,6 @@ export const TopRow: React.FC<TopRowProps> = ({ category, likes, bookmarks }) =>
             </Hide>
         )}
 
-        <HStack spacing={2}>
-            <StatButton icon={SavedIcon} count={bookmarks} />
-            <StatButton icon={EmojiHeartIcon} count={likes} />
-        </HStack>
+        <RateButtons bookmarks={bookmarks} likes={likes} />
     </Flex>
 );
