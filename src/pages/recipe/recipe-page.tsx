@@ -1,12 +1,13 @@
 import { VStack } from '@chakra-ui/react';
 
 import { HeaderSection } from '~/components/features/recipe/header-section/header-section';
+import { NutritionSection } from '~/components/features/recipe/nutrition-section/nutrition-section';
 import { recipes } from '~/constants/data/recipes';
 
 const mockRecipe = recipes[2];
 
 export const RecipePage = () => (
-    <VStack>
+    <VStack spacing={{ base: 6, md: 10 }}>
         <HeaderSection
             title={mockRecipe.title}
             image={mockRecipe.image}
@@ -16,5 +17,7 @@ export const RecipePage = () => (
             bookmarks={mockRecipe.bookmarks}
             likes={mockRecipe.likes}
         />
+
+        <NutritionSection {...mockRecipe.nutritionValue} />
     </VStack>
 );
