@@ -6,6 +6,7 @@ export type BlogAuthor = {
     fullName: string;
     userName: string;
     description: string;
+    followers?: number;
 };
 
 export const authors: BlogAuthor[] = [
@@ -16,6 +17,7 @@ export const authors: BlogAuthor[] = [
         userName: 'elenapovar',
         description:
             'Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.',
+        followers: 78,
     },
     {
         id: 2,

@@ -17,4 +17,13 @@ const cardVariant = definePartsStyle({
     },
 });
 
-export const Card = defineMultiStyleConfig({ variants: { outline: cardVariant } });
+const brandCardVariant = definePartsStyle({
+    container: {
+        bgColor: 'lime.300',
+        borderColor: 'blackAlpha.200',
+    },
+});
+
+export const Card = defineMultiStyleConfig({
+    variants: { outline: cardVariant, brand: brandCardVariant },
+});

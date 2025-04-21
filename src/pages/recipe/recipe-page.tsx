@@ -4,9 +4,12 @@ import { HeaderSection } from '~/components/features/recipe/header-section/heade
 import { NutritionSection } from '~/components/features/recipe/nutrition-section/nutrition-section';
 import { RecipeStepsSection } from '~/components/features/recipe/recipe-steps-section/recipe-steps-section';
 import { RecipeTableSection } from '~/components/features/recipe/recipe-table-section/recipe-table-section';
+import { RecipeAuthorCard } from '~/components/shared/cards/recipe-author-card/recipe-author-card';
+import { authors } from '~/constants/data/authors';
 import { recipes } from '~/constants/data/recipes';
 
 const mockRecipe = recipes[1];
+const mockAuthor = authors[0];
 
 export const RecipePage = () => (
     <VStack spacing={{ base: 6, md: 10 }}>
@@ -32,6 +35,13 @@ export const RecipePage = () => (
                 portions={mockRecipe.portions}
             />
             <RecipeStepsSection steps={mockRecipe.steps} />
+
+            <RecipeAuthorCard
+                fullName={mockAuthor.fullName}
+                userName={mockAuthor.userName}
+                avatarUrl={mockAuthor.avatarUrl}
+                followers={mockAuthor.followers}
+            />
         </VStack>
     </VStack>
 );
