@@ -27,10 +27,12 @@ export const JuiciestSection = () => (
             {recipes.slice(5, 9).map((recipe) => (
                 <RecipeCardHorizontal
                     key={recipe.id}
+                    id={recipe.id}
                     image={recipe.image}
                     title={recipe.title}
                     description={recipe.description}
-                    category={recipe.category[0]}
+                    category={recipe.category}
+                    subcategory={recipe.subcategory}
                     likes={recipe.likes}
                     bookmarks={recipe.bookmarks}
                 />

@@ -29,3 +29,18 @@ export const getActiveSubcategoryIndex = (
         const subPath = getSubcategoryPath(category.path, child.path);
         return subPath === pathname;
     });
+
+export const findMatchingSubcategory = (
+    categoryPath: CategoryKey,
+    recipeSubcategories: string[],
+) => {
+    const categoryNode = routeTree.find(
+        (node) => node.type === 'category' && node.path === categoryPath,
+    );
+
+    if (!categoryNode?.children) {
+        return undefined;
+    }
+
+    return categoryNode.children.find((child) => recipeSubcategories.includes(child.path))?.path;
+};

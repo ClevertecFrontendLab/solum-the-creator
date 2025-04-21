@@ -26,7 +26,8 @@ type RecipeCardHorizontalProps = {
     image: string;
     title: string;
     description?: string;
-    category?: CategoryKey;
+    category: CategoryKey[];
+    subcategory: string[];
     likes?: number;
     bookmarks?: number;
     recommendedBy?: {
@@ -41,16 +42,21 @@ export const RecipeCardHorizontal: React.FC<RecipeCardHorizontalProps> = ({
     image,
     description,
     category,
+    subcategory,
     recommendedBy,
     likes = 0,
     bookmarks = 0,
 }) => {
-    const handleCookClick = useNavigationToRecipe(id);
+    const handleCookClick = useNavigationToRecipe({
+        recipeId: id,
+        category: category[0],
+        subcategories: subcategory,
+    });
 
     return (
         <Card w='100%' borderRadius='lg' variant='outline' minH={{ base: '8rem', lg: '15.25rem' }}>
             <Flex direction='row' h='100%' align='stretch'>
-                <ImageSection image={image} category={category} recommendedBy={recommendedBy} />
+                <ImageSection image={image} category={category[0]} recommendedBy={recommendedBy} />
 
                 <Flex
                     direction='column'
@@ -67,7 +73,7 @@ export const RecipeCardHorizontal: React.FC<RecipeCardHorizontalProps> = ({
                         px={0}
                         py={0}
                     >
-                        <TopRow category={category} likes={likes} bookmarks={bookmarks} />
+                        <TopRow category={category[0]} likes={likes} bookmarks={bookmarks} />
 
                         <VStack spacing={2} align='stretch' maxH={{ base: 'none', lg: '6.25rem' }}>
                             <Heading

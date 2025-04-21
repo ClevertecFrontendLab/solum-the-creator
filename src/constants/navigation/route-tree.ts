@@ -29,7 +29,7 @@ export const routeTree: RouteNode[] = [
             { path: 'meat', name: 'Мясные салаты' },
             { path: 'fish', name: 'Рыбные салаты' },
             { path: 'vegetable', name: 'Овощные салаты' },
-            { path: 'warm', name: 'Теплые салаты' },
+            { path: 'warm-salads', name: 'Теплые салаты' },
         ],
     },
     {
@@ -65,7 +65,7 @@ export const routeTree: RouteNode[] = [
             { path: 'meat', name: 'Мясные' },
             { path: 'fish', name: 'Рыбные' },
             { path: 'vegetable', name: 'Овощные' },
-            { path: 'poultry', name: 'Из птицы' },
+            { path: 'poultry-dish', name: 'Из птицы' },
             { path: 'mushrooms', name: 'Из грибов' },
             { path: 'offal', name: 'Из субпродуктов' },
             { path: 'steamed', name: 'На пару' },
@@ -115,8 +115,8 @@ export const routeTree: RouteNode[] = [
         type: 'category',
         children: [
             { path: 'snacks', name: 'Закуски' },
-            { path: 'first-dishes', name: 'Первые блюда' },
-            { path: 'second-dishes', name: 'Вторые блюда' },
+            { path: 'first-dish', name: 'Первые блюда' },
+            { path: 'second-dish', name: 'Вторые блюда' },
             { path: 'side-dishes', name: 'Гарниры' },
             { path: 'desserts', name: 'Десерты' },
             { path: 'baking', name: 'Выпечка' },

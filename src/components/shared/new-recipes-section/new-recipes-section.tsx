@@ -17,12 +17,15 @@ export const NewRecipesSection = () => (
                 renderItem={(recipe) => (
                     <RecipeCardVertical
                         key={recipe.id}
+                        id={recipe.id}
                         title={recipe.title}
                         description={recipe.description}
                         image={recipe.image}
-                        category={recipe.category[0]}
+                        category={recipe.category}
+                        subcategory={recipe.subcategory}
                         likes={recipe.likes}
                         bookmarks={recipe.bookmarks}
+                        forceFromRecipe={true}
                     />
                 )}
             />

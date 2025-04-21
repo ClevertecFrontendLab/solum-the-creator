@@ -30,7 +30,8 @@ export const RecipeHorizontalGridSection: React.FC<RecipeHorizontalGridSectionPr
                     image={recipe.image}
                     bookmarks={recipe.bookmarks}
                     likes={recipe.likes}
-                    category={recipe.category[0]}
+                    category={recipe.category}
+                    subcategory={recipe.subcategory}
                     description={recipe.description}
                 />
             ))}
