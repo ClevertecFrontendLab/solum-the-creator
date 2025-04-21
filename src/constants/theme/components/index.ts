@@ -7,6 +7,7 @@ import { Heading } from './heading';
 import { Input } from './input';
 import { Select } from './select';
 import { Switch } from './switch';
+import { Table } from './table';
 import { Tabs } from './tabs';
 
 export const components = {
@@ -20,4 +21,5 @@ export const components = {
     Switch,
     Tabs,
     Accordion,
+    Table,
 };
