@@ -2,8 +2,8 @@ import { Box, Flex } from '@chakra-ui/react';
 
 import { CulinaryBlogsSection } from '~/components/features/home/culinary-blogs-section';
 import { JuiciestSection } from '~/components/features/home/juiciest-section';
-import { NewRecipesSection } from '~/components/features/home/new-recipes-section';
 import { HeroSection } from '~/components/shared/hero-section/hero-section';
+import { NewRecipesSection } from '~/components/shared/new-recipes-section/new-recipes-section';
 import { RelevantKitchenSection } from '~/components/widgets/relevant-kitchen-section/relevant-kitchen-section';
 import { recipes } from '~/constants/data/recipes';
 

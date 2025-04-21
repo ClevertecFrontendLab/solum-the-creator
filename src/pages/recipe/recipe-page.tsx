@@ -5,6 +5,7 @@ import { NutritionSection } from '~/components/features/recipe/nutrition-section
 import { RecipeStepsSection } from '~/components/features/recipe/recipe-steps-section/recipe-steps-section';
 import { RecipeTableSection } from '~/components/features/recipe/recipe-table-section/recipe-table-section';
 import { RecipeAuthorCard } from '~/components/shared/cards/recipe-author-card/recipe-author-card';
+import { NewRecipesSection } from '~/components/shared/new-recipes-section/new-recipes-section';
 import { authors } from '~/constants/data/authors';
 import { recipes } from '~/constants/data/recipes';
 
@@ -43,5 +44,7 @@ export const RecipePage = () => (
                 followers={mockAuthor.followers}
             />
         </VStack>
+
+        <NewRecipesSection />
     </VStack>
 );
