@@ -1,4 +1,5 @@
 import { VStack } from '@chakra-ui/react';
+import { useParams } from 'react-router';
 
 import { HeaderSection } from '~/components/features/recipe/header-section/header-section';
 import { NutritionSection } from '~/components/features/recipe/nutrition-section/nutrition-section';
@@ -9,42 +10,48 @@ import { NewRecipesSection } from '~/components/shared/new-recipes-section/new-r
 import { authors } from '~/constants/data/authors';
 import { recipes } from '~/constants/data/recipes';
 
-const mockRecipe = recipes[1];
 const mockAuthor = authors[0];
 
-export const RecipePage = () => (
-    <VStack spacing={{ base: 6, md: 10 }}>
-        <HeaderSection
-            title={mockRecipe.title}
-            image={mockRecipe.image}
-            category={mockRecipe.category}
-            description={mockRecipe.description}
-            time={mockRecipe.time}
-            bookmarks={mockRecipe.bookmarks}
-            likes={mockRecipe.likes}
-        />
+export const RecipePage = () => {
+    const { recipeId } = useParams<{ recipeId: string }>();
 
-        <NutritionSection {...mockRecipe.nutritionValue} />
+    const recipe = recipes.find((r) => r.id === recipeId);
 
-        <VStack
-            width='100%'
-            maxW={{ base: '37.75rem', md: '36.125rem', '2xl': '41.75rem' }}
-            spacing={{ base: 6, md: 10 }}
-        >
-            <RecipeTableSection
-                ingredients={mockRecipe.ingredients}
-                portions={mockRecipe.portions}
+    if (!recipe) {
+        return null;
+    }
+
+    return (
+        <VStack spacing={{ base: 6, md: 10 }}>
+            <HeaderSection
+                title={recipe.title}
+                image={recipe.image}
+                category={recipe.category}
+                description={recipe.description}
+                time={recipe.time}
+                bookmarks={recipe.bookmarks}
+                likes={recipe.likes}
             />
-            <RecipeStepsSection steps={mockRecipe.steps} />
 
-            <RecipeAuthorCard
-                fullName={mockAuthor.fullName}
-                userName={mockAuthor.userName}
-                avatarUrl={mockAuthor.avatarUrl}
-                followers={mockAuthor.followers}
-            />
+            <NutritionSection {...recipe.nutritionValue} />
+
+            <VStack
+                width='100%'
+                maxW={{ base: '37.75rem', md: '36.125rem', '2xl': '41.75rem' }}
+                spacing={{ base: 6, md: 10 }}
+            >
+                <RecipeTableSection ingredients={recipe.ingredients} portions={recipe.portions} />
+                <RecipeStepsSection steps={recipe.steps} />
+
+                <RecipeAuthorCard
+                    fullName={mockAuthor.fullName}
+                    userName={mockAuthor.userName}
+                    avatarUrl={mockAuthor.avatarUrl}
+                    followers={mockAuthor.followers}
+                />
+            </VStack>
+
+            <NewRecipesSection />
         </VStack>
-
-        <NewRecipesSection />
-    </VStack>
-);
+    );
+};

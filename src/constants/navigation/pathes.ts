@@ -3,7 +3,7 @@ export const pathes = {
     juiciest: '/juiciest',
     categories: '/:category',
     subcategories: '/:category/:subcategory',
-    recipes: '/:category/:subcategory/:recipe',
+    recipes: '/:category/:subcategory/:recipeId',
 };
 
 export const VEGAN_CATEGORY_PATH = 'vegan';

@@ -25,6 +25,7 @@ export const RecipeHorizontalGridSection: React.FC<RecipeHorizontalGridSectionPr
             {recipes.map((recipe) => (
                 <RecipeCardHorizontal
                     key={recipe.id}
+                    id={recipe.id}
                     title={recipe.title}
                     image={recipe.image}
                     bookmarks={recipe.bookmarks}
