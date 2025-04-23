@@ -2,11 +2,15 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import { apiSlice } from '~/query/create-api';
 
+import allergenFilterReducer from './allergen-filter/slice';
 import appReducer, { appSlice } from './app-slice';
+
 const isProduction = false;
+
 const rootReducer = combineReducers({
     [appSlice.name]: appReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
+    allergenFilter: allergenFilterReducer,
 });
 
 export type ApplicationState = ReturnType<typeof rootReducer>;

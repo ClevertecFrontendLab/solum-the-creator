@@ -1,18 +1,27 @@
 import { Box, HStack } from '@chakra-ui/react';
-import { useState } from 'react';
 
 import { AllergenSelect } from '~/components/ui/selects/allergen-select/allergen-select';
 import { Option } from '~/components/ui/selects/multi-select-menu/multi-select-menu';
 import { SwitchWithLabel } from '~/components/ui/swith-with-label/swith-with-label';
+import { selectExcludeMode, selectSelectedAllergens } from '~/store/allergen-filter/selectors';
+import { resetFilters, setExcludeMode, setSelectedAllergens } from '~/store/allergen-filter/slice';
+import { useAppDispatch, useAppSelector } from '~/store/hooks';
 
 export const HeroFilters: React.FC = () => {
-    const [excludeAllergens, setExcludeAllergens] = useState(false);
-    const [selectedAllergens, setSelectedAllergens] = useState<Option[]>([]);
+    const dispatch = useAppDispatch();
+    const excludeAllergens = useAppSelector(selectExcludeMode);
+    const selectedAllergens = useAppSelector(selectSelectedAllergens);
 
     const handleExcludeAllergensChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const checked = e.target.checked;
-        setExcludeAllergens(checked);
-        if (!checked) setSelectedAllergens([]);
+        dispatch(setExcludeMode(checked));
+        if (!checked) {
+            dispatch(resetFilters());
+        }
+    };
+
+    const handleAllergensChange = (allergens: Option[]) => {
+        dispatch(setSelectedAllergens(allergens));
     };
 
     return (
@@ -27,7 +36,7 @@ export const HeroFilters: React.FC = () => {
             <Box maxW='14.5rem' w='100%'>
                 <AllergenSelect
                     selectedAllergens={selectedAllergens}
-                    onChange={setSelectedAllergens}
+                    onChange={handleAllergensChange}
                     isDisabled={!excludeAllergens}
                 />
             </Box>
