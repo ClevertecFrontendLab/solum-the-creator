@@ -25,6 +25,7 @@
         "@emotion/styled": "11.14.0",
         "@fontsource/inter": "^5.2.5",
         "@reduxjs/toolkit": "2.5.1",
+        "chakra-react-select": "5.0.5",
         "framer-motion": "12.0.0",
         "lefthook": "1.10.10",
         "react": "19.0.0",

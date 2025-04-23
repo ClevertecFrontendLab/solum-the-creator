@@ -25,5 +25,15 @@ export const Button: ComponentStyleConfig = {
                 color: 'blackAlpha.400',
             },
         },
+        'menu-select': {
+            backgroundColor: 'transparent',
+            border: '1px solid',
+            borderColor: 'blackAlpha.200',
+            fontWeight: '400',
+            color: 'blackAlpha.700',
+            _active: {
+                borderColor: 'lime.300',
+            },
+        },
     },
 };
