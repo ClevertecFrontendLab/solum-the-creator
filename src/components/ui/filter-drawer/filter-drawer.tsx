@@ -17,6 +17,17 @@ import { useState } from 'react';
 import CloseIcon from '~/assets/icons/full-close-icon.svg?react';
 import { CategorySelect } from '~/components/ui/selects/category-select/category-select';
 import { meatTypes, sideTypes } from '~/constants/data/recipes';
+import { selectIsAllergenFilterActive } from '~/store/allergen-filter/selectors';
+import { resetFilters } from '~/store/allergen-filter/slice';
+import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import {
+    setAllergens,
+    setAuthors,
+    setCategories,
+    setExcludeAllergens,
+    setMeatTypes,
+    setSideTypes,
+} from '~/store/recipe-filter/slice';
 
 import { AllergenSelect } from '../selects/allergen-select/allergen-select';
 import { AuthorSelect } from '../selects/author-select/author-select';
@@ -29,13 +40,17 @@ type FilterDrawerProps = {
 };
 
 export const FilterDrawer: React.FC<FilterDrawerProps> = ({ isOpen, onClose }) => {
+    const dispatch = useAppDispatch();
+
+    const isAllergensFilterActive = useAppSelector(selectIsAllergenFilterActive);
+
     const [selectedCategories, setSelectedCategories] = useState<Option[]>([]);
     const [selectedAuthors, setSelectedAuthors] = useState<Option[]>([]);
 
     const [selectedMeatTypes, setSelectedMeatTypes] = useState<Option[]>([]);
     const [selectedSideTypes, setSelectedSideTypes] = useState<Option[]>([]);
 
-    const [excludeAllergens, setExcludeAllergens] = useState(false);
+    const [isExcludeAllergens, setIsExcludeAllergens] = useState(false);
     const [selectedAllergens, setSelectedAllergens] = useState<Option[]>([]);
 
     const handleOnChangeMeatType = (ingridient: Option) => {
@@ -58,7 +73,34 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({ isOpen, onClose }) =
 
     const handleExcludeAllergensChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const checked = e.target.checked;
-        setExcludeAllergens(checked);
+        setIsExcludeAllergens(checked);
+    };
+
+    const clearAllFilters = () => {
+        setSelectedCategories([]);
+        setSelectedAuthors([]);
+        setSelectedMeatTypes([]);
+        setSelectedSideTypes([]);
+        setIsExcludeAllergens(false);
+        setSelectedAllergens([]);
+
+        dispatch(resetFilters());
+    };
+
+    const handleSubmitFilters = () => {
+        if (isAllergensFilterActive) {
+            dispatch(resetFilters());
+        }
+
+        dispatch(setCategories(selectedCategories));
+        dispatch(setAuthors(selectedAuthors));
+        dispatch(setMeatTypes(selectedMeatTypes));
+        dispatch(setSideTypes(selectedSideTypes));
+        dispatch(setExcludeAllergens(isExcludeAllergens));
+        dispatch(setAllergens(selectedAllergens));
+
+        clearAllFilters();
+        onClose();
     };
 
     return (
@@ -114,14 +156,14 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({ isOpen, onClose }) =
                         <SwitchWithLabel
                             id='exclude-allergens'
                             label='Исключить аллергены'
-                            isChecked={excludeAllergens}
+                            isChecked={isExcludeAllergens}
                             onChange={handleExcludeAllergensChange}
                         />
 
                         <AllergenSelect
                             selectedAllergens={selectedAllergens}
                             onChange={setSelectedAllergens}
-                            isDisabled={!excludeAllergens}
+                            isDisabled={!isExcludeAllergens}
                         />
                     </VStack>
                 </DrawerBody>
@@ -131,10 +173,15 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({ isOpen, onClose }) =
                             variant='outline'
                             colorScheme='black'
                             size={{ base: 'sm', md: 'lg' }}
+                            onClick={clearAllFilters}
                         >
                             Очистить фильтр
                         </Button>
-                        <Button variant='black' size={{ base: 'sm', md: 'lg' }}>
+                        <Button
+                            variant='black'
+                            size={{ base: 'sm', md: 'lg' }}
+                            onClick={handleSubmitFilters}
+                        >
                             Найти рецепт
                         </Button>
                     </HStack>

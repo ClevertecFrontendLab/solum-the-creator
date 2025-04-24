@@ -10,12 +10,19 @@ import { RelevantKitchenSection } from '~/components/widgets/relevant-kitchen-se
 import { recipes } from '~/constants/data/recipes';
 import { fadeIn } from '~/constants/motions/motion-presets';
 import { useAllergenFilteredRecipes } from '~/hooks/use-allergen-filtered-recipes';
+import { useFilteredRecipes } from '~/hooks/use-filtered-recipes';
 import { selectIsAllergenFilterActive } from '~/store/allergen-filter/selectors';
 import { useAppSelector } from '~/store/hooks';
+import { selectIsDrawerFilterApplied } from '~/store/recipe-filter/selectors';
 
 export const HomePage = () => {
-    const isFilterActive = useAppSelector(selectIsAllergenFilterActive);
-    const filteredRecipes = useAllergenFilteredRecipes(recipes);
+    const isAllergenFilterActive = useAppSelector(selectIsAllergenFilterActive);
+    const filteredAllergenRecipes = useAllergenFilteredRecipes(recipes);
+
+    const isDrawerFilterApplied = useAppSelector(selectIsDrawerFilterApplied);
+    const filteredRecipes = useFilteredRecipes(recipes);
+
+    const showFilteredRecipes = isDrawerFilterApplied ? filteredRecipes : filteredAllergenRecipes;
 
     return (
         <Flex direction='column' align='center'>
@@ -24,9 +31,9 @@ export const HomePage = () => {
             </Box>
 
             <AnimatePresence mode='wait'>
-                {isFilterActive ? (
+                {isAllergenFilterActive || isDrawerFilterApplied ? (
                     <motion.div key='filtered' {...fadeIn}>
-                        <RecipeHorizontalGridSection recipes={filteredRecipes} />
+                        <RecipeHorizontalGridSection recipes={showFilteredRecipes} />
                     </motion.div>
                 ) : (
                     <>

@@ -1,7 +1,7 @@
 import avatarImg from '~/assets/images/avatar.jpg';
 
 export type BlogAuthor = {
-    id: number;
+    id: string;
     avatarUrl: string;
     fullName: string;
     userName: string;
@@ -11,7 +11,7 @@ export type BlogAuthor = {
 
 export const authors: BlogAuthor[] = [
     {
-        id: 1,
+        id: '1',
         avatarUrl: avatarImg,
         fullName: 'Елена Высоцкая',
         userName: 'elenapovar',
@@ -20,7 +20,7 @@ export const authors: BlogAuthor[] = [
         followers: 78,
     },
     {
-        id: 2,
+        id: '2',
         avatarUrl: avatarImg,
         fullName: 'Alex Cook',
         userName: 'funtasticooking',
@@ -28,7 +28,7 @@ export const authors: BlogAuthor[] = [
             'Как раз после праздников, когда мясные продукты еще остались, но никто их уже не хочет, время варить солянку.',
     },
     {
-        id: 3,
+        id: '3',
         avatarUrl: avatarImg,
         fullName: 'Екатерина Константинопольская',
         userName: 'bake_and_pie',

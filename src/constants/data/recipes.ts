@@ -30,7 +30,8 @@ import recipe8Step2 from '~/assets/recipes/recipe-8/step-2.jpg';
 import recipe9Img from '~/assets/recipes/recipe-9/recipe-9.jpg';
 import recipe9Step1 from '~/assets/recipes/recipe-9/step-1.jpg';
 import recipe9Step2 from '~/assets/recipes/recipe-9/step-2.jpg';
-import { CategoryKey } from '~/constants/ui/category-icons';
+
+import { CategoryValue } from './category';
 
 export type Subcategory =
     | 'snacks'
@@ -68,7 +69,7 @@ export type Recipe = {
     title: string;
     description: string;
     image: string;
-    category: CategoryKey[];
+    category: CategoryValue[];
     subcategory: Subcategory[];
     bookmarks?: number;
     likes?: number;
@@ -78,6 +79,7 @@ export type Recipe = {
     nutritionValue: NutritionValue;
     ingredients: Ingredient[];
     steps: RecipeStep[];
+    authorId: string;
     side?: string;
     meat?: string;
 };
@@ -185,6 +187,7 @@ export const recipes: Recipe[] = [
                 image: recipe1Step4,
             },
         ],
+        authorId: '1',
         meat: '',
         side: 'potatoes',
     },
@@ -225,6 +228,7 @@ export const recipes: Recipe[] = [
                 image: recipe2Step3,
             },
         ],
+        authorId: '1',
         side: 'potatoes',
     },
     {
@@ -263,6 +267,7 @@ export const recipes: Recipe[] = [
                 description: 'Запекать 30 минут.',
             },
         ],
+        authorId: '2',
     },
     {
         id: '3',
@@ -300,6 +305,7 @@ export const recipes: Recipe[] = [
                 description: 'Подавать с соусом.',
             },
         ],
+        authorId: '3',
     },
     {
         id: '4',
@@ -337,6 +343,7 @@ export const recipes: Recipe[] = [
                 image: recipe5Step3,
             },
         ],
+        authorId: '2',
         side: 'potatoes',
     },
     {
@@ -375,6 +382,7 @@ export const recipes: Recipe[] = [
                 image: recipe6Step3,
             },
         ],
+        authorId: '1',
     },
     {
         id: '6',
@@ -413,6 +421,7 @@ export const recipes: Recipe[] = [
                 image: recipe7Step3,
             },
         ],
+        authorId: '2',
     },
     {
         id: '7',
@@ -449,6 +458,7 @@ export const recipes: Recipe[] = [
                 description: 'Смешать лапшу с курицей и подавать.',
             },
         ],
+        authorId: '3',
     },
     {
         id: '8',
@@ -481,6 +491,7 @@ export const recipes: Recipe[] = [
                 image: recipe9Step2,
             },
         ],
+        authorId: '1',
     },
     {
         id: '9',
@@ -519,6 +530,7 @@ export const recipes: Recipe[] = [
                 image: recipe2Step3,
             },
         ],
+        authorId: '2',
         side: 'potatoes',
     },
 ];

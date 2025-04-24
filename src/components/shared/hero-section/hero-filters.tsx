@@ -6,11 +6,15 @@ import { SwitchWithLabel } from '~/components/ui/swith-with-label/swith-with-lab
 import { selectExcludeMode, selectSelectedAllergens } from '~/store/allergen-filter/selectors';
 import { resetFilters, setExcludeMode, setSelectedAllergens } from '~/store/allergen-filter/slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import { selectIsDrawerFilterApplied } from '~/store/recipe-filter/selectors';
+import { clearFilters } from '~/store/recipe-filter/slice';
 
 export const HeroFilters: React.FC = () => {
     const dispatch = useAppDispatch();
     const excludeAllergens = useAppSelector(selectExcludeMode);
     const selectedAllergens = useAppSelector(selectSelectedAllergens);
+
+    const isDrawerFilterActive = useAppSelector(selectIsDrawerFilterApplied);
 
     const handleExcludeAllergensChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const checked = e.target.checked;
@@ -21,6 +25,12 @@ export const HeroFilters: React.FC = () => {
     };
 
     const handleAllergensChange = (allergens: Option[]) => {
+        const isFirstAllergenAdded = selectedAllergens.length === 0 && allergens.length > 0;
+
+        if (isDrawerFilterActive && isFirstAllergenAdded) {
+            dispatch(clearFilters());
+        }
+
         dispatch(setSelectedAllergens(allergens));
     };
 
