@@ -33,6 +33,7 @@ import { AllergenSelect } from '../selects/allergen-select/allergen-select';
 import { AuthorSelect } from '../selects/author-select/author-select';
 import { Option } from '../selects/multi-select-menu/multi-select-menu';
 import { SwitchWithLabel } from '../swith-with-label/swith-with-label';
+import { ActiveFilters } from './active-filters';
 import { IngridientsCheckboxList } from './ingridients-checkbox-list';
 type FilterDrawerProps = {
     isOpen: boolean;
@@ -103,6 +104,10 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({ isOpen, onClose }) =
         onClose();
     };
 
+    const createRemover =
+        (setter: React.Dispatch<React.SetStateAction<Option[]>>) => (value: string) =>
+            setter((prev) => prev.filter((item) => item.value !== value));
+
     return (
         <Drawer placement='right' isOpen={isOpen} onClose={onClose}>
             <DrawerOverlay backdropFilter='blur(2px)' bgColor='blackAlpha.300' />
@@ -167,8 +172,22 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({ isOpen, onClose }) =
                         />
                     </VStack>
                 </DrawerBody>
-                <DrawerFooter p={0} mt={{ base: 4, md: 6 }}>
-                    <HStack>
+                <DrawerFooter p={0} mt={{ base: 4, md: 6 }} display='flex' flexDirection='column'>
+                    <ActiveFilters
+                        selectedCategories={selectedCategories}
+                        selectedAuthors={selectedAuthors}
+                        selectedMeatTypes={selectedMeatTypes}
+                        selectedSideTypes={selectedSideTypes}
+                        selectedAllergens={selectedAllergens}
+                        isExcludeAllergens={isExcludeAllergens}
+                        onRemoveCategory={createRemover(setSelectedCategories)}
+                        onRemoveAuthor={createRemover(setSelectedAuthors)}
+                        onRemoveMeatType={createRemover(setSelectedMeatTypes)}
+                        onRemoveSideType={createRemover(setSelectedSideTypes)}
+                        onRemoveAllergen={createRemover(setSelectedAllergens)}
+                    />
+
+                    <HStack justify='end' w='100%'>
                         <Button
                             variant='outline'
                             colorScheme='black'

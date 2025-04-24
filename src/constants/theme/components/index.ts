@@ -12,6 +12,7 @@ import { Select } from './select';
 import { Switch } from './switch';
 import { Table } from './table';
 import { Tabs } from './tabs';
+import { Tag } from './tag';
 
 export const components = {
     Button,
@@ -26,6 +27,7 @@ export const components = {
     Switch,
     List,
     Tabs,
+    Tag,
     Accordion,
     Table,
 };
