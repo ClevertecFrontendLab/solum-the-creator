@@ -21,6 +21,7 @@ import { selectIsAllergenFilterActive } from '~/store/allergen-filter/selectors'
 import { resetFilters } from '~/store/allergen-filter/slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import {
+    clearFilters,
     setAllergens,
     setAuthors,
     setCategories,
@@ -53,6 +54,13 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({ isOpen, onClose }) =
 
     const [isExcludeAllergens, setIsExcludeAllergens] = useState(false);
     const [selectedAllergens, setSelectedAllergens] = useState<Option[]>([]);
+
+    const isFiltersActive =
+        selectedCategories.length > 0 ||
+        selectedAuthors.length > 0 ||
+        selectedMeatTypes.length > 0 ||
+        selectedSideTypes.length > 0 ||
+        (isExcludeAllergens && selectedAllergens.length > 0);
 
     const handleOnChangeMeatType = (ingridient: Option) => {
         setSelectedMeatTypes((prev) => {
@@ -102,6 +110,11 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({ isOpen, onClose }) =
 
         clearAllFilters();
         onClose();
+    };
+
+    const handleClearFilters = () => {
+        clearAllFilters();
+        dispatch(clearFilters());
     };
 
     const createRemover =
@@ -192,7 +205,7 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({ isOpen, onClose }) =
                             variant='outline'
                             colorScheme='black'
                             size={{ base: 'sm', md: 'lg' }}
-                            onClick={clearAllFilters}
+                            onClick={handleClearFilters}
                         >
                             Очистить фильтр
                         </Button>
@@ -200,6 +213,7 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({ isOpen, onClose }) =
                             variant='black'
                             size={{ base: 'sm', md: 'lg' }}
                             onClick={handleSubmitFilters}
+                            isDisabled={!isFiltersActive}
                         >
                             Найти рецепт
                         </Button>

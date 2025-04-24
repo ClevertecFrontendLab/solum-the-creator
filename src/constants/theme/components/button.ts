@@ -11,8 +11,8 @@ export const Button: ComponentStyleConfig = {
             _hover: { bg: 'black.700' },
             _active: { bg: 'black.800' },
             _disabled: {
-                bg: 'blackAlpha.200',
-                color: 'blackAlpha.400',
+                bg: 'blackAlpha.400',
+                color: 'blackAlpha.600',
             },
         },
         brand: {

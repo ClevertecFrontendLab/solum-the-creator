@@ -2,10 +2,19 @@ import { RecipeHorizontalGridSection } from '~/components/widgets/recipe-horizon
 import { recipes } from '~/constants/data/recipes';
 import { useAllergenFilteredRecipes } from '~/hooks/use-allergen-filtered-recipes';
 import { useCategoryFilteredRecipes } from '~/hooks/use-category-filtered-recipes';
+import { useFilteredRecipes } from '~/hooks/use-filtered-recipes';
+import { useAppSelector } from '~/store/hooks';
+import { selectIsDrawerFilterApplied } from '~/store/recipe-filter/selectors';
 
 export const SubcategoryPage = () => {
     const categoryFilteredRecipes = useCategoryFilteredRecipes(recipes);
-    const filteredRecipes = useAllergenFilteredRecipes(categoryFilteredRecipes);
 
-    return <RecipeHorizontalGridSection recipes={filteredRecipes} />;
+    const filteredAllergenRecipes = useAllergenFilteredRecipes(categoryFilteredRecipes);
+
+    const isDrawerFilterApplied = useAppSelector(selectIsDrawerFilterApplied);
+    const filteredRecipes = useFilteredRecipes(categoryFilteredRecipes);
+
+    const showFilteredRecipes = isDrawerFilterApplied ? filteredRecipes : filteredAllergenRecipes;
+
+    return <RecipeHorizontalGridSection recipes={showFilteredRecipes} />;
 };

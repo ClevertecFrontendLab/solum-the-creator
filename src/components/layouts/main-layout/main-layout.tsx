@@ -2,14 +2,14 @@ import { Box, Hide, Show } from '@chakra-ui/react';
 import { Outlet } from 'react-router';
 
 import { Header } from '~/components/layouts/header/header';
-import { useResetAllergenFilter } from '~/hooks/use-reset-allergen-filter';
+import { useResetAllFiltersOnRouteChange } from '~/hooks/use-reset-all-filters-on-route-change';
 
 import { Footer } from '../footer/footer';
 import { RightSidebar } from '../right-sidebar/right-sidebar';
 import { Sidebar } from '../sidebar/sidebar';
 
 export const MainLayout: React.FC = () => {
-    useResetAllergenFilter();
+    useResetAllFiltersOnRouteChange();
 
     return (
         <Box position='relative'>
