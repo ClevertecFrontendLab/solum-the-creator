@@ -19,5 +19,6 @@ export const AllergenSelect: React.FC<AllergenSelectProps> = ({
         onChange={onChange}
         allowCustomInput={true}
         isDisabled={isDisabled}
+        placeholder='Выберите из списка аллергенов...'
     />
 );

@@ -11,6 +11,13 @@ const brand = definePartsStyle({
         _checked: {
             bg: 'lime.400',
             borderColor: 'lime.400',
+            _hover: {
+                bg: 'lime.300',
+                borderColor: 'lime.200',
+            },
+        },
+        _hover: {
+            bg: 'transparent',
         },
     },
     icon: {

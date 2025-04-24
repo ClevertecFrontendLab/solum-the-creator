@@ -12,12 +12,14 @@ import SecondIcon from '~/assets/icons/category-icons/second-icon.svg';
 import SnacksIcon from '~/assets/icons/category-icons/snacks-icon.svg';
 import VeganIcon from '~/assets/icons/category-icons/vegan-icon.svg';
 
-export const categoryIcons = {
+import { CategoryValue } from '../data/category';
+
+export const categoryIcons: Record<CategoryValue, string> = {
     salads: SaladsIcon,
     sauces: SaucesIcon,
     drinks: DrinksIcon,
     snacks: SnacksIcon,
-    'first-dishes': FirstIcon,
+    'first-dish': FirstIcon,
     'second-dish': SecondIcon,
     grill: GrillIcon,
     'desserts-and-baking': DesertsIcon,

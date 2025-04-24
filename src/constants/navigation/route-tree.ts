@@ -1,3 +1,5 @@
+import { categories } from '../data/category';
+
 export type RouteNode = {
     path: string;
     name: string;
@@ -22,8 +24,8 @@ export const routeTree: RouteNode[] = [
         type: 'page',
     },
     {
-        path: 'salads',
-        name: 'Салаты',
+        path: categories.salads.value,
+        name: categories.salads.label,
         type: 'category',
         children: [
             { path: 'meat', name: 'Мясные салаты' },
@@ -33,8 +35,8 @@ export const routeTree: RouteNode[] = [
         ],
     },
     {
-        path: 'snacks',
-        name: 'Закуски',
+        path: categories.snacks.value,
+        name: categories.snacks.label,
         type: 'category',
         children: [
             { path: 'meat', name: 'Мясные закуски' },
@@ -46,8 +48,8 @@ export const routeTree: RouteNode[] = [
         ],
     },
     {
-        path: 'first-dishes',
-        name: 'Первые блюда',
+        path: categories['first-dish'].value,
+        name: categories['first-dish'].label,
         type: 'category',
         children: [
             { path: 'meat', name: 'Мясные супы' },
@@ -58,8 +60,8 @@ export const routeTree: RouteNode[] = [
         ],
     },
     {
-        path: 'second-dish',
-        name: 'Вторые блюда',
+        path: categories['second-dish'].value,
+        name: categories['second-dish'].label,
         type: 'category',
         children: [
             { path: 'meat', name: 'Мясные' },
@@ -77,8 +79,8 @@ export const routeTree: RouteNode[] = [
         ],
     },
     {
-        path: 'desserts-and-baking',
-        name: 'Десерты, выпечка',
+        path: categories['desserts-and-baking'].value,
+        name: categories['desserts-and-baking'].label,
         type: 'category',
         children: [
             { path: 'pancakes', name: 'Блины и оладьи' },
@@ -97,8 +99,8 @@ export const routeTree: RouteNode[] = [
         ],
     },
     {
-        path: 'grill',
-        name: 'Блюда на гриле',
+        path: categories.grill.value,
+        name: categories.grill.label,
         type: 'category',
         children: [
             { path: 'beef', name: 'Говядина' },
@@ -110,8 +112,8 @@ export const routeTree: RouteNode[] = [
         ],
     },
     {
-        path: 'vegan',
-        name: 'Веганская кухня',
+        path: categories.vegan.value,
+        name: categories.vegan.label,
         type: 'category',
         children: [
             { path: 'snacks', name: 'Закуски' },
@@ -125,8 +127,8 @@ export const routeTree: RouteNode[] = [
         ],
     },
     {
-        path: 'kids',
-        name: 'Детские блюда',
+        path: categories.kids.value,
+        name: categories.kids.label,
         type: 'category',
         children: [
             { path: 'first', name: 'Первые блюда' },
@@ -140,8 +142,8 @@ export const routeTree: RouteNode[] = [
         ],
     },
     {
-        path: 'medical',
-        name: 'Лечебное питание',
+        path: categories.medical.value,
+        name: categories.medical.label,
         type: 'category',
         children: [
             { path: 'kids', name: 'Детская диета' },
@@ -163,8 +165,8 @@ export const routeTree: RouteNode[] = [
         ],
     },
     {
-        path: 'national',
-        name: 'Национальные',
+        path: categories.national.value,
+        name: categories.national.label,
         type: 'category',
         children: [
             { path: 'american', name: 'Американская кухня' },
@@ -185,8 +187,8 @@ export const routeTree: RouteNode[] = [
         ],
     },
     {
-        path: 'sauces',
-        name: 'Соусы',
+        path: categories.sauces.value,
+        name: categories.sauces.label,
         type: 'category',
         children: [
             { path: 'meat', name: 'Соусы мясные' },
@@ -196,8 +198,8 @@ export const routeTree: RouteNode[] = [
     },
 
     {
-        path: 'drinks',
-        name: 'Напитки',
+        path: categories.drinks.value,
+        name: categories.drinks.label,
         type: 'category',
         children: [
             { path: 'juices', name: 'Соки и фреши' },
@@ -212,8 +214,8 @@ export const routeTree: RouteNode[] = [
         ],
     },
     {
-        path: 'preserves',
-        name: 'Заготовки',
+        path: categories.preserves.value,
+        name: categories.preserves.label,
         type: 'category',
         children: [
             { path: 'meat', name: 'Мясные заготовки' },

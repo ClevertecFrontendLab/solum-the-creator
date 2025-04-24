@@ -1,3 +1,4 @@
+import { categories } from '~/constants/data/category';
 import { RouteNode, routeTree } from '~/constants/navigation/route-tree';
 import { categoryIcons, CategoryKey } from '~/constants/ui/category-icons';
 
@@ -44,3 +45,9 @@ export const findMatchingSubcategory = (
 
     return categoryNode.children.find((child) => recipeSubcategories.includes(child.path))?.path;
 };
+
+export const getCategiresOptions = () =>
+    Object.entries(categories).map(([key, { label }]) => ({
+        value: key,
+        label,
+    }));
