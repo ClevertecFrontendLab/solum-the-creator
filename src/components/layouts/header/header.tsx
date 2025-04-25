@@ -17,7 +17,7 @@ export const Header: React.FC = () => {
     return (
         <Box
             as='header'
-            bg={bgColor}
+            bg={{ base: bgColor, md: 'lime.50' }}
             px={{ base: 4, sm: 5 }}
             py={4}
             top={0}
