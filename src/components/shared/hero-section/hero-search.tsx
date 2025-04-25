@@ -24,6 +24,8 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({ onFocusChange }) => {
     const [inputValue, setInputValue] = useState('');
     const dispatch = useAppDispatch();
 
+    const isDisabled = inputValue.trim().length < 3;
+
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
 
@@ -35,7 +37,9 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({ onFocusChange }) => {
     };
 
     const handleSearch = () => {
-        dispatch(setSearchQuery(inputValue));
+        if (!isDisabled) {
+            dispatch(setSearchQuery(inputValue));
+        }
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -75,6 +79,7 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({ onFocusChange }) => {
                         icon={<SearchIcon />}
                         variant='clear'
                         onClick={handleSearch}
+                        isDisabled={isDisabled}
                     />
                 </InputRightElement>
             </InputGroup>
