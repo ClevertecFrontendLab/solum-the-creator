@@ -6,6 +6,7 @@ import { RelevantKitchenSection } from '~/components/widgets/relevant-kitchen-se
 import { recipes } from '~/constants/data/recipes';
 import { useAllergenFilteredRecipes } from '~/hooks/use-allergen-filtered-recipes';
 import { useFilteredRecipes } from '~/hooks/use-filtered-recipes';
+import { useSearchedRecipes } from '~/hooks/use-serched-recipes';
 import { useAppSelector } from '~/store/hooks';
 import { selectIsDrawerFilterApplied } from '~/store/recipe-filter/selectors';
 
@@ -15,12 +16,14 @@ export const JuiciestPage = () => {
     const isDrawerFilterApplied = useAppSelector(selectIsDrawerFilterApplied);
     const filteredRecipes = useFilteredRecipes(recipes);
 
-    const showFilteredRecipes = isDrawerFilterApplied ? filteredRecipes : filteredAllergenRecipes;
+    const filteredRicipesByUI = isDrawerFilterApplied ? filteredRecipes : filteredAllergenRecipes;
+
+    const { recipes: finalRecipes } = useSearchedRecipes(filteredRicipesByUI);
 
     return (
         <Flex direction='column' align='center'>
             <HeroSection title='Самое сочное' />
-            <RecipeHorizontalGridSection recipes={showFilteredRecipes} />
+            <RecipeHorizontalGridSection recipes={finalRecipes} />
             <RelevantKitchenSection
                 title='Веганская кухня'
                 description='Интересны не только убеждённым вегетарианцам, но и тем, кто хочет  попробовать вегетарианскую диету и готовить вкусные  вегетарианские блюда.'
