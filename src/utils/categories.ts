@@ -1,3 +1,5 @@
+import { matchPath } from 'react-router';
+
 import { categories } from '~/constants/data/category';
 import { RouteNode, routeTree } from '~/constants/navigation/route-tree';
 import { categoryIcons, CategoryKey } from '~/constants/ui/category-icons';
@@ -27,8 +29,13 @@ export const getActiveSubcategoryIndex = (
     pathname: string,
 ) =>
     subcategories.findIndex((child) => {
-        const subPath = getSubcategoryPath(category.path, child.path);
-        return subPath === pathname;
+        const pathPattern = `/${getSubcategoryPath(category.path, child.path)}/*`;
+
+        const normalizedPathname = pathname.startsWith('/') ? pathname : `/${pathname}`;
+
+        const isMatch = matchPath({ path: pathPattern, end: false }, normalizedPathname);
+
+        return isMatch !== null;
     });
 
 export const findMatchingSubcategory = (
