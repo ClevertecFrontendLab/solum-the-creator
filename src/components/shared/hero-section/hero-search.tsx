@@ -8,12 +8,37 @@ import {
     InputRightElement,
     useDisclosure,
 } from '@chakra-ui/react';
+import { useState } from 'react';
 
 import FilterIcon from '~/assets/icons/filter-icon.svg?react';
 import { FilterDrawer } from '~/components/ui/filter-drawer/filter-drawer';
+import { useAppDispatch } from '~/store/hooks';
+import { clearSearchQuery, setSearchQuery } from '~/store/search/slice';
 
 export const HeroSearch: React.FC = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const [inputValue, setInputValue] = useState('');
+    const dispatch = useAppDispatch();
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value;
+
+        setInputValue(event.target.value);
+
+        if (value.trim() === '') {
+            dispatch(clearSearchQuery());
+        }
+    };
+
+    const handleSearch = () => {
+        dispatch(setSearchQuery(inputValue));
+    };
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            handleSearch();
+        }
+    };
 
     return (
         <HStack spacing={3} width='100%' maxW={{ base: '28rem', md: '32.375rem' }}>
@@ -31,9 +56,20 @@ export const HeroSearch: React.FC = () => {
             <FilterDrawer isOpen={isOpen} onClose={onClose} />
 
             <InputGroup size={{ base: 'sm', md: 'lg' }}>
-                <Input variant='search' placeholder='Название или ингредиент...' />
+                <Input
+                    variant='search'
+                    placeholder='Название или ингредиент...'
+                    value={inputValue}
+                    onChange={handleChange}
+                    onKeyDown={handleKeyDown}
+                />
                 <InputRightElement>
-                    <SearchIcon />
+                    <IconButton
+                        aria-label='Search'
+                        icon={<SearchIcon />}
+                        variant='clear'
+                        onClick={handleSearch}
+                    />
                 </InputRightElement>
             </InputGroup>
         </HStack>

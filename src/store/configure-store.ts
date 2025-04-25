@@ -5,6 +5,7 @@ import { apiSlice } from '~/query/create-api';
 import allergenFilterReducer from './allergen-filter/slice';
 import appReducer, { appSlice } from './app-slice';
 import recipeFilterReducer from './recipe-filter/slice';
+import searchReducer from './search/slice';
 
 const isProduction = false;
 
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
     [apiSlice.reducerPath]: apiSlice.reducer,
     allergenFilter: allergenFilterReducer,
     recipeFilter: recipeFilterReducer,
+    search: searchReducer,
 });
 
 export type ApplicationState = ReturnType<typeof rootReducer>;
