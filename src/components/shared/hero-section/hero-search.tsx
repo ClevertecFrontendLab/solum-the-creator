@@ -15,7 +15,11 @@ import { FilterDrawer } from '~/components/ui/filter-drawer/filter-drawer';
 import { useAppDispatch } from '~/store/hooks';
 import { clearSearchQuery, setSearchQuery } from '~/store/search/slice';
 
-export const HeroSearch: React.FC = () => {
+type HeroSearchProps = {
+    onFocusChange: (focused: boolean) => void;
+};
+
+export const HeroSearch: React.FC<HeroSearchProps> = ({ onFocusChange }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [inputValue, setInputValue] = useState('');
     const dispatch = useAppDispatch();
@@ -62,6 +66,8 @@ export const HeroSearch: React.FC = () => {
                     value={inputValue}
                     onChange={handleChange}
                     onKeyDown={handleKeyDown}
+                    onFocus={() => onFocusChange(true)}
+                    onBlur={() => onFocusChange(false)}
                 />
                 <InputRightElement>
                     <IconButton
