@@ -2,7 +2,7 @@ import { Box, HStack } from '@chakra-ui/react';
 
 import { AllergenSelect } from '~/components/ui/selects/allergen-select/allergen-select';
 import { Option } from '~/components/ui/selects/multi-select-menu/multi-select-menu';
-import { SwitchWithLabel } from '~/components/ui/swith-with-label/swith-with-label';
+import { SwitchWithLabel } from '~/components/ui/switch-with-label/switch-with-label';
 import { selectExcludeMode, selectSelectedAllergens } from '~/store/allergen-filter/selectors';
 import { resetFilters, setExcludeMode, setSelectedAllergens } from '~/store/allergen-filter/slice';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';

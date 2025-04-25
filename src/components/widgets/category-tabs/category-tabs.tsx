@@ -46,7 +46,12 @@ export const CategoryTabs = () => {
                     },
                 }}
             >
-                <TabList display='inline-flex' minW='max-content' gap={0}>
+                <TabList
+                    display='inline-flex'
+                    w='100%'
+                    flexWrap={{ base: 'nowrap', lg: 'wrap' }}
+                    gap={0}
+                >
                     {children.map((child, index) => (
                         <Tab
                             key={child.path}

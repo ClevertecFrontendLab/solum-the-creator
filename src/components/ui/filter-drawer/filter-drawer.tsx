@@ -33,7 +33,7 @@ import {
 import { AllergenSelect } from '../selects/allergen-select/allergen-select';
 import { AuthorSelect } from '../selects/author-select/author-select';
 import { Option } from '../selects/multi-select-menu/multi-select-menu';
-import { SwitchWithLabel } from '../swith-with-label/swith-with-label';
+import { SwitchWithLabel } from '../switch-with-label/switch-with-label';
 import { ActiveFilters } from './active-filters';
 import { IngridientsCheckboxList } from './ingridients-checkbox-list';
 type FilterDrawerProps = {
