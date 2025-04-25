@@ -6,6 +6,7 @@ import {
     Flex,
     Heading,
     Hide,
+    Highlight,
     HStack,
     Icon,
     IconButton,
@@ -17,6 +18,8 @@ import {
 import SavedIcon from '~/assets/icons/bookmarkHeart-icon.svg?react';
 import { CategoryKey } from '~/constants/ui/category-icons';
 import { useNavigationToRecipe } from '~/hooks/use-navigation-to-recipe';
+import { useAppSelector } from '~/store/hooks';
+import { selectSearchQuery } from '~/store/search/selectors';
 
 import { ImageSection } from './image-section';
 import { TopRow } from './top-row';
@@ -53,6 +56,8 @@ export const RecipeCardHorizontal: React.FC<RecipeCardHorizontalProps> = ({
         subcategories: subcategory,
     });
 
+    const searchQuery = useAppSelector(selectSearchQuery);
+
     return (
         <Card w='100%' borderRadius='lg' variant='outline' minH={{ base: '8rem', lg: '15.25rem' }}>
             <Flex direction='row' h='100%' align='stretch'>
@@ -83,7 +88,9 @@ export const RecipeCardHorizontal: React.FC<RecipeCardHorizontalProps> = ({
                                 noOfLines={{ base: 2, lg: 1 }}
                                 wordBreak='break-all'
                             >
-                                {title}
+                                <Highlight query={searchQuery} styles={{ color: 'lime.600' }}>
+                                    {title}
+                                </Highlight>
                             </Heading>
 
                             <Text
