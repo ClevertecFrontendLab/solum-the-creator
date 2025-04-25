@@ -29,7 +29,13 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ onNavigate }) => {
 
         return (
             <BreadcrumbItem key={crumb.href} isCurrentPage={isCurrent}>
-                <BreadcrumbLink as={Link} to={crumb.href} onClick={handleClick}>
+                <BreadcrumbLink
+                    as={Link}
+                    to={crumb.href}
+                    onClick={handleClick}
+                    noOfLines={1}
+                    wordBreak='break-all'
+                >
                     {crumb.label}
                 </BreadcrumbLink>
             </BreadcrumbItem>

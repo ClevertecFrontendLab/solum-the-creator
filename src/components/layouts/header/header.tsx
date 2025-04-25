@@ -24,7 +24,7 @@ export const Header: React.FC = () => {
             width='100%'
             data-test-id='header'
         >
-            <Flex h={{ base: 8, md: 12 }} alignItems='center' width='100%'>
+            <Flex h={{ base: 8, md: 12 }} alignItems='center' width='100%' gap={2}>
                 <Logo isFull={true} onClick={onClose} />
 
                 <Show above='md'>
