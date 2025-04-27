@@ -17,16 +17,18 @@ export const CategoryPage = () => {
                 description={categoryText[category!].description}
             />
 
-            <CategoryTabs />
+            <Flex direction='column' align='center' width='100%' px={{ base: 4, sm: 5, md: 6 }}>
+                <CategoryTabs />
 
-            <Outlet />
+                <Outlet />
 
-            <RelevantKitchenSection
-                title='Десерты, выпечка'
-                description='Без них невозможно представить себе ни современную, ни традиционную  кулинарию. Пироги и печенья, блины, пончики, вареники и, конечно, хлеб - рецепты изделий из теста многообразны и невероятно популярны.'
-                recipesTextCards={recipes.slice(0, 2)}
-                recipesSimpleCards={recipes.slice(2, 5)}
-            />
+                <RelevantKitchenSection
+                    title='Десерты, выпечка'
+                    description='Без них невозможно представить себе ни современную, ни традиционную  кулинарию. Пироги и печенья, блины, пончики, вареники и, конечно, хлеб - рецепты изделий из теста многообразны и невероятно популярны.'
+                    recipesTextCards={recipes.slice(0, 2)}
+                    recipesSimpleCards={recipes.slice(2, 5)}
+                />
+            </Flex>
         </Flex>
     );
 };

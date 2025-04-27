@@ -1,4 +1,4 @@
-import { Heading, Hide, HStack, Show, SimpleGrid, VStack } from '@chakra-ui/react';
+import { Heading, HStack, SimpleGrid, VStack } from '@chakra-ui/react';
 
 import { RecipeCardHorizontal } from '~/components/shared/cards/recipe-card/recipe-card-horizontal/recipe-card-horizontal';
 import { JuiciestButton } from '~/components/ui/buttons/shared/juiciest-button';
@@ -17,9 +17,11 @@ export const JuiciestSection = () => {
         >
             <HStack justify='space-between' align='center' width='100%'>
                 <Heading variant='section-title'>Самое сочное</Heading>
-                <Hide below='lg'>
-                    <JuiciestButton data-test-id='juiciest-link' />
-                </Hide>
+
+                <JuiciestButton
+                    display={{ base: 'none', lg: 'block' }}
+                    data-test-id='juiciest-link'
+                />
             </HStack>
 
             <SimpleGrid
@@ -27,10 +29,11 @@ export const JuiciestSection = () => {
                 spacing={{ base: 3, sm: 4, '2xl': 6 }}
                 columns={{ base: 1, sm: 2, md: 1, '2xl': 2 }}
             >
-                {popularRecipes.map((recipe) => (
+                {popularRecipes.map((recipe, index) => (
                     <RecipeCardHorizontal
                         key={recipe.id}
                         id={recipe.id}
+                        index={index}
                         image={recipe.image}
                         title={recipe.title}
                         description={recipe.description}
@@ -42,9 +45,10 @@ export const JuiciestSection = () => {
                 ))}
             </SimpleGrid>
 
-            <Show below='lg'>
-                <JuiciestButton data-test-id='juiciest-link-mobile' />
-            </Show>
+            <JuiciestButton
+                display={{ base: 'block', lg: 'none' }}
+                data-test-id='juiciest-link-mobile'
+            />
         </VStack>
     );
 };

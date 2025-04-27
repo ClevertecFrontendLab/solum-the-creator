@@ -29,17 +29,24 @@ export const HomePage = () => {
 
     return (
         <Flex direction='column' align='center'>
-            <Box pb={{ base: 0, xl: 6 }} width='100%'>
+            <Box pb={{ base: 0, xl: 6 }} width='100%' px={{ base: 0, sm: 5, md: 6 }}>
                 <HeroSection title='Приятного аппетита!' />
             </Box>
 
             <AnimatePresence mode='wait'>
                 {isAllergenFilterActive || isDrawerFilterApplied || isSearchActive ? (
                     <motion.div key='filtered' {...fadeIn}>
-                        <RecipeHorizontalGridSection recipes={finalRecipes} />
+                        <Box px={{ base: 4, sm: 5, md: 6 }}>
+                            <RecipeHorizontalGridSection recipes={finalRecipes} />
+                        </Box>
                     </motion.div>
                 ) : (
-                    <>
+                    <Flex
+                        direction='column'
+                        align='center'
+                        width='100%'
+                        px={{ base: 4, sm: 5, md: 6 }}
+                    >
                         <NewRecipesSection />
                         <JuiciestSection />
                         <CulinaryBlogsSection />
@@ -49,7 +56,7 @@ export const HomePage = () => {
                             recipesTextCards={recipes.slice(0, 2)}
                             recipesSimpleCards={recipes.slice(2, 5)}
                         />
-                    </>
+                    </Flex>
                 )}
             </AnimatePresence>
         </Flex>

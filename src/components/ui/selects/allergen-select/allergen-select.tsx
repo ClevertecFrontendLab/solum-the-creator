@@ -6,12 +6,14 @@ type AllergenSelectProps = {
     selectedAllergens: Option[];
     onChange: (selected: Option[]) => void;
     isDisabled?: boolean;
+    dataTestId?: string;
 };
 
 export const AllergenSelect: React.FC<AllergenSelectProps> = ({
     selectedAllergens,
     onChange,
     isDisabled,
+    dataTestId,
 }) => (
     <MultiSelectMenu
         options={initialAllergens}
@@ -19,6 +21,9 @@ export const AllergenSelect: React.FC<AllergenSelectProps> = ({
         onChange={onChange}
         allowCustomInput={true}
         isDisabled={isDisabled}
+        dataTestId={dataTestId}
         placeholder='Выберите из списка аллергенов...'
+        getOptionTestId={(_, idx) => `allergen-${idx}`}
+        menuListDataTestId='allergens-menu'
     />
 );

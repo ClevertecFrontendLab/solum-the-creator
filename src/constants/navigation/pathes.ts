@@ -1,6 +1,6 @@
 export const pathes = {
     home: '/',
-    juiciest: '/juiciest',
+    juiciest: '/the-juiciest',
     categories: '/:category',
     subcategories: '/:category/:subcategory',
     recipes: '/:category/:subcategory/:recipeId',

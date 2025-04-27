@@ -129,6 +129,7 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({ isOpen, onClose }) =
                 px={{ base: 4, md: 8 }}
                 py={{ base: 4, md: 8 }}
                 pr={{ base: 5, md: 8 }}
+                data-test-id='filter-drawer'
             >
                 <DrawerHeader
                     display='flex'
@@ -146,6 +147,7 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({ isOpen, onClose }) =
                         size='xs'
                         icon={<Icon as={CloseIcon} boxSize={6} />}
                         mt={1}
+                        data-test-id='close-filter-drawer'
                     />
                 </DrawerHeader>
                 <DrawerBody p={0} display='flex' flexDirection='column' gap={{ base: 4, md: 6 }}>
@@ -176,12 +178,14 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({ isOpen, onClose }) =
                             label='Исключить аллергены'
                             isChecked={isExcludeAllergens}
                             onChange={handleExcludeAllergensChange}
+                            dataTestId='allergens-switcher-filter'
                         />
 
                         <AllergenSelect
                             selectedAllergens={selectedAllergens}
                             onChange={setSelectedAllergens}
                             isDisabled={!isExcludeAllergens}
+                            dataTestId='allergens-menu-button-filter'
                         />
                     </VStack>
                 </DrawerBody>
@@ -206,6 +210,7 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({ isOpen, onClose }) =
                             colorScheme='black'
                             size={{ base: 'sm', md: 'lg' }}
                             onClick={handleClearFilters}
+                            data-test-id='clear-filter-button'
                         >
                             Очистить фильтр
                         </Button>
@@ -214,6 +219,8 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({ isOpen, onClose }) =
                             size={{ base: 'sm', md: 'lg' }}
                             onClick={handleSubmitFilters}
                             isDisabled={!isFiltersActive}
+                            pointerEvents={isFiltersActive ? 'auto' : 'none'}
+                            data-test-id='find-recipe-button'
                         >
                             Найти рецепт
                         </Button>

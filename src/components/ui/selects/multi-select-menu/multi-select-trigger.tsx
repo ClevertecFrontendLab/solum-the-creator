@@ -8,6 +8,7 @@ type MultiSelectTriggerProps = {
     placeholder: string;
     isOpen?: boolean;
     isDisabled?: boolean;
+    dataTestId?: string;
 };
 
 export const MultiSelectTrigger: React.FC<MultiSelectTriggerProps> = ({
@@ -15,6 +16,7 @@ export const MultiSelectTrigger: React.FC<MultiSelectTriggerProps> = ({
     placeholder,
     isOpen,
     isDisabled,
+    dataTestId,
 }) => {
     const borderColor = selected.length > 0 ? 'lime.300' : undefined;
     return (
@@ -30,6 +32,7 @@ export const MultiSelectTrigger: React.FC<MultiSelectTriggerProps> = ({
             pr={3}
             py={2}
             isDisabled={isDisabled}
+            data-test-id={dataTestId}
         >
             <Box w='100%' textAlign='left'>
                 {selected.length > 0 ? (

@@ -1,4 +1,4 @@
-import { Table, TableContainer, Tbody, Td, Th, Thead, Tr } from '@chakra-ui/react';
+import { Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 
 import { PortionInput } from '~/components/ui/inputs/portion-input/portion-input';
 import { Ingredient } from '~/constants/data/recipes';
@@ -28,11 +28,14 @@ export const RecipeTableSection: React.FC<RecipeTableSectionProps> = ({
                     </Tr>
                 </Thead>
                 <Tbody>
-                    {ingredients.map((ingredient) => (
+                    {ingredients.map((ingredient, index) => (
                         <Tr key={ingredient.title}>
                             <Td>{ingredient.title}</Td>
                             <Td textAlign='right'>
-                                {calculatePortion(ingredient)} {ingredient.measureUnit}
+                                <Text as='span' data-test-id={`ingredient-quantity-${index}`}>
+                                    {calculatePortion(ingredient)}
+                                </Text>
+                                {ingredient.measureUnit}
                             </Td>
                         </Tr>
                     ))}

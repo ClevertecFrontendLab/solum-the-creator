@@ -41,6 +41,7 @@ export const HeroFilters: React.FC = () => {
                 label='Исключить мои аллергены'
                 isChecked={excludeAllergens}
                 onChange={handleExcludeAllergensChange}
+                dataTestId='allergens-switcher'
             />
 
             <Box maxW='14.5rem' w='100%'>
@@ -48,6 +49,7 @@ export const HeroFilters: React.FC = () => {
                     selectedAllergens={selectedAllergens}
                     onChange={handleAllergensChange}
                     isDisabled={!excludeAllergens}
+                    dataTestId='allergens-menu-button'
                 />
             </Box>
         </HStack>

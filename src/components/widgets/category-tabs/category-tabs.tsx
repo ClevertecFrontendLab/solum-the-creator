@@ -62,6 +62,7 @@ export const CategoryTabs = () => {
                             py={{ base: 1, md: 2 }}
                             fontSize={{ base: 'sm', md: 'md' }}
                             fontWeight='500'
+                            data-test-id={`tab-${child.path}-${index}`}
                         >
                             {child.name}
                         </Tab>

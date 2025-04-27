@@ -1,7 +1,7 @@
 import 'swiper/css';
 import 'swiper/css/navigation';
 
-import { Box, Hide } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import { useRef } from 'react';
 import { Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -24,10 +24,10 @@ export const HorizontalSlider = <T extends { id: string }>({
 
     return (
         <Box position='relative'>
-            <Hide below='md'>
-                <SliderNavButton direction='left' ref={prevRef} />
-                <SliderNavButton direction='right' ref={nextRef} />
-            </Hide>
+            <Box display={{ base: 'none', md: 'block' }}>
+                <SliderNavButton direction='left' ref={prevRef} data-test-id='carousel-back' />
+                <SliderNavButton direction='right' ref={nextRef} data-test-id='carousel-forward' />
+            </Box>
 
             <Swiper
                 loop={true}
@@ -43,9 +43,14 @@ export const HorizontalSlider = <T extends { id: string }>({
                         swiper.params.navigation.nextEl = nextRef.current;
                     }
                 }}
+                data-test-id='carousel'
             >
-                {items.map((item) => (
-                    <SwiperSlide key={item.id} style={{ width: 'auto' }}>
+                {items.map((item, index) => (
+                    <SwiperSlide
+                        key={item.id}
+                        style={{ width: 'auto' }}
+                        data-test-id={`carousel-card-${index}`}
+                    >
                         {renderItem(item)}
                     </SwiperSlide>
                 ))}

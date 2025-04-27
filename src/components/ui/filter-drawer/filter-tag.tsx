@@ -7,7 +7,7 @@ type FilterTagProps = {
 };
 
 export const FilterTag: React.FC<FilterTagProps> = ({ label, value, onRemove }) => (
-    <Tag size='md' variant='brand'>
+    <Tag size='md' variant='brand' data-test-id='filter-tag'>
         <TagLabel>{label}</TagLabel>
         <TagCloseButton onClick={() => onRemove(value)} />
     </Tag>

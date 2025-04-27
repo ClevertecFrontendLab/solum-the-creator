@@ -25,13 +25,16 @@ export const JuiciestPage = () => {
     return (
         <Flex direction='column' align='center'>
             <HeroSection title='Самое сочное' />
-            <RecipeHorizontalGridSection recipes={finalRecipes} />
-            <RelevantKitchenSection
-                title='Веганская кухня'
-                description='Интересны не только убеждённым вегетарианцам, но и тем, кто хочет  попробовать вегетарианскую диету и готовить вкусные  вегетарианские блюда.'
-                recipesTextCards={recipes.slice(0, 2)}
-                recipesSimpleCards={recipes.slice(2, 5)}
-            />
+
+            <Flex direction='column' align='center' width='100%' px={{ base: 4, sm: 5, md: 6 }}>
+                <RecipeHorizontalGridSection recipes={finalRecipes} />
+                <RelevantKitchenSection
+                    title='Веганская кухня'
+                    description='Интересны не только убеждённым вегетарианцам, но и тем, кто хочет  попробовать вегетарианскую диету и готовить вкусные  вегетарианские блюда.'
+                    recipesTextCards={recipes.slice(0, 2)}
+                    recipesSimpleCards={recipes.slice(2, 5)}
+                />
+            </Flex>
         </Flex>
     );
 };

@@ -15,6 +15,10 @@ export const CategorySelect: React.FC<CategorySelectProps> = ({
 }) => {
     const initialCategories: Option[] = getCategiresOptions();
 
+    const testIdMap: Record<string, string> = {
+        vegan: 'checkbox-веганская кухня',
+    };
+
     return (
         <MultiSelectMenu
             options={initialCategories}
@@ -22,6 +26,8 @@ export const CategorySelect: React.FC<CategorySelectProps> = ({
             onChange={onChange}
             isDisabled={isDisabled}
             placeholder='Категория'
+            dataTestId='filter-menu-button-категория'
+            getOptionTestId={(opt) => testIdMap[opt.value]}
         />
     );
 };

@@ -1,4 +1,4 @@
-import { Box, Checkbox, List, MenuItem } from '@chakra-ui/react';
+import { Box, Checkbox, List } from '@chakra-ui/react';
 
 import { Option } from './multi-select-menu';
 
@@ -6,12 +6,14 @@ type MultiSelectOptionsProps = {
     options: Option[];
     selected: Option[];
     onToggle: (option: Option) => void;
+    getOptionTestId?: (option: Option, index: number) => string | undefined;
 };
 
 export const MultiSelectOptions: React.FC<MultiSelectOptionsProps> = ({
     options,
     selected,
     onToggle,
+    getOptionTestId,
 }) => {
     const selectedValues = new Set(selected.map((opt) => opt.value));
 
@@ -19,25 +21,20 @@ export const MultiSelectOptions: React.FC<MultiSelectOptionsProps> = ({
 
     return (
         <List variant='color-variation'>
-            {options.map((option) => (
-                <MenuItem
-                    key={option.value}
-                    onClick={handleToggle(option)}
-                    closeOnSelect={false}
-                    px={4}
-                    py={1.5}
-                >
+            {options.map((option, index) => (
+                <Box as='li' key={option.value} px={4} py={1.5}>
                     <Checkbox
                         variant='brand'
                         isChecked={selectedValues.has(option.value)}
-                        pointerEvents='none'
                         size='sm'
+                        onChange={handleToggle(option)}
+                        data-test-id={getOptionTestId?.(option, index)}
                     >
                         <Box noOfLines={1} wordBreak='break-word'>
                             {option.label}
                         </Box>
                     </Checkbox>
-                </MenuItem>
+                </Box>
             ))}
         </List>
     );

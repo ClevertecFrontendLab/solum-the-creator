@@ -50,6 +50,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ onNavigate }) => {
             flexWrap='wrap'
             rowGap={1}
             listProps={{ flexWrap: 'wrap' }}
+            data-test-id='breadcrumbs'
         >
             {breadcrumbsItems}
         </Breadcrumb>

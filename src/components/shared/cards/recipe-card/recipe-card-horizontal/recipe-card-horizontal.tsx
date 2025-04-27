@@ -5,12 +5,10 @@ import {
     CardFooter,
     Flex,
     Heading,
-    Hide,
     Highlight,
     HStack,
     Icon,
     IconButton,
-    Show,
     Text,
     VStack,
 } from '@chakra-ui/react';
@@ -28,10 +26,12 @@ type RecipeCardHorizontalProps = {
     id: string;
     image: string;
     title: string;
-    description?: string;
+    description: string;
     category: CategoryKey[];
     subcategory: string[];
     likes?: number;
+    dataTestId?: string;
+    index?: number;
     bookmarks?: number;
     recommendedBy?: {
         avatarUrl: string;
@@ -47,6 +47,8 @@ export const RecipeCardHorizontal: React.FC<RecipeCardHorizontalProps> = ({
     category,
     subcategory,
     recommendedBy,
+    dataTestId,
+    index,
     likes = 0,
     bookmarks = 0,
 }) => {
@@ -59,7 +61,13 @@ export const RecipeCardHorizontal: React.FC<RecipeCardHorizontalProps> = ({
     const searchQuery = useAppSelector(selectSearchQuery);
 
     return (
-        <Card w='100%' borderRadius='lg' variant='outline' minH={{ base: '8rem', lg: '15.25rem' }}>
+        <Card
+            w='100%'
+            borderRadius='lg'
+            variant='outline'
+            minH={{ base: '8rem', lg: '15.25rem' }}
+            data-test-id={dataTestId}
+        >
             <Flex direction='row' h='100%' align='stretch'>
                 <ImageSection image={image} category={category[0]} recommendedBy={recommendedBy} />
 
@@ -105,32 +113,31 @@ export const RecipeCardHorizontal: React.FC<RecipeCardHorizontalProps> = ({
 
                     <CardFooter px={0} pt={{ base: 5, lg: 6 }} pb={0}>
                         <HStack spacing={{ base: 3, lg: 2 }} justify='flex-end' w='100%'>
-                            <Show below='lg'>
-                                <IconButton
-                                    size='xs'
-                                    icon={<Icon as={SavedIcon} />}
-                                    variant='outline'
-                                    colorScheme='black'
-                                    aria-label='Сохранить'
-                                />
-                            </Show>
+                            <IconButton
+                                size='xs'
+                                icon={<Icon as={SavedIcon} />}
+                                variant='outline'
+                                colorScheme='black'
+                                aria-label='Сохранить'
+                                display={{ base: 'block', lg: 'none' }}
+                            />
 
-                            <Hide below='lg'>
-                                <Button
-                                    leftIcon={<Icon as={SavedIcon} />}
-                                    size='sm'
-                                    variant='outline'
-                                    colorScheme='black'
-                                    color='blackAlpha.800'
-                                >
-                                    Сохранить
-                                </Button>
-                            </Hide>
+                            <Button
+                                leftIcon={<Icon as={SavedIcon} />}
+                                size='sm'
+                                variant='outline'
+                                colorScheme='black'
+                                color='blackAlpha.800'
+                                display={{ base: 'none', lg: 'block' }}
+                            >
+                                Сохранить
+                            </Button>
 
                             <Button
                                 size={{ base: 'xs', lg: 'sm' }}
                                 variant='black'
                                 onClick={handleCookClick}
+                                data-test-id={`card-link-${index}`}
                             >
                                 Готовить
                             </Button>

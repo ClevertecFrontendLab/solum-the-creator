@@ -22,12 +22,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ title, description }) 
     const isHeroActive = isActive || isSearchFocused;
 
     return (
-        <Box as='section' width='100%' display='flex' justifyContent='center'>
+        <Box as='section' w='100%' display='flex' justifyContent='center' mb={4}>
             <VStack
                 align='center'
                 pt={{ base: 4, md: 8 }}
                 spacing={{ base: 4, md: 8 }}
                 pb={{ base: 8 }}
+                px={{ base: 4 }}
                 rounded='3xl'
                 w='100%'
                 maxW={{ base: '100%', sm: '30rem', md: '36.125rem', '2xl': '56.125rem' }}

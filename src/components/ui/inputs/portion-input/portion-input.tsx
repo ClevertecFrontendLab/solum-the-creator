@@ -41,8 +41,8 @@ export const PortionInput: React.FC<PortionInputProps> = ({
             >
                 <NumberInputField />
                 <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
+                    <NumberIncrementStepper data-test-id='increment-stepper' />
+                    <NumberDecrementStepper data-test-id='decrement-stepper' />
                 </NumberInputStepper>
             </NumberInput>
         </Flex>

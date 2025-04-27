@@ -11,7 +11,13 @@ export const BurgerButton: React.FC<BurgerButtonProps> = ({ isOpen, onOpen, onCl
     <IconButton
         size='md'
         mx={1}
-        icon={isOpen ? <CloseIcon boxSize={3} /> : <HamburgerIcon boxSize={5} />}
+        icon={
+            isOpen ? (
+                <CloseIcon boxSize={3} data-test-id='close-icon' />
+            ) : (
+                <HamburgerIcon boxSize={5} data-test-id='hamburger-icon' />
+            )
+        }
         aria-label='Toggle menu'
         onClick={isOpen ? onClose : onOpen}
         variant='clear'

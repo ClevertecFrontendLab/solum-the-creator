@@ -60,6 +60,7 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({ onFocusChange }) => {
                 icon={<Icon boxSize={{ base: 3.5, md: 6 }} as={FilterIcon} />}
                 flexShrink={0}
                 onClick={onOpen}
+                data-test-id='filter-button'
             />
             <FilterDrawer isOpen={isOpen} onClose={onClose} />
 
@@ -72,6 +73,7 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({ onFocusChange }) => {
                     onKeyDown={handleKeyDown}
                     onFocus={() => onFocusChange(true)}
                     onBlur={() => onFocusChange(false)}
+                    data-test-id='search-input'
                 />
                 <InputRightElement>
                     <IconButton
@@ -80,6 +82,8 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({ onFocusChange }) => {
                         variant='clear'
                         onClick={handleSearch}
                         isDisabled={isDisabled}
+                        pointerEvents={isDisabled ? 'none' : 'auto'}
+                        data-test-id='search-button'
                     />
                 </InputRightElement>
             </InputGroup>

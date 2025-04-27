@@ -38,6 +38,7 @@ export const MultiSelectCustomInput: React.FC<MultiSelectCustomInputProps> = ({
                 onKeyDown={handleKeyDown}
                 flexShrink={1}
                 size='sm'
+                data-test-id='add-other-allergen'
             />
             <IconButton
                 aria-label='Добавить значение'
@@ -46,6 +47,7 @@ export const MultiSelectCustomInput: React.FC<MultiSelectCustomInputProps> = ({
                 icon={<Icon as={PlusIcon} />}
                 onClick={onAdd}
                 isDisabled={isDisabled}
+                data-test-id='add-allergen-button'
             />
         </Flex>
     );

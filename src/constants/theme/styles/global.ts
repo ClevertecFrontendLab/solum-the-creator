@@ -19,5 +19,8 @@ export const globalStyles = {
                 bg: `blackAlpha.300`,
             },
         },
+        html: {
+            scrollPaddingTop: '8rem',
+        },
     },
 };

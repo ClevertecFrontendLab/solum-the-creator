@@ -52,8 +52,6 @@ export const CategoryItem = React.memo(
             [category, subcategories, pathname],
         );
 
-        const dataTestId = category.path === 'vegan' ? 'vegan-cuisine' : undefined;
-
         const bgColor = isActive ? 'lime.100' : 'transparent';
         const fontWeight = isActive ? '700' : '500';
 
@@ -66,7 +64,7 @@ export const CategoryItem = React.memo(
                     px={2}
                     bg={bgColor}
                     fontWeight={fontWeight}
-                    data-test-id={dataTestId}
+                    data-test-id={category.path === 'vegan' ? 'vegan-cuisine' : category.path}
                 >
                     <Box as='span' boxSize={6} mr={3}>
                         <Image src={icon} alt={category.name} boxSize={6} />
@@ -86,13 +84,15 @@ export const CategoryItem = React.memo(
                             isLazy={true}
                         >
                             <TabList display='flex' flexDirection='column'>
-                                {subcategories.map((child) => {
+                                {subcategories.map((child, index) => {
                                     const subPath = getSubcategoryPath(category.path, child.path);
 
                                     return (
                                         <SubcategoryItem
                                             key={child.path}
+                                            isActive={activeTabIndex === index}
                                             to={subPath}
+                                            subcategory={child.path}
                                             name={child.name}
                                         />
                                     );

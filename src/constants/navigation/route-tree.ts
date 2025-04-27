@@ -19,7 +19,7 @@ export const routeTree: RouteNode[] = [
         type: 'page',
     },
     {
-        path: 'juiciest',
+        path: 'the-juiciest',
         name: 'Самое сочное',
         type: 'page',
     },

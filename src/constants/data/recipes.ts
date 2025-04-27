@@ -495,10 +495,10 @@ export const recipes: Recipe[] = [
     },
     {
         id: '9',
-        title: 'Картофельные рулетики с грибами',
+        title: 'Французский рулетик с мясом',
         description:
             'Рекомендую всем приготовить постное блюдо из картофеля и грибов. Готовится это блюдо без яиц, без мяса и без сыра, из самых простых ингредиентов, а получается очень вкусно и сытно. Постный рецепт картофельных рулетиков с грибами, в томатном соусе, - на обед, ужин и даже на праздничный стол!',
-        category: ['vegan', 'snacks'],
+        category: ['second-dish', 'snacks'],
         subcategory: ['snacks', 'warm-snacks'],
         image: recipe2Img,
         bookmarks: 85,
@@ -531,6 +531,5 @@ export const recipes: Recipe[] = [
             },
         ],
         authorId: '2',
-        side: 'potatoes',
     },
 ];

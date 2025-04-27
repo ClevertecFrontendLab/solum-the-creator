@@ -1,4 +1,4 @@
-import { Box, Flex, Hide, Show, Spacer, useDisclosure } from '@chakra-ui/react';
+import { Box, Flex, Show, Spacer, useDisclosure } from '@chakra-ui/react';
 
 import avatarUrl from '~/assets/images/avatar.jpg';
 import { ProfileNotification } from '~/components/entities/profile-notification/profile-notification';
@@ -44,16 +44,18 @@ export const Header: React.FC = () => {
                     </Box>
                 </Show>
 
-                <Hide above='md'>
-                    <Flex align='center' gap={{ base: 2, sm: 4 }}>
-                        {!isOpen && <ProfileNotification values={[121, 23, 49]} />}
+                <Flex
+                    align='center'
+                    gap={{ base: 2, sm: 4 }}
+                    display={{ base: 'flex', md: 'none' }}
+                >
+                    {!isOpen && <ProfileNotification values={[121, 23, 49]} />}
 
-                        <Box>
-                            <BurgerButton isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
-                            <MobileSidebar isOpen={isOpen} onClose={onClose} />
-                        </Box>
-                    </Flex>
-                </Hide>
+                    <Box>
+                        <BurgerButton isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
+                        <MobileSidebar isOpen={isOpen} onClose={onClose} />
+                    </Box>
+                </Flex>
             </Flex>
         </Box>
     );

@@ -20,16 +20,22 @@ type MultiSelectMenuProps = {
     allowCustomInput?: boolean;
     inputPlaceholder?: string;
     isDisabled?: boolean;
+    dataTestId?: string;
+    menuListDataTestId?: string;
+    getOptionTestId?: (option: Option, index: number) => string | undefined;
 };
 
 export const MultiSelectMenu: React.FC<MultiSelectMenuProps> = ({
     options,
     selected,
     onChange,
+    dataTestId,
     placeholder = 'Выберите из списка...',
     allowCustomInput = false,
     inputPlaceholder = 'Введите значение',
     isDisabled = false,
+    menuListDataTestId,
+    getOptionTestId,
 }) => {
     const [availableOptions, setAvailableOptions] = useState<Option[]>(options);
     const [inputValue, setInputValue] = useState('');
@@ -69,14 +75,19 @@ export const MultiSelectMenu: React.FC<MultiSelectMenuProps> = ({
                         placeholder={placeholder}
                         isOpen={isOpen}
                         isDisabled={isDisabled}
+                        dataTestId={dataTestId}
                     />
-                    <MenuList zIndex={3}>
-                        <MultiSelectOptions
-                            options={availableOptions}
-                            selected={selected}
-                            onToggle={toggleOption}
-                        />
-                        {allowCustomInput && (
+                    <MenuList zIndex={3} data-test-id={menuListDataTestId}>
+                        {isOpen && (
+                            <MultiSelectOptions
+                                options={availableOptions}
+                                selected={selected}
+                                onToggle={toggleOption}
+                                getOptionTestId={getOptionTestId}
+                            />
+                        )}
+
+                        {allowCustomInput && isOpen && (
                             <MultiSelectCustomInput
                                 value={inputValue}
                                 onChange={setInputValue}
