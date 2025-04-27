@@ -9,12 +9,14 @@ import { useFilteredRecipes } from '~/hooks/use-filtered-recipes';
 import { useSearchedRecipes } from '~/hooks/use-serched-recipes';
 import { useAppSelector } from '~/store/hooks';
 import { selectIsDrawerFilterApplied } from '~/store/recipe-filter/selectors';
+import { getPopularRecipes } from '~/utils/sort';
 
 export const JuiciestPage = () => {
-    const filteredAllergenRecipes = useAllergenFilteredRecipes(recipes);
+    const popularRecipes = getPopularRecipes(recipes);
+    const filteredAllergenRecipes = useAllergenFilteredRecipes(popularRecipes);
 
     const isDrawerFilterApplied = useAppSelector(selectIsDrawerFilterApplied);
-    const filteredRecipes = useFilteredRecipes(recipes);
+    const filteredRecipes = useFilteredRecipes(popularRecipes);
 
     const filteredRicipesByUI = isDrawerFilterApplied ? filteredRecipes : filteredAllergenRecipes;
 

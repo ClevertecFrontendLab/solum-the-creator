@@ -72,7 +72,7 @@ export type Recipe = {
     category: CategoryValue[];
     subcategory: Subcategory[];
     bookmarks?: number;
-    likes?: number;
+    likes: number;
     date: string;
     time: string;
     portions: number;
