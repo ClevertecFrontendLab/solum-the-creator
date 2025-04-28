@@ -18,7 +18,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ title, description }) 
     const [isSearchFocused, setSearchFocused] = useState(false);
 
     const isActive = useAppSelector(selectIsHeroActive);
-
     const isHeroActive = isActive || isSearchFocused;
 
     return (

@@ -1,4 +1,5 @@
 import { Box, HStack } from '@chakra-ui/react';
+import { useCallback } from 'react';
 
 import { AllergenSelect } from '~/components/shared/selects/allergen-select/allergen-select';
 import { Option } from '~/components/shared/selects/multi-select-menu/multi-select-menu';
@@ -13,26 +14,30 @@ export const HeroFilters: React.FC = () => {
     const dispatch = useAppDispatch();
     const excludeAllergens = useAppSelector(selectExcludeMode);
     const selectedAllergens = useAppSelector(selectSelectedAllergens);
-
     const isDrawerFilterActive = useAppSelector(selectIsDrawerFilterApplied);
 
-    const handleExcludeAllergensChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const checked = e.target.checked;
-        dispatch(setExcludeMode(checked));
-        if (!checked) {
-            dispatch(resetFilters());
-        }
-    };
+    const handleExcludeSwitch = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            const { checked } = e.target;
+            dispatch(setExcludeMode(checked));
 
-    const handleAllergensChange = (allergens: Option[]) => {
-        const isFirstAllergenAdded = selectedAllergens.length === 0 && allergens.length > 0;
+            if (!checked) dispatch(resetFilters());
+        },
+        [dispatch],
+    );
 
-        if (isDrawerFilterActive && isFirstAllergenAdded) {
-            dispatch(clearFilters());
-        }
+    const handleAllergenSelectionChange = useCallback(
+        (allergens: Option[]) => {
+            const addingFirstAllergen = selectedAllergens.length === 0 && allergens.length > 0;
 
-        dispatch(setSelectedAllergens(allergens));
-    };
+            if (isDrawerFilterActive && addingFirstAllergen) {
+                dispatch(clearFilters());
+            }
+
+            dispatch(setSelectedAllergens(allergens));
+        },
+        [dispatch, isDrawerFilterActive, selectedAllergens.length],
+    );
 
     return (
         <HStack spacing={4} w='100%' justify='center'>
@@ -40,14 +45,14 @@ export const HeroFilters: React.FC = () => {
                 id='exclude-allergens'
                 label='Исключить мои аллергены'
                 isChecked={excludeAllergens}
-                onChange={handleExcludeAllergensChange}
+                onChange={handleExcludeSwitch}
                 dataTestId='allergens-switcher'
             />
 
-            <Box maxW='14.5rem' w='100%'>
+            <Box w='100%' maxW='14.5rem'>
                 <AllergenSelect
                     selectedAllergens={selectedAllergens}
-                    onChange={handleAllergensChange}
+                    onChange={handleAllergenSelectionChange}
                     isDisabled={!excludeAllergens}
                     dataTestId='allergens-menu-button'
                 />

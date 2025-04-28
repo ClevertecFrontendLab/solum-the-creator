@@ -8,7 +8,7 @@ import {
     InputRightElement,
     useDisclosure,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import FilterIcon from '~/assets/icons/filter-icon.svg?react';
 import { FilterDrawer } from '~/components/ui/filter-drawer/filter-drawer';
@@ -26,27 +26,35 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({ onFocusChange }) => {
 
     const isDisabled = inputValue.trim().length < 3;
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const value = event.target.value;
+    const handleInputChange = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            const { value } = e.target;
+            setInputValue(value);
 
-        setInputValue(event.target.value);
+            if (value.trim() === '') {
+                dispatch(clearSearchQuery());
+            }
+        },
+        [dispatch],
+    );
 
-        if (value.trim() === '') {
-            dispatch(clearSearchQuery());
-        }
-    };
-
-    const handleSearch = () => {
+    const handleSearch = useCallback(() => {
         if (!isDisabled) {
             dispatch(setSearchQuery(inputValue));
         }
-    };
+    }, [dispatch, inputValue, isDisabled]);
 
-    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-        if (event.key === 'Enter') {
-            handleSearch();
-        }
-    };
+    const handleKeyDown = useCallback(
+        (e: React.KeyboardEvent<HTMLInputElement>) => {
+            if (e.key === 'Enter') {
+                handleSearch();
+            }
+        },
+        [handleSearch],
+    );
+
+    const handleFocus = useCallback(() => onFocusChange(true), [onFocusChange]);
+    const handleBlur = useCallback(() => onFocusChange(false), [onFocusChange]);
 
     return (
         <HStack spacing={3} width='100%' maxW={{ base: '28rem', md: '32.375rem' }}>
@@ -69,10 +77,10 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({ onFocusChange }) => {
                     variant='search'
                     placeholder='Название или ингредиент...'
                     value={inputValue}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
-                    onFocus={() => onFocusChange(true)}
-                    onBlur={() => onFocusChange(false)}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
                     data-test-id='search-input'
                 />
                 <InputRightElement>
