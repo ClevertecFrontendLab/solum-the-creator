@@ -1,7 +1,7 @@
 import { Flex, Spacer } from '@chakra-ui/react';
 
-import { ProfileNotification } from '~/components/entities/profile-notification/profile-notification';
-import { PrescribeButton } from '~/components/ui/buttons/menu-button/prescribe-button';
+import { PrescribeButton } from '~/components/shared/buttons/menu-button/prescribe-button';
+import { ProfileNotification } from '~/components/ui/profile-notification/profile-notification';
 
 export const RightSidebar: React.FC = () => (
     <Flex

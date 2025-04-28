@@ -1,12 +1,12 @@
 import { Box, Flex } from '@chakra-ui/react';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import { CulinaryBlogsSection } from '~/components/features/home/culinary-blogs-section';
-import { JuiciestSection } from '~/components/features/home/juiciest-section';
-import { HeroSection } from '~/components/shared/hero-section/hero-section';
-import { NewRecipesSection } from '~/components/shared/new-recipes-section/new-recipes-section';
-import { RecipeHorizontalGridSection } from '~/components/widgets/recipe-horizontal-grid-section/recipe-horizontal-grid-section';
-import { RelevantKitchenSection } from '~/components/widgets/relevant-kitchen-section/relevant-kitchen-section';
+import { HeroSection } from '~/components/sections/hero-section/hero-section';
+import { CulinaryBlogsSection } from '~/components/sections/home/culinary-blogs-section';
+import { JuiciestSection } from '~/components/sections/home/juiciest-section';
+import { NewRecipesSection } from '~/components/sections/new-recipes-section/new-recipes-section';
+import { RecipeHorizontalGridSection } from '~/components/sections/recipe-horizontal-grid-section/recipe-horizontal-grid-section';
+import { RelevantKitchenSection } from '~/components/sections/relevant-kitchen-section/relevant-kitchen-section';
 import { recipes } from '~/constants/data/recipes';
 import { fadeIn } from '~/constants/motions/motion-presets';
 import { useAllergenFilteredRecipes } from '~/hooks/use-allergen-filtered-recipes';

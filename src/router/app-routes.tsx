@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router';
 
-import { MainLayout } from '~/components/layouts/main-layout/main-layout';
+import { MainLayout } from '~/components/layouts/main-layout';
 import { pathes } from '~/constants/navigation/pathes';
 import { CategoryPage } from '~/pages/category/category-page';
 import { SubcategoryPage } from '~/pages/category/subcategory/subcategory-page';

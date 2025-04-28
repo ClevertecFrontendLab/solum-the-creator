@@ -1,8 +1,8 @@
 import { Box, HStack, Portal, useToken, VStack } from '@chakra-ui/react';
 import { AnimatePresence, motion } from 'framer-motion';
 
-import { Overlay } from '~/components/shared/overlay/overlay';
-import { Breadcrumbs } from '~/components/widgets/breadcrumbs/breadcrumbs';
+import { Overlay } from '~/components/shared/misc/overlay/overlay';
+import { Breadcrumbs } from '~/components/shared/navigation/breadcrumbs/breadcrumbs';
 import { heightExpand } from '~/constants/motions/motion-presets';
 import { useScrollLock } from '~/hooks/use-scroll-lock';
 

@@ -1,8 +1,8 @@
 import { Flex } from '@chakra-ui/react';
 
-import { HeroSection } from '~/components/shared/hero-section/hero-section';
-import { RecipeHorizontalGridSection } from '~/components/widgets/recipe-horizontal-grid-section/recipe-horizontal-grid-section';
-import { RelevantKitchenSection } from '~/components/widgets/relevant-kitchen-section/relevant-kitchen-section';
+import { HeroSection } from '~/components/sections/hero-section/hero-section';
+import { RecipeHorizontalGridSection } from '~/components/sections/recipe-horizontal-grid-section/recipe-horizontal-grid-section';
+import { RelevantKitchenSection } from '~/components/sections/relevant-kitchen-section/relevant-kitchen-section';
 import { recipes } from '~/constants/data/recipes';
 import { useAllergenFilteredRecipes } from '~/hooks/use-allergen-filtered-recipes';
 import { useFilteredRecipes } from '~/hooks/use-filtered-recipes';

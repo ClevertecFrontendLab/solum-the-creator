@@ -1,6 +1,6 @@
 import { Flex } from '@chakra-ui/react';
 
-import { Option } from '../selects/multi-select-menu/multi-select-menu';
+import { Option } from '../../shared/selects/multi-select-menu/multi-select-menu';
 import { FilterTag } from './filter-tag';
 
 type ActiveFiltersProps = {

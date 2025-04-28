@@ -1,12 +1,12 @@
 import { VStack } from '@chakra-ui/react';
 import { useParams } from 'react-router';
 
-import { HeaderSection } from '~/components/features/recipe/header-section/header-section';
-import { NutritionSection } from '~/components/features/recipe/nutrition-section/nutrition-section';
-import { RecipeStepsSection } from '~/components/features/recipe/recipe-steps-section/recipe-steps-section';
-import { RecipeTableSection } from '~/components/features/recipe/recipe-table-section/recipe-table-section';
-import { RecipeAuthorCard } from '~/components/shared/cards/recipe-author-card/recipe-author-card';
-import { NewRecipesSection } from '~/components/shared/new-recipes-section/new-recipes-section';
+import { RecipeAuthorCard } from '~/components/cards/recipe-author-card/recipe-author-card';
+import { NewRecipesSection } from '~/components/sections/new-recipes-section/new-recipes-section';
+import { HeaderSection } from '~/components/sections/recipe/header-section/header-section';
+import { NutritionSection } from '~/components/sections/recipe/nutrition-section/nutrition-section';
+import { RecipeStepsSection } from '~/components/sections/recipe/recipe-steps-section/recipe-steps-section';
+import { RecipeTableSection } from '~/components/sections/recipe/recipe-table-section/recipe-table-section';
 import { authors } from '~/constants/data/authors';
 import { recipes } from '~/constants/data/recipes';
 

@@ -1,4 +1,4 @@
-import { Option } from '~/components/ui/selects/multi-select-menu/multi-select-menu';
+import { Option } from '~/components/shared/selects/multi-select-menu/multi-select-menu';
 
 export const initialAllergens: Option[] = [
     { label: 'Молочные продукты', value: 'молоко' },

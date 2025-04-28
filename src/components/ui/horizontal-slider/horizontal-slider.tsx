@@ -6,7 +6,7 @@ import { useRef } from 'react';
 import { Navigation } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import { SliderNavButton } from '~/components/ui/buttons/slider-nav-button/slider-nav-button';
+import { SliderNavButton } from '~/components/shared/buttons/slider-nav-button/slider-nav-button';
 
 import { sliderBreakpoints } from './slider-breakpoinst';
 

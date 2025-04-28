@@ -15,7 +15,7 @@ import {
 import { useState } from 'react';
 
 import CloseIcon from '~/assets/icons/full-close-icon.svg?react';
-import { CategorySelect } from '~/components/ui/selects/category-select/category-select';
+import { CategorySelect } from '~/components/shared/selects/category-select/category-select';
 import { meatTypes, sideTypes } from '~/constants/data/recipes';
 import { selectIsAllergenFilterActive } from '~/store/allergen-filter/selectors';
 import { resetFilters } from '~/store/allergen-filter/slice';
@@ -30,10 +30,10 @@ import {
     setSideTypes,
 } from '~/store/recipe-filter/slice';
 
-import { AllergenSelect } from '../selects/allergen-select/allergen-select';
-import { AuthorSelect } from '../selects/author-select/author-select';
-import { Option } from '../selects/multi-select-menu/multi-select-menu';
-import { SwitchWithLabel } from '../switch-with-label/switch-with-label';
+import { AllergenSelect } from '../../shared/selects/allergen-select/allergen-select';
+import { AuthorSelect } from '../../shared/selects/author-select/author-select';
+import { Option } from '../../shared/selects/multi-select-menu/multi-select-menu';
+import { SwitchWithLabel } from '../../shared/switch-with-label/switch-with-label';
 import { ActiveFilters } from './active-filters';
 import { IngridientsCheckboxList } from './ingridients-checkbox-list';
 type FilterDrawerProps = {

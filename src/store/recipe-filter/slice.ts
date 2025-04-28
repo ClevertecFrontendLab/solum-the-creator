@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { Option } from '~/components/ui/selects/multi-select-menu/multi-select-menu';
+import { Option } from '~/components/shared/selects/multi-select-menu/multi-select-menu';
 
 type RecipeFilterState = {
     categories: Option[];
