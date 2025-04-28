@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useLocation } from 'react-router';
 
-import { RouteNode } from '~/constants/route-tree';
+import { RouteNode } from '~/constants/navigation/route-tree';
 import { isCategoryActive } from '~/utils/categories';
 
 export const useActiveCategoryIndex = (categories: RouteNode[]) => {

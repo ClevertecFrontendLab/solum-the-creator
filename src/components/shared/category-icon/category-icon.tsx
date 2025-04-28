@@ -1,6 +1,6 @@
 import { Image } from '@chakra-ui/react';
 
-import { categoryIcons, CategoryKey } from '~/constants/category-icons';
+import { categoryIcons, CategoryKey } from '~/constants/ui/category-icons';
 import { getCategoryNameByKey } from '~/utils/categories';
 
 type CategoryIconProps = {

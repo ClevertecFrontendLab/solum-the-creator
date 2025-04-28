@@ -1,30 +1,29 @@
-import { Box, ListItem, Text } from '@chakra-ui/react';
+import { Tab, Text } from '@chakra-ui/react';
+import React from 'react';
 import { Link } from 'react-router';
 
 type SubcategoryItemProps = {
     to: string;
     name: string;
-    isActive: boolean;
+    subcategory: string;
+    isActive?: boolean;
 };
 
-export const SubcategoryItem: React.FC<SubcategoryItemProps> = ({ to, name, isActive }) => (
-    <ListItem position='relative'>
-        <Link to={to}>
-            <Box position='relative' py='6px' pl='12px'>
-                <Box
-                    position='absolute'
-                    right='100%'
-                    top='50%'
-                    transform='translateY(-50%)'
-                    w={isActive ? '8px' : '1px'}
-                    h={isActive ? 7 : 6}
-                    bg='lime.300'
-                    transition='width 0.2s'
-                />
-                <Text as='span' fontWeight={isActive ? '700' : '500'} noOfLines={1}>
-                    {name}
-                </Text>
-            </Box>
-        </Link>
-    </ListItem>
+export const SubcategoryItem = React.memo(
+    ({ to, name, subcategory, isActive }: SubcategoryItemProps) => (
+        <Tab
+            position='relative'
+            as={Link}
+            to={to}
+            pl={3}
+            pr={0}
+            py={1.5}
+            justifyContent='flex-start'
+            data-test-id={isActive ? `${subcategory}-active` : undefined}
+        >
+            <Text as='span' isTruncated={true}>
+                {name}
+            </Text>
+        </Tab>
+    ),
 );

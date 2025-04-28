@@ -1,5 +1,8 @@
-import { categoryIcons, CategoryKey } from '~/constants/category-icons';
-import { RouteNode, routeTree } from '~/constants/route-tree';
+import { matchPath } from 'react-router';
+
+import { categories } from '~/constants/data/category';
+import { RouteNode, routeTree } from '~/constants/navigation/route-tree';
+import { categoryIcons, CategoryKey } from '~/constants/ui/category-icons';
 
 export const getCategories = (routeTree: RouteNode[]) =>
     routeTree.filter((route) => route.type === 'category');
@@ -19,3 +22,39 @@ export const getCurrentCategory = (category?: string): RouteNode | undefined =>
     routeTree.find((node) => node.path === category && node.type === 'category');
 
 export const isCategoryKey = (key: string): key is CategoryKey => key in categoryIcons;
+
+export const getActiveSubcategoryIndex = (
+    category: RouteNode,
+    subcategories: RouteNode[],
+    pathname: string,
+) =>
+    subcategories.findIndex((child) => {
+        const pathPattern = `/${getSubcategoryPath(category.path, child.path)}/*`;
+
+        const normalizedPathname = pathname.startsWith('/') ? pathname : `/${pathname}`;
+
+        const isMatch = matchPath({ path: pathPattern, end: false }, normalizedPathname);
+
+        return isMatch !== null;
+    });
+
+export const findMatchingSubcategory = (
+    categoryPath: CategoryKey,
+    recipeSubcategories: string[],
+) => {
+    const categoryNode = routeTree.find(
+        (node) => node.type === 'category' && node.path === categoryPath,
+    );
+
+    if (!categoryNode?.children) {
+        return undefined;
+    }
+
+    return categoryNode.children.find((child) => recipeSubcategories.includes(child.path))?.path;
+};
+
+export const getCategiresOptions = () =>
+    Object.entries(categories).map(([key, { label }]) => ({
+        value: key,
+        label,
+    }));

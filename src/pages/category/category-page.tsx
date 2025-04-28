@@ -1,27 +1,34 @@
 import { Flex } from '@chakra-ui/react';
-import { Outlet } from 'react-router';
+import { Outlet, useParams } from 'react-router';
 
-import { CategoryTabs } from '~/components/shared/category-tabs/category-tabs';
-import { HeroSection } from '~/components/shared/hero-section/hero-section';
-import { RelevantKitchenSection } from '~/components/shared/relevant-kitchen-section/relevant-kitchen-section';
-import { recipes } from '~/constants/recipes';
+import { HeroSection } from '~/components/sections/hero-section/hero-section';
+import { RelevantKitchenSection } from '~/components/sections/relevant-kitchen-section/relevant-kitchen-section';
+import { CategoryTabs } from '~/components/shared/navigation/category-tabs/category-tabs';
+import { categoryText, CategoryValue } from '~/constants/data/category';
+import { recipes } from '~/constants/data/recipes';
 
-export const CategoryPage = () => (
-    <Flex direction='column' align='center'>
-        <HeroSection
-            title='Веганская кухня'
-            description='Интересны не только убеждённым вегетарианцам, но и тем, кто хочет  попробовать вегетарианскую диету и готовить вкусные  вегетарианские блюда.'
-        />
+export const CategoryPage = () => {
+    const { category } = useParams<{ category: CategoryValue }>();
 
-        <CategoryTabs />
+    return (
+        <Flex direction='column' align='center'>
+            <HeroSection
+                title={categoryText[category!].title}
+                description={categoryText[category!].description}
+            />
 
-        <Outlet />
+            <Flex direction='column' align='center' width='100%' px={{ base: 4, sm: 5, md: 6 }}>
+                <CategoryTabs />
 
-        <RelevantKitchenSection
-            title='Десерты, выпечка'
-            description='Без них невозможно представить себе ни современную, ни традиционную  кулинарию. Пироги и печенья, блины, пончики, вареники и, конечно, хлеб - рецепты изделий из теста многообразны и невероятно популярны.'
-            recipesTextCards={recipes.slice(0, 2)}
-            recipesSimpleCards={recipes.slice(2, 5)}
-        />
-    </Flex>
-);
+                <Outlet />
+
+                <RelevantKitchenSection
+                    title='Десерты, выпечка'
+                    description='Без них невозможно представить себе ни современную, ни традиционную  кулинарию. Пироги и печенья, блины, пончики, вареники и, конечно, хлеб - рецепты изделий из теста многообразны и невероятно популярны.'
+                    recipesTextCards={recipes.slice(0, 2)}
+                    recipesSimpleCards={recipes.slice(2, 5)}
+                />
+            </Flex>
+        </Flex>
+    );
+};

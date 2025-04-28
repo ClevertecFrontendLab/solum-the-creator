@@ -1,6 +1,6 @@
 import { Navigate, useParams } from 'react-router';
 
-import { pathes } from '~/constants/pathes';
+import { pathes } from '~/constants/navigation/pathes';
 import { getFirstSubcategoryPath } from '~/utils/get-first-subcategory';
 
 export const RedirectToFirstSubcategory = () => {

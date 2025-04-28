@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useLocation } from 'react-router';
 
-import { routeTree } from '~/constants/route-tree';
+import { routeTree } from '~/constants/navigation/route-tree';
 import { findRoute } from '~/utils/find-route';
 
 export const useBreadcrumbs = () => {

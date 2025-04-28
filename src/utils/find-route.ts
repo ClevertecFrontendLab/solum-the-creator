@@ -1,4 +1,5 @@
-import { Breadcrumb, RouteNode } from '~/constants/route-tree';
+import { recipes } from '~/constants/data/recipes';
+import { Breadcrumb, RouteNode } from '~/constants/navigation/route-tree';
 
 export const findRoute = (
     nodes: RouteNode[],
@@ -12,14 +13,19 @@ export const findRoute = (
     const [segment, ...rest] = segments;
     const node = nodes.find((n) => n.path === segment);
 
-    if (!node) {
-        return [
-            { label: segment, href: `${currentPath}/${segment}` },
-            ...findRoute([], rest, `${currentPath}/${segment}`),
-        ];
+    if (node) {
+        const path = `${currentPath}/${node.path}`;
+        return [{ label: node.name, href: path }, ...findRoute(node.children ?? [], rest, path)];
     }
 
-    const path = `${currentPath}/${node.path}`;
+    const recipe = recipes.find((r) => r.id === segment);
+    if (recipe) {
+        const path = `${currentPath}/${segment}`;
+        return [{ label: recipe.title, href: path }];
+    }
 
-    return [{ label: node.name, href: path }, ...findRoute(node.children ?? [], rest, path)];
+    return [
+        { label: segment, href: `${currentPath}/${segment}` },
+        ...findRoute([], rest, `${currentPath}/${segment}`),
+    ];
 };
