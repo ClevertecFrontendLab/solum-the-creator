@@ -1,7 +1,7 @@
 import { Box, Image } from '@chakra-ui/react';
 
+import { CategoryBadge } from '~/components/shared/badges/category-badge/category-badge';
 import { RecommendBadge } from '~/components/shared/badges/recommend-badge/recommend-badge';
-import { CategoryBadge } from '~/components/shared/category-badge/category-badge';
 import { CategoryKey } from '~/constants/ui/category-icons';
 
 type ImageSectionProps = {

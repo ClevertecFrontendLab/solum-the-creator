@@ -1,5 +1,5 @@
 import { Box, Tab, TabList, Tabs } from '@chakra-ui/react';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
 import { useScrollToTab } from '~/hooks/use-scroll-to-tab';
@@ -10,18 +10,34 @@ export const CategoryTabs = () => {
     const navigate = useNavigate();
 
     const currentCategory = getCurrentCategory(category);
+
     const children = useMemo(() => currentCategory?.children ?? [], [currentCategory]);
 
-    const currentIndex = children.findIndex((child) => child.path === subcategory);
+    const currentIndex = useMemo(
+        () => children.findIndex((child) => child.path === subcategory),
+        [children, subcategory],
+    );
 
     const tabRefs = useScrollToTab(currentIndex, children);
 
-    const handleTabChange = (index: number) => {
-        const sub = children[index];
-        if (sub) {
-            navigate(`/${category}/${sub.path}`);
-        }
-    };
+    const handleTabChange = useCallback(
+        (index: number) => {
+            const sub = children[index];
+            if (sub) {
+                navigate(`/${category}/${sub.path}`);
+            }
+        },
+        [children, category, navigate],
+    );
+
+    const setTabRef = useCallback(
+        (el: HTMLButtonElement | null, index: number) => {
+            if (el) {
+                tabRefs.current[index] = el;
+            }
+        },
+        [tabRefs],
+    );
 
     if (!currentCategory || children.length === 0) {
         return null;
@@ -55,9 +71,7 @@ export const CategoryTabs = () => {
                     {children.map((child, index) => (
                         <Tab
                             key={child.path}
-                            ref={(el) => {
-                                tabRefs.current[index] = el;
-                            }}
+                            ref={(el) => setTabRef(el, index)}
                             flexShrink={0}
                             py={{ base: 1, md: 2 }}
                             fontSize={{ base: 'sm', md: 'md' }}

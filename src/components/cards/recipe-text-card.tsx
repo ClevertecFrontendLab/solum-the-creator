@@ -1,7 +1,7 @@
 import { Card, CardBody, CardFooter, Flex, Heading, Text, VStack } from '@chakra-ui/react';
 
+import { CategoryBadge } from '~/components/shared/badges/category-badge/category-badge';
 import { RateButtons } from '~/components/shared/buttons/rate-buttons/rate-buttons';
-import { CategoryBadge } from '~/components/shared/category-badge/category-badge';
 import { CategoryKey } from '~/constants/ui/category-icons';
 import { useNavigationToRecipe } from '~/hooks/use-navigation-to-recipe';
 
