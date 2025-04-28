@@ -43,7 +43,6 @@ type FilterDrawerProps = {
 
 export const FilterDrawer: React.FC<FilterDrawerProps> = ({ isOpen, onClose }) => {
     const dispatch = useAppDispatch();
-
     const isAllergensFilterActive = useAppSelector(selectIsAllergenFilterActive);
 
     const [selectedCategories, setSelectedCategories] = useState<Option[]>([]);
@@ -56,28 +55,20 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({ isOpen, onClose }) =
     const [selectedAllergens, setSelectedAllergens] = useState<Option[]>([]);
 
     const isFiltersActive =
-        selectedCategories.length > 0 ||
-        selectedAuthors.length > 0 ||
-        selectedMeatTypes.length > 0 ||
-        selectedSideTypes.length > 0 ||
+        [selectedCategories, selectedAuthors, selectedMeatTypes, selectedSideTypes].some(
+            (list) => list.length > 0,
+        ) ||
         (isExcludeAllergens && selectedAllergens.length > 0);
 
-    const handleOnChangeMeatType = (ingridient: Option) => {
-        setSelectedMeatTypes((prev) => {
-            const exists = prev.some((item) => item.value === ingridient.value);
-            return exists
-                ? prev.filter((item) => item.value !== ingridient.value)
-                : [...prev, ingridient];
-        });
-    };
-
-    const handleOnChangeSideType = (ingridient: Option) => {
-        setSelectedSideTypes((prev) => {
-            const exists = prev.some((item) => item.value === ingridient.value);
-            return exists
-                ? prev.filter((item) => item.value !== ingridient.value)
-                : [...prev, ingridient];
-        });
+    const handleToggleOption = (
+        option: Option,
+        setOptions: React.Dispatch<React.SetStateAction<Option[]>>,
+    ) => {
+        setOptions((prev) =>
+            prev.some((item) => item.value === option.value)
+                ? prev.filter((item) => item.value !== option.value)
+                : [...prev, option],
+        );
     };
 
     const handleExcludeAllergensChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -162,14 +153,18 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({ isOpen, onClose }) =
                         title='Тип мяса:'
                         ingridients={meatTypes}
                         checkedIngridients={selectedMeatTypes}
-                        onChange={handleOnChangeMeatType}
+                        onChange={(ingridient) =>
+                            handleToggleOption(ingridient, setSelectedMeatTypes)
+                        }
                     />
 
                     <IngridientsCheckboxList
                         title='Тип гарнира:'
                         ingridients={sideTypes}
                         checkedIngridients={selectedSideTypes}
-                        onChange={handleOnChangeSideType}
+                        onChange={(ingridient) =>
+                            handleToggleOption(ingridient, setSelectedSideTypes)
+                        }
                     />
 
                     <VStack w='100%' align='start'>
