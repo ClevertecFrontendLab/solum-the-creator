@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router';
 import { PersistGate } from 'redux-persist/integration/react';
 
+import { GlobalLoader } from '~/components/shared/misc/global-loader/global-loader';
 import { theme } from '~/constants/theme/theme';
 import { persistor, store } from '~/store/configure-store.ts';
 
@@ -18,6 +19,7 @@ createRoot(document.getElementById('root')!).render(
             <BrowserRouter>
                 <Provider store={store}>
                     <PersistGate loading={null} persistor={persistor}>
+                        <GlobalLoader />
                         <AppRoutes />
                     </PersistGate>
                 </Provider>
