@@ -5,5 +5,3 @@ export const pathes = {
     subcategories: '/:category/:subcategory',
     recipes: '/:category/:subcategory/:recipeId',
 };
-
-export const VEGAN_CATEGORY_PATH = 'vegan';

@@ -3,6 +3,7 @@ import { matchPath } from 'react-router';
 import { categories } from '~/constants/data/category';
 import { RouteNode, routeTree } from '~/constants/navigation/route-tree';
 import { categoryIcons, CategoryKey } from '~/constants/ui/category-icons';
+import { SidebarCategory, SubCategory } from '~/types/category';
 
 export const getCategories = (routeTree: RouteNode[]) =>
     routeTree.filter((route) => route.type === 'category');
@@ -24,12 +25,12 @@ export const getCurrentCategory = (category?: string): RouteNode | undefined =>
 export const isCategoryKey = (key: string): key is CategoryKey => key in categoryIcons;
 
 export const getActiveSubcategoryIndex = (
-    category: RouteNode,
-    subcategories: RouteNode[],
+    category: SidebarCategory,
+    subcategories: SubCategory[],
     pathname: string,
 ) =>
     subcategories.findIndex((child) => {
-        const pathPattern = `/${getSubcategoryPath(category.path, child.path)}/*`;
+        const pathPattern = `/${concatPath(category.category, child.category)}/*`;
 
         const normalizedPathname = pathname.startsWith('/') ? pathname : `/${pathname}`;
 
@@ -58,3 +59,5 @@ export const getCategiresOptions = () =>
         value: key,
         label,
     }));
+
+export const concatPath = (...paths: string[]) => paths.filter(Boolean).join('/');

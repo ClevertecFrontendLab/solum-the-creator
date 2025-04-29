@@ -13,40 +13,35 @@ import { Link } from 'react-router';
 
 import ChevronDownIcon from '~/assets/icons/chevron-down-icon.svg?react';
 import { pathes } from '~/constants/navigation/pathes';
-import { RouteNode } from '~/constants/navigation/route-tree';
-import { categoryIcons } from '~/constants/ui/category-icons';
+import { SidebarCategory } from '~/types/category';
 import {
+    concatPath,
     getActiveSubcategoryIndex,
     getSubcategoryPath,
     isCategoryActive,
-    isCategoryKey,
 } from '~/utils/categories';
-import { getFirstSubcategoryPath } from '~/utils/get-first-subcategory';
 
 import { SubcategoryItem } from './subcategory-item';
 
 type CategoryItemProps = {
-    category: RouteNode;
+    category: SidebarCategory;
     pathname: string;
 };
 
 export const CategoryItem = React.memo(
     ({ category, pathname }: CategoryItemProps) => {
         const isActive = useMemo(
-            () => isCategoryActive(category.path, pathname),
-            [category.path, pathname],
-        );
-        const icon = useMemo(
-            () => (isCategoryKey(category.path) ? categoryIcons[category.path] : undefined),
-            [category.path],
+            () => isCategoryActive(category.category, pathname),
+            [category.category, pathname],
         );
 
-        const subcategories = useMemo(() => category.children ?? [], [category.children]);
+        const subcategories = category.subCategories;
 
         const firstSubcategoryPath = useMemo(
-            () => getFirstSubcategoryPath(category.path),
-            [category.path],
+            () => concatPath(category.category, subcategories[0].category),
+            [category.category, subcategories],
         );
+
         const activeTabIndex = useMemo(
             () => getActiveSubcategoryIndex(category, subcategories, pathname),
             [category, subcategories, pathname],
@@ -64,13 +59,15 @@ export const CategoryItem = React.memo(
                     px={2}
                     bg={bgColor}
                     fontWeight={fontWeight}
-                    data-test-id={category.path === 'vegan' ? 'vegan-cuisine' : category.path}
+                    data-test-id={
+                        category.category === 'vegan' ? 'vegan-cuisine' : category.category
+                    }
                 >
                     <Box as='span' boxSize={6} mr={3}>
-                        <Image src={icon} alt={category.name} boxSize={6} />
+                        <Image src={category.icon} alt={category.category} boxSize={6} />
                     </Box>
                     <Box as='span' flex={1} textAlign='left'>
-                        {category.name}
+                        {category.title}
                     </Box>
                     <AccordionIcon boxSize={4} as={ChevronDownIcon} />
                 </AccordionButton>
@@ -85,15 +82,18 @@ export const CategoryItem = React.memo(
                         >
                             <TabList display='flex' flexDirection='column'>
                                 {subcategories.map((child, index) => {
-                                    const subPath = getSubcategoryPath(category.path, child.path);
+                                    const subPath = getSubcategoryPath(
+                                        category.category,
+                                        child.category,
+                                    );
 
                                     return (
                                         <SubcategoryItem
-                                            key={child.path}
+                                            key={child._id}
                                             isActive={activeTabIndex === index}
                                             to={subPath}
-                                            subcategory={child.path}
-                                            name={child.name}
+                                            subcategory={child.category}
+                                            name={child.title}
                                         />
                                     );
                                 })}
@@ -106,6 +106,6 @@ export const CategoryItem = React.memo(
     },
     (prev, next) =>
         prev.pathname === next.pathname &&
-        prev.category.path === next.category.path &&
-        JSON.stringify(prev.category.children) === JSON.stringify(next.category.children),
+        prev.category.category === next.category.category &&
+        JSON.stringify(prev.category.subCategories) === JSON.stringify(next.category.subCategories),
 );
