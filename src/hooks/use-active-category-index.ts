@@ -14,7 +14,7 @@ export const useActiveCategoryIndex = (categories: SidebarCategory[]) => {
     );
 
     return {
-        activeIndex: activeIndex === -1 ? undefined : activeIndex,
+        activeIndex,
         pathname,
     };
 };
