@@ -5,9 +5,6 @@ import { RouteNode, routeTree } from '~/constants/navigation/route-tree';
 import { categoryIcons, CategoryKey } from '~/constants/ui/category-icons';
 import { SidebarCategory, SubCategory } from '~/types/category';
 
-export const getCategories = (routeTree: RouteNode[]) =>
-    routeTree.filter((route) => route.type === 'category');
-
 export const getSubcategoryPath = (categoryPath: string, subPath: string) =>
     `${categoryPath}/${subPath}`;
 
