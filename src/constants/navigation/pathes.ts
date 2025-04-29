@@ -4,4 +4,5 @@ export const pathes = {
     categories: '/:category',
     subcategories: '/:category/:subcategory',
     recipes: '/:category/:subcategory/:recipeId',
+    subcategory: (category: string, subcategory: string) => `/${category}/${subcategory}`,
 };
