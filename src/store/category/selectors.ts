@@ -22,3 +22,8 @@ export const selectSidebarCategories = createSelector(
             subCategories,
         })),
 );
+
+export const selectCategoryBySlug = (slug: string) =>
+    createSelector([selectAllCategories], (categories) =>
+        categories.find((category) => category.category === slug),
+    );

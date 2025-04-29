@@ -14,12 +14,7 @@ import { Link } from 'react-router';
 import ChevronDownIcon from '~/assets/icons/chevron-down-icon.svg?react';
 import { pathes } from '~/constants/navigation/pathes';
 import { SidebarCategory } from '~/types/category';
-import {
-    concatPath,
-    getActiveSubcategoryIndex,
-    getSubcategoryPath,
-    isCategoryActive,
-} from '~/utils/categories';
+import { concatPath, getActiveSubcategoryIndex, isCategoryActive } from '~/utils/categories';
 
 import { SubcategoryItem } from './subcategory-item';
 
@@ -38,7 +33,10 @@ export const CategoryItem = React.memo(
         const subcategories = category.subCategories;
 
         const firstSubcategoryPath = useMemo(
-            () => concatPath(category.category, subcategories[0].category),
+            () =>
+                subcategories?.[0]
+                    ? concatPath(category.category, subcategories[0].category)
+                    : undefined,
             [category.category, subcategories],
         );
 
@@ -81,22 +79,15 @@ export const CategoryItem = React.memo(
                             isLazy={true}
                         >
                             <TabList display='flex' flexDirection='column'>
-                                {subcategories.map((child, index) => {
-                                    const subPath = getSubcategoryPath(
-                                        category.category,
-                                        child.category,
-                                    );
-
-                                    return (
-                                        <SubcategoryItem
-                                            key={child._id}
-                                            isActive={activeTabIndex === index}
-                                            to={subPath}
-                                            subcategory={child.category}
-                                            name={child.title}
-                                        />
-                                    );
-                                })}
+                                {subcategories.map((child, index) => (
+                                    <SubcategoryItem
+                                        key={child._id}
+                                        isActive={activeTabIndex === index}
+                                        to={concatPath(category.category, child.category)}
+                                        subcategory={child.category}
+                                        name={child.title}
+                                    />
+                                ))}
                             </TabList>
                         </Tabs>
                     )}

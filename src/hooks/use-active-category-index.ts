@@ -9,15 +9,12 @@ export const useActiveCategoryIndex = (categories: SidebarCategory[]) => {
     const pathname = location.pathname.slice(1);
 
     const activeIndex = useMemo(
-        () =>
-            categories
-                .map((c, i) => (isCategoryActive(c.category, pathname) ? i : -1))
-                .filter((i) => i !== -1),
+        () => categories.findIndex((c) => isCategoryActive(c.category, pathname)),
         [categories, pathname],
     );
 
     return {
-        activeIndex,
+        activeIndex: activeIndex === -1 ? undefined : activeIndex,
         pathname,
     };
 };
