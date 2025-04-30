@@ -30,7 +30,6 @@ export const RecipeCardVertical: React.FC<RecipeCardVerticalProps> = ({
     bookmarks = 0,
 }) => {
     const categories = useAppSelector(selectParentCategoriesBySubIds(categoriesIds));
-    const category = categories[0];
 
     const navigateToRecipe = useNavigationToRecipe({
         recipeId: id,
@@ -48,15 +47,12 @@ export const RecipeCardVertical: React.FC<RecipeCardVerticalProps> = ({
             minH='13.75rem'
             cursor='pointer'
             onClick={navigateToRecipe}
+            height='100%'
         >
-            <ImageSection
-                image={image}
-                category={category.category}
-                categoryTitle={category.title}
-            />
+            <ImageSection image={image} categories={categories} />
 
             <CardBody pt={{ base: 2, sm: 3, '2xl': 4 }} pb={0} px={{ base: 2, sm: 3, '2xl': 6 }}>
-                <VStack spacing={2} align='start'>
+                <VStack spacing={2} align='start' maxH={{ base: '3rem', md: '6.25rem' }} flex={0}>
                     <Heading
                         as='h3'
                         fontSize={{ base: 'md', md: 'lg' }}
@@ -66,16 +62,9 @@ export const RecipeCardVertical: React.FC<RecipeCardVerticalProps> = ({
                         {title}
                     </Heading>
 
-                    {description && (
-                        <Text
-                            fontSize='sm'
-                            noOfLines={3}
-                            h='4rem'
-                            display={{ base: 'none', md: '-webkit-box' }}
-                        >
-                            {description}
-                        </Text>
-                    )}
+                    <Text fontSize='sm' noOfLines={3} display={{ base: 'none', md: '-webkit-box' }}>
+                        {description}
+                    </Text>
                 </VStack>
             </CardBody>
 
@@ -89,7 +78,15 @@ export const RecipeCardVertical: React.FC<RecipeCardVerticalProps> = ({
                 flexWrap='wrap'
             >
                 <Hide below='md'>
-                    <CategoryBadge title={category.title} category={category.category} />
+                    <VStack>
+                        {categories.map((category) => (
+                            <CategoryBadge
+                                key={category._id}
+                                title={category.title}
+                                category={category.category}
+                            />
+                        ))}
+                    </VStack>
                 </Hide>
 
                 <RateButtons bookmarks={bookmarks} likes={likes} />

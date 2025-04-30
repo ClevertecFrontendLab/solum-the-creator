@@ -48,7 +48,7 @@ export const HorizontalSlider = <T extends { _id: string }>({
                 {items.map((item, index) => (
                     <SwiperSlide
                         key={item._id}
-                        style={{ width: 'auto' }}
+                        style={{ width: 'auto', height: 'auto' }}
                         data-test-id={`carousel-card-${index}`}
                     >
                         {renderItem(item)}
