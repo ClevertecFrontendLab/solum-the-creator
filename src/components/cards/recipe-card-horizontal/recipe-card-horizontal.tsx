@@ -14,8 +14,8 @@ import {
 } from '@chakra-ui/react';
 
 import SavedIcon from '~/assets/icons/bookmarkHeart-icon.svg?react';
-import { CategoryKey } from '~/constants/ui/category-icons';
 import { useNavigationToRecipe } from '~/hooks/use-navigation-to-recipe';
+import { selectParentCategoriesBySubIds } from '~/store/category/selectors';
 import { useAppSelector } from '~/store/hooks';
 import { selectSearchQuery } from '~/store/search/selectors';
 
@@ -27,8 +27,7 @@ type RecipeCardHorizontalProps = {
     image: string;
     title: string;
     description: string;
-    category: CategoryKey[];
-    subcategory: string[];
+    categoriesIds: string[];
     likes?: number;
     dataTestId?: string;
     index?: number;
@@ -44,18 +43,18 @@ export const RecipeCardHorizontal: React.FC<RecipeCardHorizontalProps> = ({
     title,
     image,
     description,
-    category,
-    subcategory,
+    categoriesIds,
     recommendedBy,
     dataTestId,
     index,
     likes = 0,
     bookmarks = 0,
 }) => {
+    const categories = useAppSelector(selectParentCategoriesBySubIds(categoriesIds));
+
     const handleCookClick = useNavigationToRecipe({
         recipeId: id,
-        category: category[0],
-        subcategories: subcategory,
+        subCategoryId: categoriesIds[0],
     });
 
     const searchQuery = useAppSelector(selectSearchQuery);
@@ -69,7 +68,7 @@ export const RecipeCardHorizontal: React.FC<RecipeCardHorizontalProps> = ({
             data-test-id={dataTestId}
         >
             <Flex direction='row' h='100%' align='stretch'>
-                <ImageSection image={image} category={category[0]} recommendedBy={recommendedBy} />
+                <ImageSection image={image} categories={categories} recommendedBy={recommendedBy} />
 
                 <Flex
                     direction='column'
@@ -86,7 +85,7 @@ export const RecipeCardHorizontal: React.FC<RecipeCardHorizontalProps> = ({
                         px={0}
                         py={0}
                     >
-                        <TopRow category={category[0]} likes={likes} bookmarks={bookmarks} />
+                        <TopRow categories={categories} likes={likes} bookmarks={bookmarks} />
 
                         <VStack spacing={2} align='stretch' maxH={{ base: 'none', lg: '6.25rem' }}>
                             <Heading

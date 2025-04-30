@@ -1,37 +1,38 @@
-import { Box, Image } from '@chakra-ui/react';
+import { Box, Image, VStack } from '@chakra-ui/react';
 
 import { CategoryBadge } from '~/components/shared/badges/category-badge/category-badge';
 import { RecommendBadge } from '~/components/shared/badges/recommend-badge/recommend-badge';
-import { CategoryKey } from '~/constants/ui/category-icons';
+import { Category } from '~/types/category';
 
 type ImageSectionProps = {
     image: string;
-    category?: CategoryKey;
+    categories: Category[];
     recommendedBy?: { avatarUrl: string; fullName: string };
 };
 
-export const ImageSection: React.FC<ImageSectionProps> = ({ image, category, recommendedBy }) => (
+export const ImageSection: React.FC<ImageSectionProps> = ({ image, categories, recommendedBy }) => (
     <Box
         position='relative'
         w='100%'
         maxW={{ base: '10rem', lg: '21.625rem' }}
         minW={{ base: '9.875rem', lg: '14.375rem' }}
-        maxH={{ base: '8rem', lg: '15.25rem' }}
         h='100%'
     >
         <Image src={image} alt='Recipe image' w='100%' h='100%' objectFit='cover' />
 
-        {category && (
-            <Box
-                position='absolute'
-                top={2}
-                left={2}
-                zIndex={1}
-                display={{ base: 'inline-flex', lg: 'none' }}
-            >
-                <CategoryBadge category={category} bgColor='lime.50' />
-            </Box>
-        )}
+        <Box
+            position='absolute'
+            top={2}
+            left={2}
+            zIndex={1}
+            display={{ base: 'inline-flex', lg: 'none' }}
+        >
+            <VStack>
+                {categories.map(({ _id, title, category }) => (
+                    <CategoryBadge key={_id} title={title} category={category} bgColor='lime.50' />
+                ))}
+            </VStack>
+        </Box>
 
         {recommendedBy && (
             <Box

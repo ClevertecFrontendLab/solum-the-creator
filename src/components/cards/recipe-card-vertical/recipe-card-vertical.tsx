@@ -78,7 +78,7 @@ export const RecipeCardVertical: React.FC<RecipeCardVerticalProps> = ({
                 flexWrap='wrap'
             >
                 <Hide below='md'>
-                    <VStack>
+                    <VStack align='start' maxW='60%'>
                         {categories.map((category) => (
                             <CategoryBadge
                                 key={category._id}

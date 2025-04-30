@@ -1,22 +1,29 @@
-import { Flex, Hide } from '@chakra-ui/react';
+import { Flex, Hide, VStack } from '@chakra-ui/react';
 
 import { CategoryBadge } from '~/components/shared/badges/category-badge/category-badge';
 import { RateButtons } from '~/components/shared/buttons/rate-buttons/rate-buttons';
-import { CategoryKey } from '~/constants/ui/category-icons';
+import { Category } from '~/types/category';
 
 type TopRowProps = {
-    category?: CategoryKey;
+    categories: Category[];
     likes: number;
     bookmarks: number;
 };
 
-export const TopRow: React.FC<TopRowProps> = ({ category, likes, bookmarks }) => (
-    <Flex justify='space-between' align='center' wrap='wrap' gap={2}>
-        {category && (
-            <Hide below='lg'>
-                <CategoryBadge category={category} bgColor='lime.50' />
-            </Hide>
-        )}
+export const TopRow: React.FC<TopRowProps> = ({ categories, likes, bookmarks }) => (
+    <Flex justify='space-between' align='start' wrap='wrap' gap={2}>
+        <Hide below='lg'>
+            <VStack>
+                {categories.map((category) => (
+                    <CategoryBadge
+                        key={category._id}
+                        category={category.category}
+                        title={category.title}
+                        bgColor='lime.50'
+                    />
+                ))}
+            </VStack>
+        </Hide>
 
         <RateButtons bookmarks={bookmarks} likes={likes} />
     </Flex>
