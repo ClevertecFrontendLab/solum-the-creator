@@ -1,16 +1,18 @@
 import { Image } from '@chakra-ui/react';
 
-import { categoryIcons, CategoryKey } from '~/constants/ui/category-icons';
-import { getCategoryNameByKey } from '~/utils/categories';
+import { selectCategoryBySlug } from '~/store/category/selectors';
+import { useAppSelector } from '~/store/hooks';
 
 type CategoryIconProps = {
-    category: CategoryKey;
+    category: string;
     boxSize?: number;
 };
 
 export const CategoryIcon: React.FC<CategoryIconProps> = ({ category, boxSize = 4 }) => {
-    const categoryIcon = categoryIcons[category];
-    const categoryName = getCategoryNameByKey(category);
+    const categoryItem = useAppSelector(selectCategoryBySlug(category));
+
+    const categoryIcon = categoryItem?.icon;
+    const categoryName = categoryItem?.title;
 
     return <Image src={categoryIcon} alt={categoryName} boxSize={boxSize} />;
 };

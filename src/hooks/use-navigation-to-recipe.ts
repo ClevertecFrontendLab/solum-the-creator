@@ -1,35 +1,34 @@
 import { useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
-import { CategoryKey } from '~/constants/ui/category-icons';
-import { findMatchingSubcategory } from '~/utils/categories';
+import { selectCategoryBySubCategoryId, selectSubCategoryById } from '~/store/category/selectors';
+import { useAppSelector } from '~/store/hooks';
 
 type UseNavigationToRecipeArgs = {
     recipeId: string;
-    category: CategoryKey;
-    subcategories: string[];
+    subCategoryId: string;
     forceFromRecipe?: boolean;
 };
 
 export const useNavigationToRecipe = ({
     recipeId,
-    category,
-    subcategories,
+    subCategoryId,
     forceFromRecipe = false,
 }: UseNavigationToRecipeArgs) => {
     const navigate = useNavigate();
     const params = useParams<{ category: string; subcategory: string }>();
 
+    const category = useAppSelector(selectCategoryBySubCategoryId(subCategoryId));
+    const subCategory = useAppSelector(selectSubCategoryById(subCategoryId));
+
     return useCallback(() => {
         if (forceFromRecipe || !params.category || !params.subcategory) {
-            const currentSubcategory = findMatchingSubcategory(category, subcategories);
-
-            if (!currentSubcategory) {
-                console.warn(`Could not find matching subcategory`);
+            if (!category || !subCategory) {
+                console.warn(`Category or subcategory not found: ${subCategoryId}`);
                 return;
             }
 
-            navigate(`/${category}/${currentSubcategory}/${recipeId}`);
+            navigate(`/${category.category}/${subCategory.category}/${recipeId}`);
             return;
         }
 
@@ -37,5 +36,14 @@ export const useNavigationToRecipe = ({
             navigate(`/${params.category}/${params.subcategory}/${recipeId}`);
             return;
         }
-    }, [category, navigate, params, recipeId, subcategories, forceFromRecipe]);
+    }, [
+        category,
+        forceFromRecipe,
+        navigate,
+        params.category,
+        params.subcategory,
+        recipeId,
+        subCategory,
+        subCategoryId,
+    ]);
 };

@@ -1,6 +1,7 @@
 export enum ApiEndpoints {
     POSTS = '/posts/',
     CATEGORY = '/category/',
+    RECIPE = '/recipe/',
 }
 
 export const API_BASE_URL = 'https://marathon-api.clevertec.ru';

@@ -2,8 +2,9 @@ import { Card, CardBody, CardFooter, Heading, Hide, Text, VStack } from '@chakra
 
 import { CategoryBadge } from '~/components/shared/badges/category-badge/category-badge';
 import { RateButtons } from '~/components/shared/buttons/rate-buttons/rate-buttons';
-import { CategoryKey } from '~/constants/ui/category-icons';
 import { useNavigationToRecipe } from '~/hooks/use-navigation-to-recipe';
+import { selectParentCategoriesBySubIds } from '~/store/category/selectors';
+import { useAppSelector } from '~/store/hooks';
 
 import { ImageSection } from './image-section';
 
@@ -11,8 +12,7 @@ type RecipeCardVerticalProps = {
     id: string;
     title: string;
     image: string;
-    category: CategoryKey[];
-    subcategory: string[];
+    categoriesIds: string[];
     description: string;
     likes?: number;
     bookmarks?: number;
@@ -24,16 +24,17 @@ export const RecipeCardVertical: React.FC<RecipeCardVerticalProps> = ({
     image,
     title,
     description,
-    category,
-    subcategory,
+    categoriesIds,
     forceFromRecipe,
     likes = 0,
     bookmarks = 0,
 }) => {
+    const categories = useAppSelector(selectParentCategoriesBySubIds(categoriesIds));
+    const category = categories[0];
+
     const navigateToRecipe = useNavigationToRecipe({
         recipeId: id,
-        category: category[0],
-        subcategories: subcategory,
+        subCategoryId: categoriesIds[0],
         forceFromRecipe,
     });
 
@@ -48,7 +49,11 @@ export const RecipeCardVertical: React.FC<RecipeCardVerticalProps> = ({
             cursor='pointer'
             onClick={navigateToRecipe}
         >
-            <ImageSection image={image} category={category[0]} />
+            <ImageSection
+                image={image}
+                category={category.category}
+                categoryTitle={category.title}
+            />
 
             <CardBody pt={{ base: 2, sm: 3, '2xl': 4 }} pb={0} px={{ base: 2, sm: 3, '2xl': 6 }}>
                 <VStack spacing={2} align='start'>
@@ -83,11 +88,9 @@ export const RecipeCardVertical: React.FC<RecipeCardVerticalProps> = ({
                 alignItems='center'
                 flexWrap='wrap'
             >
-                {category && (
-                    <Hide below='md'>
-                        <CategoryBadge category={category[0]} />
-                    </Hide>
-                )}
+                <Hide below='md'>
+                    <CategoryBadge title={category.title} category={category.category} />
+                </Hide>
 
                 <RateButtons bookmarks={bookmarks} likes={likes} />
             </CardFooter>

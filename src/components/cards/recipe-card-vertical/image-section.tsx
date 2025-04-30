@@ -1,14 +1,14 @@
 import { Box, Image } from '@chakra-ui/react';
 
 import { CategoryBadge } from '~/components/shared/badges/category-badge/category-badge';
-import { CategoryKey } from '~/constants/ui/category-icons';
 
 type ImageSectionProps = {
     image: string;
-    category?: CategoryKey;
+    category: string;
+    categoryTitle: string;
 };
 
-export const ImageSection: React.FC<ImageSectionProps> = ({ image, category }) => (
+export const ImageSection: React.FC<ImageSectionProps> = ({ image, categoryTitle, category }) => (
     <Box position='relative'>
         <Image
             src={image}
@@ -18,16 +18,14 @@ export const ImageSection: React.FC<ImageSectionProps> = ({ image, category }) =
             objectFit='cover'
         />
 
-        {category && (
-            <Box
-                position='absolute'
-                top={2}
-                left={2}
-                zIndex={1}
-                display={{ base: 'inline-flex', md: 'none' }}
-            >
-                <CategoryBadge category={category} />
-            </Box>
-        )}
+        <Box
+            position='absolute'
+            top={2}
+            left={2}
+            zIndex={1}
+            display={{ base: 'inline-flex', md: 'none' }}
+        >
+            <CategoryBadge title={categoryTitle} category={category} />
+        </Box>
     </Box>
 );

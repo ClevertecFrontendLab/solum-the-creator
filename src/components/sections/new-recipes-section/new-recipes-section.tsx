@@ -3,11 +3,14 @@ import { Box, Heading } from '@chakra-ui/react';
 import { RecipeCardVertical } from '~/components/cards/recipe-card-vertical/recipe-card-vertical';
 import { FullBleed } from '~/components/shared/misc/full-bleed/full-bleed';
 import { HorizontalSlider } from '~/components/ui/horizontal-slider/horizontal-slider';
-import { recipes } from '~/constants/data/recipes';
-import { getNewestRecipes } from '~/utils/sort';
+import { useGlobalLoading } from '~/hooks/use-global-loading';
+import { useGetRecipesQuery } from '~/query/services/recipe';
 
 export const NewRecipesSection = () => {
-    const newRecipes = getNewestRecipes(recipes);
+    const recipesCount = 10;
+    const { data: recipes, isLoading } = useGetRecipesQuery(recipesCount);
+
+    useGlobalLoading(isLoading);
 
     return (
         <Box as='section' position='relative' width='100%'>
@@ -16,23 +19,24 @@ export const NewRecipesSection = () => {
             </Heading>
 
             <FullBleed>
-                <HorizontalSlider
-                    items={newRecipes}
-                    renderItem={(recipe) => (
-                        <RecipeCardVertical
-                            key={recipe.id}
-                            id={recipe.id}
-                            title={recipe.title}
-                            description={recipe.description}
-                            image={recipe.image}
-                            category={recipe.category}
-                            subcategory={recipe.subcategory}
-                            likes={recipe.likes}
-                            bookmarks={recipe.bookmarks}
-                            forceFromRecipe={true}
-                        />
-                    )}
-                />
+                {recipes && (
+                    <HorizontalSlider
+                        items={recipes}
+                        renderItem={(recipe) => (
+                            <RecipeCardVertical
+                                key={recipe._id}
+                                id={recipe._id}
+                                title={recipe.title}
+                                description={recipe.description}
+                                image={recipe.image}
+                                categoriesIds={recipe.categoriesIds}
+                                likes={recipe.likes}
+                                bookmarks={recipe.bookmarks}
+                                forceFromRecipe={true}
+                            />
+                        )}
+                    />
+                )}
             </FullBleed>
         </Box>
     );

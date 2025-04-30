@@ -15,7 +15,7 @@ type HorizontalSliderProps<T> = {
     renderItem: (item: T) => React.ReactNode;
 };
 
-export const HorizontalSlider = <T extends { id: string }>({
+export const HorizontalSlider = <T extends { _id: string }>({
     items,
     renderItem,
 }: HorizontalSliderProps<T>) => {
@@ -47,7 +47,7 @@ export const HorizontalSlider = <T extends { id: string }>({
             >
                 {items.map((item, index) => (
                     <SwiperSlide
-                        key={item.id}
+                        key={item._id}
                         style={{ width: 'auto' }}
                         data-test-id={`carousel-card-${index}`}
                     >
