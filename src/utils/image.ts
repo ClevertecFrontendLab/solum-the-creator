@@ -1,9 +1,9 @@
 import { IMG_BASE_URL } from '~/query/constants/api';
-import { RawRecipe } from '~/query/services/recipe';
+import { Recipe } from '~/query/services/recipe';
 
 export const getImgUrl = (url: string) => `${IMG_BASE_URL}${url}`;
 
-export const transformRecipeResponse = (raw: RawRecipe[]): RawRecipe[] =>
+export const transformRecipeResponse = (raw: Recipe[]): Recipe[] =>
     raw.map((r) => ({
         ...r,
         image: getImgUrl(r.image),

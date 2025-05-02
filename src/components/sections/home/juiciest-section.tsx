@@ -6,7 +6,8 @@ import { useGlobalLoading } from '~/hooks/use-global-loading';
 import { useGetJuiciestRecipesQuery } from '~/query/services/recipe';
 
 export const JuiciestSection = () => {
-    const { data: recipes, isLoading } = useGetJuiciestRecipesQuery(4);
+    const limit = 4;
+    const { data: recipes, isLoading } = useGetJuiciestRecipesQuery(limit);
     useGlobalLoading(isLoading);
 
     return (
@@ -21,7 +22,7 @@ export const JuiciestSection = () => {
                 <Heading variant='section-title'>Самое сочное</Heading>
 
                 <JuiciestButton
-                    display={{ base: 'none', lg: 'block' }}
+                    display={{ base: 'none', lg: 'flex' }}
                     data-test-id='juiciest-link'
                 />
             </HStack>
@@ -49,7 +50,7 @@ export const JuiciestSection = () => {
             )}
 
             <JuiciestButton
-                display={{ base: 'block', lg: 'none' }}
+                display={{ base: 'flex', lg: 'none' }}
                 data-test-id='juiciest-link-mobile'
             />
         </VStack>

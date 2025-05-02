@@ -3,4 +3,5 @@ export enum EndpointNames {
     GET_CATEGORY = 'getCategories',
     GET_RECIPES = 'getRecipes',
     GET_JUICIEST_RECIPES = 'getJuiciestRecipes',
+    GET_JUICIEST_RECIPES_PAGINATED = 'getJuiciestRecipesPaginated',
 }

@@ -25,6 +25,21 @@ export type Recipe = {
     ingredients: Ingredient[];
 };
 
+type RecipeResponse = {
+    data: Recipe[];
+    meta: {
+        total: number;
+        page: number;
+        limit: number;
+        totalPages: number;
+    };
+};
+
+type RecipesInitialPageParam = {
+    page: number;
+    limit: number;
+};
+
 export const recipeApiSlice = apiSlice
     .enhanceEndpoints({
         addTagTypes: [Tags.RECIPE],
@@ -57,7 +72,7 @@ export const recipeApiSlice = apiSlice
                 query: (limit) => ({
                     url: ApiEndpoints.RECIPE,
                     method: 'GET',
-                    params: { limit, page: 1, sortBy: 'likes', sortOrder: 'desc' },
+                    params: { limit, page: '1', sortBy: 'likes', sortOrder: 'desc' },
                     apiGroupName: ApiGroupNames.RECIPE,
                     name: EndpointNames.GET_JUICIEST_RECIPES,
                 }),
@@ -70,9 +85,55 @@ export const recipeApiSlice = apiSlice
                           ]
                         : [{ type: Tags.RECIPE, id: 'TOP' as const }],
             }),
+            [EndpointNames.GET_JUICIEST_RECIPES_PAGINATED]: builder.infiniteQuery<
+                Recipe[],
+                { perPage: number },
+                RecipesInitialPageParam
+            >({
+                infiniteQueryOptions: {
+                    initialPageParam: {
+                        page: 1,
+                        limit: 8,
+                    },
+                    getNextPageParam: (_lastPage, _allPages, lastPageParam) => ({
+                        ...lastPageParam,
+                        page: lastPageParam.page + 1,
+                    }),
+                    getPreviousPageParam: (
+                        _firstPage,
+                        _allPages,
+                        firstPageParam,
+                        _allPagesParam,
+                    ) => {
+                        const prevPage = firstPageParam.page - 1;
+
+                        if (prevPage < 0) {
+                            return undefined;
+                        }
+
+                        return {
+                            ...firstPageParam,
+                            page: prevPage,
+                        };
+                    },
+                },
+                query: ({ queryArg: { perPage }, pageParam: { page } }) => ({
+                    url: ApiEndpoints.RECIPE,
+                    method: 'GET',
+                    params: { limit: perPage, page, sortBy: 'likes', sortOrder: 'desc' },
+                    apiGroupName: ApiGroupNames.RECIPE,
+                    name: EndpointNames.GET_JUICIEST_RECIPES_PAGINATED,
+                }),
+                transformResponse: (response: RecipeResponse): Recipe[] =>
+                    transformRecipeResponse(response.data),
+            }),
         }),
         overrideExisting: false,
     });
 
-export const { useGetRecipesQuery, useLazyGetRecipesQuery, useGetJuiciestRecipesQuery } =
-    recipeApiSlice;
+export const {
+    useGetRecipesQuery,
+    useLazyGetRecipesQuery,
+    useGetJuiciestRecipesQuery,
+    useGetJuiciestRecipesPaginatedInfiniteQuery,
+} = recipeApiSlice;
