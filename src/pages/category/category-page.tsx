@@ -4,7 +4,6 @@ import { Outlet, useParams } from 'react-router';
 import { HeroSection } from '~/components/sections/hero-section/hero-section';
 import { RelevantKitchenSection } from '~/components/sections/relevant-kitchen-section/relevant-kitchen-section';
 import { CategoryTabs } from '~/components/shared/navigation/category-tabs/category-tabs';
-import { recipes } from '~/constants/data/recipes';
 import { selectCategoryBySlug } from '~/store/category/selectors';
 import { useAppSelector } from '~/store/hooks';
 
@@ -24,12 +23,7 @@ export const CategoryPage = () => {
 
                 <Outlet />
 
-                <RelevantKitchenSection
-                    title='Десерты, выпечка'
-                    description='Без них невозможно представить себе ни современную, ни традиционную  кулинарию. Пироги и печенья, блины, пончики, вареники и, конечно, хлеб - рецепты изделий из теста многообразны и невероятно популярны.'
-                    recipesTextCards={recipes.slice(0, 2)}
-                    recipesSimpleCards={recipes.slice(2, 5)}
-                />
+                <RelevantKitchenSection currentCategoryId={category._id} />
             </Flex>
         </Flex>
     );

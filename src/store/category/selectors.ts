@@ -65,3 +65,8 @@ export const selectSubCategoriesIdsByCategoryId = (categoryId: string) =>
         [(state: ApplicationState) => selectCategoryById(state, categoryId)],
         (category) => category.subCategories.map((s) => s._id),
     );
+
+export const selectSubcategoryBySlug = (slug: string) =>
+    createSelector([selectFlatSubCategories], (flatSubs) =>
+        flatSubs.find((s) => s.category === slug),
+    );

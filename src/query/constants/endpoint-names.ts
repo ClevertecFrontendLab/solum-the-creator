@@ -5,4 +5,5 @@ export enum EndpointNames {
     GET_JUICIEST_RECIPES = 'getJuiciestRecipes',
     GET_JUICIEST_RECIPES_PAGINATED = 'getJuiciestRecipesPaginated',
     GET_RECIPES_BY_SUBCATEGORY_IDS = 'getRecipesBySubcategoryIds',
+    GET_RECIPES_BY_CATEGORY_ID_PAGINATED = 'getRecipesByCategoryIdPaginated',
 }

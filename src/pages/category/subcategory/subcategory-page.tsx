@@ -1,23 +1,53 @@
+import { Box } from '@chakra-ui/react';
+import { useParams } from 'react-router';
+
 import { RecipeHorizontalGridSection } from '~/components/sections/recipe-horizontal-grid-section/recipe-horizontal-grid-section';
-import { recipes } from '~/constants/data/recipes';
-import { useAllergenFilteredRecipes } from '~/hooks/use-allergen-filtered-recipes';
-import { useCategoryFilteredRecipes } from '~/hooks/use-category-filtered-recipes';
-import { useFilteredRecipes } from '~/hooks/use-filtered-recipes';
-import { useSearchedRecipes } from '~/hooks/use-serched-recipes';
+import { Loader } from '~/components/shared/misc/loader/loader';
+import { useGlobalLoading } from '~/hooks/use-global-loading';
+import { useGetRecipesByCategoryIdPaginatedInfiniteQuery } from '~/query/services/recipe';
+import { selectSubcategoryBySlug } from '~/store/category/selectors';
 import { useAppSelector } from '~/store/hooks';
-import { selectIsDrawerFilterApplied } from '~/store/recipe-filter/selectors';
 
 export const SubcategoryPage = () => {
-    const categoryFilteredRecipes = useCategoryFilteredRecipes(recipes);
+    const { subcategory: subcategorySlug } = useParams<{
+        subcategory: string;
+    }>();
 
-    const filteredAllergenRecipes = useAllergenFilteredRecipes(categoryFilteredRecipes);
+    const categoryId = useAppSelector(selectSubcategoryBySlug(subcategorySlug!))?._id as string;
 
-    const isDrawerFilterApplied = useAppSelector(selectIsDrawerFilterApplied);
-    const filteredRecipes = useFilteredRecipes(categoryFilteredRecipes);
+    const { data, isLoading, hasNextPage, isFetchingNextPage, isFetching, fetchNextPage } =
+        useGetRecipesByCategoryIdPaginatedInfiniteQuery({
+            perPage: 8,
+            categoryId,
+        });
 
-    const filteredRicipesByUI = isDrawerFilterApplied ? filteredRecipes : filteredAllergenRecipes;
+    useGlobalLoading(isLoading);
 
-    const { recipes: finalRecipes } = useSearchedRecipes(filteredRicipesByUI);
+    const recipes = data?.pages.flat() ?? [];
 
-    return <RecipeHorizontalGridSection recipes={finalRecipes} />;
+    const handleClickMore = () => fetchNextPage();
+
+    // const categoryFilteredRecipes = useCategoryFilteredRecipes(recipes);
+
+    // const filteredAllergenRecipes = useAllergenFilteredRecipes(categoryFilteredRecipes);
+
+    // const isDrawerFilterApplied = useAppSelector(selectIsDrawerFilterApplied);
+    // const filteredRecipes = useFilteredRecipes(categoryFilteredRecipes);
+
+    // const filteredRicipesByUI = isDrawerFilterApplied ? filteredRecipes : filteredAllergenRecipes;
+
+    // const { recipes: finalRecipes } = useSearchedRecipes(filteredRicipesByUI);
+
+    return isFetching ? (
+        <Box py={4}>
+            <Loader isVisible={true} />
+        </Box>
+    ) : (
+        <RecipeHorizontalGridSection
+            recipes={recipes}
+            hasNextPage={hasNextPage}
+            onClickMore={handleClickMore}
+            isLoading={isFetchingNextPage}
+        />
+    );
 };

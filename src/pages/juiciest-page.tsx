@@ -8,7 +8,7 @@ import { useGetJuiciestRecipesPaginatedInfiniteQuery } from '~/query/services/re
 
 export const JuiciestPage = () => {
     const limit = 8;
-    const { data, isLoading, isFetching, fetchNextPage, hasNextPage } =
+    const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } =
         useGetJuiciestRecipesPaginatedInfiniteQuery({ perPage: limit });
 
     useGlobalLoading(isLoading);
@@ -36,7 +36,7 @@ export const JuiciestPage = () => {
                         recipes={recipes}
                         onClickMore={handleClickMore}
                         hasNextPage={hasNextPage}
-                        isLoading={isFetching}
+                        isLoading={isFetchingNextPage}
                     />
                 )}
 

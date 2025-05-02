@@ -5,8 +5,14 @@ import { SimpleRecipeCard } from '~/components/cards/simple-recipe-card';
 import { useGlobalLoading } from '~/hooks/use-global-loading';
 import { useRandomCategoryRecipes } from '~/hooks/use-random-category-recipes';
 
-export const RelevantKitchenSection: React.FC = () => {
-    const { category, recipes, isLoading } = useRandomCategoryRecipes();
+type RelevantKitchenSectionProps = {
+    currentCategoryId?: string;
+};
+
+export const RelevantKitchenSection: React.FC<RelevantKitchenSectionProps> = ({
+    currentCategoryId,
+}) => {
+    const { category, recipes, isLoading } = useRandomCategoryRecipes(currentCategoryId);
     useGlobalLoading(isLoading);
 
     const recipesTextCard = recipes.slice(0, 2);

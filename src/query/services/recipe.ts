@@ -95,25 +95,14 @@ export const recipeApiSlice = apiSlice
                         page: 1,
                         limit: 8,
                     },
-                    getNextPageParam: (_lastPage, _allPages, lastPageParam) => ({
-                        ...lastPageParam,
-                        page: lastPageParam.page + 1,
-                    }),
-                    getPreviousPageParam: (
-                        _firstPage,
-                        _allPages,
-                        firstPageParam,
-                        _allPagesParam,
-                    ) => {
-                        const prevPage = firstPageParam.page - 1;
-
-                        if (prevPage < 0) {
+                    getNextPageParam: (lastPage, _allPages, lastPageParam) => {
+                        if (lastPage.length < lastPageParam.limit) {
                             return undefined;
                         }
 
                         return {
-                            ...firstPageParam,
-                            page: prevPage,
+                            ...lastPageParam,
+                            page: lastPageParam.page + 1,
                         };
                     },
                 },
@@ -155,6 +144,37 @@ export const recipeApiSlice = apiSlice
                           ]
                         : [{ type: Tags.RECIPE, id: 'LIST' }],
             }),
+            [EndpointNames.GET_RECIPES_BY_CATEGORY_ID_PAGINATED]: builder.infiniteQuery<
+                Recipe[],
+                { perPage: number; categoryId: string },
+                RecipesInitialPageParam
+            >({
+                infiniteQueryOptions: {
+                    initialPageParam: {
+                        page: 1,
+                        limit: 8,
+                    },
+                    getNextPageParam: (lastPage, _allPages, lastPageParam) => {
+                        if (lastPage.length < lastPageParam.limit) {
+                            return undefined;
+                        }
+
+                        return {
+                            ...lastPageParam,
+                            page: lastPageParam.page + 1,
+                        };
+                    },
+                },
+                query: ({ queryArg: { perPage, categoryId }, pageParam: { page } }) => ({
+                    url: `${ApiEndpoints.RECIPE_CATEGORY}${categoryId}`,
+                    method: 'GET',
+                    params: { limit: perPage, page },
+                    apiGroupName: ApiGroupNames.RECIPE,
+                    name: EndpointNames.GET_RECIPES_BY_CATEGORY_ID_PAGINATED,
+                }),
+                transformResponse: (response: RecipeResponse): Recipe[] =>
+                    transformRecipeResponse(response.data),
+            }),
         }),
         overrideExisting: false,
     });
@@ -164,5 +184,6 @@ export const {
     useLazyGetRecipesQuery,
     useGetJuiciestRecipesQuery,
     useGetJuiciestRecipesPaginatedInfiniteQuery,
+    useGetRecipesByCategoryIdPaginatedInfiniteQuery,
     useGetRecipesBySubcategoryIdsQuery,
 } = recipeApiSlice;
