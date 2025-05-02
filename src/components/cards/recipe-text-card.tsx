@@ -2,15 +2,15 @@ import { Card, CardBody, CardFooter, Flex, Heading, Text, VStack } from '@chakra
 
 import { CategoryBadge } from '~/components/shared/badges/category-badge/category-badge';
 import { RateButtons } from '~/components/shared/buttons/rate-buttons/rate-buttons';
-import { CategoryKey } from '~/constants/ui/category-icons';
 import { useNavigationToRecipe } from '~/hooks/use-navigation-to-recipe';
+import { selectCategoryBySubCategoryId } from '~/store/category/selectors';
+import { useAppSelector } from '~/store/hooks';
 
 type RecipeTextCardProps = {
     id: string;
     title: string;
     description: string;
-    category: CategoryKey;
-    subcategory: string[];
+    categoriesIds: string[];
     likes?: number;
     bookmarks?: number;
 };
@@ -19,15 +19,15 @@ export const RecipeTextCard: React.FC<RecipeTextCardProps> = ({
     id,
     title,
     description,
-    category,
-    subcategory,
+    categoriesIds,
     likes = 0,
     bookmarks = 0,
 }) => {
+    const category = useAppSelector(selectCategoryBySubCategoryId(categoriesIds[0]));
+
     const navigateToRecipe = useNavigationToRecipe({
         recipeId: id,
-        category,
-        subcategories: subcategory,
+        subCategoryId: categoriesIds[0],
         forceFromRecipe: true,
     });
 
@@ -65,7 +65,13 @@ export const RecipeTextCard: React.FC<RecipeTextCardProps> = ({
 
             <CardFooter p={0}>
                 <Flex justify='space-between' align='center' w='100%' gap={1}>
-                    <CategoryBadge category={category} bgColor='lime.50' />
+                    {category && (
+                        <CategoryBadge
+                            title={category.title}
+                            category={category.category}
+                            bgColor='lime.50'
+                        />
+                    )}
 
                     <RateButtons bookmarks={bookmarks} likes={likes} />
                 </Flex>

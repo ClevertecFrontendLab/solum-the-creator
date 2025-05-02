@@ -50,12 +50,7 @@ export const HomePage = () => {
                         <NewRecipesSection />
                         <JuiciestSection />
                         <CulinaryBlogsSection />
-                        <RelevantKitchenSection
-                            title='Веганская кухня'
-                            description='Интересны не только убеждённым вегетарианцам, но и тем, кто хочет  попробовать вегетарианскую диету и готовить вкусные  вегетарианские блюда.'
-                            recipesTextCards={recipes.slice(0, 2)}
-                            recipesSimpleCards={recipes.slice(2, 5)}
-                        />
+                        <RelevantKitchenSection />
                     </Flex>
                 )}
             </AnimatePresence>

@@ -127,6 +127,34 @@ export const recipeApiSlice = apiSlice
                 transformResponse: (response: RecipeResponse): Recipe[] =>
                     transformRecipeResponse(response.data),
             }),
+            [EndpointNames.GET_RECIPES_BY_SUBCATEGORY_IDS]: builder.query<
+                Recipe[],
+                { limit: number; subcategoryIds: string[] }
+            >({
+                query: ({ limit, subcategoryIds }) => ({
+                    url: ApiEndpoints.RECIPE,
+                    method: 'GET',
+                    params: {
+                        limit,
+                        page: 1,
+                        subcategoriesIds: subcategoryIds,
+                    },
+                    apiGroupName: ApiGroupNames.RECIPE,
+                    name: EndpointNames.GET_RECIPES_BY_SUBCATEGORY_IDS,
+                }),
+                transformResponse: (response: { data: Recipe[] }): Recipe[] =>
+                    transformRecipeResponse(response.data),
+                providesTags: (result) =>
+                    result
+                        ? [
+                              ...result.map(({ _id }) => ({
+                                  type: Tags.RECIPE as const,
+                                  id: _id,
+                              })),
+                              { type: Tags.RECIPE, id: 'LIST' },
+                          ]
+                        : [{ type: Tags.RECIPE, id: 'LIST' }],
+            }),
         }),
         overrideExisting: false,
     });
@@ -136,4 +164,5 @@ export const {
     useLazyGetRecipesQuery,
     useGetJuiciestRecipesQuery,
     useGetJuiciestRecipesPaginatedInfiniteQuery,
+    useGetRecipesBySubcategoryIdsQuery,
 } = recipeApiSlice;

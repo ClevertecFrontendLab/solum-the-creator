@@ -13,7 +13,7 @@ export const CategoryBadge: React.FC<CategoryBadgeProps> = ({
     title,
     bgColor = 'lime.200',
 }) => (
-    <Badge variant='brand' display='inline-flex' bgColor={bgColor} alignItems='center' w='100%'>
+    <Badge variant='brand' display='inline-flex' bgColor={bgColor} alignItems='center' w='auto'>
         <HStack spacing={{ base: 1, md: 2 }} w='100%'>
             <CategoryIcon category={category} boxSize={4} />
             <Box as='span' noOfLines={1} wordBreak='break-all' w='100%' display='inline'>

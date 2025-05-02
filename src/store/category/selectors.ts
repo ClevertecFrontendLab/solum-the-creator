@@ -59,3 +59,9 @@ export const selectParentCategoriesBySubIds = (subIds: string[]) =>
         }
         return Array.from(parentsMap.values());
     });
+
+export const selectSubCategoriesIdsByCategoryId = (categoryId: string) =>
+    createSelector(
+        [(state: ApplicationState) => selectCategoryById(state, categoryId)],
+        (category) => category.subCategories.map((s) => s._id),
+    );
