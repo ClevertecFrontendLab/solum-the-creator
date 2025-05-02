@@ -1,4 +1,5 @@
 import { VStack } from '@chakra-ui/react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router';
 
 import { RecipeAuthorCard } from '~/components/cards/recipe-author-card/recipe-author-card';
@@ -8,14 +9,26 @@ import { NutritionSection } from '~/components/sections/recipe/nutrition-section
 import { RecipeStepsSection } from '~/components/sections/recipe/recipe-steps-section/recipe-steps-section';
 import { RecipeTableSection } from '~/components/sections/recipe/recipe-table-section/recipe-table-section';
 import { authors } from '~/constants/data/authors';
-import { recipes } from '~/constants/data/recipes';
+import { useGlobalLoading } from '~/hooks/use-global-loading';
+import { useGetRecipeByIdQuery } from '~/query/services/recipe';
+import { clearCurrentRecipe } from '~/store/current-recipe/slice';
+import { useAppDispatch } from '~/store/hooks';
 
 const mockAuthor = authors[0];
 
 export const RecipePage = () => {
     const { recipeId } = useParams<{ recipeId: string }>();
+    const dispatch = useAppDispatch();
 
-    const recipe = recipes.find((r) => r.id === recipeId);
+    const { data: recipe, isLoading } = useGetRecipeByIdQuery(recipeId!);
+    useGlobalLoading(isLoading);
+
+    useEffect(
+        () => () => {
+            dispatch(clearCurrentRecipe());
+        },
+        [dispatch],
+    );
 
     if (!recipe) {
         return null;
@@ -26,8 +39,8 @@ export const RecipePage = () => {
             <HeaderSection
                 title={recipe.title}
                 image={recipe.image}
-                category={recipe.category}
                 description={recipe.description}
+                categoriesIds={recipe.categoriesIds}
                 time={recipe.time}
                 bookmarks={recipe.bookmarks}
                 likes={recipe.likes}

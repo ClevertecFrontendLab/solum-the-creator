@@ -175,6 +175,17 @@ export const recipeApiSlice = apiSlice
                 transformResponse: (response: RecipeResponse): Recipe[] =>
                     transformRecipeResponse(response.data),
             }),
+            [EndpointNames.GET_RECIPE_BY_ID]: builder.query<Recipe, string>({
+                query: (id) => ({
+                    url: `${ApiEndpoints.RECIPE}${id}`,
+                    method: 'GET',
+                    apiGroupName: ApiGroupNames.RECIPE,
+                    name: EndpointNames.GET_RECIPE_BY_ID,
+                }),
+                transformResponse: (response: Recipe): Recipe => transformRecipeResponse(response),
+                providesTags: (result, _error, id) =>
+                    result ? [{ type: Tags.RECIPE as const, id }] : [],
+            }),
         }),
         overrideExisting: false,
     });
@@ -186,4 +197,5 @@ export const {
     useGetJuiciestRecipesPaginatedInfiniteQuery,
     useGetRecipesByCategoryIdPaginatedInfiniteQuery,
     useGetRecipesBySubcategoryIdsQuery,
+    useGetRecipeByIdQuery,
 } = recipeApiSlice;

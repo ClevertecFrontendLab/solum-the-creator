@@ -1,13 +1,15 @@
 import { useMemo } from 'react';
 import { useLocation } from 'react-router';
 
-import { recipes } from '~/constants/data/recipes';
 import { staticPaths } from '~/constants/navigation/pathes';
 import { Breadcrumb } from '~/constants/navigation/route-tree';
 import { selectSidebarCategories } from '~/store/category/selectors';
+import { selectCurrentRecipe } from '~/store/current-recipe/selectors';
 import { useAppSelector } from '~/store/hooks';
 
 export function useBreadcrumbs(): Breadcrumb[] {
+    const recipe = useAppSelector(selectCurrentRecipe);
+
     const location = useLocation();
     const categories = useAppSelector(selectSidebarCategories);
 
@@ -51,7 +53,6 @@ export function useBreadcrumbs(): Breadcrumb[] {
                 }
             }
 
-            const recipe = recipes.find((r) => r.id === seg);
             if (recipe) {
                 currentPath = `${currentPath}/${seg}`;
                 crumbs.push({ label: recipe.title, href: currentPath });
@@ -63,5 +64,5 @@ export function useBreadcrumbs(): Breadcrumb[] {
         });
 
         return crumbs;
-    }, [location.pathname, categories]);
+    }, [location.pathname, categories, recipe]);
 }
