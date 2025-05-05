@@ -12,7 +12,7 @@ export const RedirectToFirstSubcategory = () => {
         ?.subCategories[0].category;
 
     if (!firstSubcategoryPath) {
-        return <Navigate to={pathes.home} replace />;
+        return <Navigate to={pathes.notFound} replace />;
     }
 
     return <Navigate to={firstSubcategoryPath} replace />;

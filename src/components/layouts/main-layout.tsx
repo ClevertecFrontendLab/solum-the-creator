@@ -58,6 +58,8 @@ export const MainLayout: React.FC = () => {
                 minH='100vh'
                 overflowY='auto'
                 maxW={{ base: '100%', lg: '58rem', '2xl': '88rem' }}
+                display='flex'
+                flexDir='column'
             >
                 <Outlet />
             </Box>

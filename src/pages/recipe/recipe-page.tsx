@@ -1,6 +1,6 @@
 import { VStack } from '@chakra-ui/react';
 import { useEffect } from 'react';
-import { useParams } from 'react-router';
+import { Navigate, useParams } from 'react-router';
 
 import { RecipeAuthorCard } from '~/components/cards/recipe-author-card/recipe-author-card';
 import { NewRecipesSection } from '~/components/sections/new-recipes-section/new-recipes-section';
@@ -9,6 +9,7 @@ import { NutritionSection } from '~/components/sections/recipe/nutrition-section
 import { RecipeStepsSection } from '~/components/sections/recipe/recipe-steps-section/recipe-steps-section';
 import { RecipeTableSection } from '~/components/sections/recipe/recipe-table-section/recipe-table-section';
 import { authors } from '~/constants/data/authors';
+import { pathes } from '~/constants/navigation/pathes';
 import { useGlobalLoading } from '~/hooks/use-global-loading';
 import { useGetRecipeByIdQuery } from '~/query/services/recipe';
 import { clearCurrentRecipe } from '~/store/current-recipe/slice';
@@ -20,7 +21,7 @@ export const RecipePage = () => {
     const { recipeId } = useParams<{ recipeId: string }>();
     const dispatch = useAppDispatch();
 
-    const { data: recipe, isLoading } = useGetRecipeByIdQuery(recipeId!);
+    const { data: recipe, isLoading, isError } = useGetRecipeByIdQuery(recipeId!);
     useGlobalLoading(isLoading);
 
     useEffect(
@@ -29,6 +30,10 @@ export const RecipePage = () => {
         },
         [dispatch],
     );
+
+    if (isError) {
+        return <Navigate to={pathes.notFound} replace />;
+    }
 
     if (!recipe) {
         return null;

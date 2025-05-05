@@ -1,9 +1,10 @@
 import { Flex } from '@chakra-ui/react';
-import { Outlet, useParams } from 'react-router';
+import { Navigate, Outlet, useParams } from 'react-router';
 
 import { HeroSection } from '~/components/sections/hero-section/hero-section';
 import { RelevantKitchenSection } from '~/components/sections/relevant-kitchen-section/relevant-kitchen-section';
 import { CategoryTabs } from '~/components/shared/navigation/category-tabs/category-tabs';
+import { pathes } from '~/constants/navigation/pathes';
 import { selectCategoryBySlug } from '~/store/category/selectors';
 import { useAppSelector } from '~/store/hooks';
 
@@ -12,7 +13,9 @@ export const CategoryPage = () => {
 
     const category = useAppSelector(selectCategoryBySlug(categorySlug!));
 
-    if (!category) return null;
+    if (!category) {
+        return <Navigate to={pathes.notFound} replace />;
+    }
 
     return (
         <Flex direction='column' align='center'>
