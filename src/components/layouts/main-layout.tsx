@@ -6,6 +6,7 @@ import { useGlobalLoading } from '~/hooks/use-global-loading';
 import { useResetAllFiltersOnRouteChange } from '~/hooks/use-reset-all-filters-on-route-change';
 import { useGetCategoriesQuery } from '~/query/services/category';
 
+import { GlobalLoader } from '../shared/misc/global-loader/global-loader';
 import { Footer } from './footer';
 import { RightSidebar } from './right-sidebar/right-sidebar';
 import { Sidebar } from './sidebar/sidebar';
@@ -77,6 +78,8 @@ export const MainLayout: React.FC = () => {
             >
                 <Footer />
             </Box>
+
+            <GlobalLoader />
         </Box>
     );
 };

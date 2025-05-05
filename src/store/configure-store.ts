@@ -16,7 +16,6 @@ import { apiSlice } from '~/query/create-api';
 import allergenFilterReducer from './allergen-filter/slice';
 import appReducer, { appSlice } from './app-slice';
 import categoriesReducer from './category/slice';
-import currentRecipeReducer from './current-recipe/slice';
 import globalLoadingReducer from './loader/slice';
 import recipeFilterReducer from './recipe-filter/slice';
 import searchReducer from './search/slice';
@@ -31,7 +30,6 @@ const rootReducer = combineReducers({
     recipeFilter: recipeFilterReducer,
     search: searchReducer,
     globalLoading: globalLoadingReducer,
-    currentRecipe: currentRecipeReducer,
 });
 
 const persistedReducer = persistReducer(

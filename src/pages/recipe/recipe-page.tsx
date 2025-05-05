@@ -1,6 +1,5 @@
 import { VStack } from '@chakra-ui/react';
-import { useEffect } from 'react';
-import { Navigate, useParams } from 'react-router';
+import { LoaderFunction, useLoaderData } from 'react-router';
 
 import { RecipeAuthorCard } from '~/components/cards/recipe-author-card/recipe-author-card';
 import { NewRecipesSection } from '~/components/sections/new-recipes-section/new-recipes-section';
@@ -9,35 +8,26 @@ import { NutritionSection } from '~/components/sections/recipe/nutrition-section
 import { RecipeStepsSection } from '~/components/sections/recipe/recipe-steps-section/recipe-steps-section';
 import { RecipeTableSection } from '~/components/sections/recipe/recipe-table-section/recipe-table-section';
 import { authors } from '~/constants/data/authors';
-import { pathes } from '~/constants/navigation/pathes';
-import { useGlobalLoading } from '~/hooks/use-global-loading';
-import { useGetRecipeByIdQuery } from '~/query/services/recipe';
-import { clearCurrentRecipe } from '~/store/current-recipe/slice';
-import { useAppDispatch } from '~/store/hooks';
+import { Recipe, recipeApiSlice } from '~/query/services/recipe';
+import { store } from '~/store/configure-store';
 
 const mockAuthor = authors[0];
 
+export const RecipePageLoader: LoaderFunction = async ({ params }) => {
+    const { recipeId } = params;
+    const result = await store.dispatch(recipeApiSlice.endpoints.getRecipeById.initiate(recipeId!));
+
+    if (result.error) {
+        throw new Response('Not found', { status: 404 });
+    }
+
+    return result.data;
+};
+
+export const HydrateRecipePage: React.FC = () => null;
+
 export const RecipePage = () => {
-    const { recipeId } = useParams<{ recipeId: string }>();
-    const dispatch = useAppDispatch();
-
-    const { data: recipe, isLoading, isError } = useGetRecipeByIdQuery(recipeId!);
-    useGlobalLoading(isLoading);
-
-    useEffect(
-        () => () => {
-            dispatch(clearCurrentRecipe());
-        },
-        [dispatch],
-    );
-
-    if (isError) {
-        return <Navigate to={pathes.notFound} replace />;
-    }
-
-    if (!recipe) {
-        return null;
-    }
+    const recipe = useLoaderData<Recipe>();
 
     return (
         <VStack spacing={{ base: 6, md: 10 }} px={{ base: 4, sm: 5, md: 6 }}>

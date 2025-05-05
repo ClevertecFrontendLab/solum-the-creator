@@ -1,17 +1,22 @@
 import { useMemo } from 'react';
-import { useLocation } from 'react-router';
+import { useLocation, useMatches } from 'react-router';
 
+import { Recipe } from '~/constants/data/recipes';
 import { staticPaths } from '~/constants/navigation/pathes';
 import { Breadcrumb } from '~/constants/navigation/route-tree';
 import { selectSidebarCategories } from '~/store/category/selectors';
-import { selectCurrentRecipe } from '~/store/current-recipe/selectors';
 import { useAppSelector } from '~/store/hooks';
 
-export function useBreadcrumbs(): Breadcrumb[] {
-    const recipe = useAppSelector(selectCurrentRecipe);
-
+export const useBreadcrumbs = (): Breadcrumb[] => {
     const location = useLocation();
+    const matches = useMatches();
     const categories = useAppSelector(selectSidebarCategories);
+
+    const recipe = useMemo(() => {
+        const recipeMatch = matches.find((m) => /^\/[^/]+\/[^/]+\/[^/]+$/.test(m.pathname || ''));
+
+        return recipeMatch?.data as Recipe | undefined;
+    }, [matches]);
 
     return useMemo(() => {
         const segments = location.pathname.split('/').filter(Boolean);
@@ -53,7 +58,7 @@ export function useBreadcrumbs(): Breadcrumb[] {
                 }
             }
 
-            if (recipe) {
+            if (idx === 2 && recipe) {
                 currentPath = `${currentPath}/${seg}`;
                 crumbs.push({ label: recipe.title, href: currentPath });
                 return;
@@ -65,4 +70,4 @@ export function useBreadcrumbs(): Breadcrumb[] {
 
         return crumbs;
     }, [location.pathname, categories, recipe]);
-}
+};
