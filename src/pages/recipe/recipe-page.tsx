@@ -18,7 +18,7 @@ export const RecipePageLoader: LoaderFunction = async ({ params }) => {
     const result = await store.dispatch(recipeApiSlice.endpoints.getRecipeById.initiate(recipeId!));
 
     if (result.error) {
-        throw new Response('Not found', { status: 404 });
+        throw new Response('Failed to fetch recipe', { status: 500 });
     }
 
     return result.data;

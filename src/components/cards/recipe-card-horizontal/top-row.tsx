@@ -13,7 +13,7 @@ type TopRowProps = {
 export const TopRow: React.FC<TopRowProps> = ({ categories, likes, bookmarks }) => (
     <Flex justify='space-between' align='start' wrap='wrap' gap={2}>
         <Hide below='lg'>
-            <VStack>
+            <VStack align='start'>
                 {categories.map((category) => (
                     <CategoryBadge
                         key={category._id}

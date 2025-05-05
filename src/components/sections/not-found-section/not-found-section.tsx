@@ -1,6 +1,8 @@
-import { Heading, Image, Text, VStack } from '@chakra-ui/react';
+import { Heading, Image, Link, Text, VStack } from '@chakra-ui/react';
+import { Link as RouterLink } from 'react-router';
 
 import notFoundImage from '~/assets/images/404.png';
+import { pathes } from '~/constants/navigation/pathes';
 
 export const NotFoundSection = () => (
     <VStack spacing={8} p={8} maxW={{ base: '19.75rem', md: '24.75rem' }}>
@@ -9,7 +11,13 @@ export const NotFoundSection = () => (
             <Heading as='h2' fontSize='2xl'>
                 Упс! Такой страницы нет
             </Heading>
-            <Text color='blackAlpha.700'>Можете поискать другой рецепт здесь.</Text>
+            <Text color='blackAlpha.700'>
+                Можете поискать другой рецепт{' '}
+                <Link as={RouterLink} to={pathes.home} textDecoration='underline'>
+                    здесь
+                </Link>
+                .
+            </Text>
         </VStack>
     </VStack>
 );

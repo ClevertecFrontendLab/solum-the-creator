@@ -27,7 +27,7 @@ export const ImageSection: React.FC<ImageSectionProps> = ({ image, categories, r
             zIndex={1}
             display={{ base: 'inline-flex', lg: 'none' }}
         >
-            <VStack>
+            <VStack align='start'>
                 {categories.map(({ _id, title, category }) => (
                     <CategoryBadge key={_id} title={title} category={category} bgColor='lime.50' />
                 ))}
