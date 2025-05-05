@@ -17,6 +17,7 @@ import allergenFilterReducer from './allergen-filter/slice';
 import appReducer, { appSlice } from './app-slice';
 import categoriesReducer from './category/slice';
 import globalLoadingReducer from './loader/slice';
+import notificationReducer from './notification/slice';
 import recipeFilterReducer from './recipe-filter/slice';
 import searchReducer from './search/slice';
 
@@ -30,6 +31,7 @@ const rootReducer = combineReducers({
     recipeFilter: recipeFilterReducer,
     search: searchReducer,
     globalLoading: globalLoadingReducer,
+    notification: notificationReducer,
 });
 
 const persistedReducer = persistReducer(

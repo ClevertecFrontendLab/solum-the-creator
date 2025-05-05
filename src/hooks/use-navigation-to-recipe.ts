@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useNavigate, useParams } from 'react-router';
+import { useLocation, useNavigate, useParams } from 'react-router';
 
 import { selectCategoryBySubCategoryId, selectSubCategoryById } from '~/store/category/selectors';
 import { useAppSelector } from '~/store/hooks';
@@ -17,6 +17,7 @@ export const useNavigationToRecipe = ({
 }: UseNavigationToRecipeArgs) => {
     const navigate = useNavigate();
     const params = useParams<{ category: string; subcategory: string }>();
+    const location = useLocation();
 
     const category = useAppSelector(selectCategoryBySubCategoryId(subCategoryId));
     const subCategory = useAppSelector(selectSubCategoryById(subCategoryId));
@@ -28,12 +29,16 @@ export const useNavigationToRecipe = ({
                 return;
             }
 
-            navigate(`/${category.category}/${subCategory.category}/${recipeId}`);
+            navigate(`/${category.category}/${subCategory.category}/${recipeId}`, {
+                state: { from: location.pathname },
+            });
             return;
         }
 
         if (params.category && params.subcategory) {
-            navigate(`/${params.category}/${params.subcategory}/${recipeId}`);
+            navigate(`/${params.category}/${params.subcategory}/${recipeId}`, {
+                state: { from: location.pathname },
+            });
             return;
         }
     }, [
@@ -45,5 +50,6 @@ export const useNavigationToRecipe = ({
         recipeId,
         subCategory,
         subCategoryId,
+        location,
     ]);
 };

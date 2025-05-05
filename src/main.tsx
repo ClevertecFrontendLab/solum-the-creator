@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router';
 import { PersistGate } from 'redux-persist/integration/react';
 
+import { Notification } from '~/components/shared/notification/notification';
 import { theme } from '~/constants/theme/theme';
 import { persistor, store } from '~/store/configure-store.ts';
 
@@ -17,6 +18,7 @@ createRoot(document.getElementById('root')!).render(
         <ChakraProvider theme={theme}>
             <Provider store={store}>
                 <PersistGate loading={null} persistor={persistor}>
+                    <Notification />
                     <RouterProvider router={router} />
                 </PersistGate>
             </Provider>

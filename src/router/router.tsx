@@ -1,6 +1,7 @@
 import { createBrowserRouter, createRoutesFromElements, Navigate, Route } from 'react-router';
 
 import { MainLayout } from '~/components/layouts/main-layout';
+import { RecipeError } from '~/components/shared/errors/recipe-error';
 import { pathes } from '~/constants/navigation/pathes';
 import { CategoryPage } from '~/pages/category/category-page';
 import { SubcategoryPage } from '~/pages/category/subcategory/subcategory-page';
@@ -27,7 +28,7 @@ export const router = createBrowserRouter(
                 element={<RecipePage />}
                 loader={RecipePageLoader}
                 HydrateFallback={HydrateRecipePage}
-                errorElement={<Navigate to={pathes.notFound} replace />}
+                errorElement={<RecipeError />}
             />
 
             <Route path={pathes.notFound} element={<NotFoundPage />} />
