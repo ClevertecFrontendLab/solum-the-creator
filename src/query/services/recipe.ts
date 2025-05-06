@@ -23,6 +23,8 @@ export type Recipe = {
     steps: RecipeStep[];
     nutritionValue: NutritionValue;
     ingredients: Ingredient[];
+    garnish?: string;
+    meat?: string;
 };
 
 type RecipeResponse = {
@@ -38,6 +40,17 @@ type RecipeResponse = {
 type RecipesInitialPageParam = {
     page: number;
     limit: number;
+};
+
+export type FilterParams = {
+    page: number;
+    limit: number;
+    searchString?: string;
+    subcategoriesIds?: string[];
+    meat?: string[];
+    garnish?: string[];
+    allergens?: string[];
+    excludeAllergens?: boolean;
 };
 
 export const recipeApiSlice = apiSlice
@@ -186,6 +199,60 @@ export const recipeApiSlice = apiSlice
                 providesTags: (result, _error, id) =>
                     result ? [{ type: Tags.RECIPE as const, id }] : [],
             }),
+            [EndpointNames.GET_FILTERED_RECIPES]: builder.infiniteQuery<
+                Recipe[],
+                { filters: Omit<FilterParams, 'page' | 'limit'>; perPage: number },
+                RecipesInitialPageParam
+            >({
+                infiniteQueryOptions: {
+                    initialPageParam: {
+                        page: 1,
+                        limit: 8,
+                    },
+                    getNextPageParam: (lastPage, _allPages, lastPageParam) => {
+                        if (lastPage.length < lastPageParam.limit) {
+                            return undefined;
+                        }
+
+                        return {
+                            ...lastPageParam,
+                            page: lastPageParam.page + 1,
+                        };
+                    },
+                },
+
+                query: ({ queryArg: { filters, perPage }, pageParam: { page } }) => {
+                    const { excludeAllergens, ...restFilters } = filters;
+
+                    const params = {
+                        ...restFilters,
+                        page,
+                        limit: perPage,
+                    };
+
+                    if (!filters.excludeAllergens) {
+                        delete params.allergens;
+                    }
+
+                    Object.entries(params).forEach(([key, value]) => {
+                        const isEmptyArray = Array.isArray(value) && value.length === 0;
+                        const isEmptyString = typeof value === 'string' && value.trim() === '';
+                        if (value == null || isEmptyArray || isEmptyString) {
+                            delete params[key];
+                        }
+                    });
+
+                    return {
+                        url: `${ApiEndpoints.RECIPE}`,
+                        method: 'GET',
+                        params,
+                        apiGroupName: ApiGroupNames.RECIPE,
+                        name: EndpointNames.GET_FILTERED_RECIPES,
+                    };
+                },
+                transformResponse: (response: RecipeResponse): Recipe[] =>
+                    transformRecipeResponse(response.data),
+            }),
         }),
         overrideExisting: false,
     });
@@ -198,4 +265,5 @@ export const {
     useGetRecipesByCategoryIdPaginatedInfiniteQuery,
     useGetRecipesBySubcategoryIdsQuery,
     useGetRecipeByIdQuery,
+    useGetFilteredRecipesInfiniteQuery,
 } = recipeApiSlice;

@@ -13,7 +13,7 @@ import { useCallback, useState } from 'react';
 import FilterIcon from '~/assets/icons/filter-icon.svg?react';
 import { FilterDrawer } from '~/components/ui/filter-drawer/filter-drawer';
 import { useAppDispatch } from '~/store/hooks';
-import { clearSearchQuery, setSearchQuery } from '~/store/search/slice';
+import { applyFilters, setSearchString } from '~/store/recipes-filters/slice';
 
 type HeroSearchProps = {
     onFocusChange: (focused: boolean) => void;
@@ -32,7 +32,8 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({ onFocusChange }) => {
             setInputValue(value);
 
             if (value.trim() === '') {
-                dispatch(clearSearchQuery());
+                dispatch(setSearchString(''));
+                dispatch(applyFilters());
             }
         },
         [dispatch],
@@ -40,7 +41,8 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({ onFocusChange }) => {
 
     const handleSearch = useCallback(() => {
         if (!isDisabled) {
-            dispatch(setSearchQuery(inputValue));
+            dispatch(setSearchString(inputValue.trim()));
+            dispatch(applyFilters());
         }
     }, [dispatch, inputValue, isDisabled]);
 

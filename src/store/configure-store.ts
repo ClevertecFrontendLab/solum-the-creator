@@ -19,6 +19,7 @@ import categoriesReducer from './category/slice';
 import globalLoadingReducer from './loader/slice';
 import notificationReducer from './notification/slice';
 import recipeFilterReducer from './recipe-filter/slice';
+import recipesFiltersReducer from './recipes-filters/slice';
 import searchReducer from './search/slice';
 
 const isProduction = false;
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
     search: searchReducer,
     globalLoading: globalLoadingReducer,
     notification: notificationReducer,
+    recipesFilters: recipesFiltersReducer,
 });
 
 const persistedReducer = persistReducer(

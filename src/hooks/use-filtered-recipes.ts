@@ -1,48 +1,50 @@
-import { useMemo } from 'react';
+import { useEffect, useState } from 'react';
 
-import { CategoryValue } from '~/constants/data/category';
-import { Recipe } from '~/constants/data/recipes';
+import { Recipe, useGetFilteredRecipesInfiniteQuery } from '~/query/services/recipe';
 import { useAppSelector } from '~/store/hooks';
+import { selectAppliedFilters, selectIsFilterApplied } from '~/store/recipes-filters/selectors';
 
-export const useFilteredRecipes = (recipes: Recipe[]) => {
-    const { categories, authors, allergens, excludeAllergens, meatTypes, sideTypes } =
-        useAppSelector((state) => state.recipeFilter);
+export const useFilteredRecipes = () => {
+    const isFilterApplied = useAppSelector(selectIsFilterApplied);
+    const filters = useAppSelector(selectAppliedFilters);
 
-    const filteredRecipes = useMemo(
-        () =>
-            recipes.filter((recipe) => {
-                const categoryMatch =
-                    categories.length === 0 ||
-                    categories.some((category) =>
-                        recipe.category.includes(category.value as CategoryValue),
-                    );
+    const [cachedRecipes, setCachedRecipes] = useState<Recipe[] | null>(null);
 
-                const authorMatch =
-                    authors.length === 0 ||
-                    authors.some((author) => recipe.authorId === author.value);
-
-                const meatMatch =
-                    meatTypes.length === 0 ||
-                    meatTypes.some((meat) => recipe.meat?.includes(meat.value));
-
-                const sideMatch =
-                    sideTypes.length === 0 ||
-                    sideTypes.some((side) => recipe.side?.includes(side.value));
-
-                const ingredientTitles = recipe.ingredients.map((ingredient) =>
-                    ingredient.title.toLowerCase(),
-                );
-
-                const allergenMatch =
-                    excludeAllergens &&
-                    ingredientTitles.some((title) =>
-                        allergens.some((allergen) => title.includes(allergen.value)),
-                    );
-
-                return categoryMatch && authorMatch && meatMatch && sideMatch && !allergenMatch;
-            }),
-        [allergens, authors, recipes, categories, excludeAllergens, meatTypes, sideTypes],
+    const {
+        data: filteredRecipesPages,
+        isFetching,
+        fetchNextPage,
+        hasNextPage,
+        isFetchingNextPage,
+    } = useGetFilteredRecipesInfiniteQuery(
+        {
+            filters,
+            perPage: 8,
+        },
+        {
+            skip: !isFilterApplied,
+        },
     );
 
-    return filteredRecipes;
+    useEffect(() => {
+        if (filteredRecipesPages) {
+            const flatRecipes = filteredRecipesPages.pages.flat();
+            setCachedRecipes(flatRecipes);
+        }
+    }, [filteredRecipesPages]);
+
+    useEffect(() => {
+        if (!isFilterApplied) {
+            setCachedRecipes(null);
+        }
+    }, [isFilterApplied]);
+
+    return {
+        cachedRecipes,
+        isFetchingNextPage,
+        isFilterApplied,
+        isFetching,
+        hasNextPage,
+        fetchNextPage,
+    };
 };

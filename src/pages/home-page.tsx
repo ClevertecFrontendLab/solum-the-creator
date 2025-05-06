@@ -7,25 +7,14 @@ import { JuiciestSection } from '~/components/sections/home/juiciest-section';
 import { NewRecipesSection } from '~/components/sections/new-recipes-section/new-recipes-section';
 import { RecipeHorizontalGridSection } from '~/components/sections/recipe-horizontal-grid-section/recipe-horizontal-grid-section';
 import { RelevantKitchenSection } from '~/components/sections/relevant-kitchen-section/relevant-kitchen-section';
-import { recipes } from '~/constants/data/recipes';
 import { fadeIn } from '~/constants/motions/motion-presets';
-import { useAllergenFilteredRecipes } from '~/hooks/use-allergen-filtered-recipes';
 import { useFilteredRecipes } from '~/hooks/use-filtered-recipes';
-import { useSearchedRecipes } from '~/hooks/use-serched-recipes';
-import { selectIsAllergenFilterActive } from '~/store/allergen-filter/selectors';
-import { useAppSelector } from '~/store/hooks';
-import { selectIsDrawerFilterApplied } from '~/store/recipe-filter/selectors';
 
 export const HomePage = () => {
-    const isAllergenFilterActive = useAppSelector(selectIsAllergenFilterActive);
-    const filteredAllergenRecipes = useAllergenFilteredRecipes(recipes);
+    const { cachedRecipes, isFilterApplied, isFetchingNextPage, hasNextPage, fetchNextPage } =
+        useFilteredRecipes();
 
-    const isDrawerFilterApplied = useAppSelector(selectIsDrawerFilterApplied);
-    const filteredRecipes = useFilteredRecipes(recipes);
-
-    const filteredRicipesByUI = isDrawerFilterApplied ? filteredRecipes : filteredAllergenRecipes;
-
-    const { recipes: finalRecipes, isSearchActive } = useSearchedRecipes(filteredRicipesByUI);
+    const shouldShowRecipes = isFilterApplied && cachedRecipes !== null;
 
     return (
         <Flex direction='column' align='center'>
@@ -34,10 +23,15 @@ export const HomePage = () => {
             </Box>
 
             <AnimatePresence mode='wait'>
-                {isAllergenFilterActive || isDrawerFilterApplied || isSearchActive ? (
+                {shouldShowRecipes ? (
                     <motion.div key='filtered' {...fadeIn}>
                         <Box px={{ base: 4, sm: 5, md: 6 }}>
-                            <RecipeHorizontalGridSection recipes={finalRecipes} />
+                            <RecipeHorizontalGridSection
+                                recipes={cachedRecipes}
+                                isLoading={isFetchingNextPage}
+                                hasNextPage={hasNextPage}
+                                onClickMore={fetchNextPage}
+                            />
                         </Box>
                     </motion.div>
                 ) : (
