@@ -11,15 +11,21 @@ import { fadeIn } from '~/constants/motions/motion-presets';
 import { useFilteredRecipes } from '~/hooks/use-filtered-recipes';
 
 export const HomePage = () => {
-    const { cachedRecipes, isFilterApplied, isFetchingNextPage, hasNextPage, fetchNextPage } =
-        useFilteredRecipes();
+    const {
+        cachedRecipes,
+        isFilterApplied,
+        isFetchingNextPage,
+        isFetching,
+        hasNextPage,
+        fetchNextPage,
+    } = useFilteredRecipes();
 
     const shouldShowRecipes = isFilterApplied && cachedRecipes !== null;
 
     return (
         <Flex direction='column' align='center'>
             <Box pb={{ base: 0, xl: 6 }} width='100%' px={{ base: 0, sm: 5, md: 6 }}>
-                <HeroSection title='Приятного аппетита!' />
+                <HeroSection title='Приятного аппетита!' isLoading={isFetching} />
             </Box>
 
             <AnimatePresence mode='wait'>

@@ -8,12 +8,15 @@ import {
     InputRightElement,
     useDisclosure,
 } from '@chakra-ui/react';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import FilterIcon from '~/assets/icons/filter-icon.svg?react';
 import { FilterDrawer } from '~/components/ui/filter-drawer/filter-drawer';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
-import { selectIsAllergensSelected } from '~/store/recipes-filters/selectors';
+import {
+    selectIsAllergensSelected,
+    selectSearchStringFilter,
+} from '~/store/recipes-filters/selectors';
 import { applyFilters, setSearchString } from '~/store/recipes-filters/slice';
 
 type HeroSearchProps = {
@@ -22,7 +25,12 @@ type HeroSearchProps = {
 
 export const HeroSearch: React.FC<HeroSearchProps> = ({ onFocusChange }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const [inputValue, setInputValue] = useState('');
+    const searchString = useAppSelector(selectSearchStringFilter);
+    const [inputValue, setInputValue] = useState(searchString);
+
+    useEffect(() => {
+        setInputValue(searchString);
+    }, [searchString]);
 
     const isAllergensSelected = useAppSelector(selectIsAllergensSelected);
     const dispatch = useAppDispatch();

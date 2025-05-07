@@ -10,6 +10,8 @@ export const useFilteredRecipes = () => {
 
     const [cachedRecipes, setCachedRecipes] = useState<Recipe[] | null>(null);
 
+    const { excludeAllergens, ...clearFilters } = filters;
+
     const {
         data: filteredRecipesPages,
         isFetching,
@@ -18,7 +20,7 @@ export const useFilteredRecipes = () => {
         isFetchingNextPage,
     } = useGetFilteredRecipesInfiniteQuery(
         {
-            filters,
+            filters: clearFilters,
             perPage: 8,
         },
         {

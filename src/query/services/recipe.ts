@@ -223,10 +223,8 @@ export const recipeApiSlice = apiSlice
                 },
 
                 query: ({ queryArg: { filters, perPage }, pageParam: { page } }) => {
-                    const { excludeAllergens, ...restFilters } = filters;
-
                     const params = {
-                        ...restFilters,
+                        ...filters,
                         page,
                         limit: perPage,
                     };
