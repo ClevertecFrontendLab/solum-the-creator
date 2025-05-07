@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 
 import { Recipe, useGetFilteredRecipesInfiniteQuery } from '~/query/services/recipe';
 import { useAppSelector } from '~/store/hooks';
-import { selectAppliedFilters, selectIsFilterApplied } from '~/store/recipes-filters/selectors';
+import { selectAppliedFilters, selectIsFilterActive } from '~/store/recipes-filters/selectors';
 
 export const useFilteredRecipes = () => {
-    const isFilterApplied = useAppSelector(selectIsFilterApplied);
+    const isFilterApplied = useAppSelector(selectIsFilterActive);
     const filters = useAppSelector(selectAppliedFilters);
 
     const [cachedRecipes, setCachedRecipes] = useState<Recipe[] | null>(null);

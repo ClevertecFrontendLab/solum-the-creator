@@ -12,6 +12,7 @@ export type FilterParams = {
 type RecipesFiltersState = {
     draftFilters: FilterParams;
     appliedFilters: FilterParams;
+    isFilterActive: boolean;
 };
 
 const initialFilters: FilterParams = {
@@ -26,6 +27,7 @@ const initialFilters: FilterParams = {
 const initialState: RecipesFiltersState = {
     draftFilters: initialFilters,
     appliedFilters: initialFilters,
+    isFilterActive: false,
 };
 
 const recipesFiltersSlice = createSlice({
@@ -54,11 +56,23 @@ const recipesFiltersSlice = createSlice({
         setSubcategoriesIdsFilter(state, action: PayloadAction<string[]>) {
             state.draftFilters.subcategoriesIds = action.payload;
         },
+        setAppliedAllergensFilter(state, action: PayloadAction<string[]>) {
+            state.appliedFilters.allergens = action.payload;
+        },
+        setAppliedExcludeAllergensFilter(state, action: PayloadAction<boolean>) {
+            state.appliedFilters.excludeAllergens = action.payload;
+
+            if (!action.payload) {
+                state.appliedFilters.allergens = [];
+            }
+        },
         resetFilters(state) {
             state.draftFilters = initialFilters;
             state.appliedFilters = initialFilters;
+            state.isFilterActive = false;
         },
         applyFilters(state) {
+            state.isFilterActive = true;
             state.appliedFilters = state.draftFilters;
         },
         setDraftFiltersFromApplied(state) {
@@ -77,6 +91,8 @@ export const {
     resetFilters,
     applyFilters,
     setDraftFiltersFromApplied,
+    setAppliedAllergensFilter,
+    setAppliedExcludeAllergensFilter,
 } = recipesFiltersSlice.actions;
 
 export default recipesFiltersSlice.reducer;

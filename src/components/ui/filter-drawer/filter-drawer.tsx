@@ -20,6 +20,7 @@ import { meatTypes, sideTypes } from '~/constants/data/recipes';
 import { useFilterOption } from '~/hooks/use-filter-option';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import {
+    selectAllergensFilter,
     selectExcludeAllergensFilter,
     selectGarnishFilter,
     selectMeatFilter,
@@ -27,6 +28,7 @@ import {
 import {
     applyFilters,
     resetFilters,
+    setAllergensFilter,
     setDraftFiltersFromApplied,
     setExcludeAllergensFilter,
     setGarnishFilter,
@@ -54,6 +56,11 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({ isOpen, onClose }) =
         useFilterOption(selectedGarnish, sideTypes, (values) => dispatch(setGarnishFilter(values)));
 
     const isExcludeAllergens = useAppSelector(selectExcludeAllergensFilter);
+
+    const selectedAllergens = useAppSelector(selectAllergensFilter);
+    const handleAllergensChange = (values: string[]) => {
+        dispatch(setAllergensFilter(values));
+    };
 
     useEffect(() => {
         if (!isOpen) {
@@ -132,6 +139,8 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({ isOpen, onClose }) =
                         />
 
                         <AllergenSelect
+                            selectedAllergens={selectedAllergens}
+                            onChange={handleAllergensChange}
                             isDisabled={!isExcludeAllergens}
                             dataTestId='allergens-menu-button-filter'
                         />

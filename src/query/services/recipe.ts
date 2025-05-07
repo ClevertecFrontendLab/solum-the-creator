@@ -1,4 +1,5 @@
 import { Ingredient, NutritionValue, RecipeStep } from '~/constants/data/recipes';
+import { getValuable } from '~/utils/get-valuable-obj';
 import { transformRecipeResponse } from '~/utils/image';
 
 import { ApiEndpoints } from '../constants/api';
@@ -230,22 +231,12 @@ export const recipeApiSlice = apiSlice
                         limit: perPage,
                     };
 
-                    if (!filters.excludeAllergens) {
-                        delete params.allergens;
-                    }
-
-                    Object.entries(params).forEach(([key, value]) => {
-                        const isEmptyArray = Array.isArray(value) && value.length === 0;
-                        const isEmptyString = typeof value === 'string' && value.trim() === '';
-                        if (value == null || isEmptyArray || isEmptyString) {
-                            delete params[key];
-                        }
-                    });
+                    const clearParams = getValuable(params);
 
                     return {
                         url: `${ApiEndpoints.RECIPE}`,
                         method: 'GET',
-                        params,
+                        params: clearParams,
                         apiGroupName: ApiGroupNames.RECIPE,
                         name: EndpointNames.GET_FILTERED_RECIPES,
                     };

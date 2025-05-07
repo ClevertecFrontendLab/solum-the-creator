@@ -12,7 +12,8 @@ import { useCallback, useState } from 'react';
 
 import FilterIcon from '~/assets/icons/filter-icon.svg?react';
 import { FilterDrawer } from '~/components/ui/filter-drawer/filter-drawer';
-import { useAppDispatch } from '~/store/hooks';
+import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import { selectIsAllergensSelected } from '~/store/recipes-filters/selectors';
 import { applyFilters, setSearchString } from '~/store/recipes-filters/slice';
 
 type HeroSearchProps = {
@@ -22,9 +23,11 @@ type HeroSearchProps = {
 export const HeroSearch: React.FC<HeroSearchProps> = ({ onFocusChange }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [inputValue, setInputValue] = useState('');
+
+    const isAllergensSelected = useAppSelector(selectIsAllergensSelected);
     const dispatch = useAppDispatch();
 
-    const isDisabled = inputValue.trim().length < 3;
+    const isDisabled = inputValue.trim().length < 3 && !isAllergensSelected;
 
     const handleInputChange = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
