@@ -3,42 +3,66 @@ import { Flex } from '@chakra-ui/react';
 import { HeroSection } from '~/components/sections/hero-section/hero-section';
 import { RecipeHorizontalGridSection } from '~/components/sections/recipe-horizontal-grid-section/recipe-horizontal-grid-section';
 import { RelevantKitchenSection } from '~/components/sections/relevant-kitchen-section/relevant-kitchen-section';
+import { useFilteredRecipes } from '~/hooks/use-filtered-recipes';
 import { useGlobalLoading } from '~/hooks/use-global-loading';
 import { useGetJuiciestRecipesPaginatedInfiniteQuery } from '~/query/services/recipe';
 
 export const JuiciestPage = () => {
     const limit = 8;
-    const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } =
-        useGetJuiciestRecipesPaginatedInfiniteQuery({ perPage: limit });
 
-    useGlobalLoading(isLoading);
+    const {
+        cachedRecipes,
+        isFilterApplied,
+        isFetchingNextPage: isFetchingFilteredNextPage,
+        isFetching: isFetchingFiltered,
+        hasNextPage: hasMoreFiltered,
+        fetchNextPage: fetchNextFiltered,
+    } = useFilteredRecipes({ sortBy: 'likes', sortOrder: 'desc' });
 
-    const recipes = data?.pages.flat() ?? [];
+    const {
+        data: juicyData,
+        isLoading: isJuicyLoading,
+        isFetchingNextPage: isFetchingJuicyNextPage,
+        fetchNextPage: fetchNextJuicy,
+        hasNextPage: hasMoreJuicy,
+    } = useGetJuiciestRecipesPaginatedInfiniteQuery(
+        { perPage: limit },
+        {
+            skip: isFilterApplied,
+        },
+    );
 
-    // const filteredAllergenRecipes = useAllergenFilteredRecipes(popularRecipes);
+    useGlobalLoading(isJuicyLoading);
 
-    // const isDrawerFilterApplied = useAppSelector(selectIsDrawerFilterApplied);
-    // const filteredRecipes = useFilteredRecipes(popularRecipes);
+    const juicyRecipes = juicyData?.pages.flat() ?? [];
 
-    // const filteredRicipesByUI = isDrawerFilterApplied ? filteredRecipes : filteredAllergenRecipes;
+    const isEmptyResult = isFilterApplied && cachedRecipes?.length === 0;
+    const shouldShowFiltered = isFilterApplied && cachedRecipes && cachedRecipes.length > 0;
 
-    // const { recipes: finalRecipes } = useSearchedRecipes(filteredRicipesByUI);
-
-    const handleClickMore = () => fetchNextPage();
+    const recipeProps = shouldShowFiltered
+        ? {
+              recipes: cachedRecipes,
+              onClickMore: fetchNextFiltered,
+              hasNextPage: hasMoreFiltered,
+              isLoading: isFetchingFilteredNextPage,
+          }
+        : {
+              recipes: juicyRecipes,
+              onClickMore: fetchNextJuicy,
+              hasNextPage: hasMoreJuicy,
+              isLoading: isFetchingJuicyNextPage,
+          };
 
     return (
         <Flex direction='column' align='center'>
-            <HeroSection title='Самое сочное' />
+            <HeroSection
+                title='Самое сочное'
+                isLoading={isFetchingFiltered}
+                isEmptyResult={isEmptyResult}
+            />
 
             <Flex direction='column' align='center' width='100%' px={{ base: 4, sm: 5, md: 6 }}>
-                {recipes && (
-                    <RecipeHorizontalGridSection
-                        recipes={recipes}
-                        onClickMore={handleClickMore}
-                        hasNextPage={hasNextPage}
-                        isLoading={isFetchingNextPage}
-                    />
-                )}
+                <RecipeHorizontalGridSection {...recipeProps} />
 
                 <RelevantKitchenSection />
             </Flex>

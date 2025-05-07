@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Recipe, useGetFilteredRecipesInfiniteQuery } from '~/query/services/recipe';
+import { Recipe, SortParams, useGetFilteredRecipesInfiniteQuery } from '~/query/services/recipe';
 import { useAppSelector } from '~/store/hooks';
 import {
     selectAppliedFilters,
@@ -8,7 +8,7 @@ import {
     selectIsFilterActive,
 } from '~/store/recipes-filters/selectors';
 
-export const useFilteredRecipes = () => {
+export const useFilteredRecipes = (sort?: SortParams) => {
     const isFilterApplied = useAppSelector(selectIsFilterActive);
     const filters = useAppSelector(selectAppliedFilters);
     const version = useAppSelector(selectAppliedFilterVersion);
@@ -27,6 +27,7 @@ export const useFilteredRecipes = () => {
         {
             filters: clearFilters,
             perPage: 8,
+            sort,
             version,
         },
         {

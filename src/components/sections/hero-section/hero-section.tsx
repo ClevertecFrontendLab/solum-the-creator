@@ -26,7 +26,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     const [isSearchFocused, setSearchFocused] = useState(false);
 
     const isActive = useAppSelector(selectIsHeroActive);
-    const isHeroActive = isActive || isSearchFocused;
+    const isHeroActive = isActive || isSearchFocused || isEmptyResult;
 
     return (
         <Box as='section' w='100%' display='flex' justifyContent='center' mb={4}>

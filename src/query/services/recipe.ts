@@ -54,6 +54,11 @@ export type FilterParams = {
     excludeAllergens?: boolean;
 };
 
+export type SortParams = {
+    sortBy?: 'likes' | 'createdAt';
+    sortOrder?: 'asc' | 'desc';
+};
+
 export const recipeApiSlice = apiSlice
     .enhanceEndpoints({
         addTagTypes: [Tags.RECIPE],
@@ -202,7 +207,12 @@ export const recipeApiSlice = apiSlice
             }),
             [EndpointNames.GET_FILTERED_RECIPES]: builder.infiniteQuery<
                 Recipe[],
-                { filters: Omit<FilterParams, 'page' | 'limit'>; perPage: number; version: number },
+                {
+                    filters: Omit<FilterParams, 'page' | 'limit'>;
+                    perPage: number;
+                    sort?: SortParams;
+                    version: number;
+                },
                 RecipesInitialPageParam
             >({
                 infiniteQueryOptions: {
@@ -222,9 +232,10 @@ export const recipeApiSlice = apiSlice
                     },
                 },
 
-                query: ({ queryArg: { filters, perPage }, pageParam: { page } }) => {
+                query: ({ queryArg: { filters, perPage, sort }, pageParam: { page } }) => {
                     const params = {
                         ...filters,
+                        ...sort,
                         page,
                         limit: perPage,
                     };
