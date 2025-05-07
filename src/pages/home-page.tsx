@@ -20,12 +20,17 @@ export const HomePage = () => {
         fetchNextPage,
     } = useFilteredRecipes();
 
-    const shouldShowRecipes = isFilterApplied && cachedRecipes !== null;
+    const isEmptyResult = isFilterApplied && cachedRecipes?.length === 0;
+    const shouldShowRecipes = isFilterApplied && cachedRecipes && cachedRecipes.length > 0;
 
     return (
         <Flex direction='column' align='center'>
             <Box pb={{ base: 0, xl: 6 }} width='100%' px={{ base: 0, sm: 5, md: 6 }}>
-                <HeroSection title='Приятного аппетита!' isLoading={isFetching} />
+                <HeroSection
+                    title='Приятного аппетита!'
+                    isLoading={isFetching}
+                    isEmptyResult={isEmptyResult}
+                />
             </Box>
 
             <AnimatePresence mode='wait'>

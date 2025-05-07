@@ -32,3 +32,6 @@ export const selectIsAllergensSelected = (state: ApplicationState) =>
 
 export const selectAppliedExcludeAllergensFilter = (state: ApplicationState) =>
     state.recipesFilters.appliedFilters.excludeAllergens;
+
+export const selectAppliedFilterVersion = (state: ApplicationState) =>
+    state.recipesFilters.appliedFilterVersion;

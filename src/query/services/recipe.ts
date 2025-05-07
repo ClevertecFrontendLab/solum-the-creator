@@ -202,7 +202,7 @@ export const recipeApiSlice = apiSlice
             }),
             [EndpointNames.GET_FILTERED_RECIPES]: builder.infiniteQuery<
                 Recipe[],
-                { filters: Omit<FilterParams, 'page' | 'limit'>; perPage: number },
+                { filters: Omit<FilterParams, 'page' | 'limit'>; perPage: number; version: number },
                 RecipesInitialPageParam
             >({
                 infiniteQueryOptions: {

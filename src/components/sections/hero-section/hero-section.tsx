@@ -1,4 +1,4 @@
-import { Box, Center, VStack } from '@chakra-ui/react';
+import { Box, Center, Heading, VStack } from '@chakra-ui/react';
 import { useState } from 'react';
 
 import { Loader } from '~/components/shared/misc/loader/loader';
@@ -12,11 +12,17 @@ import { HeroTitle } from './hero-title';
 
 type HeroSectionProps = {
     title: string;
+    isEmptyResult?: boolean;
     isLoading?: boolean;
     description?: string;
 };
 
-export const HeroSection: React.FC<HeroSectionProps> = ({ title, isLoading, description }) => {
+export const HeroSection: React.FC<HeroSectionProps> = ({
+    title,
+    isEmptyResult,
+    isLoading,
+    description,
+}) => {
     const [isSearchFocused, setSearchFocused] = useState(false);
 
     const isActive = useAppSelector(selectIsHeroActive);
@@ -37,7 +43,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ title, isLoading, desc
                 transition='box-shadow 0.2s ease-in-out'
             >
                 <VStack align='center' spacing={{ base: 3, md: 4 }}>
-                    <HeroTitle>{title}</HeroTitle>
+                    {isEmptyResult ? (
+                        <Heading as='h2' fontSize='md' fontWeight='600' textAlign='center'>
+                            По вашему запросу ничего не найдено. <br /> Попробуйте другой запрос
+                        </Heading>
+                    ) : (
+                        <HeroTitle>{title}</HeroTitle>
+                    )}
 
                     {description && <HeroDescription>{description}</HeroDescription>}
                 </VStack>

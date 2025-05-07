@@ -13,6 +13,7 @@ type RecipesFiltersState = {
     draftFilters: FilterParams;
     appliedFilters: FilterParams;
     isFilterActive: boolean;
+    appliedFilterVersion: number;
 };
 
 const initialFilters: FilterParams = {
@@ -28,6 +29,7 @@ const initialState: RecipesFiltersState = {
     draftFilters: initialFilters,
     appliedFilters: initialFilters,
     isFilterActive: false,
+    appliedFilterVersion: 0,
 };
 
 const recipesFiltersSlice = createSlice({
@@ -74,6 +76,7 @@ const recipesFiltersSlice = createSlice({
         applyFilters(state) {
             state.isFilterActive = true;
             state.appliedFilters = state.draftFilters;
+            state.appliedFilterVersion += 1;
         },
         setDraftFiltersFromApplied(state) {
             state.draftFilters = state.appliedFilters;

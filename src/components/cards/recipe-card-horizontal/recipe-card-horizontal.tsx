@@ -17,7 +17,7 @@ import SavedIcon from '~/assets/icons/bookmarkHeart-icon.svg?react';
 import { useNavigationToRecipe } from '~/hooks/use-navigation-to-recipe';
 import { selectParentCategoriesBySubIds } from '~/store/category/selectors';
 import { useAppSelector } from '~/store/hooks';
-import { selectSearchQuery } from '~/store/search/selectors';
+import { selectSearchStringFilter } from '~/store/recipes-filters/selectors';
 
 import { ImageSection } from './image-section';
 import { TopRow } from './top-row';
@@ -57,7 +57,7 @@ export const RecipeCardHorizontal: React.FC<RecipeCardHorizontalProps> = ({
         subCategoryId: categoriesIds[0],
     });
 
-    const searchQuery = useAppSelector(selectSearchQuery);
+    const searchQuery = useAppSelector(selectSearchStringFilter);
 
     return (
         <Card

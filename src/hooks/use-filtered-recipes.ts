@@ -2,11 +2,16 @@ import { useEffect, useState } from 'react';
 
 import { Recipe, useGetFilteredRecipesInfiniteQuery } from '~/query/services/recipe';
 import { useAppSelector } from '~/store/hooks';
-import { selectAppliedFilters, selectIsFilterActive } from '~/store/recipes-filters/selectors';
+import {
+    selectAppliedFilters,
+    selectAppliedFilterVersion,
+    selectIsFilterActive,
+} from '~/store/recipes-filters/selectors';
 
 export const useFilteredRecipes = () => {
     const isFilterApplied = useAppSelector(selectIsFilterActive);
     const filters = useAppSelector(selectAppliedFilters);
+    const version = useAppSelector(selectAppliedFilterVersion);
 
     const [cachedRecipes, setCachedRecipes] = useState<Recipe[] | null>(null);
 
@@ -22,6 +27,7 @@ export const useFilteredRecipes = () => {
         {
             filters: clearFilters,
             perPage: 8,
+            version,
         },
         {
             skip: !isFilterApplied,
