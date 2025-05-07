@@ -8,7 +8,12 @@ import {
     selectIsFilterActive,
 } from '~/store/recipes-filters/selectors';
 
-export const useFilteredRecipes = (sort?: SortParams) => {
+type FilteredRecipesParams = {
+    subcategoriesIds?: string[];
+    sort?: SortParams;
+};
+
+export const useFilteredRecipes = ({ subcategoriesIds, sort }: FilteredRecipesParams = {}) => {
     const isFilterApplied = useAppSelector(selectIsFilterActive);
     const filters = useAppSelector(selectAppliedFilters);
     const version = useAppSelector(selectAppliedFilterVersion);
@@ -16,6 +21,11 @@ export const useFilteredRecipes = (sort?: SortParams) => {
     const [cachedRecipes, setCachedRecipes] = useState<Recipe[] | null>(null);
 
     const { excludeAllergens, ...clearFilters } = filters;
+
+    const effectiveFilters = {
+        ...clearFilters,
+        ...(subcategoriesIds !== undefined ? { subcategoriesIds } : {}),
+    };
 
     const {
         data: filteredRecipesPages,
@@ -25,7 +35,7 @@ export const useFilteredRecipes = (sort?: SortParams) => {
         isFetchingNextPage,
     } = useGetFilteredRecipesInfiniteQuery(
         {
-            filters: clearFilters,
+            filters: effectiveFilters,
             perPage: 8,
             sort,
             version,

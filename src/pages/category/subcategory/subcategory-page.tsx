@@ -32,17 +32,6 @@ export const SubcategoryPage = () => {
 
     const handleClickMore = () => fetchNextPage();
 
-    // const categoryFilteredRecipes = useCategoryFilteredRecipes(recipes);
-
-    // const filteredAllergenRecipes = useAllergenFilteredRecipes(categoryFilteredRecipes);
-
-    // const isDrawerFilterApplied = useAppSelector(selectIsDrawerFilterApplied);
-    // const filteredRecipes = useFilteredRecipes(categoryFilteredRecipes);
-
-    // const filteredRicipesByUI = isDrawerFilterApplied ? filteredRecipes : filteredAllergenRecipes;
-
-    // const { recipes: finalRecipes } = useSearchedRecipes(filteredRicipesByUI);
-
     return isFetching ? (
         <Box py={4}>
             <Loader isVisible={true} />

@@ -17,7 +17,7 @@ export const JuiciestPage = () => {
         isFetching: isFetchingFiltered,
         hasNextPage: hasMoreFiltered,
         fetchNextPage: fetchNextFiltered,
-    } = useFilteredRecipes({ sortBy: 'likes', sortOrder: 'desc' });
+    } = useFilteredRecipes({ sort: { sortBy: 'likes', sortOrder: 'desc' } });
 
     const {
         data: juicyData,
