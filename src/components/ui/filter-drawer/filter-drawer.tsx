@@ -23,13 +23,14 @@ import {
     selectAllergensFilter,
     selectExcludeAllergensFilter,
     selectGarnishFilter,
+    selectIsFilterDraftActive,
     selectMeatFilter,
 } from '~/store/recipes-filters/selectors';
 import {
     applyFilters,
+    resetDraftFilters,
     resetFilters,
     setAllergensFilter,
-    setDraftFiltersFromApplied,
     setExcludeAllergensFilter,
     setGarnishFilter,
     setMeatFilter,
@@ -47,6 +48,8 @@ type FilterDrawerProps = {
 export const FilterDrawer: React.FC<FilterDrawerProps> = ({ isOpen, onClose }) => {
     const dispatch = useAppDispatch();
 
+    const isFiltersActive = useAppSelector(selectIsFilterDraftActive);
+
     const selectedMeat = useAppSelector(selectMeatFilter);
     const { selectedOptions: selectedMeatOptions, toggleOption: toggleMeatOption } =
         useFilterOption(selectedMeat, meatTypes, (values) => dispatch(setMeatFilter(values)));
@@ -63,8 +66,8 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({ isOpen, onClose }) =
     };
 
     useEffect(() => {
-        if (!isOpen) {
-            dispatch(setDraftFiltersFromApplied());
+        if (isOpen) {
+            dispatch(resetDraftFilters());
         }
     }, [isOpen, dispatch]);
 
@@ -77,8 +80,8 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({ isOpen, onClose }) =
     };
 
     const handleSubmitFilters = () => {
-        onClose();
         dispatch(applyFilters());
+        onClose();
     };
 
     return (
@@ -163,8 +166,8 @@ export const FilterDrawer: React.FC<FilterDrawerProps> = ({ isOpen, onClose }) =
                             variant='black'
                             size={{ base: 'sm', md: 'lg' }}
                             onClick={handleSubmitFilters}
-                            // isDisabled={!isFiltersActive}
-                            // pointerEvents={isFiltersActive ? 'auto' : 'none'}
+                            isDisabled={!isFiltersActive}
+                            pointerEvents={isFiltersActive ? 'auto' : 'none'}
                             data-test-id='find-recipe-button'
                         >
                             Найти рецепт

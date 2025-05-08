@@ -11,6 +11,9 @@ export const {
     selectIds: selectCategoryIds,
 } = categoriesAdapter.getSelectors<ApplicationState>((state) => state.categories);
 
+export const selectIsCategoriesExists = (state: ApplicationState) =>
+    state.categories.ids.length > 0;
+
 export const selectSidebarCategories = createSelector(
     [selectAllCategories],
     (categories): SidebarCategory[] =>

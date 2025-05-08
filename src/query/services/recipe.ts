@@ -38,7 +38,7 @@ type RecipeResponse = {
     };
 };
 
-type RecipesInitialPageParam = {
+export type RecipesInitialPageParam = {
     page: number;
     limit: number;
 };
@@ -87,11 +87,11 @@ export const recipeApiSlice = apiSlice
                         : [{ type: Tags.RECIPE, id: 'LIST' }],
             }),
 
-            [EndpointNames.GET_JUICIEST_RECIPES]: builder.query<Recipe[], number>({
-                query: (limit) => ({
+            [EndpointNames.GET_JUICIEST_RECIPES]: builder.query<Recipe[], void>({
+                query: () => ({
                     url: ApiEndpoints.RECIPE,
                     method: 'GET',
-                    params: { limit, page: '1', sortBy: 'likes', sortOrder: 'desc' },
+                    params: { sortBy: 'likes', limit: '4', page: '1', sortOrder: 'desc' },
                     apiGroupName: ApiGroupNames.RECIPE,
                     name: EndpointNames.GET_JUICIEST_RECIPES,
                 }),
@@ -105,7 +105,7 @@ export const recipeApiSlice = apiSlice
                         : [{ type: Tags.RECIPE, id: 'TOP' as const }],
             }),
             [EndpointNames.GET_JUICIEST_RECIPES_PAGINATED]: builder.infiniteQuery<
-                Recipe[],
+                { data: Recipe[]; meta: RecipeResponse['meta'] },
                 { perPage: number },
                 RecipesInitialPageParam
             >({
@@ -115,7 +115,9 @@ export const recipeApiSlice = apiSlice
                         limit: 8,
                     },
                     getNextPageParam: (lastPage, _allPages, lastPageParam) => {
-                        if (lastPage.length < lastPageParam.limit) {
+                        const totalAvailablePages = lastPage.meta.totalPages;
+
+                        if (lastPage.meta.page >= totalAvailablePages) {
                             return undefined;
                         }
 
@@ -132,8 +134,10 @@ export const recipeApiSlice = apiSlice
                     apiGroupName: ApiGroupNames.RECIPE,
                     name: EndpointNames.GET_JUICIEST_RECIPES_PAGINATED,
                 }),
-                transformResponse: (response: RecipeResponse): Recipe[] =>
-                    transformRecipeResponse(response.data),
+                transformResponse: (response: RecipeResponse) => ({
+                    data: transformRecipeResponse(response.data),
+                    meta: response.meta,
+                }),
             }),
             [EndpointNames.GET_RECIPES_BY_SUBCATEGORY_IDS]: builder.query<
                 Recipe[],
@@ -162,6 +166,22 @@ export const recipeApiSlice = apiSlice
                               { type: Tags.RECIPE, id: 'LIST' },
                           ]
                         : [{ type: Tags.RECIPE, id: 'LIST' }],
+            }),
+            [EndpointNames.GET_RELEVANT_RECIPES]: builder.query<
+                Recipe[],
+                { subcategoryId: string }
+            >({
+                query: ({ subcategoryId }) => ({
+                    url: `${ApiEndpoints.RECIPE_CATEGORY}${subcategoryId}`,
+                    method: 'GET',
+                    params: {
+                        limit: '5',
+                    },
+                    apiGroupName: ApiGroupNames.RECIPE,
+                    name: EndpointNames.GET_RELEVANT_RECIPES,
+                }),
+                transformResponse: (response: { data: Recipe[] }): Recipe[] =>
+                    transformRecipeResponse(response.data),
             }),
             [EndpointNames.GET_RECIPES_BY_CATEGORY_ID_PAGINATED]: builder.infiniteQuery<
                 Recipe[],
@@ -196,7 +216,7 @@ export const recipeApiSlice = apiSlice
             }),
             [EndpointNames.GET_RECIPE_BY_ID]: builder.query<Recipe, string>({
                 query: (id) => ({
-                    url: `${ApiEndpoints.RECIPE}${id}`,
+                    url: `${ApiEndpoints.RECIPE}/${id}`,
                     method: 'GET',
                     apiGroupName: ApiGroupNames.RECIPE,
                     name: EndpointNames.GET_RECIPE_BY_ID,
@@ -266,4 +286,5 @@ export const {
     useGetRecipesBySubcategoryIdsQuery,
     useGetRecipeByIdQuery,
     useGetFilteredRecipesInfiniteQuery,
+    useGetRelevantRecipesQuery,
 } = recipeApiSlice;

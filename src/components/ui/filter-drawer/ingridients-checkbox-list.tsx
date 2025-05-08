@@ -29,7 +29,7 @@ export const IngridientsCheckboxList: React.FC<IngridientsCheckboxListProps> = (
                     isChecked={selectedValues.has(ingridient.value)}
                     size='md'
                     onChange={() => onChange(ingridient)}
-                    data-test-id={ingridient.value === 'potato' ? 'checkbox-картошка' : undefined}
+                    data-test-id={ingridient.value === 'картошка' ? 'checkbox-картошка' : undefined}
                 >
                     <Box noOfLines={1} wordBreak='break-word'>
                         {ingridient.label}

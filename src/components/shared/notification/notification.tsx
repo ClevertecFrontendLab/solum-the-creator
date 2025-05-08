@@ -32,6 +32,7 @@ export const Notification: React.FC = () => {
                     w={{ base: '20.5rem', md: '25rem' }}
                     variant='solid'
                     bgColor='red.500'
+                    data-test-id='error-notification'
                 >
                     <AlertIcon />
                     <Box>
@@ -44,6 +45,7 @@ export const Notification: React.FC = () => {
                         alignSelf='flex-start'
                         right={0}
                         top={0}
+                        data-test-id='close-alert-button'
                     />
                 </Alert>
             ))}

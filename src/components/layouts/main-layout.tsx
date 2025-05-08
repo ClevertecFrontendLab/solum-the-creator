@@ -5,6 +5,8 @@ import { Header } from '~/components/layouts/header';
 import { useGlobalLoading } from '~/hooks/use-global-loading';
 import { useResetAllFiltersOnRouteChange } from '~/hooks/use-reset-all-filters-on-route-change';
 import { useGetCategoriesQuery } from '~/query/services/category';
+import { selectIsCategoriesExists } from '~/store/category/selectors';
+import { useAppSelector } from '~/store/hooks';
 
 import { GlobalLoader } from '../shared/misc/global-loader/global-loader';
 import { Footer } from './footer';
@@ -13,6 +15,9 @@ import { Sidebar } from './sidebar/sidebar';
 
 export const MainLayout: React.FC = () => {
     const { isLoading } = useGetCategoriesQuery();
+
+    const isCategoriesExist = useAppSelector(selectIsCategoriesExists);
+
     useGlobalLoading(isLoading);
     useResetAllFiltersOnRouteChange();
 
@@ -50,20 +55,22 @@ export const MainLayout: React.FC = () => {
                 </Box>
             </Show>
 
-            <Box
-                as='main'
-                pt={{ base: '4rem', md: '5rem' }}
-                pb={{ base: '5.25rem', md: 0 }}
-                ml={{ base: 0, md: '16rem' }}
-                mr={{ base: 0, md: '13rem' }}
-                minH='100vh'
-                overflowY='auto'
-                maxW={{ base: '100%', lg: '58rem', '2xl': '88rem' }}
-                display='flex'
-                flexDir='column'
-            >
-                <Outlet />
-            </Box>
+            {isCategoriesExist && (
+                <Box
+                    as='main'
+                    pt={{ base: '4rem', md: '5rem' }}
+                    pb={{ base: '5.25rem', md: 0 }}
+                    ml={{ base: 0, md: '16rem' }}
+                    mr={{ base: 0, md: '13rem' }}
+                    minH='100vh'
+                    overflowY='auto'
+                    maxW={{ base: '100%', lg: '58rem', '2xl': '88rem' }}
+                    display='flex'
+                    flexDir='column'
+                >
+                    <Outlet />
+                </Box>
+            )}
 
             <Box
                 as='footer'

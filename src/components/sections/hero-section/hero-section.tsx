@@ -1,4 +1,4 @@
-import { Box, Center, Heading, VStack } from '@chakra-ui/react';
+import { Box, Center, Heading, Hide, VStack } from '@chakra-ui/react';
 import { useState } from 'react';
 
 import { Loader } from '~/components/shared/misc/loader/loader';
@@ -62,13 +62,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                     ) : (
                         <>
                             <HeroSearch onFocusChange={setSearchFocused} />
-                            <Box
-                                display={{ base: 'none', md: 'flex' }}
-                                width='100%'
-                                justifyContent='center'
-                            >
-                                <HeroFilters />
-                            </Box>
+                            <Hide below='md'>
+                                <Box display='flex' width='100%' justifyContent='center'>
+                                    <HeroFilters />
+                                </Box>
+                            </Hide>
                         </>
                     )}
                 </VStack>

@@ -21,7 +21,12 @@ export const Loader: React.FC<LoaderProps> = ({ isVisible, variant = 'inline', s
     const { boxSize, spinnerSize } = sizeMap[size];
 
     const SpinnerWithGradient = (
-        <Box position='relative' display='inline-block' boxSize={boxSize}>
+        <Box
+            position='relative'
+            display='inline-block'
+            boxSize={boxSize}
+            data-test-id='loader-search-block'
+        >
             <Box
                 position='absolute'
                 top='50%'
@@ -59,6 +64,7 @@ export const Loader: React.FC<LoaderProps> = ({ isVisible, variant = 'inline', s
                     alignItems='center'
                     justifyContent='center'
                     zIndex={21}
+                    data-test-id='app-loader'
                 >
                     {SpinnerWithGradient}
                 </Box>

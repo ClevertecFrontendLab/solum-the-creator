@@ -34,7 +34,8 @@ export const JuiciestPage = () => {
 
     useGlobalLoading(isJuicyLoading);
 
-    const juicyRecipes = juicyData?.pages.flat() ?? [];
+    const juicyPages = juicyData?.pages.flat() ?? [];
+    const juicyRecipes = juicyPages.flatMap((page) => page.data);
 
     const isEmptyResult = isFilterApplied && cachedRecipes?.length === 0;
     const shouldShowFiltered = isFilterApplied && cachedRecipes && cachedRecipes.length > 0;
@@ -52,6 +53,10 @@ export const JuiciestPage = () => {
               hasNextPage: hasMoreJuicy,
               isLoading: isFetchingJuicyNextPage,
           };
+
+    if (isJuicyLoading) {
+        return null;
+    }
 
     return (
         <Flex direction='column' align='center'>

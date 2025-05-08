@@ -51,8 +51,13 @@ export const RecipeHorizontalGridSection: React.FC<RecipeHorizontalGridSectionPr
 
         {hasNextPage && (
             <Box mt={4} textAlign='center'>
-                <Button variant='brand' size='md' onClick={onClickMore}>
-                    Загрузить ещё
+                <Button
+                    variant='brand'
+                    size='md'
+                    onClick={onClickMore}
+                    data-test-id='load-more-button'
+                >
+                    {isLoading ? 'Загрузка...' : 'Загрузить ещё'}
                 </Button>
             </Box>
         )}

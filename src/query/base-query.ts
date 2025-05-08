@@ -18,7 +18,7 @@ export const baseQueryWithErrorNotification: BaseQueryFn = async (args, api, ext
             addNotification({
                 id: Date.now().toString(),
                 title: 'Ошибка сервера',
-                description: 'Попробуйте немного позже',
+                description: 'Попробуйте поискать снова попозже',
             }),
         );
     }

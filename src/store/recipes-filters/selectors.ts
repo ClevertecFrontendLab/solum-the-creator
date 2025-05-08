@@ -18,7 +18,10 @@ export const selectIsFilterApplied = (state: ApplicationState) =>
     !isFiltersEmpty(state.recipesFilters.appliedFilters);
 
 export const selectIsFilterActive = (state: ApplicationState) =>
-    state.recipesFilters.isFilterActive && !isFiltersEmpty(state.recipesFilters.draftFilters);
+    state.recipesFilters.isFilterActive && !isFiltersEmpty(state.recipesFilters.appliedFilters);
+
+export const selectIsFilterDraftActive = (state: ApplicationState) =>
+    !isFiltersEmpty(state.recipesFilters.draftFilters);
 
 export const selectAppliedFilters = (state: ApplicationState) =>
     state.recipesFilters.appliedFilters;

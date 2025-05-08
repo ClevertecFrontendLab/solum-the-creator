@@ -2,7 +2,6 @@ import { Box, Grid, GridItem, Heading, Text } from '@chakra-ui/react';
 
 import { RecipeTextCard } from '~/components/cards/recipe-text-card';
 import { SimpleRecipeCard } from '~/components/cards/simple-recipe-card';
-import { useGlobalLoading } from '~/hooks/use-global-loading';
 import { useRandomCategoryRecipes } from '~/hooks/use-random-category-recipes';
 
 type RelevantKitchenSectionProps = {
@@ -12,11 +11,12 @@ type RelevantKitchenSectionProps = {
 export const RelevantKitchenSection: React.FC<RelevantKitchenSectionProps> = ({
     currentCategoryId,
 }) => {
-    const { category, recipes, isLoading } = useRandomCategoryRecipes(currentCategoryId);
-    useGlobalLoading(isLoading);
+    const { category, recipes } = useRandomCategoryRecipes(currentCategoryId);
 
     const recipesTextCard = recipes.slice(0, 2);
     const recipesSimpleCard = recipes.slice(2);
+
+    if (!category) return null;
 
     return (
         <Box

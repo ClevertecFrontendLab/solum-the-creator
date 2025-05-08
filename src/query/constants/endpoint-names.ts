@@ -8,4 +8,5 @@ export enum EndpointNames {
     GET_RECIPES_BY_CATEGORY_ID_PAGINATED = 'getRecipesByCategoryIdPaginated',
     GET_RECIPE_BY_ID = 'getRecipeById',
     GET_FILTERED_RECIPES = 'getFilteredRecipes',
+    GET_RELEVANT_RECIPES = 'getRelevantRecipes',
 }

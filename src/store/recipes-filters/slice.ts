@@ -73,6 +73,9 @@ const recipesFiltersSlice = createSlice({
             state.appliedFilters = initialFilters;
             state.isFilterActive = false;
         },
+        resetDraftFilters(state) {
+            state.draftFilters = initialFilters;
+        },
         applyFilters(state) {
             state.isFilterActive = true;
             state.appliedFilters = state.draftFilters;
@@ -96,6 +99,7 @@ export const {
     setDraftFiltersFromApplied,
     setAppliedAllergensFilter,
     setAppliedExcludeAllergensFilter,
+    resetDraftFilters,
 } = recipesFiltersSlice.actions;
 
 export default recipesFiltersSlice.reducer;

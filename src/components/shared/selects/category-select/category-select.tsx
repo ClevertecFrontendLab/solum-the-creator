@@ -50,10 +50,6 @@ export const CategorySelect: React.FC<CategorySelectProps> = ({ isDisabled }) =>
         dispatch(setSubcategoriesIdsFilter(allSelectedSubcategoryIds));
     };
 
-    const testIdMap: Record<string, string> = {
-        vegan: 'checkbox-веганская кухня',
-    };
-
     return (
         <MultiSelectMenu
             options={categoryOptions}
@@ -62,7 +58,6 @@ export const CategorySelect: React.FC<CategorySelectProps> = ({ isDisabled }) =>
             isDisabled={isDisabled}
             placeholder='Категория'
             dataTestId='filter-menu-button-категория'
-            getOptionTestId={(opt) => testIdMap[opt.value]}
         />
     );
 };
