@@ -3,37 +3,75 @@ import { Flex } from '@chakra-ui/react';
 import { HeroSection } from '~/components/sections/hero-section/hero-section';
 import { RecipeHorizontalGridSection } from '~/components/sections/recipe-horizontal-grid-section/recipe-horizontal-grid-section';
 import { RelevantKitchenSection } from '~/components/sections/relevant-kitchen-section/relevant-kitchen-section';
-import { recipes } from '~/constants/data/recipes';
-import { useAllergenFilteredRecipes } from '~/hooks/use-allergen-filtered-recipes';
 import { useFilteredRecipes } from '~/hooks/use-filtered-recipes';
-import { useSearchedRecipes } from '~/hooks/use-serched-recipes';
-import { useAppSelector } from '~/store/hooks';
-import { selectIsDrawerFilterApplied } from '~/store/recipe-filter/selectors';
-import { getPopularRecipes } from '~/utils/sort';
+import { useGlobalLoading } from '~/hooks/use-global-loading';
+import { useGetJuiciestRecipesPaginatedInfiniteQuery } from '~/query/services/recipe';
 
 export const JuiciestPage = () => {
-    const popularRecipes = getPopularRecipes(recipes);
-    const filteredAllergenRecipes = useAllergenFilteredRecipes(popularRecipes);
+    const limit = 8;
 
-    const isDrawerFilterApplied = useAppSelector(selectIsDrawerFilterApplied);
-    const filteredRecipes = useFilteredRecipes(popularRecipes);
+    const {
+        cachedRecipes,
+        isFilterApplied,
+        isFetchingNextPage: isFetchingFilteredNextPage,
+        isFetching: isFetchingFiltered,
+        hasNextPage: hasMoreFiltered,
+        fetchNextPage: fetchNextFiltered,
+    } = useFilteredRecipes({ sort: { sortBy: 'likes', sortOrder: 'desc' } });
 
-    const filteredRicipesByUI = isDrawerFilterApplied ? filteredRecipes : filteredAllergenRecipes;
+    const {
+        data: juicyData,
+        isLoading: isJuicyLoading,
+        isFetchingNextPage: isFetchingJuicyNextPage,
+        fetchNextPage: fetchNextJuicy,
+        hasNextPage: hasMoreJuicy,
+    } = useGetJuiciestRecipesPaginatedInfiniteQuery(
+        { perPage: limit },
+        {
+            skip: isFilterApplied,
+        },
+    );
 
-    const { recipes: finalRecipes } = useSearchedRecipes(filteredRicipesByUI);
+    useGlobalLoading(isJuicyLoading);
+
+    const juicyPages = juicyData?.pages.flat() ?? [];
+    const juicyRecipes = juicyPages.flatMap((page) => page.data);
+
+    const isEmptyResult = isFilterApplied && !cachedRecipes?.length;
+    const isSuccessResult = !!(isFilterApplied && cachedRecipes);
+    const shouldShowFiltered = isFilterApplied && cachedRecipes && cachedRecipes.length > 0;
+
+    const recipeProps = shouldShowFiltered
+        ? {
+              recipes: cachedRecipes,
+              onClickMore: fetchNextFiltered,
+              hasNextPage: hasMoreFiltered,
+              isLoading: isFetchingFilteredNextPage,
+          }
+        : {
+              recipes: juicyRecipes,
+              onClickMore: fetchNextJuicy,
+              hasNextPage: hasMoreJuicy,
+              isLoading: isFetchingJuicyNextPage,
+          };
+
+    if (isJuicyLoading) {
+        return null;
+    }
 
     return (
         <Flex direction='column' align='center'>
-            <HeroSection title='Самое сочное' />
+            <HeroSection
+                title='Самое сочное'
+                isLoading={isFetchingFiltered}
+                isEmptyResult={isEmptyResult}
+                isSuccessResult={isSuccessResult}
+            />
 
             <Flex direction='column' align='center' width='100%' px={{ base: 4, sm: 5, md: 6 }}>
-                <RecipeHorizontalGridSection recipes={finalRecipes} />
-                <RelevantKitchenSection
-                    title='Веганская кухня'
-                    description='Интересны не только убеждённым вегетарианцам, но и тем, кто хочет  попробовать вегетарианскую диету и готовить вкусные  вегетарианские блюда.'
-                    recipesTextCards={recipes.slice(0, 2)}
-                    recipesSimpleCards={recipes.slice(2, 5)}
-                />
+                <RecipeHorizontalGridSection {...recipeProps} />
+
+                <RelevantKitchenSection />
             </Flex>
         </Flex>
     );

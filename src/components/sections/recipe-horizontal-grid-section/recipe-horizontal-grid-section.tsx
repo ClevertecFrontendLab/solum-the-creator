@@ -1,14 +1,21 @@
 import { Box, Button, Grid } from '@chakra-ui/react';
 
 import { RecipeCardHorizontal } from '~/components/cards/recipe-card-horizontal/recipe-card-horizontal';
-import { Recipe } from '~/constants/data/recipes';
+import { Loader } from '~/components/shared/misc/loader/loader';
+import { Recipe } from '~/query/services/recipe';
 
 type RecipeHorizontalGridSectionProps = {
     recipes: Recipe[];
+    onClickMore?: () => void;
+    hasNextPage?: boolean;
+    isLoading?: boolean;
 };
 
 export const RecipeHorizontalGridSection: React.FC<RecipeHorizontalGridSectionProps> = ({
     recipes,
+    onClickMore,
+    hasNextPage,
+    isLoading = false,
 }) => (
     <Box as='section' width='100%'>
         <Grid
@@ -24,25 +31,36 @@ export const RecipeHorizontalGridSection: React.FC<RecipeHorizontalGridSectionPr
         >
             {recipes.map((recipe, index) => (
                 <RecipeCardHorizontal
-                    key={recipe.id}
-                    id={recipe.id}
+                    key={recipe._id}
+                    id={recipe._id}
                     index={index}
                     title={recipe.title}
                     image={recipe.image}
                     bookmarks={recipe.bookmarks}
                     likes={recipe.likes}
-                    category={recipe.category}
-                    subcategory={recipe.subcategory}
+                    categoriesIds={recipe.categoriesIds}
                     description={recipe.description}
                     dataTestId={`food-card-${index}`}
                 />
             ))}
         </Grid>
 
-        <Box mt={4} textAlign='center'>
-            <Button variant='brand' size='md'>
-                Загрузить ещё
-            </Button>
+        <Box my={10} textAlign='center'>
+            <Loader isVisible={isLoading} />
         </Box>
+
+        {hasNextPage && (
+            <Box mt={4} textAlign='center'>
+                <Button
+                    variant='brand'
+                    size='md'
+                    onClick={onClickMore}
+                    disabled={isLoading}
+                    data-test-id='load-more-button'
+                >
+                    {isLoading ? 'Загрузка...' : 'Загрузить ещё'}
+                </Button>
+            </Box>
+        )}
     </Box>
 );

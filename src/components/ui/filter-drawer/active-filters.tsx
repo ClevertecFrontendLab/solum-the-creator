@@ -1,42 +1,59 @@
 import { Flex } from '@chakra-ui/react';
 
-import { Option } from '../../shared/selects/multi-select-menu/multi-select-menu';
+import { meatTypes, sideTypes } from '~/constants/data/recipes';
+import { selectParentCategoriesBySubIds } from '~/store/category/selectors';
+import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import { selectRecipesFilters } from '~/store/recipes-filters/selectors';
+import {
+    setAllergensFilter,
+    setGarnishFilter,
+    setMeatFilter,
+    setSubcategoriesIdsFilter,
+} from '~/store/recipes-filters/slice';
+import { mergeOptionsWithValues } from '~/utils/allergens';
+
 import { FilterTag } from './filter-tag';
 
-type ActiveFiltersProps = {
-    selectedCategories: Option[];
-    selectedAuthors: Option[];
-    selectedMeatTypes: Option[];
-    selectedSideTypes: Option[];
-    selectedAllergens: Option[];
-    isExcludeAllergens: boolean;
+export const ActiveFilters: React.FC = () => {
+    const dispatch = useAppDispatch();
 
-    onRemoveCategory: (value: string) => void;
-    onRemoveAuthor: (value: string) => void;
-    onRemoveMeatType: (value: string) => void;
-    onRemoveSideType: (value: string) => void;
-    onRemoveAllergen: (value: string) => void;
-};
+    const { allergens, excludeAllergens, garnish, meat, subcategoriesIds } =
+        useAppSelector(selectRecipesFilters);
 
-export const ActiveFilters: React.FC<ActiveFiltersProps> = ({
-    selectedCategories,
-    selectedAuthors,
-    selectedMeatTypes,
-    selectedSideTypes,
-    selectedAllergens,
-    isExcludeAllergens,
-    onRemoveCategory,
-    onRemoveAuthor,
-    onRemoveMeatType,
-    onRemoveSideType,
-    onRemoveAllergen,
-}) => {
+    const selectedMeatTypes = meatTypes.filter((opt) => meat.includes(opt.value));
+    const selectedSideTypes = sideTypes.filter((opt) => garnish.includes(opt.value));
+    const selectedAllergens = mergeOptionsWithValues(allergens, []);
+    const parentCategories = useAppSelector(selectParentCategoriesBySubIds(subcategoriesIds));
+    const selectedCategories = parentCategories.map((cat) => ({
+        label: cat.title,
+        value: cat._id,
+    }));
+
+    const handleRemove = {
+        category: (id: string) => {
+            const category = parentCategories.find((cat) => cat._id === id);
+            if (!category) return;
+            const idsToRemove = category.subCategories.map((s) => s._id);
+            const next = subcategoriesIds.filter((id) => !idsToRemove.includes(id));
+            dispatch(setSubcategoriesIdsFilter(next));
+        },
+
+        meat: (val: string) => {
+            dispatch(setMeatFilter(meat.filter((m) => m !== val)));
+        },
+        side: (val: string) => {
+            dispatch(setGarnishFilter(garnish.filter((g) => g !== val)));
+        },
+        allergen: (val: string) => {
+            dispatch(setAllergensFilter(allergens.filter((a) => a !== val)));
+        },
+    };
+
     const hasFilters =
         selectedCategories.length > 0 ||
-        selectedAuthors.length > 0 ||
         selectedMeatTypes.length > 0 ||
         selectedSideTypes.length > 0 ||
-        (isExcludeAllergens && selectedAllergens.length > 0);
+        (excludeAllergens && selectedAllergens.length > 0);
 
     if (!hasFilters) {
         return null;
@@ -49,23 +66,23 @@ export const ActiveFilters: React.FC<ActiveFiltersProps> = ({
                     key={`cat-${item.value}`}
                     label={item.label}
                     value={item.value}
-                    onRemove={onRemoveCategory}
+                    onRemove={handleRemove.category}
                 />
             ))}
-            {selectedAuthors.map((item) => (
+            {/* {selectedAuthors.map((item) => (
                 <FilterTag
                     key={`auth-${item.value}`}
                     label={item.label}
                     value={item.value}
                     onRemove={onRemoveAuthor}
                 />
-            ))}
+            ))} */}
             {selectedMeatTypes.map((item) => (
                 <FilterTag
                     key={`meat-${item.value}`}
                     label={item.label}
                     value={item.value}
-                    onRemove={onRemoveMeatType}
+                    onRemove={handleRemove.meat}
                 />
             ))}
             {selectedSideTypes.map((item) => (
@@ -73,16 +90,16 @@ export const ActiveFilters: React.FC<ActiveFiltersProps> = ({
                     key={`side-${item.value}`}
                     label={item.label}
                     value={item.value}
-                    onRemove={onRemoveSideType}
+                    onRemove={handleRemove.side}
                 />
             ))}
-            {isExcludeAllergens &&
+            {excludeAllergens &&
                 selectedAllergens.map((item) => (
                     <FilterTag
                         key={`allergen-${item.value}`}
                         label={item.label}
                         value={item.value}
-                        onRemove={onRemoveAllergen}
+                        onRemove={handleRemove.allergen}
                     />
                 ))}
         </Flex>

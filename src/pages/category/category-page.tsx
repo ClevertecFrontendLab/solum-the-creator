@@ -1,33 +1,70 @@
 import { Flex } from '@chakra-ui/react';
-import { Outlet, useParams } from 'react-router';
+import { Navigate, Outlet, useParams } from 'react-router';
 
 import { HeroSection } from '~/components/sections/hero-section/hero-section';
+import { RecipeHorizontalGridSection } from '~/components/sections/recipe-horizontal-grid-section/recipe-horizontal-grid-section';
 import { RelevantKitchenSection } from '~/components/sections/relevant-kitchen-section/relevant-kitchen-section';
 import { CategoryTabs } from '~/components/shared/navigation/category-tabs/category-tabs';
-import { categoryText, CategoryValue } from '~/constants/data/category';
-import { recipes } from '~/constants/data/recipes';
+import { pathes } from '~/constants/navigation/pathes';
+import { useFilteredRecipes } from '~/hooks/use-filtered-recipes';
+import { selectCategoryBySlug } from '~/store/category/selectors';
+import { useAppSelector } from '~/store/hooks';
 
 export const CategoryPage = () => {
-    const { category } = useParams<{ category: CategoryValue }>();
+    const { category: categorySlug } = useParams<{ category: string }>();
+
+    const category = useAppSelector(selectCategoryBySlug(categorySlug!));
+    const subcategoriesIds = category?.subCategories.map((s) => s._id) ?? [];
+
+    const {
+        cachedRecipes,
+        isFilterApplied,
+        isFetching,
+        isFetchingNextPage,
+        hasNextPage,
+        fetchNextPage,
+    } = useFilteredRecipes({ subcategoriesIds });
+
+    const isEmptyResult = isFilterApplied && !cachedRecipes?.length;
+    const isSuccessResult = !!(isFilterApplied && cachedRecipes);
+    const shouldShowRecipes = isFilterApplied && cachedRecipes && cachedRecipes.length > 0;
+
+    if (!category) {
+        return <Navigate to={pathes.notFound} replace />;
+    }
 
     return (
         <Flex direction='column' align='center'>
             <HeroSection
-                title={categoryText[category!].title}
-                description={categoryText[category!].description}
+                title={category.title}
+                description={category.description}
+                isEmptyResult={isEmptyResult}
+                isLoading={isFetching}
+                isSuccessResult={isSuccessResult}
             />
+            <Flex
+                direction='column'
+                align='center'
+                width='100%'
+                pt={4}
+                px={{ base: 4, sm: 5, md: 6 }}
+            >
+                {shouldShowRecipes ? (
+                    <RecipeHorizontalGridSection
+                        recipes={cachedRecipes}
+                        isLoading={isFetchingNextPage}
+                        hasNextPage={hasNextPage}
+                        onClickMore={fetchNextPage}
+                    />
+                ) : (
+                    <>
+                        <CategoryTabs />
 
-            <Flex direction='column' align='center' width='100%' px={{ base: 4, sm: 5, md: 6 }}>
-                <CategoryTabs />
+                        <Outlet />
+                    </>
+                )}
 
-                <Outlet />
-
-                <RelevantKitchenSection
-                    title='Десерты, выпечка'
-                    description='Без них невозможно представить себе ни современную, ни традиционную  кулинарию. Пироги и печенья, блины, пончики, вареники и, конечно, хлеб - рецепты изделий из теста многообразны и невероятно популярны.'
-                    recipesTextCards={recipes.slice(0, 2)}
-                    recipesSimpleCards={recipes.slice(2, 5)}
-                />
+                <RelevantKitchenSection currentCategoryId={category._id} />
             </Flex>
         </Flex>
     );

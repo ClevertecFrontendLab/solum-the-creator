@@ -41,6 +41,7 @@ export const RecipeStepCard: React.FC<RecipeStepCardProps> = ({
                     pb={{ base: 1, md: 5 }}
                     spacing={{ base: 3, md: 4 }}
                     align='flex-start'
+                    flex={1}
                 >
                     <StepBadge step={stepNumber} isLastStep={isLastStep} />
                     <Text fontSize='sm'>{description}</Text>

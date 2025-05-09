@@ -86,58 +86,58 @@ export type Recipe = {
 
 export const meatTypes = [
     {
-        value: 'chicken',
+        value: 'курица',
         label: 'Курица',
     },
     {
-        value: 'pork',
+        value: 'свинина',
         label: 'Свинина',
     },
     {
-        value: 'beef',
+        value: 'говядина',
         label: 'Говядина',
     },
     {
-        value: 'turkey',
+        value: 'индейка',
         label: 'Индейка',
     },
     {
-        value: 'duck',
+        value: 'утка',
         label: 'Утка',
     },
 ];
 
 export const sideTypes = [
     {
-        value: 'potato',
+        value: 'картошка',
         label: 'Картошка',
     },
     {
-        value: 'buckwheat',
+        value: 'гречка',
         label: 'Гречка',
     },
     {
-        value: 'pasta',
+        value: 'паста',
         label: 'Паста',
     },
     {
-        value: 'spaghetti',
+        value: 'спагетти',
         label: 'Спагетти',
     },
     {
-        value: 'rice',
+        value: 'рис',
         label: 'Рис',
     },
     {
-        value: 'cabbage',
+        value: 'капуста',
         label: 'Капуста',
     },
     {
-        value: 'beans',
+        value: 'фасоль',
         label: 'Фасоль',
     },
     {
-        value: 'other',
+        value: 'другие овощи',
         label: 'Другие овощи',
     },
 ];

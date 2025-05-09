@@ -8,23 +8,36 @@ import {
     InputRightElement,
     useDisclosure,
 } from '@chakra-ui/react';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import FilterIcon from '~/assets/icons/filter-icon.svg?react';
 import { FilterDrawer } from '~/components/ui/filter-drawer/filter-drawer';
-import { useAppDispatch } from '~/store/hooks';
-import { clearSearchQuery, setSearchQuery } from '~/store/search/slice';
+import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import {
+    selectIsAllergensSelected,
+    selectSearchStringFilter,
+} from '~/store/recipes-filters/selectors';
+import { applyFilters, setSearchString } from '~/store/recipes-filters/slice';
 
 type HeroSearchProps = {
     onFocusChange: (focused: boolean) => void;
+    isSuccess?: boolean;
+    isError?: boolean;
 };
 
-export const HeroSearch: React.FC<HeroSearchProps> = ({ onFocusChange }) => {
+export const HeroSearch: React.FC<HeroSearchProps> = ({ onFocusChange, isSuccess, isError }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const [inputValue, setInputValue] = useState('');
+    const searchString = useAppSelector(selectSearchStringFilter);
+    const [inputValue, setInputValue] = useState(searchString);
+
+    useEffect(() => {
+        setInputValue(searchString);
+    }, [searchString]);
+
+    const isAllergensSelected = useAppSelector(selectIsAllergensSelected);
     const dispatch = useAppDispatch();
 
-    const isDisabled = inputValue.trim().length < 3;
+    const isDisabled = inputValue.trim().length < 3 && !isAllergensSelected;
 
     const handleInputChange = useCallback(
         (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,7 +45,8 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({ onFocusChange }) => {
             setInputValue(value);
 
             if (value.trim() === '') {
-                dispatch(clearSearchQuery());
+                dispatch(setSearchString(''));
+                dispatch(applyFilters());
             }
         },
         [dispatch],
@@ -40,7 +54,8 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({ onFocusChange }) => {
 
     const handleSearch = useCallback(() => {
         if (!isDisabled) {
-            dispatch(setSearchQuery(inputValue));
+            dispatch(setSearchString(inputValue.trim()));
+            dispatch(applyFilters());
         }
     }, [dispatch, inputValue, isDisabled]);
 
@@ -55,6 +70,8 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({ onFocusChange }) => {
 
     const handleFocus = useCallback(() => onFocusChange(true), [onFocusChange]);
     const handleBlur = useCallback(() => onFocusChange(false), [onFocusChange]);
+
+    const borderColor = isError ? 'red.600' : isSuccess ? 'lime.600' : 'blackAlpha.600';
 
     return (
         <HStack spacing={3} width='100%' maxW={{ base: '28rem', md: '32.375rem' }}>
@@ -82,6 +99,7 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({ onFocusChange }) => {
                     onFocus={handleFocus}
                     onBlur={handleBlur}
                     data-test-id='search-input'
+                    borderColor={borderColor}
                 />
                 <InputRightElement>
                     <IconButton

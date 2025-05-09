@@ -34,7 +34,7 @@ export const RecipeTableSection: React.FC<RecipeTableSectionProps> = ({
                             <Td textAlign='right'>
                                 <Text as='span' data-test-id={`ingredient-quantity-${index}`}>
                                     {calculatePortion(ingredient)}
-                                </Text>
+                                </Text>{' '}
                                 {ingredient.measureUnit}
                             </Td>
                         </Tr>

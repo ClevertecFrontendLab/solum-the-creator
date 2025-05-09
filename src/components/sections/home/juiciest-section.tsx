@@ -2,11 +2,15 @@ import { Heading, HStack, SimpleGrid, VStack } from '@chakra-ui/react';
 
 import { RecipeCardHorizontal } from '~/components/cards/recipe-card-horizontal/recipe-card-horizontal';
 import { JuiciestButton } from '~/components/shared/buttons/juiciest-button';
-import { recipes } from '~/constants/data/recipes';
-import { getPopularRecipes } from '~/utils/sort';
+import { useGetJuiciestRecipesQuery } from '~/query/services/recipe';
 
 export const JuiciestSection = () => {
-    const popularRecipes = getPopularRecipes(recipes).slice(0, 4);
+    const { data: recipes, isLoading } = useGetJuiciestRecipesQuery();
+
+    if (isLoading) {
+        return null;
+    }
+
     return (
         <VStack
             as='section'
@@ -19,34 +23,35 @@ export const JuiciestSection = () => {
                 <Heading variant='section-title'>Самое сочное</Heading>
 
                 <JuiciestButton
-                    display={{ base: 'none', lg: 'block' }}
+                    display={{ base: 'none', sm: 'flex' }}
                     data-test-id='juiciest-link'
                 />
             </HStack>
 
-            <SimpleGrid
-                width='100%'
-                spacing={{ base: 3, sm: 4, '2xl': 6 }}
-                columns={{ base: 1, sm: 2, md: 1, '2xl': 2 }}
-            >
-                {popularRecipes.map((recipe, index) => (
-                    <RecipeCardHorizontal
-                        key={recipe.id}
-                        id={recipe.id}
-                        index={index}
-                        image={recipe.image}
-                        title={recipe.title}
-                        description={recipe.description}
-                        category={recipe.category}
-                        subcategory={recipe.subcategory}
-                        likes={recipe.likes}
-                        bookmarks={recipe.bookmarks}
-                    />
-                ))}
-            </SimpleGrid>
+            {recipes && (
+                <SimpleGrid
+                    width='100%'
+                    spacing={{ base: 3, sm: 4, '2xl': 6 }}
+                    columns={{ base: 1, sm: 2, md: 1, '2xl': 2 }}
+                >
+                    {recipes.map((recipe, index) => (
+                        <RecipeCardHorizontal
+                            key={recipe._id}
+                            id={recipe._id}
+                            index={index}
+                            image={recipe.image}
+                            title={recipe.title}
+                            description={recipe.description}
+                            categoriesIds={recipe.categoriesIds}
+                            likes={recipe.likes}
+                            bookmarks={recipe.bookmarks}
+                        />
+                    ))}
+                </SimpleGrid>
+            )}
 
             <JuiciestButton
-                display={{ base: 'block', lg: 'none' }}
+                display={{ base: 'flex', sm: 'none' }}
                 data-test-id='juiciest-link-mobile'
             />
         </VStack>

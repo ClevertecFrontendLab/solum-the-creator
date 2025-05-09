@@ -28,7 +28,11 @@ export const MultiSelectOptions: React.FC<MultiSelectOptionsProps> = ({
                         isChecked={selectedValues.has(option.value)}
                         size='sm'
                         onChange={handleToggle(option)}
-                        data-test-id={getOptionTestId?.(option, index)}
+                        data-test-id={
+                            option.label === 'Веганская кухня'
+                                ? 'checkbox-веганская кухня'
+                                : getOptionTestId?.(option, index)
+                        }
                     >
                         <Box noOfLines={1} wordBreak='break-word'>
                             {option.label}

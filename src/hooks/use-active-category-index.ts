@@ -1,18 +1,15 @@
 import { useMemo } from 'react';
 import { useLocation } from 'react-router';
 
-import { RouteNode } from '~/constants/navigation/route-tree';
+import { SidebarCategory } from '~/types/category';
 import { isCategoryActive } from '~/utils/categories';
 
-export const useActiveCategoryIndex = (categories: RouteNode[]) => {
+export const useActiveCategoryIndex = (categories: SidebarCategory[]) => {
     const location = useLocation();
     const pathname = location.pathname.slice(1);
 
     const activeIndex = useMemo(
-        () =>
-            categories
-                .map((c, i) => (isCategoryActive(c.path, pathname) ? i : -1))
-                .filter((i) => i !== -1),
+        () => categories.findIndex((c) => isCategoryActive(c.category, pathname)),
         [categories, pathname],
     );
 

@@ -1,5 +1,5 @@
 import { VStack } from '@chakra-ui/react';
-import { useParams } from 'react-router';
+import { LoaderFunction, useLoaderData } from 'react-router';
 
 import { RecipeAuthorCard } from '~/components/cards/recipe-author-card/recipe-author-card';
 import { NewRecipesSection } from '~/components/sections/new-recipes-section/new-recipes-section';
@@ -8,26 +8,34 @@ import { NutritionSection } from '~/components/sections/recipe/nutrition-section
 import { RecipeStepsSection } from '~/components/sections/recipe/recipe-steps-section/recipe-steps-section';
 import { RecipeTableSection } from '~/components/sections/recipe/recipe-table-section/recipe-table-section';
 import { authors } from '~/constants/data/authors';
-import { recipes } from '~/constants/data/recipes';
+import { Recipe, recipeApiSlice } from '~/query/services/recipe';
+import { store } from '~/store/configure-store';
 
 const mockAuthor = authors[0];
 
-export const RecipePage = () => {
-    const { recipeId } = useParams<{ recipeId: string }>();
+export const RecipePageLoader: LoaderFunction = async ({ params }) => {
+    const { recipeId } = params;
+    const result = await store.dispatch(recipeApiSlice.endpoints.getRecipeById.initiate(recipeId!));
 
-    const recipe = recipes.find((r) => r.id === recipeId);
-
-    if (!recipe) {
-        return null;
+    if (result.error) {
+        throw new Response('Failed to fetch recipe', { status: 500 });
     }
+
+    return result.data;
+};
+
+export const HydrateRecipePage: React.FC = () => null;
+
+export const RecipePage = () => {
+    const recipe = useLoaderData<Recipe>();
 
     return (
         <VStack spacing={{ base: 6, md: 10 }} px={{ base: 4, sm: 5, md: 6 }}>
             <HeaderSection
                 title={recipe.title}
                 image={recipe.image}
-                category={recipe.category}
                 description={recipe.description}
+                categoriesIds={recipe.categoriesIds}
                 time={recipe.time}
                 bookmarks={recipe.bookmarks}
                 likes={recipe.likes}

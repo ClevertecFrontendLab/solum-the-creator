@@ -1,8 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-import { RouteNode } from '~/constants/navigation/route-tree';
-
-export const useScrollToTab = (index: number, children: RouteNode[]) => {
+export const useScrollToTab = (index: number) => {
     const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
     useEffect(() => {
@@ -14,7 +12,7 @@ export const useScrollToTab = (index: number, children: RouteNode[]) => {
                 block: 'nearest',
             });
         }
-    }, [index, children]);
+    }, [index]);
 
     return tabRefs;
 };

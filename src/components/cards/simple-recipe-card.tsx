@@ -1,26 +1,21 @@
 import { Button, Card, CardBody, Flex, Heading } from '@chakra-ui/react';
 
 import { CategoryIcon } from '~/components/shared/category-icon/category-icon';
-import { CategoryKey } from '~/constants/ui/category-icons';
 import { useNavigationToRecipe } from '~/hooks/use-navigation-to-recipe';
+import { selectCategoryBySubCategoryId } from '~/store/category/selectors';
+import { useAppSelector } from '~/store/hooks';
 
 type SimpleRecipeCardProps = {
     id: string;
-    category: CategoryKey;
-    subcategory: string[];
+    categoriesIds: string[];
     title: string;
 };
 
-export const SimpleRecipeCard: React.FC<SimpleRecipeCardProps> = ({
-    id,
-    category,
-    subcategory,
-    title,
-}) => {
+export const SimpleRecipeCard: React.FC<SimpleRecipeCardProps> = ({ id, categoriesIds, title }) => {
+    const category = useAppSelector(selectCategoryBySubCategoryId(categoriesIds[0]));
     const navigateToRecipe = useNavigationToRecipe({
         recipeId: id,
-        category: category,
-        subcategories: subcategory,
+        subCategoryId: categoriesIds[0],
         forceFromRecipe: true,
     });
 
@@ -38,7 +33,8 @@ export const SimpleRecipeCard: React.FC<SimpleRecipeCardProps> = ({
             <CardBody p={0} display='flex' alignItems='center'>
                 <Flex align='center' justify='space-between' w='100%' gap={2}>
                     <Flex align='center' gap={{ base: 2, md: 3 }} overflow='hidden'>
-                        <CategoryIcon category={category} boxSize={6} />
+                        {category && <CategoryIcon category={category.category} boxSize={6} />}
+
                         <Heading
                             as='h3'
                             fontSize={{ base: 'md', md: 'lg', '2xl': 'xl' }}

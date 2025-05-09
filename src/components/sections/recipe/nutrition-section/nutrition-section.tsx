@@ -29,10 +29,10 @@ export const NutritionSection: React.FC<NutritionSectionProps> = ({
             }}
             gap={{ base: 3, '2xl': 6 }}
         >
-            <NutritionItem type='calories' value={calories} />
-            <NutritionItem type='proteins' value={proteins} />
-            <NutritionItem type='fats' value={fats} />
-            <NutritionItem type='carbohydrates' value={carbohydrates} />
+            <NutritionItem type='calories' value={calories || 0} />
+            <NutritionItem type='proteins' value={proteins || 0} />
+            <NutritionItem type='fats' value={fats || 0} />
+            <NutritionItem type='carbohydrates' value={carbohydrates || 0} />
         </Grid>
     </VStack>
 );

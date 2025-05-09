@@ -1,45 +1,47 @@
 import { Box, Tab, TabList, Tabs } from '@chakra-ui/react';
-import { useCallback, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
+import { pathes } from '~/constants/navigation/pathes';
 import { useScrollToTab } from '~/hooks/use-scroll-to-tab';
-import { getCurrentCategory } from '~/utils/categories';
+import { selectCategoryBySlug } from '~/store/category/selectors';
+import { useAppSelector } from '~/store/hooks';
 
 export const CategoryTabs = () => {
-    const { category, subcategory } = useParams();
+    const { category, subcategory } = useParams<{ category: string; subcategory: string }>();
     const navigate = useNavigate();
 
-    const currentCategory = getCurrentCategory(category);
+    const currentCategory = useAppSelector(selectCategoryBySlug(category!));
 
-    const children = useMemo(() => currentCategory?.children ?? [], [currentCategory]);
+    const subcategories = currentCategory?.subCategories ?? [];
 
-    const currentIndex = useMemo(
-        () => children.findIndex((child) => child.path === subcategory),
-        [children, subcategory],
-    );
+    const currentIndex = subcategories.findIndex((child) => child.category === subcategory);
 
-    const tabRefs = useScrollToTab(currentIndex, children);
+    const tabRefs = useScrollToTab(currentIndex);
 
-    const handleTabChange = useCallback(
-        (index: number) => {
-            const sub = children[index];
-            if (sub) {
-                navigate(`/${category}/${sub.path}`);
-            }
+    const hideScrollbar = {
+        '::-webkit-scrollbar': {
+            display: 'none',
         },
-        [children, category, navigate],
-    );
+    };
 
-    const setTabRef = useCallback(
-        (el: HTMLButtonElement | null, index: number) => {
-            if (el) {
-                tabRefs.current[index] = el;
-            }
-        },
-        [tabRefs],
-    );
+    const handleTabChange = (index: number) => {
+        if (!currentCategory) {
+            return;
+        }
 
-    if (!currentCategory || children.length === 0) {
+        const sub = subcategories[index];
+        if (sub) {
+            navigate(pathes.subcategory(currentCategory.category, sub.category));
+        }
+    };
+
+    const setTabRef = (el: HTMLButtonElement | null, index: number) => {
+        if (el) {
+            tabRefs.current[index] = el;
+        }
+    };
+
+    if (!currentCategory || subcategories.length === 0) {
         return null;
     }
 
@@ -53,32 +55,24 @@ export const CategoryTabs = () => {
             mb={3}
             align='center'
         >
-            <Box
-                overflowX='auto'
-                w='100%'
-                sx={{
-                    '::-webkit-scrollbar': {
-                        display: 'none',
-                    },
-                }}
-            >
+            <Box overflowX='auto' w='100%' sx={hideScrollbar}>
                 <TabList
                     display='inline-flex'
                     w='100%'
                     flexWrap={{ base: 'nowrap', lg: 'wrap' }}
                     gap={0}
                 >
-                    {children.map((child, index) => (
+                    {subcategories.map((subcategory, index) => (
                         <Tab
-                            key={child.path}
+                            key={subcategory._id}
                             ref={(el) => setTabRef(el, index)}
                             flexShrink={0}
                             py={{ base: 1, md: 2 }}
                             fontSize={{ base: 'sm', md: 'md' }}
                             fontWeight='500'
-                            data-test-id={`tab-${child.path}-${index}`}
+                            data-test-id={`tab-${subcategory.category}-${index}`}
                         >
-                            {child.name}
+                            {subcategory.title}
                         </Tab>
                     ))}
                 </TabList>
