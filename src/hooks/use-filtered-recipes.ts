@@ -8,10 +8,10 @@ import {
     selectIsFilterActive,
 } from '~/store/recipes-filters/selectors';
 
-type FilteredRecipesParams = {
-    subcategoriesIds?: string[];
-    sort?: SortParams;
-};
+type FilteredRecipesParams = Partial<{
+    subcategoriesIds: string[];
+    sort: SortParams;
+}>;
 
 export const useFilteredRecipes = ({ subcategoriesIds, sort }: FilteredRecipesParams = {}) => {
     const isFilterApplied = useAppSelector(selectIsFilterActive);
@@ -24,7 +24,7 @@ export const useFilteredRecipes = ({ subcategoriesIds, sort }: FilteredRecipesPa
 
     const effectiveFilters = {
         ...clearFilters,
-        ...(subcategoriesIds !== undefined ? { subcategoriesIds } : {}),
+        ...((subcategoriesIds && { subcategoriesIds }) || {}),
     };
 
     const {

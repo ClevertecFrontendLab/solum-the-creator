@@ -13,6 +13,7 @@ import { HeroTitle } from './hero-title';
 type HeroSectionProps = {
     title: string;
     isEmptyResult?: boolean;
+    isSuccessResult?: boolean;
     isLoading?: boolean;
     description?: string;
 };
@@ -20,6 +21,7 @@ type HeroSectionProps = {
 export const HeroSection: React.FC<HeroSectionProps> = ({
     title,
     isEmptyResult,
+    isSuccessResult,
     isLoading,
     description,
 }) => {
@@ -61,7 +63,11 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                         </Center>
                     ) : (
                         <>
-                            <HeroSearch onFocusChange={setSearchFocused} />
+                            <HeroSearch
+                                onFocusChange={setSearchFocused}
+                                isSuccess={isSuccessResult}
+                                isError={isEmptyResult}
+                            />
                             <Hide below='md'>
                                 <Box display='flex' width='100%' justifyContent='center'>
                                     <HeroFilters />

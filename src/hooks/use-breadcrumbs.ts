@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { useLocation, useMatches } from 'react-router';
 
 import { Recipe } from '~/constants/data/recipes';
+import { getRecipeFromUrlRegexp } from '~/constants/data/regexp';
 import { staticPaths } from '~/constants/navigation/pathes';
 import { Breadcrumb } from '~/constants/navigation/route-tree';
 import { selectSidebarCategories } from '~/store/category/selectors';
@@ -13,7 +14,7 @@ export const useBreadcrumbs = (): Breadcrumb[] => {
     const categories = useAppSelector(selectSidebarCategories);
 
     const recipe = useMemo(() => {
-        const recipeMatch = matches.find((m) => /^\/[^/]+\/[^/]+\/[^/]+$/.test(m.pathname || ''));
+        const recipeMatch = matches.find((m) => getRecipeFromUrlRegexp.test(m.pathname || ''));
 
         return recipeMatch?.data as Recipe | undefined;
     }, [matches]);

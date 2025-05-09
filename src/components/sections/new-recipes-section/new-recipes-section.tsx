@@ -1,7 +1,6 @@
 import { Box, Heading } from '@chakra-ui/react';
 
 import { RecipeCardVertical } from '~/components/cards/recipe-card-vertical/recipe-card-vertical';
-import { CenterLoader } from '~/components/shared/misc/center-loader/center-loader';
 import { FullBleed } from '~/components/shared/misc/full-bleed/full-bleed';
 import { HorizontalSlider } from '~/components/ui/horizontal-slider/horizontal-slider';
 import { useGetRecipesQuery } from '~/query/services/recipe';
@@ -11,7 +10,11 @@ export const NewRecipesSection = () => {
     const recipesCount = 10;
     const { data: recipes, isLoading } = useGetRecipesQuery(recipesCount);
 
-    const filteredRecipes = getNewestRecipes(recipes || []);
+    const filteredRecipes = getNewestRecipes(recipes);
+
+    if (isLoading) {
+        return null;
+    }
 
     return (
         <Box as='section' position='relative' width='100%'>
@@ -19,30 +22,26 @@ export const NewRecipesSection = () => {
                 Новые рецепты
             </Heading>
 
-            {isLoading ? (
-                <CenterLoader isLoading={isLoading} />
-            ) : (
-                <FullBleed>
-                    {filteredRecipes.length > 0 && (
-                        <HorizontalSlider
-                            items={filteredRecipes}
-                            renderItem={(recipe) => (
-                                <RecipeCardVertical
-                                    key={recipe._id}
-                                    id={recipe._id}
-                                    title={recipe.title}
-                                    description={recipe.description}
-                                    image={recipe.image}
-                                    categoriesIds={recipe.categoriesIds}
-                                    likes={recipe.likes}
-                                    bookmarks={recipe.bookmarks}
-                                    forceFromRecipe={true}
-                                />
-                            )}
-                        />
-                    )}
-                </FullBleed>
-            )}
+            <FullBleed>
+                {filteredRecipes.length > 0 && (
+                    <HorizontalSlider
+                        items={filteredRecipes}
+                        renderItem={(recipe) => (
+                            <RecipeCardVertical
+                                key={recipe._id}
+                                id={recipe._id}
+                                title={recipe.title}
+                                description={recipe.description}
+                                image={recipe.image}
+                                categoriesIds={recipe.categoriesIds}
+                                likes={recipe.likes}
+                                bookmarks={recipe.bookmarks}
+                                forceFromRecipe={true}
+                            />
+                        )}
+                    />
+                )}
+            </FullBleed>
         </Box>
     );
 };

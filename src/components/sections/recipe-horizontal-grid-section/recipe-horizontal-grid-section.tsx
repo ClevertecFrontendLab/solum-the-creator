@@ -55,6 +55,7 @@ export const RecipeHorizontalGridSection: React.FC<RecipeHorizontalGridSectionPr
                     variant='brand'
                     size='md'
                     onClick={onClickMore}
+                    disabled={isLoading}
                     data-test-id='load-more-button'
                 >
                     {isLoading ? 'Загрузка...' : 'Загрузить ещё'}

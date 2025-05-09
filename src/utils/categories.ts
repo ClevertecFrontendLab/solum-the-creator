@@ -3,7 +3,10 @@ import { matchPath } from 'react-router';
 import { categories } from '~/constants/data/category';
 import { RouteNode, routeTree } from '~/constants/navigation/route-tree';
 import { categoryIcons, CategoryKey } from '~/constants/ui/category-icons';
-import { SidebarCategory, SubCategory } from '~/types/category';
+import { RawCategory, RawItem } from '~/query/services/category';
+import { Category, SidebarCategory, SubCategory } from '~/types/category';
+
+import { getImgUrl } from './image';
 
 export const getSubcategoryPath = (categoryPath: string, subPath: string) =>
     `${categoryPath}/${subPath}`;
@@ -58,3 +61,12 @@ export const getCategiresOptions = () =>
     }));
 
 export const concatPath = (...paths: string[]) => paths.filter(Boolean).join('/');
+
+export const transformCategories = (raw: RawItem[]): Category[] => {
+    const roots = raw.filter((item): item is RawCategory => item.rootCategoryId === undefined);
+
+    return roots.map((item) => ({
+        ...item,
+        icon: getImgUrl(item.icon),
+    }));
+};

@@ -21,9 +21,11 @@ import { applyFilters, setSearchString } from '~/store/recipes-filters/slice';
 
 type HeroSearchProps = {
     onFocusChange: (focused: boolean) => void;
+    isSuccess?: boolean;
+    isError?: boolean;
 };
 
-export const HeroSearch: React.FC<HeroSearchProps> = ({ onFocusChange }) => {
+export const HeroSearch: React.FC<HeroSearchProps> = ({ onFocusChange, isSuccess, isError }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const searchString = useAppSelector(selectSearchStringFilter);
     const [inputValue, setInputValue] = useState(searchString);
@@ -69,6 +71,8 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({ onFocusChange }) => {
     const handleFocus = useCallback(() => onFocusChange(true), [onFocusChange]);
     const handleBlur = useCallback(() => onFocusChange(false), [onFocusChange]);
 
+    const borderColor = isError ? 'red.600' : isSuccess ? 'lime.600' : 'blackAlpha.600';
+
     return (
         <HStack spacing={3} width='100%' maxW={{ base: '28rem', md: '32.375rem' }}>
             <IconButton
@@ -95,6 +99,7 @@ export const HeroSearch: React.FC<HeroSearchProps> = ({ onFocusChange }) => {
                     onFocus={handleFocus}
                     onBlur={handleBlur}
                     data-test-id='search-input'
+                    borderColor={borderColor}
                 />
                 <InputRightElement>
                     <IconButton

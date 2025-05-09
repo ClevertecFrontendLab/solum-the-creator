@@ -54,10 +54,10 @@ export type FilterParams = {
     excludeAllergens?: boolean;
 };
 
-export type SortParams = {
-    sortBy?: 'likes' | 'createdAt';
-    sortOrder?: 'asc' | 'desc';
-};
+export type SortParams = Partial<{
+    sortBy: 'likes' | 'createdAt';
+    sortOrder: 'asc' | 'desc';
+}>;
 
 export const recipeApiSlice = apiSlice
     .enhanceEndpoints({

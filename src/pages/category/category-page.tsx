@@ -25,7 +25,8 @@ export const CategoryPage = () => {
         fetchNextPage,
     } = useFilteredRecipes({ subcategoriesIds });
 
-    const isEmptyResult = isFilterApplied && cachedRecipes?.length === 0;
+    const isEmptyResult = isFilterApplied && !cachedRecipes?.length;
+    const isSuccessResult = !!(isFilterApplied && cachedRecipes);
     const shouldShowRecipes = isFilterApplied && cachedRecipes && cachedRecipes.length > 0;
 
     if (!category) {
@@ -39,6 +40,7 @@ export const CategoryPage = () => {
                 description={category.description}
                 isEmptyResult={isEmptyResult}
                 isLoading={isFetching}
+                isSuccessResult={isSuccessResult}
             />
             <Flex
                 direction='column'

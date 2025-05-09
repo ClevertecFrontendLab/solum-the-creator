@@ -14,13 +14,13 @@ export const useRandomCategoryRecipes = (excludeCategoryId?: string) => {
     );
 
     const [randomCategory] = useState(() => {
-        if (!filteredCategories.length) return undefined;
+        if (!filteredCategories.length) return;
         const index = Math.floor(Math.random() * filteredCategories.length);
         return filteredCategories[index];
     });
 
     const [randomSubcategoryId] = useState(() => {
-        if (!randomCategory?.subCategories.length) return undefined;
+        if (!randomCategory?.subCategories.length) return;
         const index = Math.floor(Math.random() * randomCategory.subCategories.length);
         return randomCategory.subCategories[index]._id;
     });

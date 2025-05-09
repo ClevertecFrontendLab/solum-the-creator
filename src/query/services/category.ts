@@ -1,5 +1,5 @@
 import { Category, SubCategory } from '~/types/category';
-import { getImgUrl } from '~/utils/image';
+import { transformCategories } from '~/utils/categories';
 
 import { ApiEndpoints } from '../constants/api';
 import { ApiGroupNames } from '../constants/api-group-names';
@@ -7,11 +7,11 @@ import { EndpointNames } from '../constants/endpoint-names';
 import { Tags } from '../constants/tags';
 import { apiSlice } from '../create-api';
 
-type RawCategory = Category & { rootCategoryId: undefined };
+export type RawCategory = Category & { rootCategoryId: undefined };
 
-type RawSubCategory = SubCategory & { subCategories: undefined };
+export type RawSubCategory = SubCategory & { subCategories: undefined };
 
-type RawItem = RawCategory | RawSubCategory;
+export type RawItem = RawCategory | RawSubCategory;
 
 export const categoriesApiSlice = apiSlice
     .enhanceEndpoints({
@@ -26,16 +26,7 @@ export const categoriesApiSlice = apiSlice
                     apiGroupName: ApiGroupNames.CATEGORY,
                     name: EndpointNames.GET_CATEGORY,
                 }),
-                transformResponse: (raw: RawItem[]): Category[] => {
-                    const roots = raw.filter(
-                        (item): item is RawCategory => item.rootCategoryId === undefined,
-                    );
-
-                    return roots.map((item) => ({
-                        ...item,
-                        icon: getImgUrl(item.icon),
-                    }));
-                },
+                transformResponse: transformCategories,
                 providesTags: (result) =>
                     result
                         ? [

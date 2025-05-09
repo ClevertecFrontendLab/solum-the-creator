@@ -37,7 +37,8 @@ export const JuiciestPage = () => {
     const juicyPages = juicyData?.pages.flat() ?? [];
     const juicyRecipes = juicyPages.flatMap((page) => page.data);
 
-    const isEmptyResult = isFilterApplied && cachedRecipes?.length === 0;
+    const isEmptyResult = isFilterApplied && !cachedRecipes?.length;
+    const isSuccessResult = !!(isFilterApplied && cachedRecipes);
     const shouldShowFiltered = isFilterApplied && cachedRecipes && cachedRecipes.length > 0;
 
     const recipeProps = shouldShowFiltered
@@ -64,6 +65,7 @@ export const JuiciestPage = () => {
                 title='Самое сочное'
                 isLoading={isFetchingFiltered}
                 isEmptyResult={isEmptyResult}
+                isSuccessResult={isSuccessResult}
             />
 
             <Flex direction='column' align='center' width='100%' px={{ base: 4, sm: 5, md: 6 }}>
