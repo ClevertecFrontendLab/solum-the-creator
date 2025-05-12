@@ -5,6 +5,8 @@ export const pathes = {
     subcategories: '/:category/:subcategory',
     recipes: '/:category/:subcategory/:recipeId',
     notFound: '/not-found',
+    login: '/login',
+    signUp: '/sign-up',
     subcategory: (category: string, subcategory: string) => `/${category}/${subcategory}`,
 };
 
