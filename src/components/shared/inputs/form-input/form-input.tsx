@@ -78,9 +78,6 @@ export const FormInput: React.FC<FormInputProps> = ({
                     rightIcon && <InputRightElement>{rightIcon}</InputRightElement>
                 )}
             </InputGroup>
-            <FormErrorMessage mt={1} fontSize='xs'>
-                Error message
-            </FormErrorMessage>
 
             {helperText && (
                 <FormHelperText mt={1} fontSize='xs' color='blackAlpha.700'>

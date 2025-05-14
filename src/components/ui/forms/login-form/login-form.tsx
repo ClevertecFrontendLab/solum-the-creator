@@ -1,20 +1,27 @@
 import { Button, Text, VStack } from '@chakra-ui/react';
-import { FormEvent, useState } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
 import { Link } from 'react-router';
 
 import { FormInput } from '~/components/shared/inputs/form-input/form-input';
 import { useLoginMutation } from '~/query/services/auth';
 
+import { LoginFormValues, loginSchema } from './login-schema';
+
 export const LoginForm = () => {
-    const [login, setLogin] = useState('');
-    const [password, setPassword] = useState('');
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<LoginFormValues>({
+        resolver: zodResolver(loginSchema),
+    });
 
     const [loginMutation, { isLoading }] = useLoginMutation();
 
-    const handleSubmit = async (e: FormEvent) => {
-        e.preventDefault();
+    const onSubmit = async (data: LoginFormValues) => {
         try {
-            const response = await loginMutation({ login, password }).unwrap();
+            const response = await loginMutation(data).unwrap();
             console.log('Успешный вход:', response.message);
         } catch (err) {
             console.error('Ошибка входа:', err);
@@ -22,14 +29,14 @@ export const LoginForm = () => {
     };
 
     return (
-        <VStack as='form' w='100%' onSubmit={handleSubmit}>
+        <VStack as='form' w='100%' onSubmit={handleSubmit(onSubmit)}>
             <VStack w='100%' spacing={6}>
                 <FormInput
                     label='Логин для входа на сайт'
                     type='text'
                     placeholder='Введите логин'
-                    value={login}
-                    onChange={(e) => setLogin(e.target.value)}
+                    {...register('login')}
+                    error={errors.login}
                 />
 
                 <FormInput
@@ -37,8 +44,8 @@ export const LoginForm = () => {
                     type='password'
                     placeholder='Пароль для сайта'
                     showPasswordToggle={true}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    {...register('password')}
+                    error={errors.password}
                 />
             </VStack>
 
