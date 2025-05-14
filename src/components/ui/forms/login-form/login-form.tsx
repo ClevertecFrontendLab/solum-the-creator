@@ -1,9 +1,10 @@
-import { Button, Text, VStack } from '@chakra-ui/react';
+import { Button, Text, useDisclosure, VStack } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router';
 
+import { AuthErrorModal } from '~/components/modals/auth-error-modal';
 import { FormInput } from '~/components/shared/inputs/form-input/form-input';
 import { HttpStatusCodes } from '~/constants/data/http-status';
 import { pathes } from '~/constants/navigation/pathes';
@@ -28,6 +29,12 @@ export const LoginForm = () => {
 
     const [loginMutation, { isLoading }] = useLoginMutation();
 
+    const {
+        isOpen: isErrorModalOpen,
+        onOpen: onErrorModalOpen,
+        onClose: onErrorModalClose,
+    } = useDisclosure();
+
     useGlobalLoading(isLoading);
 
     const onSubmit = async (data: LoginFormValues) => {
@@ -44,6 +51,7 @@ export const LoginForm = () => {
                         description: 'Попробуйте снова',
                     }),
                 );
+                return;
             }
 
             if (error.status === HttpStatusCodes.FORBIDDEN) {
@@ -53,12 +61,20 @@ export const LoginForm = () => {
                         description: 'Проверьте почту и перейдите по ссылке',
                     }),
                 );
+                return;
             }
+
+            onErrorModalOpen();
         }
     };
 
     const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
         event.target.value = event.target.value.trim();
+    };
+
+    const handleRetry = () => {
+        handleSubmit(onSubmit)();
+        onErrorModalClose();
     };
 
     return (
@@ -94,6 +110,12 @@ export const LoginForm = () => {
                     </Text>
                 </Link>
             </VStack>
+
+            <AuthErrorModal
+                isOpen={isErrorModalOpen}
+                onClose={onErrorModalClose}
+                onRetry={handleRetry}
+            />
         </VStack>
     );
 };
