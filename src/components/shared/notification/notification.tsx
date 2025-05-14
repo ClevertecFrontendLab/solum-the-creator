@@ -1,20 +1,22 @@
-import {
-    Alert,
-    AlertDescription,
-    AlertIcon,
-    AlertTitle,
-    Box,
-    CloseButton,
-    VStack,
-} from '@chakra-ui/react';
+import { VStack } from '@chakra-ui/react';
+import { useCallback } from 'react';
 
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import { selectAllNotifications } from '~/store/notification/selectors';
 import { removeNotification } from '~/store/notification/slice';
 
+import { NotificationItem } from './notification-item';
+
 export const Notification: React.FC = () => {
     const notifications = useAppSelector(selectAllNotifications);
     const dispatch = useAppDispatch();
+
+    const handleClose = useCallback(
+        (id: string) => {
+            dispatch(removeNotification(id));
+        },
+        [dispatch],
+    );
 
     return (
         <VStack
@@ -25,29 +27,14 @@ export const Notification: React.FC = () => {
             spacing={3}
             zIndex={8}
         >
-            {notifications.map((notif) => (
-                <Alert
-                    key={notif.id}
-                    status='error'
-                    w={{ base: '20.5rem', md: '25rem' }}
-                    variant='solid'
-                    bgColor='red.500'
-                    data-test-id='error-notification'
-                >
-                    <AlertIcon />
-                    <Box>
-                        <AlertTitle>{notif.title}</AlertTitle>
-                        <AlertDescription>{notif.description}</AlertDescription>
-                    </Box>
-                    <CloseButton
-                        onClick={() => dispatch(removeNotification(notif.id))}
-                        position='absolute'
-                        alignSelf='flex-start'
-                        right={0}
-                        top={0}
-                        data-test-id='close-alert-button'
-                    />
-                </Alert>
+            {notifications.map(({ id, title, description }) => (
+                <NotificationItem
+                    key={id}
+                    id={id}
+                    title={title}
+                    description={description}
+                    onClose={handleClose}
+                />
             ))}
         </VStack>
     );

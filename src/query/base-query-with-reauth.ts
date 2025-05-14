@@ -6,6 +6,7 @@ import {
 } from '@reduxjs/toolkit/query';
 import { Mutex } from 'async-mutex';
 
+import { HttpStatusCodes } from '~/constants/data/http-status';
 import { logout, setAccessToken } from '~/store/auth/slice';
 import { ApplicationState } from '~/store/configure-store';
 
@@ -36,7 +37,7 @@ export const baseQueryWithReauth: BaseQueryFn<
         api.dispatch(setAccessToken(newAccessToken));
     }
 
-    if (result.error?.status === 401) {
+    if (result.error?.status === HttpStatusCodes.UNAUTHORIZED) {
         if (!mutex.isLocked()) {
             const release = await mutex.acquire();
             try {

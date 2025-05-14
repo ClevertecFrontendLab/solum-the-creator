@@ -18,8 +18,16 @@ const notificationSlice = createSlice({
     name: 'notifications',
     initialState,
     reducers: {
-        addNotification: (state, action: PayloadAction<Notification>) => {
-            state.notifications.push(action.payload);
+        addNotification: (
+            state,
+            action: PayloadAction<Omit<Notification, 'id'> | Notification>,
+        ) => {
+            const notification = {
+                ...action.payload,
+                id: 'id' in action.payload ? action.payload.id : Date.now().toString(),
+            };
+
+            state.notifications.push(notification);
         },
         removeNotification: (state, action: PayloadAction<string>) => {
             state.notifications = state.notifications.filter(

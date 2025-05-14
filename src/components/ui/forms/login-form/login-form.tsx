@@ -1,10 +1,16 @@
 import { Button, Text, VStack } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 
 import { FormInput } from '~/components/shared/inputs/form-input/form-input';
+import { HttpStatusCodes } from '~/constants/data/http-status';
+import { pathes } from '~/constants/navigation/pathes';
+import { useGlobalLoading } from '~/hooks/use-global-loading';
 import { useLoginMutation } from '~/query/services/auth';
+import { useAppDispatch } from '~/store/hooks';
+import { addNotification } from '~/store/notification/slice';
 
 import { LoginFormValues, loginSchema } from './login-schema';
 
@@ -17,15 +23,42 @@ export const LoginForm = () => {
         resolver: zodResolver(loginSchema),
     });
 
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+
     const [loginMutation, { isLoading }] = useLoginMutation();
+
+    useGlobalLoading(isLoading);
 
     const onSubmit = async (data: LoginFormValues) => {
         try {
-            const response = await loginMutation(data).unwrap();
-            console.log('Успешный вход:', response.message);
+            await loginMutation(data).unwrap();
+            navigate(pathes.home);
         } catch (err) {
-            console.error('Ошибка входа:', err);
+            const error = err as FetchBaseQueryError;
+
+            if (error.status === HttpStatusCodes.UNAUTHORIZED) {
+                dispatch(
+                    addNotification({
+                        title: 'Неверный логин или пароль',
+                        description: 'Попробуйте снова',
+                    }),
+                );
+            }
+
+            if (error.status === HttpStatusCodes.FORBIDDEN) {
+                dispatch(
+                    addNotification({
+                        title: 'E-mail не верифицирован',
+                        description: 'Проверьте почту и перейдите по ссылке',
+                    }),
+                );
+            }
         }
+    };
+
+    const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+        event.target.value = event.target.value.trim();
     };
 
     return (
@@ -37,6 +70,7 @@ export const LoginForm = () => {
                     placeholder='Введите логин'
                     {...register('login')}
                     error={errors.login}
+                    onBlur={handleBlur}
                 />
 
                 <FormInput

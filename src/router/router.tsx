@@ -1,5 +1,6 @@
 import { createBrowserRouter, createRoutesFromElements, Navigate, Route } from 'react-router';
 
+import { AppLayout } from '~/components/layouts/app-layout';
 import { AuthLayout } from '~/components/layouts/auth-layout';
 import { MainLayout } from '~/components/layouts/main-layout';
 import { RecipeError } from '~/components/shared/errors/recipe-error';
@@ -19,7 +20,7 @@ import { RequireGuest } from './require-guest';
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
-        <>
+        <Route element={<AppLayout />}>
             <Route element={<RequireAuth />}>
                 <Route path={pathes.home} element={<MainLayout />}>
                     <Route index element={<HomePage />} />
@@ -49,6 +50,6 @@ export const router = createBrowserRouter(
                     <Route path={pathes.signUp} element={<SignUpPage />} />
                 </Route>
             </Route>
-        </>,
+        </Route>,
     ),
 );
