@@ -9,7 +9,7 @@ import { Mutex } from 'async-mutex';
 import { logout, setAccessToken } from '~/store/auth/slice';
 import { ApplicationState } from '~/store/configure-store';
 
-import { API_BASE_URL } from './constants/api';
+import { API_BASE_URL, ApiEndpoints } from './constants/api';
 
 const mutex = new Mutex();
 
@@ -36,12 +36,12 @@ export const baseQueryWithReauth: BaseQueryFn<
         api.dispatch(setAccessToken(newAccessToken));
     }
 
-    if (result.error?.status === 403) {
+    if (result.error?.status === 401) {
         if (!mutex.isLocked()) {
             const release = await mutex.acquire();
             try {
                 const refreshResult = await rawBaseQuery(
-                    { url: '/auth/refresh', credentials: 'include' },
+                    { url: ApiEndpoints.AUTH_REFRESH, credentials: 'include' },
                     api,
                     extraOptions,
                 );

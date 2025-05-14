@@ -1,6 +1,7 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 
 import { baseQueryWithReauth } from '../base-query-with-reauth';
+import { ApiEndpoints } from '../constants/api';
 
 export const authApi = createApi({
     reducerPath: 'authApi',
@@ -11,13 +12,13 @@ export const authApi = createApi({
             { login: string; password: string }
         >({
             query: (body) => ({
-                url: '/auth/login',
+                url: ApiEndpoints.AUTH_LOGIN,
                 method: 'POST',
                 body,
             }),
         }),
         checkAuth: builder.query<{ statusText: string; message: string }, void>({
-            query: () => ({ url: '/auth/check-auth' }),
+            query: () => ({ url: ApiEndpoints.AUTH_CHECK_AUTH, method: 'GET' }),
         }),
     }),
 });

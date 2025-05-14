@@ -14,33 +14,40 @@ import { NotFoundPage } from '~/pages/not-found/not-found-page';
 import { HydrateRecipePage, RecipePage, RecipePageLoader } from '~/pages/recipe/recipe-page';
 
 import { RedirectToFirstSubcategory } from './redirect-to-first-subcategory';
+import { RequireAuth } from './require-auth';
+import { RequireGuest } from './require-guest';
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
         <>
-            <Route path={pathes.home} element={<MainLayout />}>
-                <Route index element={<HomePage />} />
-                <Route path={pathes.juiciest} element={<JuiciestPage />} />
+            <Route element={<RequireAuth />}>
+                <Route path={pathes.home} element={<MainLayout />}>
+                    <Route index element={<HomePage />} />
+                    <Route path={pathes.juiciest} element={<JuiciestPage />} />
 
-                <Route path={pathes.categories} element={<CategoryPage />}>
-                    <Route index element={<RedirectToFirstSubcategory />} />
-                    <Route path={pathes.subcategories} element={<SubcategoryPage />} />
+                    <Route path={pathes.categories} element={<CategoryPage />}>
+                        <Route index element={<RedirectToFirstSubcategory />} />
+                        <Route path={pathes.subcategories} element={<SubcategoryPage />} />
+                    </Route>
+
+                    <Route
+                        path={pathes.recipes}
+                        element={<RecipePage />}
+                        loader={RecipePageLoader}
+                        HydrateFallback={HydrateRecipePage}
+                        errorElement={<RecipeError />}
+                    />
+
+                    <Route path={pathes.notFound} element={<NotFoundPage />} />
+                    <Route path='*' element={<Navigate to={pathes.notFound} replace />} />
                 </Route>
-
-                <Route
-                    path={pathes.recipes}
-                    element={<RecipePage />}
-                    loader={RecipePageLoader}
-                    HydrateFallback={HydrateRecipePage}
-                    errorElement={<RecipeError />}
-                />
-
-                <Route path={pathes.notFound} element={<NotFoundPage />} />
-                <Route path='*' element={<Navigate to={pathes.notFound} replace />} />
             </Route>
-            <Route element={<AuthLayout />}>
-                <Route path={pathes.login} element={<LoginPage />} />
-                <Route path={pathes.signUp} element={<SignUpPage />} />
+
+            <Route element={<RequireGuest />}>
+                <Route element={<AuthLayout />}>
+                    <Route path={pathes.login} element={<LoginPage />} />
+                    <Route path={pathes.signUp} element={<SignUpPage />} />
+                </Route>
             </Route>
         </>,
     ),

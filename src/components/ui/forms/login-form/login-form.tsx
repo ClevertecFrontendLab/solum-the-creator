@@ -15,7 +15,6 @@ export const LoginForm = () => {
         e.preventDefault();
         try {
             const response = await loginMutation({ login, password }).unwrap();
-            // Токен при успешном логине должен попасть в baseQuery через хедер
             console.log('Успешный вход:', response.message);
         } catch (err) {
             console.error('Ошибка входа:', err);
