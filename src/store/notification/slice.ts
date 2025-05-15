@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 type Notification = {
     id: string;
     title: string;
-    description: string;
+    description?: string;
 };
 
 type NotificationState = {

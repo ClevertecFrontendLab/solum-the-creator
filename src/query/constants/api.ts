@@ -7,6 +7,7 @@ export enum ApiEndpoints {
     AUTH_LOGIN = '/auth/login',
     AUTH_REFRESH = '/auth/refresh',
     AUTH_CHECK_AUTH = '/auth/check-auth',
+    AUTH_SIGNUP = '/auth/signup',
 }
 
 export const API_BASE_URL = 'https://marathon-api.clevertec.ru';

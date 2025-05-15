@@ -1,13 +1,22 @@
-import { Box, Button, Flex, Progress, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, Flex, Progress, Text, useDisclosure, VStack } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
+import { SignupSuccessModal } from '~/components/modals/signup-success-modal';
 import { FormInput } from '~/components/shared/inputs/form-input/form-input';
+import { HttpStatusCodes } from '~/constants/data/http-status';
+import { useGlobalLoading } from '~/hooks/use-global-loading';
+import { useSignUpMutation } from '~/query/services/auth';
+import { useAppDispatch } from '~/store/hooks';
+import { addNotification } from '~/store/notification/slice';
+import { AuthError } from '~/types/auth';
 
 import { SignUpFormValues, signUpSchema } from './sign-up-schema';
 
 export const SignUpForm: React.FC = () => {
+    const dispatch = useAppDispatch();
+
     const {
         register,
         handleSubmit,
@@ -15,6 +24,15 @@ export const SignUpForm: React.FC = () => {
         trigger,
         formState: { errors, touchedFields },
     } = useForm<SignUpFormValues>({ resolver: zodResolver(signUpSchema), mode: 'onTouched' });
+
+    const [signUpMutation, { isLoading }] = useSignUpMutation();
+    const {
+        isOpen: isSignupModalOpen,
+        onOpen: onSignupModalOpen,
+        onClose: onSignupModalClose,
+    } = useDisclosure();
+
+    useGlobalLoading(isLoading);
 
     const [step, setStep] = useState(1);
 
@@ -42,8 +60,25 @@ export const SignUpForm: React.FC = () => {
         setStep(step - 1);
     };
 
-    const onSubmit = (data: SignUpFormValues) => {
-        console.log('sign up form submit:', data);
+    const onSubmit = async (data: SignUpFormValues) => {
+        try {
+            await signUpMutation(data).unwrap();
+            onSignupModalOpen();
+        } catch (err) {
+            const error = err as AuthError;
+
+            if (error.status === HttpStatusCodes.BAD_REQUEST) {
+                dispatch(addNotification({ title: error.data.message }));
+                return;
+            }
+
+            dispatch(
+                addNotification({
+                    title: 'Ошибка сервера',
+                    description: 'Попробуйте немного позже',
+                }),
+            );
+        }
     };
 
     return (
@@ -128,6 +163,12 @@ export const SignUpForm: React.FC = () => {
                     </Flex>
                 </>
             )}
+
+            <SignupSuccessModal
+                email={getValues().email}
+                isOpen={isSignupModalOpen}
+                onClose={onSignupModalClose}
+            />
         </VStack>
     );
 };
