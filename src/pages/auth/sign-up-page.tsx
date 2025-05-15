@@ -1,5 +1,3 @@
-export const SignUpPage = () => (
-    <div>
-        <h1>sign up page</h1>
-    </div>
-);
+import { SignUpForm } from '~/components/ui/forms/sign-up-form/sign-up-form';
+
+export const SignUpPage = () => <SignUpForm />;

@@ -10,7 +10,7 @@ import {
     useBreakpointValue,
     VStack,
 } from '@chakra-ui/react';
-import { Link, Outlet } from 'react-router';
+import { Link, Outlet, useLocation } from 'react-router';
 
 import authImage from '~/assets/images/auth-image.jpg';
 import { pathes } from '~/constants/navigation/pathes';
@@ -18,8 +18,12 @@ import { pathes } from '~/constants/navigation/pathes';
 import { Logo, LogoSize } from '../shared/misc/logo/logo';
 
 export const AuthLayout = () => {
+    const location = useLocation();
+
     const showImage = useBreakpointValue({ base: false, md: true });
     const logoSize = useBreakpointValue<LogoSize>({ base: 'md', md: 'lg' });
+
+    const currentTabIndex = location.pathname === pathes.login ? 0 : 1;
 
     return (
         <Grid
@@ -36,6 +40,7 @@ export const AuthLayout = () => {
                 flexDirection='column'
                 alignItems='start'
                 justifyContent='space-between'
+                gap={10}
                 px={{ base: 4, sm: 5 }}
                 pt={{ base: '4.5rem', sm: '8.75rem', md: '10.625rem' }}
                 pb={{ base: 4, sm: 5 }}
@@ -48,7 +53,7 @@ export const AuthLayout = () => {
                 >
                     <Logo isFull={true} responsive={false} size={logoSize} to={pathes.login} />
                     <VStack w='100%' spacing={10}>
-                        <Tabs w='100%' variant='auth'>
+                        <Tabs index={currentTabIndex} w='100%' variant='auth'>
                             <TabList>
                                 <Tab as={Link} to={pathes.login}>
                                     Вход на сайт
@@ -70,20 +75,16 @@ export const AuthLayout = () => {
             </GridItem>
 
             {showImage && (
-                <GridItem
-                    display='flex'
-                    alignItems='center'
-                    justifyContent='center'
-                    minW={0}
-                    h='100vh'
-                >
-                    <Image
-                        src={authImage}
-                        alt='Food on table'
-                        objectFit='cover'
-                        w='100%'
-                        h='100%'
-                    />
+                <GridItem position='relative' minW={0}>
+                    <Box position='absolute' inset={0}>
+                        <Image
+                            src={authImage}
+                            alt='Food on table'
+                            objectFit='cover'
+                            w='100%'
+                            h='100%'
+                        />
+                    </Box>
 
                     <Text
                         position='absolute'
