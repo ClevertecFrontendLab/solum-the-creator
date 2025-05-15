@@ -1,37 +1,41 @@
 import { Box, Button, Flex, Progress, Text, VStack } from '@chakra-ui/react';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { FormInput } from '~/components/shared/inputs/form-input/form-input';
 
-type SignUpFormValues = {
-    firstName: string;
-    lastName: string;
-    email: string;
-    login: string;
-    password: string;
-    confirmPassword: string;
-};
+import { SignUpFormValues, signUpSchema } from './sign-up-schema';
 
 export const SignUpForm: React.FC = () => {
     const {
         register,
         handleSubmit,
         getValues,
-        formState: { errors },
-    } = useForm<SignUpFormValues>();
+        trigger,
+        formState: { errors, touchedFields },
+    } = useForm<SignUpFormValues>({ resolver: zodResolver(signUpSchema), mode: 'onTouched' });
 
     const [step, setStep] = useState(1);
 
-    const fieldFields = Object.entries(getValues()).filter(
-        ([_key, value]) => value && value.toString().trim() !== '',
+    const totalFields = 6;
+
+    const validFields = Object.entries(getValues()).filter(
+        ([key, value]) =>
+            value &&
+            value.toString().trim() !== '' &&
+            !errors[key as keyof typeof errors] &&
+            touchedFields[key as keyof typeof touchedFields],
     ).length;
 
-    const progress = Math.round((fieldFields / 6) * 100);
+    const progress = Math.round((validFields / totalFields) * 100);
     const progressLabel = step === 1 ? 'Шаг 1. Личная информация' : 'Шаг 2. Логин и пароль';
 
-    const onNext = () => {
-        setStep(step + 1);
+    const onNext = async () => {
+        const isValid = await trigger(['firstName', 'lastName', 'email']);
+        if (isValid) {
+            setStep(step + 1);
+        }
     };
 
     const onBack = () => {
