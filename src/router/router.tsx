@@ -17,6 +17,7 @@ import { HydrateRecipePage, RecipePage, RecipePageLoader } from '~/pages/recipe/
 import { RedirectToFirstSubcategory } from './redirect-to-first-subcategory';
 import { RequireAuth } from './require-auth';
 import { RequireGuest } from './require-guest';
+import { VerificationHandler } from './verification-handler';
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -49,6 +50,7 @@ export const router = createBrowserRouter(
                     <Route path={pathes.login} element={<LoginPage />} />
                     <Route path={pathes.signUp} element={<SignUpPage />} />
                 </Route>
+                <Route path={pathes.verification} element={<VerificationHandler />} />
             </Route>
         </Route>,
     ),

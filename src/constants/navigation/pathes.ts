@@ -7,6 +7,7 @@ export const pathes = {
     notFound: '/not-found',
     login: '/login',
     signUp: '/sign-up',
+    verification: '/verification',
     subcategory: (category: string, subcategory: string) => `/${category}/${subcategory}`,
 };
 

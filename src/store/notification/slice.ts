@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 type Notification = {
     id: string;
     title: string;
+    type?: 'success' | 'error';
     description?: string;
 };
 

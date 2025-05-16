@@ -27,13 +27,14 @@ export const Notification: React.FC = () => {
             spacing={3}
             zIndex={8}
         >
-            {notifications.map(({ id, title, description }) => (
+            {notifications.map(({ id, title, description, type }) => (
                 <NotificationItem
                     key={id}
                     id={id}
                     title={title}
                     description={description}
                     onClose={handleClose}
+                    type={type}
                 />
             ))}
         </VStack>
