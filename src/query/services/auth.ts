@@ -43,6 +43,16 @@ export const authApi = createApi({
                 body,
             }),
         }),
+        resetPassword: builder.mutation<
+            void,
+            { email: string; login: string; password: string; passwordConfirm: string }
+        >({
+            query: (body) => ({
+                url: ApiEndpoints.AUTH_RESET_PASSWORD,
+                method: 'POST',
+                body,
+            }),
+        }),
     }),
 });
 
@@ -52,4 +62,5 @@ export const {
     useSignUpMutation,
     useForgotPasswordMutation,
     useVerifyOtpMutation,
+    useResetPasswordMutation,
 } = authApi;
