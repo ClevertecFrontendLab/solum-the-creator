@@ -29,7 +29,15 @@ export const authApi = createApi({
                 body,
             }),
         }),
+        forgotPassword: builder.mutation<void, { email: string }>({
+            query: (body) => ({
+                url: ApiEndpoints.AUTH_FORGOT_PASSWORD,
+                method: 'POST',
+                body,
+            }),
+        }),
     }),
 });
 
-export const { useLoginMutation, useCheckAuthQuery, useSignUpMutation } = authApi;
+export const { useLoginMutation, useCheckAuthQuery, useSignUpMutation, useForgotPasswordMutation } =
+    authApi;

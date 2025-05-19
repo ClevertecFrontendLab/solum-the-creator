@@ -63,7 +63,7 @@ export const Loader: React.FC<LoaderProps> = ({ isVisible, variant = 'inline', s
                     display='flex'
                     alignItems='center'
                     justifyContent='center'
-                    zIndex={21}
+                    zIndex='toast'
                     data-test-id='app-loader'
                 >
                     {SpinnerWithGradient}

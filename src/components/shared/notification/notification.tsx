@@ -25,7 +25,7 @@ export const Notification: React.FC = () => {
             transform='translateX(-50%)'
             bottom={{ base: '6.25rem', md: '5rem' }}
             spacing={3}
-            zIndex={8}
+            zIndex='toast'
         >
             {notifications.map(({ id, title, description, type }) => (
                 <NotificationItem
