@@ -2,6 +2,7 @@ import { ModalBody } from '@chakra-ui/react';
 import { useState } from 'react';
 
 import { ForgotEmailStepForm } from '~/components/ui/forms/forgot-email-step-form/forgot-email-step-form';
+import { VerifyOtpForm } from '~/components/ui/forms/forgot-email-step-form/verify-otp-form';
 
 import { ModalContainer } from '../modal-container';
 
@@ -19,14 +20,17 @@ export const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({ isOpen
     const handleEmailSuccess = (value: string) => {
         setEmail(value);
         setStep('code');
-        console.log('email', value);
-        console.log('emailState', email);
+    };
+
+    const handleCodeSuccess = () => {
+        setStep('password');
     };
 
     return (
         <ModalContainer isOpen={isOpen} onClose={onClose}>
             <ModalBody p={0}>
                 {step === 'email' && <ForgotEmailStepForm onSuccess={handleEmailSuccess} />}
+                {step === 'code' && <VerifyOtpForm email={email} onSuccess={handleCodeSuccess} />}
             </ModalBody>
         </ModalContainer>
     );

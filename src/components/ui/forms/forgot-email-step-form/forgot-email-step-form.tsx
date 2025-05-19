@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import modalImg from '~/assets/images/scatches/breakfast.png';
 import { FormInput } from '~/components/shared/inputs/form-input/form-input';
 import { HttpStatusCodes } from '~/constants/data/http-status';
+import { useGlobalLoading } from '~/hooks/use-global-loading';
 import { useForgotPasswordMutation } from '~/query/services/auth';
 import { useAppDispatch } from '~/store/hooks';
 import { addNotification } from '~/store/notification/slice';
@@ -19,6 +20,8 @@ type ForgotEmailStepFormProps = {
 export const ForgotEmailStepForm: React.FC<ForgotEmailStepFormProps> = ({ onSuccess }) => {
     const dispatch = useAppDispatch();
     const [forgotPasswordMutation, { isLoading }] = useForgotPasswordMutation();
+
+    useGlobalLoading(isLoading);
 
     const {
         register,
@@ -72,13 +75,11 @@ export const ForgotEmailStepForm: React.FC<ForgotEmailStepFormProps> = ({ onSucc
                 maxW={{ base: '6.75rem', md: '12.875rem' }}
             />
 
-            <VStack spacing={4}>
-                <Text fontSize='md' color='blackAlpha.900' textAlign='center'>
-                    Для восстановления входа введите
-                    <br />
-                    ваш e-mail, куда можно отправить уникальный код
-                </Text>
-            </VStack>
+            <Text fontSize='md' color='blackAlpha.900' textAlign='center'>
+                Для восстановления входа введите
+                <br />
+                ваш e-mail, куда можно отправить уникальный код
+            </Text>
 
             <VStack as='form' spacing={6} w='100%' onSubmit={handleSubmit(onSubmit)}>
                 <FormInput

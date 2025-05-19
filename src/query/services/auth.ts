@@ -36,8 +36,20 @@ export const authApi = createApi({
                 body,
             }),
         }),
+        verifyOtp: builder.mutation<void, { email: string; otpToken: string }>({
+            query: (body) => ({
+                url: ApiEndpoints.AUTH_VERIFY_OTP,
+                method: 'POST',
+                body,
+            }),
+        }),
     }),
 });
 
-export const { useLoginMutation, useCheckAuthQuery, useSignUpMutation, useForgotPasswordMutation } =
-    authApi;
+export const {
+    useLoginMutation,
+    useCheckAuthQuery,
+    useSignUpMutation,
+    useForgotPasswordMutation,
+    useVerifyOtpMutation,
+} = authApi;

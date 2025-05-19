@@ -17,5 +17,11 @@ export const useGlobalLoading = (isLoading: boolean) => {
             dispatch(endLoading());
         }
         prev.current = isLoading;
+
+        return () => {
+            if (prev.current) {
+                dispatch(endLoading());
+            }
+        };
     }, [dispatch, isLoading]);
 };
