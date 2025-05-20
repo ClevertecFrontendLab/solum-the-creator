@@ -38,6 +38,15 @@ export const FormInput: React.FC<FormInputProps> = ({
     const [showPassword, setShowPassword] = useState(false);
     const isPassword = type === 'password';
 
+    const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+        if (type !== 'password') {
+            event.target.value = event.target.value.trim();
+        }
+
+        register?.onBlur?.(event);
+        props.onBlur?.(event);
+    };
+
     return (
         <FormControl isInvalid={!!error}>
             {label && (
@@ -62,6 +71,7 @@ export const FormInput: React.FC<FormInputProps> = ({
                             : type
                     }
                     placeholder={placeholder}
+                    onBlur={handleBlur}
                 />
 
                 {isPassword && showPasswordToggle ? (

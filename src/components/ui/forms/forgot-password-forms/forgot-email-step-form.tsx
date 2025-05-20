@@ -32,10 +32,6 @@ export const ForgotEmailStepForm: React.FC<ForgotEmailStepFormProps> = ({ onSucc
         resolver: zodResolver(forgotEmailSchema),
     });
 
-    const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-        event.target.value = event.target.value.trim();
-    };
-
     const onSubmit = async (data: ForgotEmailFormValues) => {
         try {
             await forgotPasswordMutation(data).unwrap();
@@ -88,7 +84,6 @@ export const ForgotEmailStepForm: React.FC<ForgotEmailStepFormProps> = ({ onSucc
                     placeholder='e-mail'
                     {...register('email')}
                     error={errors.email}
-                    onBlur={handleBlur}
                 />
 
                 <Button type='submit' variant='black' size='lg' w='100%' isLoading={isLoading}>

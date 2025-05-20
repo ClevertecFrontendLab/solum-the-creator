@@ -74,10 +74,6 @@ export const LoginForm = () => {
         }
     };
 
-    const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-        event.target.value = event.target.value.trim();
-    };
-
     const handleRetry = () => {
         handleSubmit(onSubmit)();
         onErrorModalClose();
@@ -93,7 +89,6 @@ export const LoginForm = () => {
                         placeholder='Введите логин'
                         {...register('login')}
                         error={errors.login}
-                        onBlur={handleBlur}
                     />
 
                     <FormInput
