@@ -1,11 +1,14 @@
 import { Alert, AlertDescription, AlertIcon, AlertTitle, Box, CloseButton } from '@chakra-ui/react';
 import { useEffect } from 'react';
 
-type NotificationItemProps = {
+export type NotificationPosition = 'bottom-left' | 'bottom-center';
+
+export type NotificationItemProps = {
     id: string;
     title?: string;
     description?: string;
     type?: 'success' | 'error';
+    position?: NotificationPosition;
     onClose: (id: string) => void;
 };
 
@@ -35,6 +38,7 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({
             variant='solid'
             bgColor={type === 'success' ? 'green.500' : 'red.500'}
             data-test-id={dataTestId}
+            position='relative'
         >
             <AlertIcon />
             <Box>

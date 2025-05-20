@@ -16,7 +16,13 @@ export const LoginPage = () => {
         if (location.state?.emailVerified && !hasNotifiedRef.current) {
             hasNotifiedRef.current = true;
 
-            dispatch(addNotification({ title: 'Верификация прошла успешно', type: 'success' }));
+            dispatch(
+                addNotification({
+                    title: 'Верификация прошла успешно',
+                    type: 'success',
+                    position: 'bottom-left',
+                }),
+            );
 
             navigate(pathes.login, { replace: true, state: null });
         }

@@ -1,10 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+import { NotificationPosition } from '~/components/shared/notification/notification-item';
+
 type Notification = {
     id: string;
     title: string;
     type?: 'success' | 'error';
     description?: string;
+    position?: NotificationPosition;
 };
 
 type NotificationState = {

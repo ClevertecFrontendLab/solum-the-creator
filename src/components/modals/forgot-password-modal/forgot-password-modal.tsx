@@ -36,6 +36,7 @@ export const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({ isOpen
             addNotification({
                 type: 'success',
                 title: 'Восстановление данных успешно',
+                position: 'bottom-left',
             }),
         );
     };
