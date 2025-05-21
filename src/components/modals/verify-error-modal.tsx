@@ -12,7 +12,7 @@ type VerifyErrorModalProps = {
 };
 
 export const VerifyErrorModal: React.FC<VerifyErrorModalProps> = ({ isOpen, onClose }) => (
-    <ModalContainer isOpen={isOpen} onClose={onClose}>
+    <ModalContainer isOpen={isOpen} onClose={onClose} dataTestId='email-verification-failed-modal'>
         <ModalBody p={0}>
             <VStack spacing={8}>
                 <Image

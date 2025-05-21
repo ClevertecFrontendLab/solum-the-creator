@@ -54,7 +54,7 @@ export const LoginForm = () => {
                 dispatch(
                     addNotification({
                         title: 'Неверный логин или пароль',
-                        description: 'Попробуйте снова',
+                        description: 'Попробуйте снова',
                     }),
                 );
                 return;
@@ -81,7 +81,12 @@ export const LoginForm = () => {
 
     return (
         <>
-            <VStack as='form' w='100%' onSubmit={handleSubmit(onSubmit)}>
+            <VStack
+                as='form'
+                w='100%'
+                onSubmit={handleSubmit(onSubmit)}
+                data-test-id='sign-in-form'
+            >
                 <VStack w='100%' spacing={6}>
                     <FormInput
                         label='Логин для входа на сайт'
@@ -89,6 +94,7 @@ export const LoginForm = () => {
                         placeholder='Введите логин'
                         {...register('login')}
                         error={errors.login}
+                        data-test-id='login-input'
                     />
 
                     <FormInput
@@ -98,15 +104,29 @@ export const LoginForm = () => {
                         showPasswordToggle={true}
                         {...register('password')}
                         error={errors.password}
+                        data-test-id='password-input'
                     />
                 </VStack>
 
                 <VStack w='100%' spacing={4} mt='7rem'>
-                    <Button type='submit' variant='black' w='100%' size='lg' isLoading={isLoading}>
+                    <Button
+                        type='submit'
+                        variant='black'
+                        w='100%'
+                        size='lg'
+                        isLoading={isLoading}
+                        data-test-id='submit-button'
+                    >
                         Войти
                     </Button>
 
-                    <Button variant='clear' w='100%' size='lg' onClick={onForgotModalOpen}>
+                    <Button
+                        variant='clear'
+                        w='100%'
+                        size='lg'
+                        onClick={onForgotModalOpen}
+                        data-test-id='forgot-password'
+                    >
                         <Text as='span' fontWeight={600}>
                             Забыли логин или пароль?
                         </Text>

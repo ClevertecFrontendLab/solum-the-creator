@@ -9,7 +9,7 @@ import { HttpStatusCodes } from '~/constants/data/http-status';
 import { useGlobalLoading } from '~/hooks/use-global-loading';
 import { useForgotPasswordMutation } from '~/query/services/auth';
 import { useAppDispatch } from '~/store/hooks';
-import { addNotification } from '~/store/notification/slice';
+import { addNotification, clearNotifications } from '~/store/notification/slice';
 
 import { ForgotEmailFormValues, forgotEmailSchema } from './forgot-email-schema';
 
@@ -27,6 +27,7 @@ export const ForgotEmailStepForm: React.FC<ForgotEmailStepFormProps> = ({ onSucc
         register,
         handleSubmit,
         setError,
+        setValue,
         formState: { errors },
     } = useForm<ForgotEmailFormValues>({
         resolver: zodResolver(forgotEmailSchema),
@@ -39,6 +40,7 @@ export const ForgotEmailStepForm: React.FC<ForgotEmailStepFormProps> = ({ onSucc
         } catch (err) {
             const error = err as FetchBaseQueryError;
 
+            setValue('email', '');
             if (error.status === HttpStatusCodes.FORBIDDEN) {
                 dispatch(
                     addNotification({
@@ -47,10 +49,12 @@ export const ForgotEmailStepForm: React.FC<ForgotEmailStepFormProps> = ({ onSucc
                             'Попробуйте другой e-mail или проверьте правильность его написания',
                     }),
                 );
+
                 setError('email', { type: 'server' });
                 return;
             }
 
+            dispatch(clearNotifications());
             dispatch(
                 addNotification({
                     title: 'Ошибка сервера',
@@ -72,9 +76,7 @@ export const ForgotEmailStepForm: React.FC<ForgotEmailStepFormProps> = ({ onSucc
             />
 
             <Text fontSize='md' color='blackAlpha.900' textAlign='center'>
-                Для восстановления входа введите
-                <br />
-                ваш e-mail, куда можно отправить уникальный код
+                Для восстановления входа введите ваш e-mail, куда можно отправить уникальный код
             </Text>
 
             <VStack as='form' spacing={6} w='100%' onSubmit={handleSubmit(onSubmit)}>
@@ -84,9 +86,17 @@ export const ForgotEmailStepForm: React.FC<ForgotEmailStepFormProps> = ({ onSucc
                     placeholder='e-mail'
                     {...register('email')}
                     error={errors.email}
+                    data-test-id='email-input'
                 />
 
-                <Button type='submit' variant='black' size='lg' w='100%' isLoading={isLoading}>
+                <Button
+                    type='submit'
+                    variant='black'
+                    size='lg'
+                    w='100%'
+                    isLoading={isLoading}
+                    data-test-id='submit-button'
+                >
                     Получить код
                 </Button>
 

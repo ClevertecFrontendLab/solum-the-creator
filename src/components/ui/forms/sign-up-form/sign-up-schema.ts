@@ -31,8 +31,8 @@ export const signUpSchema = z
         email: z
             .string()
             .nonempty('Введите e-mail')
-            .email('Введите корректный e-mail')
-            .max(50, 'Максимальная длина 50 символов'),
+            .max(50, 'Максимальная длина 50 символов')
+            .email('Введите корректный e-mail'),
         login: z
             .string()
             .nonempty('Введите логин')

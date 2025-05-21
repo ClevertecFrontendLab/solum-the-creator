@@ -4,12 +4,23 @@ type ModalContainerProps = {
     isOpen: boolean;
     onClose: () => void;
     children: React.ReactNode;
+    dataTestId?: string;
 };
 
-export const ModalContainer: React.FC<ModalContainerProps> = ({ isOpen, onClose, children }) => (
+export const ModalContainer: React.FC<ModalContainerProps> = ({
+    isOpen,
+    onClose,
+    dataTestId,
+    children,
+}) => (
     <Modal isOpen={isOpen} onClose={onClose} isCentered={true}>
         <ModalOverlay />
-        <ModalContent maxW={{ base: '19.75rem', md: '24.75rem' }} p={8} borderRadius='2xl'>
+        <ModalContent
+            maxW={{ base: '19.75rem', md: '24.75rem' }}
+            p={8}
+            borderRadius='2xl'
+            data-test-id={dataTestId}
+        >
             <ModalCloseButton
                 onClick={onClose}
                 borderRadius='full'
@@ -22,6 +33,7 @@ export const ModalContainer: React.FC<ModalContainerProps> = ({ isOpen, onClose,
                 justifyContent='center'
                 top={6}
                 right={6}
+                data-test-id='close-button'
             />
             {children}
         </ModalContent>

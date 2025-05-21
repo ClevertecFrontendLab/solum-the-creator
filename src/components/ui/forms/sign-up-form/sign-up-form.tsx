@@ -22,8 +22,9 @@ export const SignUpForm: React.FC = () => {
         handleSubmit,
         getValues,
         trigger,
-        formState: { errors, touchedFields },
-    } = useForm<SignUpFormValues>({ resolver: zodResolver(signUpSchema), mode: 'onTouched' });
+        watch,
+        formState: { errors },
+    } = useForm<SignUpFormValues>({ resolver: zodResolver(signUpSchema), mode: 'onChange' });
 
     const [signUpMutation, { isLoading }] = useSignUpMutation();
     const {
@@ -37,13 +38,10 @@ export const SignUpForm: React.FC = () => {
     const [step, setStep] = useState(1);
 
     const totalFields = 6;
+    const values = watch();
 
-    const validFields = Object.entries(getValues()).filter(
-        ([key, value]) =>
-            value &&
-            value.toString().trim() !== '' &&
-            !errors[key as keyof typeof errors] &&
-            touchedFields[key as keyof typeof touchedFields],
+    const validFields = Object.entries(values).filter(
+        ([key, value]) => value?.toString().trim() !== '' && !errors[key as keyof typeof errors],
     ).length;
 
     const progress = Math.round((validFields / totalFields) * 100);
@@ -82,7 +80,13 @@ export const SignUpForm: React.FC = () => {
     };
 
     return (
-        <VStack as='form' w='100%' spacing={6} onSubmit={handleSubmit(onSubmit)}>
+        <VStack
+            as='form'
+            w='100%'
+            spacing={6}
+            onSubmit={handleSubmit(onSubmit)}
+            data-test-id='sign-up-form'
+        >
             <Box w='100%'>
                 <Text fontSize='md'>{progressLabel}</Text>
                 <Progress
@@ -92,6 +96,7 @@ export const SignUpForm: React.FC = () => {
                     colorScheme='lime'
                     bgColor='blackAlpha.100'
                     w='100%'
+                    data-test-id='sign-up-progress'
                 />
             </Box>
 
@@ -102,12 +107,14 @@ export const SignUpForm: React.FC = () => {
                         placeholder='Имя'
                         {...register('firstName')}
                         error={errors.firstName}
+                        data-test-id='first-name-input'
                     />
                     <FormInput
                         label='Ваша фамилия'
                         placeholder='Фамилия'
                         {...register('lastName')}
                         error={errors.lastName}
+                        data-test-id='last-name-input'
                     />
                     <FormInput
                         label='Ваш e-mail'
@@ -115,8 +122,16 @@ export const SignUpForm: React.FC = () => {
                         type='email'
                         {...register('email')}
                         error={errors.email}
+                        data-test-id='email-input'
                     />
-                    <Button w='100%' mt={6} size='lg' variant='black' onClick={onNext}>
+                    <Button
+                        w='100%'
+                        mt={6}
+                        size='lg'
+                        variant='black'
+                        onClick={onNext}
+                        data-test-id='submit-button'
+                    >
                         Далее
                     </Button>
                 </>
@@ -130,6 +145,7 @@ export const SignUpForm: React.FC = () => {
                         helperText='Логин не менее 5 символов, только латиница'
                         {...register('login')}
                         error={errors.login}
+                        data-test-id='login-input'
                     />
                     <FormInput
                         label='Пароль'
@@ -139,6 +155,7 @@ export const SignUpForm: React.FC = () => {
                         showPasswordToggle={true}
                         {...register('password')}
                         error={errors.password}
+                        data-test-id='password-input'
                     />
                     <FormInput
                         label='Повторите пароль'
@@ -147,6 +164,7 @@ export const SignUpForm: React.FC = () => {
                         showPasswordToggle={true}
                         {...register('confirmPassword')}
                         error={errors.confirmPassword}
+                        data-test-id='confirm-password-input'
                     />
                     <Flex direction={{ base: 'column', sm: 'row' }} w='100%' gap={4} mt={6}>
                         <Button
@@ -157,7 +175,13 @@ export const SignUpForm: React.FC = () => {
                         >
                             Назад
                         </Button>
-                        <Button w='100%' type='submit' variant='black' size='lg'>
+                        <Button
+                            w='100%'
+                            type='submit'
+                            variant='black'
+                            size='lg'
+                            data-test-id='submit-button'
+                        >
                             Зарегистрироваться
                         </Button>
                     </Flex>

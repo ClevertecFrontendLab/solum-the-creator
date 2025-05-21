@@ -1,4 +1,4 @@
-import { HStack, Image, PinInput, PinInputField, Text, VStack } from '@chakra-ui/react';
+import { Heading, HStack, Image, PinInput, PinInputField, Text, VStack } from '@chakra-ui/react';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 import { useRef, useState } from 'react';
 
@@ -68,6 +68,11 @@ export const VerifyOtpForm: React.FC<VerifyOtpFormProps> = ({ email, onSuccess }
 
             <VStack spacing={6}>
                 <VStack spacing={4}>
+                    {isError && (
+                        <Heading as='h2' fontSize='2xl' textAlign='center' fontWeight='700'>
+                            Неверный код
+                        </Heading>
+                    )}
                     <Text fontSize='md' color='blackAlpha.900' textAlign='center'>
                         Мы отправили вам на e-mail
                         <br />
@@ -85,7 +90,10 @@ export const VerifyOtpForm: React.FC<VerifyOtpFormProps> = ({ email, onSuccess }
                             onComplete={handleComplete}
                         >
                             {Array.from({ length: 6 }).map((_, index) => (
-                                <PinInputField key={index} />
+                                <PinInputField
+                                    key={index}
+                                    data-test-id={`verification-code-input-${index + 1}`}
+                                />
                             ))}
                         </PinInput>
                     </HStack>

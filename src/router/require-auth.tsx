@@ -2,12 +2,23 @@ import { Navigate, Outlet } from 'react-router';
 
 import { pathes } from '~/constants/navigation/pathes';
 import { useCheckAuthQuery } from '~/query/services/auth';
+import { selectAccessToken } from '~/store/auth/selectors';
+import { useAppSelector } from '~/store/hooks';
 
 export const RequireAuth = () => {
-    const { isLoading, isSuccess, isError } = useCheckAuthQuery();
+    const accessToken = useAppSelector(selectAccessToken);
 
-    if (isLoading) return null;
-    if (isError) return <Navigate to={pathes.login} replace />;
+    const { isLoading, isSuccess } = useCheckAuthQuery(undefined, {
+        skip: !!accessToken,
+    });
 
-    return isSuccess ? <Outlet /> : null;
+    if (isLoading) {
+        return null;
+    }
+
+    if (accessToken || isSuccess) {
+        return <Outlet />;
+    }
+
+    return <Navigate to={pathes.login} replace />;
 };

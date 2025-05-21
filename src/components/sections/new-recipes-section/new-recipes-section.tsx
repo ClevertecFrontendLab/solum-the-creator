@@ -4,13 +4,10 @@ import { RecipeCardVertical } from '~/components/cards/recipe-card-vertical/reci
 import { FullBleed } from '~/components/shared/misc/full-bleed/full-bleed';
 import { HorizontalSlider } from '~/components/ui/horizontal-slider/horizontal-slider';
 import { useGetRecipesQuery } from '~/query/services/recipe';
-import { getNewestRecipes } from '~/utils/sort';
 
 export const NewRecipesSection = () => {
     const recipesCount = 10;
-    const { data: recipes, isLoading } = useGetRecipesQuery(recipesCount);
-
-    const filteredRecipes = getNewestRecipes(recipes);
+    const { data: recipes = [], isLoading } = useGetRecipesQuery(recipesCount);
 
     if (isLoading) {
         return null;
@@ -23,9 +20,9 @@ export const NewRecipesSection = () => {
             </Heading>
 
             <FullBleed>
-                {filteredRecipes.length > 0 && (
+                {recipes.length > 0 && (
                     <HorizontalSlider
-                        items={filteredRecipes}
+                        items={recipes}
                         renderItem={(recipe) => (
                             <RecipeCardVertical
                                 key={recipe._id}

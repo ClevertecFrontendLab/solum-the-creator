@@ -30,8 +30,13 @@ export const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({ isOpen
         setStep('password');
     };
 
-    const handlePasswordSuccess = () => {
+    const handleClose = () => {
         onClose();
+        setStep('email');
+    };
+
+    const handlePasswordSuccess = () => {
+        handleClose();
         dispatch(
             addNotification({
                 type: 'success',
@@ -41,8 +46,14 @@ export const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({ isOpen
         );
     };
 
+    const dataTestId = {
+        email: 'send-email-modal',
+        code: 'verification-code-modal',
+        password: 'reset-credentials-modal',
+    };
+
     return (
-        <ModalContainer isOpen={isOpen} onClose={onClose}>
+        <ModalContainer isOpen={isOpen} onClose={handleClose} dataTestId={dataTestId[step]}>
             <ModalBody p={0}>
                 {step === 'email' && <ForgotEmailStepForm onSuccess={handleEmailSuccess} />}
                 {step === 'code' && <VerifyOtpForm email={email} onSuccess={handleCodeSuccess} />}

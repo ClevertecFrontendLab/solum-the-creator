@@ -28,7 +28,7 @@ export const resetPasswordSchema = z
     })
     .refine(({ password, passwordConfirm }) => password === passwordConfirm, {
         message: 'Пароли должны совпадать',
-        path: ['confirmPassword'],
+        path: ['passwordConfirm'],
     });
 
 export type ResetPasswordValues = z.infer<typeof resetPasswordSchema>;

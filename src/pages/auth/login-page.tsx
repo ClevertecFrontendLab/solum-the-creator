@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 
 import { LoginForm } from '~/components/ui/forms/login-form/login-form';
@@ -10,12 +10,9 @@ export const LoginPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const hasNotifiedRef = useRef(false);
 
     useEffect(() => {
-        if (location.state?.emailVerified && !hasNotifiedRef.current) {
-            hasNotifiedRef.current = true;
-
+        if (location.state?.emailVerified) {
             dispatch(
                 addNotification({
                     title: 'Верификация прошла успешно',

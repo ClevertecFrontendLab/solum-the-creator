@@ -25,7 +25,7 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ email, onS
         formState: { errors },
     } = useForm<ResetPasswordValues>({
         resolver: zodResolver(resetPasswordSchema),
-        mode: 'onTouched',
+        mode: 'onChange',
     });
 
     const [resetPasswordMutation, { isLoading }] = useResetPasswordMutation();
@@ -75,6 +75,7 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ email, onS
                 helperText='Логин не менее 5 символов, только латиница'
                 {...register('login')}
                 error={errors.login}
+                data-test-id='login-input'
             />
 
             <FormInput
@@ -85,6 +86,7 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ email, onS
                 showPasswordToggle={true}
                 {...register('password')}
                 error={errors.password}
+                data-test-id='password-input'
             />
             <FormInput
                 label='Повторите пароль'
@@ -93,10 +95,19 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ email, onS
                 showPasswordToggle={true}
                 {...register('passwordConfirm')}
                 error={errors.passwordConfirm}
+                data-test-id='confirm-password-input'
             />
 
-            <Button type='submit' variant='black' size='lg' w='100%' mt={2} isLoading={isLoading}>
-                Восстановить
+            <Button
+                type='submit'
+                variant='black'
+                size='lg'
+                w='100%'
+                mt={2}
+                isLoading={isLoading}
+                data-test-id='submit-button'
+            >
+                Зарегистрироваться
             </Button>
         </VStack>
     );

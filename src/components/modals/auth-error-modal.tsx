@@ -13,7 +13,7 @@ type AuthErrorModalProps = {
 };
 
 export const AuthErrorModal: React.FC<AuthErrorModalProps> = ({ isOpen, onClose, onRetry }) => (
-    <ModalContainer isOpen={isOpen} onClose={onClose}>
+    <ModalContainer isOpen={isOpen} onClose={onClose} dataTestId='sign-in-error-modal'>
         <ModalBody p={0}>
             <VStack spacing={8}>
                 <Image
@@ -37,7 +37,13 @@ export const AuthErrorModal: React.FC<AuthErrorModalProps> = ({ isOpen, onClose,
                     </Text>
                 </VStack>
 
-                <Button alignSelf='stretch' size='lg' variant='black' onClick={onRetry}>
+                <Button
+                    alignSelf='stretch'
+                    size='lg'
+                    variant='black'
+                    onClick={onRetry}
+                    data-test-id='repeat-button'
+                >
                     Повторить
                 </Button>
             </VStack>

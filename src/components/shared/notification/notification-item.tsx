@@ -29,15 +29,13 @@ export const NotificationItem: React.FC<NotificationItemProps> = ({
         return () => clearTimeout(timer);
     }, [id, onClose]);
 
-    const dataTestId = type === 'success' ? 'success-notification' : 'error-notification';
-
     return (
         <Alert
             status={type}
             w={{ base: '20.5rem', md: '25rem' }}
             variant='solid'
             bgColor={type === 'success' ? 'green.500' : 'red.500'}
-            data-test-id={dataTestId}
+            data-test-id='error-notification'
             position='relative'
         >
             <AlertIcon />

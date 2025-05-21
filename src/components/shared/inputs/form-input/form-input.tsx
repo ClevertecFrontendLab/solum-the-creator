@@ -81,6 +81,7 @@ export const FormInput: React.FC<FormInputProps> = ({
                         onMouseLeave={() => setShowPassword(false)}
                         cursor='pointer'
                         userSelect='none'
+                        data-test-id='password-visibility-button'
                     >
                         {showPassword ? <ViewIcon /> : <ViewOffIcon />}
                     </InputRightElement>
