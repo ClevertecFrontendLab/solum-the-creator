@@ -54,10 +54,6 @@ export const SignUpForm: React.FC = () => {
         }
     };
 
-    const onBack = () => {
-        setStep(step - 1);
-    };
-
     const onSubmit = async (data: SignUpFormValues) => {
         try {
             await signUpMutation(data).unwrap();
@@ -167,14 +163,6 @@ export const SignUpForm: React.FC = () => {
                         data-test-id='confirm-password-input'
                     />
                     <Flex direction={{ base: 'column', sm: 'row' }} w='100%' gap={4} mt={6}>
-                        <Button
-                            w={{ base: '100%', sm: '40%' }}
-                            bgColor='whiteAlpha.600'
-                            size='lg'
-                            onClick={onBack}
-                        >
-                            Назад
-                        </Button>
                         <Button
                             w='100%'
                             type='submit'
