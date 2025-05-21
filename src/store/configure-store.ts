@@ -12,35 +12,33 @@ import {
 import storage from 'redux-persist/lib/storage';
 
 import { apiSlice } from '~/query/create-api';
+import { authApi } from '~/query/services/auth';
 
-import allergenFilterReducer from './allergen-filter/slice';
 import appReducer, { appSlice } from './app-slice';
+import authReducer from './auth/slice';
 import categoriesReducer from './category/slice';
 import globalLoadingReducer from './loader/slice';
 import notificationReducer from './notification/slice';
-import recipeFilterReducer from './recipe-filter/slice';
 import recipesFiltersReducer from './recipes-filters/slice';
-import searchReducer from './search/slice';
 
 const isProduction = false;
 
 const rootReducer = combineReducers({
     [appSlice.name]: appReducer,
     [apiSlice.reducerPath]: apiSlice.reducer,
+    [authApi.reducerPath]: authApi.reducer,
     categories: categoriesReducer,
-    allergenFilter: allergenFilterReducer,
-    recipeFilter: recipeFilterReducer,
-    search: searchReducer,
     globalLoading: globalLoadingReducer,
     notification: notificationReducer,
     recipesFilters: recipesFiltersReducer,
+    auth: authReducer,
 });
 
 const persistedReducer = persistReducer(
     {
         key: 'root',
         storage,
-        whitelist: ['categories'],
+        whitelist: ['categories', 'auth'],
     },
     rootReducer,
 );
@@ -52,7 +50,9 @@ export const store = configureStore({
             serializableCheck: {
                 ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
             },
-        }).concat(apiSlice.middleware),
+        })
+            .concat(apiSlice.middleware)
+            .concat(authApi.middleware),
     devTools: !isProduction,
 });
 

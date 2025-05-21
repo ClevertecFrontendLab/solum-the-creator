@@ -1,10 +1,10 @@
-import { selectIsAllergenFilterActive } from './allergen-filter/selectors';
 import { ApplicationState } from './configure-store';
+import { selectIsAllergensSelected } from './recipes-filters/selectors';
 
 export const selectIsHeroActive = (state: ApplicationState) => {
-    const searchQuery = state.search.query;
+    const searchQuery = state.recipesFilters.draftFilters.searchString;
     const hasSearchQuery = searchQuery.length > 0;
-    const hasAllergenFilter = selectIsAllergenFilterActive(state);
+    const hasAllergenFilter = selectIsAllergensSelected(state);
 
     return hasSearchQuery || hasAllergenFilter;
 };

@@ -56,9 +56,35 @@ const categoryVariant = defineStyle({
     },
 });
 
+const authVariant = defineStyle({
+    tab: {
+        bg: 'transparent',
+        fontWeight: '500',
+        fontSize: { base: 'md', md: 'lg' },
+        px: 6,
+        py: '15px',
+        color: 'lime.800',
+        _selected: {
+            color: 'lime.700',
+            borderBottom: '2px solid',
+            borderBottomColor: 'lime.700',
+            py: '13px',
+        },
+        _focus: {
+            boxShadow: 'none',
+        },
+    },
+    tablist: {
+        borderBottom: '2px solid',
+        borderBottomColor: 'blackAlpha.200',
+        gap: 4,
+    },
+});
+
 const variants = {
     subcategory: subcategoryVariant,
     'category-horizontal': categoryVariant,
+    auth: authVariant,
 };
 
 export const Tabs = { variants };

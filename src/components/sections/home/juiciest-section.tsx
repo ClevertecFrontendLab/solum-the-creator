@@ -23,7 +23,7 @@ export const JuiciestSection = () => {
                 <Heading variant='section-title'>Самое сочное</Heading>
 
                 <JuiciestButton
-                    display={{ base: 'none', sm: 'flex' }}
+                    display={{ base: 'none', md: 'flex' }}
                     data-test-id='juiciest-link'
                 />
             </HStack>
@@ -51,7 +51,7 @@ export const JuiciestSection = () => {
             )}
 
             <JuiciestButton
-                display={{ base: 'flex', sm: 'none' }}
+                display={{ base: 'flex', md: 'none' }}
                 data-test-id='juiciest-link-mobile'
             />
         </VStack>

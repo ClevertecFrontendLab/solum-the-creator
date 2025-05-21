@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
 import { useGetRelevantRecipesQuery } from '~/query/services/recipe';
 import { selectAllCategories } from '~/store/category/selectors';
@@ -13,29 +13,25 @@ export const useRandomCategoryRecipes = (excludeCategoryId?: string) => {
         [categories, excludeCategoryId],
     );
 
-    const [randomCategory] = useState(() => {
-        if (!filteredCategories.length) return;
-        const index = Math.floor(Math.random() * filteredCategories.length);
-        return filteredCategories[index];
-    });
+    const randomCategory = useMemo(() => {
+        if (!filteredCategories.length) return undefined;
+        const idx = Math.floor(Math.random() * filteredCategories.length);
+        return filteredCategories[idx];
+    }, [filteredCategories]);
 
-    const [randomSubcategoryId] = useState(() => {
-        if (!randomCategory?.subCategories.length) return;
-        const index = Math.floor(Math.random() * randomCategory.subCategories.length);
-        return randomCategory.subCategories[index]._id;
-    });
+    const randomSubcategoryId = useMemo(() => {
+        if (!randomCategory?.subCategories.length) return undefined;
+        const idx = Math.floor(Math.random() * randomCategory.subCategories.length);
+        return randomCategory.subCategories[idx]._id;
+    }, [randomCategory]);
 
     const {
         data: recipes,
         isLoading,
         isError,
     } = useGetRelevantRecipesQuery(
-        {
-            subcategoryId: randomSubcategoryId as string,
-        },
-        {
-            skip: !randomSubcategoryId,
-        },
+        { subcategoryId: randomSubcategoryId as string },
+        { skip: !randomSubcategoryId },
     );
 
     return {

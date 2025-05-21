@@ -16,7 +16,6 @@ export const baseQueryWithErrorNotification: BaseQueryFn = async (args, api, ext
     if (result.error && method === 'GET') {
         api.dispatch(
             addNotification({
-                id: Date.now().toString(),
                 title: 'Ошибка сервера',
                 description: 'Попробуйте поискать снова попозже',
             }),

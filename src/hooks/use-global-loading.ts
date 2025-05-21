@@ -5,17 +5,27 @@ import { endLoading, startLoading } from '~/store/loader/slice';
 
 export const useGlobalLoading = (isLoading: boolean) => {
     const dispatch = useAppDispatch();
-
-    const prev = useRef(false);
+    const startedRef = useRef(false);
 
     useEffect(() => {
-        if (!prev.current && isLoading) {
+        if (isLoading && !startedRef.current) {
             dispatch(startLoading());
+            startedRef.current = true;
         }
 
-        if (prev.current && !isLoading) {
+        if (!isLoading && startedRef.current) {
             dispatch(endLoading());
+            startedRef.current = false;
         }
-        prev.current = isLoading;
-    }, [dispatch, isLoading]);
+    }, [isLoading, dispatch]);
+
+    useEffect(
+        () => () => {
+            if (startedRef.current) {
+                dispatch(endLoading());
+                startedRef.current = false;
+            }
+        },
+        [dispatch],
+    );
 };
