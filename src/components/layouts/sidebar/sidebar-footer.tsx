@@ -1,14 +1,18 @@
 import { Button, Flex, Icon, Text } from '@chakra-ui/react';
+import { useNavigate } from 'react-router';
 
 import ExitIcon from '~/assets/icons/exit-icon.svg?react';
+import { pathes } from '~/constants/navigation/pathes';
 import { logout } from '~/store/auth/slice';
 import { useAppDispatch } from '~/store/hooks';
 
 export const SidebarFooter: React.FC = () => {
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const handleLogout = () => {
         dispatch(logout());
+        navigate(pathes.login);
     };
 
     return (
