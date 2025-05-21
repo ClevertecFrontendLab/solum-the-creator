@@ -2,15 +2,16 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 
 import { SignUpRequest, SignUpResponse } from '~/types/auth';
 
-import { baseQueryWithReauth } from '../base-query-with-reauth';
+import { rawBaseQuery } from '../base-query-with-reauth';
 import { ApiEndpoints } from '../constants/api';
 
 export const authApi = createApi({
     reducerPath: 'authApi',
-    baseQuery: baseQueryWithReauth,
+    baseQuery: rawBaseQuery,
+
     endpoints: (builder) => ({
         login: builder.mutation<
-            { statusText: string; message: string },
+            { statusText: string; message: string } & { accessToken?: string },
             { login: string; password: string }
         >({
             query: (body) => ({
@@ -18,6 +19,14 @@ export const authApi = createApi({
                 method: 'POST',
                 body,
             }),
+            transformResponse: (baseResponse, meta) => {
+                const token = meta?.response?.headers?.get('Authentication-Access');
+
+                return {
+                    ...(baseResponse as { statusText: string; message: string }),
+                    accessToken: token ?? undefined,
+                };
+            },
         }),
         checkAuth: builder.query<{ statusText: string; message: string }, void>({
             query: () => ({ url: ApiEndpoints.AUTH_CHECK_AUTH, method: 'GET' }),

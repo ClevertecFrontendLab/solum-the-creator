@@ -30,7 +30,7 @@ export const VerifyErrorModal: React.FC<VerifyErrorModalProps> = ({ isOpen, onCl
                         {verifyErrorModalText.title}
                     </Heading>
 
-                    <Text fontSize='md' color='blackAlpha.900' textAlign='center'>
+                    <Text fontSize='md' color='blackAlpha.700' textAlign='center'>
                         {verifyErrorModalText.description}
                     </Text>
                 </VStack>

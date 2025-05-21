@@ -50,6 +50,7 @@ export const LoginForm = () => {
     const onSubmit = async (data: LoginFormValues) => {
         try {
             await loginMutation(data).unwrap();
+
             navigate(pathes.home);
         } catch (err) {
             const error = err as FetchBaseQueryError;
@@ -59,6 +60,7 @@ export const LoginForm = () => {
                     addNotification({
                         title: notificationWrongCredentials.title,
                         description: notificationWrongCredentials.description,
+                        position: 'bottom-left',
                     }),
                 );
                 return;
@@ -69,6 +71,7 @@ export const LoginForm = () => {
                     addNotification({
                         title: notificationEmailNotVerified.title,
                         description: notificationEmailNotVerified.description,
+                        position: 'bottom-left',
                     }),
                 );
                 return;

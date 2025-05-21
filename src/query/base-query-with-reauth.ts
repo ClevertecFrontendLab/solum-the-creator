@@ -14,7 +14,7 @@ import { API_BASE_URL, ApiEndpoints } from './constants/api';
 
 const mutex = new Mutex();
 
-const rawBaseQuery = fetchBaseQuery({
+export const rawBaseQuery = fetchBaseQuery({
     baseUrl: API_BASE_URL,
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {

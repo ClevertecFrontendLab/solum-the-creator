@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+import { authApi } from '~/query/services/auth';
+
 type AuthState = {
     accessToken: string | null;
 };
@@ -20,6 +22,14 @@ export const authSlice = createSlice({
             state.accessToken = null;
             localStorage.removeItem('accessToken');
         },
+    },
+    extraReducers: (builder) => {
+        builder.addMatcher(authApi.endpoints.login.matchFulfilled, (state, { payload }) => {
+            if (payload.accessToken) {
+                state.accessToken = payload.accessToken;
+                localStorage.setItem('accessToken', payload.accessToken);
+            }
+        });
     },
 });
 

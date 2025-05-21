@@ -63,7 +63,7 @@ export const SignUpForm: React.FC = () => {
             const error = err as AuthError;
 
             if (error.status === HttpStatusCodes.BAD_REQUEST) {
-                dispatch(addNotification({ title: error.data.message }));
+                dispatch(addNotification({ title: error.data.message, position: 'bottom-left' }));
                 return;
             }
 
@@ -71,6 +71,7 @@ export const SignUpForm: React.FC = () => {
                 addNotification({
                     title: notificationServerError.title,
                     description: notificationServerError.description,
+                    position: 'bottom-left',
                 }),
             );
         }

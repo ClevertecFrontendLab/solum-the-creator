@@ -67,7 +67,7 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ email, onS
 
     return (
         <VStack as='form' spacing={6} w='100%' onSubmit={handleSubmit(onSubmit)}>
-            <Heading as='h2' textAlign='center' fontWeight='700' fontSize='2xl'>
+            <Heading as='h2' textAlign='center' fontWeight='700' fontSize='2xl' maxW='90%'>
                 Восстановление аккаунта
             </Heading>
 

@@ -44,7 +44,7 @@ export const SignupSuccessModal: React.FC<SignupSuccessModalProps> = ({
                         <Text fontSize='md' color='blackAlpha.900' textAlign='center'>
                             Мы отправили вам на почту
                             <br />
-                            {email}
+                            <b>{email}</b>
                             <br /> ссылку для верификации.
                         </Text>
                     </VStack>
