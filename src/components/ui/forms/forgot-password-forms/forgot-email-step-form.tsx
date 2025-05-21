@@ -6,6 +6,11 @@ import { useForm } from 'react-hook-form';
 import modalImg from '~/assets/images/scatches/breakfast.png';
 import { FormInput } from '~/components/shared/inputs/form-input/form-input';
 import { HttpStatusCodes } from '~/constants/data/http-status';
+import { forgotEmailModalText, noEmailArrivedText } from '~/constants/texts/modals';
+import {
+    notificationEmailNotExists,
+    notificationServerError,
+} from '~/constants/texts/notifications';
 import { useGlobalLoading } from '~/hooks/use-global-loading';
 import { useForgotPasswordMutation } from '~/query/services/auth';
 import { useAppDispatch } from '~/store/hooks';
@@ -44,9 +49,8 @@ export const ForgotEmailStepForm: React.FC<ForgotEmailStepFormProps> = ({ onSucc
             if (error.status === HttpStatusCodes.FORBIDDEN) {
                 dispatch(
                     addNotification({
-                        title: 'Такого e-mail нет',
-                        description:
-                            'Попробуйте другой e-mail или проверьте правильность его написания',
+                        title: notificationEmailNotExists.title,
+                        description: notificationEmailNotExists.description,
                     }),
                 );
 
@@ -57,8 +61,8 @@ export const ForgotEmailStepForm: React.FC<ForgotEmailStepFormProps> = ({ onSucc
             dispatch(clearNotifications());
             dispatch(
                 addNotification({
-                    title: 'Ошибка сервера',
-                    description: 'Попробуйте немного позже',
+                    title: notificationServerError.title,
+                    description: notificationServerError.description,
                 }),
             );
         }
@@ -76,7 +80,7 @@ export const ForgotEmailStepForm: React.FC<ForgotEmailStepFormProps> = ({ onSucc
             />
 
             <Text fontSize='md' color='blackAlpha.900' textAlign='center'>
-                Для восстановления входа введите ваш e-mail, куда можно отправить уникальный код
+                {forgotEmailModalText}
             </Text>
 
             <VStack as='form' spacing={6} w='100%' onSubmit={handleSubmit(onSubmit)}>
@@ -101,7 +105,7 @@ export const ForgotEmailStepForm: React.FC<ForgotEmailStepFormProps> = ({ onSucc
                 </Button>
 
                 <Text fontSize='xs' color='blackAlpha.600' textAlign='center'>
-                    Не пришло письмо? Проверьте папку Спам.
+                    {noEmailArrivedText}
                 </Text>
             </VStack>
         </VStack>

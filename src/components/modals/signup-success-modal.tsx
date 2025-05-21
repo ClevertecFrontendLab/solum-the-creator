@@ -3,6 +3,7 @@ import { Link as RouterLink, useNavigate } from 'react-router';
 
 import modalImg from '~/assets/images/scatches/signup-success.png';
 import { pathes } from '~/constants/navigation/pathes';
+import { signupModalSuccessHeading } from '~/constants/texts/modals';
 
 import { ModalContainer } from './modal-container';
 
@@ -37,7 +38,7 @@ export const SignupSuccessModal: React.FC<SignupSuccessModalProps> = ({
 
                     <VStack spacing={4}>
                         <Heading as='h2' fontSize='2xl' textAlign='center' fontWeight='700'>
-                            Остался последний шаг. Нужно верифицировать ваш e-mail
+                            {signupModalSuccessHeading}
                         </Heading>
 
                         <Text fontSize='md' color='blackAlpha.900' textAlign='center'>

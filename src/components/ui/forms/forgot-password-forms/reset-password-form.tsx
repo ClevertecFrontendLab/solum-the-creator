@@ -5,6 +5,10 @@ import { useForm } from 'react-hook-form';
 
 import { FormInput } from '~/components/shared/inputs/form-input/form-input';
 import { HttpStatusCodes } from '~/constants/data/http-status';
+import {
+    notificationLoginNotExists,
+    notificationServerError,
+} from '~/constants/texts/notifications';
 import { useGlobalLoading } from '~/hooks/use-global-loading';
 import { useResetPasswordMutation } from '~/query/services/auth';
 import { useAppDispatch } from '~/store/hooks';
@@ -45,9 +49,8 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ email, onS
             ) {
                 dispatch(
                     addNotification({
-                        title: 'Такого логина нет',
-                        description:
-                            'Попробуйте другой логин или проверьте правильность его написания',
+                        title: notificationLoginNotExists.title,
+                        description: notificationLoginNotExists.description,
                     }),
                 );
                 return;
@@ -55,8 +58,8 @@ export const ResetPasswordForm: React.FC<ResetPasswordFormProps> = ({ email, onS
 
             dispatch(
                 addNotification({
-                    title: 'Ошибка сервера',
-                    description: 'Попробуйте немного позже',
+                    title: notificationServerError.title,
+                    description: notificationServerError.description,
                 }),
             );
         }

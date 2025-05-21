@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { SignupSuccessModal } from '~/components/modals/signup-success-modal';
 import { FormInput } from '~/components/shared/inputs/form-input/form-input';
 import { HttpStatusCodes } from '~/constants/data/http-status';
+import { notificationServerError } from '~/constants/texts/notifications';
 import { useGlobalLoading } from '~/hooks/use-global-loading';
 import { useSignUpMutation } from '~/query/services/auth';
 import { useAppDispatch } from '~/store/hooks';
@@ -68,8 +69,8 @@ export const SignUpForm: React.FC = () => {
 
             dispatch(
                 addNotification({
-                    title: 'Ошибка сервера',
-                    description: 'Попробуйте немного позже',
+                    title: notificationServerError.title,
+                    description: notificationServerError.description,
                 }),
             );
         }

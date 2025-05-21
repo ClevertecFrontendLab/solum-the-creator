@@ -9,6 +9,10 @@ import { ForgotPasswordModal } from '~/components/modals/forgot-password-modal/f
 import { FormInput } from '~/components/shared/inputs/form-input/form-input';
 import { HttpStatusCodes } from '~/constants/data/http-status';
 import { pathes } from '~/constants/navigation/pathes';
+import {
+    notificationEmailNotVerified,
+    notificationWrongCredentials,
+} from '~/constants/texts/notifications';
 import { useGlobalLoading } from '~/hooks/use-global-loading';
 import { useLoginMutation } from '~/query/services/auth';
 import { useAppDispatch } from '~/store/hooks';
@@ -53,8 +57,8 @@ export const LoginForm = () => {
             if (error.status === HttpStatusCodes.UNAUTHORIZED) {
                 dispatch(
                     addNotification({
-                        title: 'Неверный логин или пароль',
-                        description: 'Попробуйте снова',
+                        title: notificationWrongCredentials.title,
+                        description: notificationWrongCredentials.description,
                     }),
                 );
                 return;
@@ -63,8 +67,8 @@ export const LoginForm = () => {
             if (error.status === HttpStatusCodes.FORBIDDEN) {
                 dispatch(
                     addNotification({
-                        title: 'E-mail не верифицирован',
-                        description: 'Проверьте почту и перейдите по ссылке',
+                        title: notificationEmailNotVerified.title,
+                        description: notificationEmailNotVerified.description,
                     }),
                 );
                 return;

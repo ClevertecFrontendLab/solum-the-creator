@@ -7,52 +7,53 @@ import {
     onlyLatinsNumbersSymbolsRegexp,
     startsWithCyrillicRegexp,
 } from '~/constants/data/regexp';
+import { schemaMessages } from '~/constants/texts/schemes';
 
 export const signUpSchema = z
     .object({
         firstName: z
             .string()
-            .nonempty('Введите имя')
-            .max(50, 'Максимальная длина 50 символов')
-            .refine(
-                (val) => startsWithCyrillicRegexp.test(val),
-                'Должно начинаться с кириллицы А-Я',
-            )
-            .refine((val) => onlyCyrillicRegexp.test(val), 'Только кириллица А-Я, и "-"'),
+            .nonempty(schemaMessages.requiredFirstName)
+            .max(50, schemaMessages.maxLength)
+            .refine((val) => startsWithCyrillicRegexp.test(val), schemaMessages.nameCyrillicStart)
+            .refine((val) => onlyCyrillicRegexp.test(val), schemaMessages.nameCyrillicOnly),
         lastName: z
             .string()
-            .nonempty('Введите фамилию')
-            .max(50, 'Максимальная длина 50 символов')
-            .refine(
-                (val) => startsWithCyrillicRegexp.test(val),
-                'Должно начинаться с кириллицы А-Я',
-            )
-            .refine((val) => onlyCyrillicRegexp.test(val), 'Только кириллица А-Я, и "-"'),
+            .nonempty(schemaMessages.requiredLastName)
+            .max(50, schemaMessages.maxLength)
+            .refine((val) => startsWithCyrillicRegexp.test(val), schemaMessages.nameCyrillicStart)
+            .refine((val) => onlyCyrillicRegexp.test(val), schemaMessages.nameCyrillicOnly),
         email: z
             .string()
-            .nonempty('Введите e-mail')
-            .max(50, 'Максимальная длина 50 символов')
-            .email('Введите корректный e-mail'),
+            .nonempty(schemaMessages.requiredEmail)
+            .max(50, schemaMessages.maxLength)
+            .email(schemaMessages.emailInvalid),
         login: z
             .string()
-            .nonempty('Введите логин')
-            .max(50, 'Максимальная длина 50 символов')
-            .min(5, 'Не соответствует формату')
-            .refine((val) => onlyLatinsNumbersSymbolsRegexp.test(val), 'Не соответствует формату'),
+            .nonempty(schemaMessages.requiredLogin)
+            .max(50, schemaMessages.maxLength)
+            .min(5, schemaMessages.loginFormatInvalid)
+            .refine(
+                (val) => onlyLatinsNumbersSymbolsRegexp.test(val),
+                schemaMessages.loginFormatInvalid,
+            ),
         password: z
             .string()
-            .nonempty('Введите пароль')
-            .max(50, 'Максимальная длина 50 символов')
-            .min(8, 'Не соответствует формату')
-            .refine((val) => onlyLatinsNumbersSymbolsRegexp.test(val), 'Не соответствует формату')
+            .nonempty(schemaMessages.requiredPassword)
+            .max(50, schemaMessages.maxLength)
+            .min(8, schemaMessages.passwordFormatInvalid)
+            .refine(
+                (val) => onlyLatinsNumbersSymbolsRegexp.test(val),
+                schemaMessages.passwordFormatInvalid,
+            )
             .refine(
                 (val) => latinsLettersRegexp.test(val) && numbersRegexp.test(val),
-                'Не соответствует формату',
+                schemaMessages.passwordFormatInvalid,
             ),
-        confirmPassword: z.string().nonempty('Повторите пароль'),
+        confirmPassword: z.string().nonempty(schemaMessages.requiredConfirmPassword),
     })
     .refine(({ password, confirmPassword }) => password === confirmPassword, {
-        message: 'Пароли должны совпадать',
+        message: schemaMessages.passwordsMismatch,
         path: ['confirmPassword'],
     });
 

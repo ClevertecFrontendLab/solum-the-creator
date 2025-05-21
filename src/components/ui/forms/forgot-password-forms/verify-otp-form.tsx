@@ -4,6 +4,8 @@ import { useRef, useState } from 'react';
 
 import modalImg from '~/assets/images/scatches/verify-otp.png';
 import { HttpStatusCodes } from '~/constants/data/http-status';
+import { noEmailArrivedText } from '~/constants/texts/modals';
+import { notificationServerError } from '~/constants/texts/notifications';
 import { useGlobalLoading } from '~/hooks/use-global-loading';
 import { useVerifyOtpMutation } from '~/query/services/auth';
 import { useAppDispatch } from '~/store/hooks';
@@ -48,8 +50,8 @@ export const VerifyOtpForm: React.FC<VerifyOtpFormProps> = ({ email, onSuccess }
 
             dispatch(
                 addNotification({
-                    title: 'Ошибка сервера',
-                    description: 'Попробуйте немного позже',
+                    title: notificationServerError.title,
+                    description: notificationServerError.description,
                 }),
             );
         }
@@ -100,7 +102,7 @@ export const VerifyOtpForm: React.FC<VerifyOtpFormProps> = ({ email, onSuccess }
                 </VStack>
 
                 <Text fontSize='xs' color='blackAlpha.600' textAlign='center'>
-                    Не пришло письмо? Проверьте папку Спам.
+                    {noEmailArrivedText}
                 </Text>
             </VStack>
         </VStack>

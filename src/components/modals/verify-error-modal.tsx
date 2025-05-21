@@ -3,6 +3,7 @@ import { Link as RouterLink } from 'react-router';
 
 import modalImg from '~/assets/images/scatches/verification-error.png';
 import { pathes } from '~/constants/navigation/pathes';
+import { verifyErrorModalText } from '~/constants/texts/modals';
 
 import { ModalContainer } from './modal-container';
 
@@ -26,12 +27,11 @@ export const VerifyErrorModal: React.FC<VerifyErrorModalProps> = ({ isOpen, onCl
 
                 <VStack spacing={4}>
                     <Heading as='h2' fontSize='2xl' textAlign='center' fontWeight='700'>
-                        Упс! Что-то пошло не так
+                        {verifyErrorModalText.title}
                     </Heading>
 
                     <Text fontSize='md' color='blackAlpha.900' textAlign='center'>
-                        Ваша ссылка для верификации недействительна. Попробуйте зарегистрироваться
-                        снова.
+                        {verifyErrorModalText.description}
                     </Text>
                 </VStack>
 
