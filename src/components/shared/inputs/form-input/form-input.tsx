@@ -47,6 +47,9 @@ export const FormInput: React.FC<FormInputProps> = ({
         props.onBlur?.(event);
     };
 
+    const inputType =
+        isPassword && showPasswordToggle ? (showPassword ? 'text' : 'password') : type;
+
     return (
         <FormControl isInvalid={!!error}>
             {label && (
@@ -63,13 +66,7 @@ export const FormInput: React.FC<FormInputProps> = ({
                     {...register}
                     variant='custom'
                     size='lg'
-                    type={
-                        isPassword && showPasswordToggle
-                            ? showPassword
-                                ? 'text'
-                                : 'password'
-                            : type
-                    }
+                    type={inputType}
                     placeholder={placeholder}
                     onBlur={handleBlur}
                 />

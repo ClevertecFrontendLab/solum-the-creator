@@ -23,11 +23,6 @@ export const SubcategoryPage = () => {
 
     useGlobalLoading(isLoading && !categoryId);
 
-    // if (isError) {
-    //     console.log('data', data);
-    //     return <Navigate to={pathes.notFound} replace />;
-    // }
-
     const recipes = data?.pages.flat() ?? [];
 
     const handleClickMore = () => fetchNextPage();
