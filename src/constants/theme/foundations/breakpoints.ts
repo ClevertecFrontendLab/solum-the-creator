@@ -5,4 +5,5 @@ export const breakpoints = {
     lg: '64rem', // 1024px
     xl: '80rem', // 1280px
     '2xl': '96rem', // 1536px
+    '3xl': '124rem', // 1984px
 };

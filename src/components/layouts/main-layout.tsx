@@ -54,8 +54,8 @@ export const MainLayout: React.FC = () => {
                 as='main'
                 pt={{ base: '4rem', md: '5rem' }}
                 pb={{ base: '5.25rem', md: 0 }}
-                ml={{ base: 0, md: '16rem' }}
-                mr={{ base: 0, md: '13rem' }}
+                ml={{ base: 0, md: '16rem', '3xl': 'auto' }}
+                mr={{ base: 0, md: '13rem', '3xl': 'auto' }}
                 minH='100vh'
                 overflowY='auto'
                 maxW={{ base: '100%', lg: '58rem', '2xl': '88rem' }}
