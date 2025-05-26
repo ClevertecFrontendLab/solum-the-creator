@@ -11,6 +11,7 @@ import { CategoryPage } from '~/pages/category/category-page';
 import { SubcategoryPage } from '~/pages/category/subcategory/subcategory-page';
 import { HomePage } from '~/pages/home-page';
 import { JuiciestPage } from '~/pages/juiciest-page';
+import { NewRecipePage } from '~/pages/new-recipe/new-recipe-page';
 import { NotFoundPage } from '~/pages/not-found/not-found-page';
 import { HydrateRecipePage, RecipePage, RecipePageLoader } from '~/pages/recipe/recipe-page';
 
@@ -39,6 +40,7 @@ export const router = createBrowserRouter(
                         HydrateFallback={HydrateRecipePage}
                         errorElement={<RecipeError />}
                     />
+                    <Route path={pathes.newRecipe} element={<NewRecipePage />} />
 
                     <Route path={pathes.notFound} element={<NotFoundPage />} />
                     <Route path='*' element={<Navigate to={pathes.notFound} replace />} />

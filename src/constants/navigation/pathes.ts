@@ -4,6 +4,7 @@ export const pathes = {
     categories: '/:category',
     subcategories: '/:category/:subcategory',
     recipes: '/:category/:subcategory/:recipeId',
+    newRecipe: '/new-recipe',
     notFound: '/not-found',
     login: '/login',
     signUp: '/sign-up',
@@ -14,5 +15,6 @@ export const pathes = {
 export const staticPaths: Array<{ path: string; label: string }> = [
     { path: pathes.home, label: 'Главная' },
     { path: pathes.juiciest, label: 'Самое сочное' },
+    { path: pathes.newRecipe, label: 'Новый рецепт' },
     { path: pathes.notFound, label: 'Страница не найдена' },
 ];
