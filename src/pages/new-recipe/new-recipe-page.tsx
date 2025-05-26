@@ -19,7 +19,8 @@ export const NewRecipePage = () => {
         <Box
             pt={{ base: '1rem', md: '3.5rem' }}
             pb={{ base: '1rem', sm: '2.75rem', md: '2rem' }}
-            px={{ base: 4, sm: 5, md: 6 }}
+            pl={{ base: 4, sm: 5, md: 6 }}
+            pr={{ base: 4, sm: 5, md: 0 }}
         >
             <NewRecipeForm />
         </Box>

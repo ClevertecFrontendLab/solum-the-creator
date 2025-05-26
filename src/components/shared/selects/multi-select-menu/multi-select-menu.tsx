@@ -16,7 +16,9 @@ type MultiSelectMenuProps = {
     options: Option[];
     selected: Option[];
     onChange: (selected: Option[]) => void;
+    isInvalid?: boolean;
     placeholder?: string;
+    maxVisibleTags?: number;
     allowCustomInput?: boolean;
     inputPlaceholder?: string;
     isDisabled?: boolean;
@@ -30,6 +32,8 @@ export const MultiSelectMenu: React.FC<MultiSelectMenuProps> = ({
     selected,
     onChange,
     dataTestId,
+    isInvalid,
+    maxVisibleTags,
     placeholder = 'Выберите из списка...',
     allowCustomInput = false,
     inputPlaceholder = 'Введите значение',
@@ -76,6 +80,8 @@ export const MultiSelectMenu: React.FC<MultiSelectMenuProps> = ({
                         isOpen={isOpen}
                         isDisabled={isDisabled}
                         dataTestId={dataTestId}
+                        isInvalid={isInvalid}
+                        maxVisibleTags={maxVisibleTags}
                     />
                     <MenuList zIndex={3} data-test-id={menuListDataTestId}>
                         {isOpen && (

@@ -62,7 +62,7 @@ export const MainLayout: React.FC = () => {
                 mr={{ base: 0, md: '13rem', '3xl': 'auto' }}
                 minH='100vh'
                 overflowY='auto'
-                maxW={{ base: '100%', lg: '58rem', '2xl': '88rem' }}
+                maxW={{ base: '100%', lg: '61rem', '2xl': '88rem' }}
                 display='flex'
                 flexDir='column'
             >

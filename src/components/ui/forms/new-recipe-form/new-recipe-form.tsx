@@ -5,7 +5,7 @@ import { NewRecipeHeader } from './new-recipe-header';
 import { NewRecipeIngridients } from './new-recipe-ingridients';
 
 export const NewRecipeForm = () => {
-    const methods = useForm();
+    const methods = useForm({ defaultValues: { categories: [] } });
 
     const onSubmit = () => {
         console.log('Submit');
