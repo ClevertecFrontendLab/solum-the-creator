@@ -1,28 +1,13 @@
-import {
-    BaseQueryFn,
-    FetchArgs,
-    fetchBaseQuery,
-    FetchBaseQueryError,
-} from '@reduxjs/toolkit/query';
+import { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { Mutex } from 'async-mutex';
 
 import { HttpStatusCodes } from '~/constants/data/http-status';
 import { logout, setAccessToken } from '~/store/auth/slice';
-import { ApplicationState } from '~/store/configure-store';
 
-import { API_BASE_URL, ApiEndpoints } from './constants/api';
+import { rawBaseQuery } from './base-query';
+import { ApiEndpoints } from './constants/api';
 
 const mutex = new Mutex();
-
-export const rawBaseQuery = fetchBaseQuery({
-    baseUrl: API_BASE_URL,
-    credentials: 'include',
-    prepareHeaders: (headers, { getState }) => {
-        const token = (getState() as ApplicationState).auth.accessToken;
-        if (token) headers.set('Authorization', `Bearer ${token}`);
-        return headers;
-    },
-});
 
 export const baseQueryWithReauth: BaseQueryFn<
     string | FetchArgs,

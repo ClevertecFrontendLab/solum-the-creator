@@ -47,7 +47,7 @@ export type Subcategory =
 
 export type NutritionValue = {
     calories: number;
-    proteins: number;
+    protein: number;
     fats: number;
     carbohydrates: number;
 };
@@ -156,7 +156,7 @@ export const recipes: Recipe[] = [
         date: '2025-02-28T00:00:00Z',
         time: '40 минут',
         portions: 2,
-        nutritionValue: { calories: 250, proteins: 5, fats: 8, carbohydrates: 40 },
+        nutritionValue: { calories: 250, protein: 5, fats: 8, carbohydrates: 40 },
         ingredients: [
             { title: 'картошка', count: '4', measureUnit: 'шт.' },
             { title: 'болгарский перец', count: '2', measureUnit: 'шт.' },
@@ -204,7 +204,7 @@ export const recipes: Recipe[] = [
         date: '2024-02-20T00:00:00Z',
         time: '30 минут',
         portions: 2,
-        nutritionValue: { calories: 180, proteins: 4, fats: 6, carbohydrates: 28 },
+        nutritionValue: { calories: 180, protein: 4, fats: 6, carbohydrates: 28 },
         ingredients: [
             { title: 'картошка', count: '3', measureUnit: 'шт.' },
             { title: 'грибы', count: '200', measureUnit: 'г' },
@@ -244,7 +244,7 @@ export const recipes: Recipe[] = [
         date: '2023-01-25T00:00:00Z',
         time: '1 час',
         portions: 1,
-        nutritionValue: { calories: 300, proteins: 12, fats: 8, carbohydrates: 45 },
+        nutritionValue: { calories: 300, protein: 12, fats: 8, carbohydrates: 45 },
         ingredients: [
             { title: 'лаваш', count: '3', measureUnit: 'листов' },
             { title: 'овощной соус', count: '300', measureUnit: 'мл' },
@@ -282,7 +282,7 @@ export const recipes: Recipe[] = [
         date: '2023-02-15T00:00:00Z',
         time: '50 минут',
         portions: 4,
-        nutritionValue: { calories: 200, proteins: 10, fats: 5, carbohydrates: 30 },
+        nutritionValue: { calories: 200, protein: 10, fats: 5, carbohydrates: 30 },
         ingredients: [
             { title: 'булгур', count: '150', measureUnit: 'г' },
             { title: 'чечевица', count: '100', measureUnit: 'г' },
@@ -320,7 +320,7 @@ export const recipes: Recipe[] = [
         date: '2024-03-01T00:00:00Z',
         time: '30 минут',
         portions: 2,
-        nutritionValue: { calories: 220, proteins: 4, fats: 7, carbohydrates: 35 },
+        nutritionValue: { calories: 220, protein: 4, fats: 7, carbohydrates: 35 },
         ingredients: [
             { title: 'картошка', count: '6', measureUnit: 'шт.' },
             { title: 'чеснок', count: '5', measureUnit: 'зубчиков' },
@@ -359,7 +359,7 @@ export const recipes: Recipe[] = [
         date: '2024-02-05T00:00:00Z',
         time: '35 минут',
         portions: 4,
-        nutritionValue: { calories: 150, proteins: 5, fats: 4, carbohydrates: 20 },
+        nutritionValue: { calories: 150, protein: 5, fats: 4, carbohydrates: 20 },
         ingredients: [
             { title: 'капуста', count: '300', measureUnit: 'г' },
             { title: 'мука', count: '50', measureUnit: 'г' },
@@ -396,7 +396,7 @@ export const recipes: Recipe[] = [
         date: '2023-03-12T00:00:00Z',
         time: '1 час',
         portions: 2,
-        nutritionValue: { calories: 200, proteins: 5, fats: 8, carbohydrates: 30 },
+        nutritionValue: { calories: 200, protein: 5, fats: 8, carbohydrates: 30 },
         ingredients: [
             { title: 'цуккини', count: '1', measureUnit: 'шт.' },
             { title: 'болгарский перец', count: '1', measureUnit: 'шт.' },
@@ -435,7 +435,7 @@ export const recipes: Recipe[] = [
         date: '2024-03-08T00:00:00Z',
         time: '40 минут',
         portions: 4,
-        nutritionValue: { calories: 400, proteins: 30, fats: 15, carbohydrates: 50 },
+        nutritionValue: { calories: 400, protein: 30, fats: 15, carbohydrates: 50 },
         ingredients: [
             { title: 'лапша', count: '200', measureUnit: 'г' },
             { title: 'курица', count: '300', measureUnit: 'г' },
@@ -472,7 +472,7 @@ export const recipes: Recipe[] = [
         date: '2023-03-20T00:00:00Z',
         portions: 2,
         time: '25 минут',
-        nutritionValue: { calories: 150, proteins: 4, fats: 6, carbohydrates: 20 },
+        nutritionValue: { calories: 150, protein: 4, fats: 6, carbohydrates: 20 },
         ingredients: [
             { title: 'цуккини', count: '1', measureUnit: 'шт.' },
             { title: 'болгарский перец', count: '1', measureUnit: 'шт.' },
@@ -506,7 +506,7 @@ export const recipes: Recipe[] = [
         date: '2024-02-20T00:00:00Z',
         time: '30 минут',
         portions: 2,
-        nutritionValue: { calories: 180, proteins: 4, fats: 6, carbohydrates: 28 },
+        nutritionValue: { calories: 180, protein: 4, fats: 6, carbohydrates: 28 },
         ingredients: [
             { title: 'картошка', count: '3', measureUnit: 'шт.' },
             { title: 'грибы', count: '200', measureUnit: 'г' },
