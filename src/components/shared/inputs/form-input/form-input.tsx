@@ -62,10 +62,10 @@ export const FormInput: React.FC<FormInputProps> = ({
                 {leftIcon && <InputLeftElement>{leftIcon}</InputLeftElement>}
 
                 <Input
+                    size='lg'
                     {...props}
                     {...register}
                     variant='custom'
-                    size='lg'
                     type={inputType}
                     placeholder={placeholder}
                     onBlur={handleBlur}
