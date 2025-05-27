@@ -3,10 +3,15 @@ import { FormProvider, useForm } from 'react-hook-form';
 
 import { NewRecipeHeader } from './new-recipe-header';
 import { NewRecipeIngridients } from './new-recipe-ingridients/new-recipe-ingridients';
+import { NewRecipeSteps } from './new-recipe-steps/new-recipe-steps';
 
 export const NewRecipeForm = () => {
     const methods = useForm({
-        defaultValues: { categories: [], ingredients: [{ title: '', amount: 0, unit: '' }] },
+        defaultValues: {
+            categories: [],
+            ingredients: [{ title: '', amount: 0, unit: '' }],
+            steps: [{ image: undefined, description: '' }],
+        },
     });
 
     const onSubmit = () => {
@@ -24,6 +29,7 @@ export const NewRecipeForm = () => {
             >
                 <NewRecipeHeader />
                 <NewRecipeIngridients />
+                <NewRecipeSteps />
             </VStack>
         </FormProvider>
     );

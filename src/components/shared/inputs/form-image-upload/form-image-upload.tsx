@@ -61,7 +61,15 @@ export const FormImageUpload: React.FC<FormImageUploadProps> = ({
                 }}
             >
                 {preview ? (
-                    <Image src={preview} alt={name} w='100%' h='100%' objectFit='cover' />
+                    <Image
+                        src={preview}
+                        alt={name}
+                        w='100%'
+                        h='100%'
+                        objectFit='cover'
+                        position='absolute'
+                        inset={0}
+                    />
                 ) : (
                     <Icon as={ImageIcon} boxSize={8} />
                 )}
