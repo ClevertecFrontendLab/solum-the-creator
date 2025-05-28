@@ -273,6 +273,15 @@ export const recipeApiSlice = apiSlice
                 transformResponse: (response: RecipeResponse): Recipe[] =>
                     transformRecipeResponse(response.data),
             }),
+
+            [EndpointNames.CREATE_RECIPE]: builder.mutation<void, FormData>({
+                query: (formData) => ({
+                    url: ApiEndpoints.RECIPE,
+                    method: 'POST',
+                    body: formData,
+                }),
+                invalidatesTags: [{ type: Tags.RECIPE, id: 'LIST' }],
+            }),
         }),
         overrideExisting: false,
     });

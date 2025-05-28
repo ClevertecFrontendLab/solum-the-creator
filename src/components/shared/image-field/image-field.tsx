@@ -7,13 +7,21 @@ import { ImagePreview } from '../image-preview/image-preview';
 
 type ImageFieldProps = {
     name: string;
-    value: File | null;
+    value: File | string | null;
     register: UseFormRegisterReturn;
     error?: FieldError;
 };
 
 export const ImageField: React.FC<ImageFieldProps> = ({ name, value, register, error }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
+
+    const handleSave = (url: string) => {
+        register.onChange({ target: { name, value: url } });
+    };
+
+    const handleDelete = () => {
+        register.onChange({ target: { name, value: null } });
+    };
 
     return (
         <>
@@ -23,8 +31,8 @@ export const ImageField: React.FC<ImageFieldProps> = ({ name, value, register, e
                 isOpen={isOpen}
                 onClose={onClose}
                 initialFile={value}
-                onSave={(file) => register.onChange({ target: { name, value: file } })}
-                onDelete={() => register.onChange({ target: { name, value: null } })}
+                onSave={handleSave}
+                onDelete={handleDelete}
             />
         </>
     );

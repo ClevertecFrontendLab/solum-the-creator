@@ -11,6 +11,8 @@ export enum ApiEndpoints {
     AUTH_FORGOT_PASSWORD = '/auth/forgot-password',
     AUTH_VERIFY_OTP = '/auth/verify-otp',
     AUTH_RESET_PASSWORD = '/auth/reset-password',
+
+    FILE_UPLOAD = '/file/upload',
 }
 
 export const API_BASE_URL = 'https://marathon-api.clevertec.ru';

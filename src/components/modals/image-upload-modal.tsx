@@ -1,13 +1,15 @@
 import { Button, Heading, VStack } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 
+import { useUploadFileMutation } from '~/query/services/file';
+
 import { ImagePreview } from '../shared/image-preview/image-preview';
 import { ModalContainer } from './modal-container';
 
 type ImageUploadModalProps = {
     isOpen: boolean;
-    initialFile: File | null;
-    onSave: (file: File) => void;
+    initialFile: File | string | null;
+    onSave: (url: string) => void;
     onDelete: () => void;
     onClose: () => void;
 };
@@ -19,8 +21,10 @@ export const ImageUploadModal: React.FC<ImageUploadModalProps> = ({
     onDelete,
     onClose,
 }) => {
-    const [file, setFile] = useState<File | null>(initialFile);
+    const [file, setFile] = useState<File | string | null>(initialFile);
     const inputRef = useRef<HTMLInputElement>(null);
+
+    const [uploadFile, { isLoading }] = useUploadFileMutation();
 
     useEffect(() => {
         setFile(initialFile);
@@ -29,16 +33,24 @@ export const ImageUploadModal: React.FC<ImageUploadModalProps> = ({
     const pickFile = () => inputRef.current?.click();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
+        const selected = e.target.files?.[0];
 
-        if (file) {
-            setFile(file);
+        if (selected) {
+            setFile(selected);
         }
+
+        e.target.value = '';
     };
 
-    const handleSave = () => {
-        if (file) {
-            onSave(file);
+    const handleSave = async () => {
+        if (!file || typeof file === 'string') return;
+
+        try {
+            const { url } = await uploadFile(file).unwrap();
+            setFile(url);
+            onSave(url);
+        } catch (error) {
+            console.log(error);
         }
     };
 
@@ -73,7 +85,7 @@ export const ImageUploadModal: React.FC<ImageUploadModalProps> = ({
                 <VStack spacing={4}>
                     {file && (
                         <>
-                            <Button variant='black' onClick={handleSave}>
+                            <Button variant='black' onClick={handleSave} isLoading={isLoading}>
                                 Сохранить
                             </Button>
                             <Button variant='outline' colorScheme='black' onClick={handleDelete}>

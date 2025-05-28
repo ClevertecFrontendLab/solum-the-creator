@@ -9,4 +9,6 @@ export enum EndpointNames {
     GET_RECIPE_BY_ID = 'getRecipeById',
     GET_FILTERED_RECIPES = 'getFilteredRecipes',
     GET_RELEVANT_RECIPES = 'getRelevantRecipes',
+
+    CREATE_RECIPE = 'createRecipe',
 }

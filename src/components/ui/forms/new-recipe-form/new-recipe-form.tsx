@@ -1,4 +1,4 @@
-import { VStack } from '@chakra-ui/react';
+import { Button, HStack, VStack } from '@chakra-ui/react';
 import { FormProvider, useForm } from 'react-hook-form';
 
 import { NewRecipeHeader } from './new-recipe-header';
@@ -30,6 +30,12 @@ export const NewRecipeForm = () => {
                 <NewRecipeHeader />
                 <NewRecipeIngridients />
                 <NewRecipeSteps />
+
+                <HStack>
+                    <Button variant='black' size='lg' type='submit'>
+                        Опубликовать рецепт
+                    </Button>
+                </HStack>
             </VStack>
         </FormProvider>
     );
