@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { Controller, useFormContext } from 'react-hook-form';
 
 import { FormTextarea } from '~/components/shared/form-textarea/form-textarea';
-import { FormImageUpload } from '~/components/shared/inputs/form-image-upload/form-image-upload';
+import { ImageField } from '~/components/shared/image-field/image-field';
 import { FormInput } from '~/components/shared/inputs/form-input/form-input';
 import { FormNumberInput } from '~/components/shared/inputs/form-number-input/form-number-input';
 import {
@@ -26,7 +26,7 @@ export const NewRecipeHeader = () => {
         [categories],
     );
 
-    const { control } = useFormContext();
+    const { control, register, watch } = useFormContext();
 
     return (
         <Flex
@@ -38,7 +38,7 @@ export const NewRecipeHeader = () => {
         >
             <Box flex={{ base: 1, sm: 1, lg: 5 }} overflow='hidden' w='100%'>
                 <Box h={{ base: '14rem', lg: '25.625rem' }} w='100%'>
-                    <FormImageUpload name='image' />
+                    <ImageField name='cover' register={register('cover')} value={watch('cover')} />
                 </Box>
             </Box>
             <Box flex={{ base: 1, sm: 2, lg: 8 }} maxW='41.75rem'>
