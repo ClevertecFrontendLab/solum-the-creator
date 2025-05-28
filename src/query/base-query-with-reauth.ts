@@ -22,7 +22,7 @@ export const baseQueryWithReauth: BaseQueryFn<
         api.dispatch(setAccessToken(newAccessToken));
     }
 
-    if (result.error?.status === HttpStatusCodes.UNAUTHORIZED) {
+    if (result.error?.status === HttpStatusCodes.FORBIDDEN) {
         if (!mutex.isLocked()) {
             const release = await mutex.acquire();
             try {

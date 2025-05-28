@@ -3,11 +3,12 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import PlusIcon from '~/assets/icons/plus-icon-flat.svg?react';
 
+import { RecipeFormData } from '../recipe-schema';
 import { IngredientRow } from './ingridient-row';
 
 export const NewRecipeIngridients = () => {
-    const { control, register } = useFormContext();
-    const { fields, append, remove } = useFieldArray({
+    const { control, register } = useFormContext<RecipeFormData>();
+    const { fields, append, remove } = useFieldArray<RecipeFormData, 'ingredients', 'id'>({
         control,
         name: 'ingredients',
     });
@@ -53,7 +54,7 @@ export const NewRecipeIngridients = () => {
                     index={idx}
                     isLast={idx === fields.length - 1}
                     onRemove={() => remove(idx)}
-                    onAdd={() => append({ title: '', amount: 0, unit: '' })}
+                    onAdd={() => append({ title: '', count: 0, measureUnit: '' })}
                     register={register}
                 />
             ))}

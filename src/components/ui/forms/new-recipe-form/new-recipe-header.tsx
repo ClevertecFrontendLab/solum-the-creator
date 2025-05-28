@@ -10,23 +10,31 @@ import {
     MultiSelectMenu,
     Option,
 } from '~/components/shared/selects/multi-select-menu/multi-select-menu';
-import { selectAllCategories } from '~/store/category/selectors';
+import { selectFlatSubCategories } from '~/store/category/selectors';
 import { useAppSelector } from '~/store/hooks';
+
+import { RecipeFormData } from './recipe-schema';
 
 export const NewRecipeHeader = () => {
     const maxVisibleTags = useBreakpointValue({ base: 1, md: 2 });
-    const categories = useAppSelector(selectAllCategories);
+
+    const subcategories = useAppSelector(selectFlatSubCategories);
 
     const categoryOptions: Option[] = useMemo(
         () =>
-            categories.map((cat) => ({
+            subcategories.map((cat) => ({
                 label: cat.title,
                 value: cat._id,
             })),
-        [categories],
+        [subcategories],
     );
 
-    const { control, register, watch } = useFormContext();
+    const {
+        control,
+        register,
+        watch,
+        formState: { errors },
+    } = useFormContext<RecipeFormData>();
 
     return (
         <Flex
@@ -38,7 +46,12 @@ export const NewRecipeHeader = () => {
         >
             <Box flex={{ base: 1, sm: 1, lg: 5 }} overflow='hidden' w='100%'>
                 <Box h={{ base: '14rem', lg: '25.625rem' }} w='100%'>
-                    <ImageField name='cover' register={register('cover')} value={watch('cover')} />
+                    <ImageField
+                        name='image'
+                        register={register('image')}
+                        value={watch('image')}
+                        error={errors.image}
+                    />
                 </Box>
             </Box>
             <Box flex={{ base: 1, sm: 2, lg: 8 }} maxW='41.75rem'>
@@ -50,13 +63,17 @@ export const NewRecipeHeader = () => {
                         <Box w='100%' maxW={{ base: '12.25rem', sm: '14.5rem', md: '21.875rem' }}>
                             <Controller
                                 control={control}
-                                name='categories'
-                                render={({ field, fieldState }) => (
+                                name='categoriesIds'
+                                render={({ field }) => (
                                     <MultiSelectMenu
                                         options={categoryOptions}
-                                        selected={field.value ?? []}
-                                        onChange={field.onChange}
-                                        isInvalid={!!fieldState.error}
+                                        selected={categoryOptions.filter((opt) =>
+                                            field.value.includes(opt.value),
+                                        )}
+                                        onChange={(opts) =>
+                                            field.onChange(opts.map((opt) => opt.value))
+                                        }
+                                        isInvalid={!!errors.categoriesIds}
                                         maxVisibleTags={maxVisibleTags}
                                         placeholder='Выберите из списка...'
                                     />
@@ -65,12 +82,18 @@ export const NewRecipeHeader = () => {
                         </Box>
                     </HStack>
 
-                    <FormInput type='text' placeholder='Название рецепта' name='title' />
+                    <FormInput
+                        type='text'
+                        placeholder='Название рецепта'
+                        {...register('title')}
+                        error={errors.title}
+                    />
 
                     <FormTextarea
                         placeholder='Краткое описание рецепта'
-                        name='description'
                         minH='5rem'
+                        {...register('description')}
+                        error={errors.description}
                     />
 
                     <Flex gap={{ base: 4, md: 6 }} justify='start' align='center'>
@@ -81,7 +104,11 @@ export const NewRecipeHeader = () => {
                         </Box>
 
                         <Box maxW='5.625rem'>
-                            <FormNumberInput name='portions' />
+                            <FormNumberInput
+                                name='portions'
+                                register={register('portions', { valueAsNumber: true })}
+                                error={errors.portions}
+                            />
                         </Box>
                     </Flex>
 
@@ -93,7 +120,11 @@ export const NewRecipeHeader = () => {
                         </Box>
 
                         <Box maxW='5.625rem'>
-                            <FormNumberInput name='time' />
+                            <FormNumberInput
+                                name='time'
+                                register={register('time', { valueAsNumber: true })}
+                                error={errors.time}
+                            />
                         </Box>
                     </Flex>
                 </VStack>

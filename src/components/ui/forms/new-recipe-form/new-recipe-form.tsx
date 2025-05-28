@@ -1,21 +1,47 @@
 import { Button, HStack, VStack } from '@chakra-ui/react';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useForm } from 'react-hook-form';
+
+import { useCreateRecipeMutation } from '~/query/services/recipe';
 
 import { NewRecipeHeader } from './new-recipe-header';
 import { NewRecipeIngridients } from './new-recipe-ingridients/new-recipe-ingridients';
 import { NewRecipeSteps } from './new-recipe-steps/new-recipe-steps';
+import { RecipeFormData, recipeSchema, Step } from './recipe-schema';
 
 export const NewRecipeForm = () => {
-    const methods = useForm({
+    const methods = useForm<RecipeFormData>({
+        resolver: zodResolver(recipeSchema),
         defaultValues: {
-            categories: [],
-            ingredients: [{ title: '', amount: 0, unit: '' }],
-            steps: [{ image: undefined, description: '' }],
+            title: '',
+            description: '',
+            time: 0,
+            portions: 1,
+            image: '',
+            categoriesIds: [],
+            steps: [{ description: '', image: undefined }],
+            ingredients: [{ title: '', count: 0, measureUnit: '' }],
         },
     });
 
-    const onSubmit = () => {
-        console.log('Submit');
+    const [createRecipe] = useCreateRecipeMutation();
+
+    const onSubmit = async (data: RecipeFormData) => {
+        console.log('submit');
+
+        const stepsWithNumbers: Step[] = data.steps.map((s, i) => ({
+            ...s,
+            stepNumber: i + 1,
+        }));
+
+        const body = { ...data, steps: stepsWithNumbers };
+
+        try {
+            await createRecipe(body).unwrap();
+            console.log('Recipe created successfully');
+        } catch (error) {
+            console.log('Error creating recipe:', error);
+        }
     };
 
     return (

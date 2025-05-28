@@ -1,22 +1,27 @@
 import { DeleteIcon } from '@chakra-ui/icons';
 import { Box, Grid, GridItem, HStack, IconButton, VStack } from '@chakra-ui/react';
-import { FieldValues, useFormContext, UseFormRegister } from 'react-hook-form';
+import { useFormContext, UseFormRegister } from 'react-hook-form';
 
 import { StepBadge } from '~/components/shared/badges/step-badge/step-badge';
 import { FormTextarea } from '~/components/shared/form-textarea/form-textarea';
 import { ImageField } from '~/components/shared/image-field/image-field';
 
+import { RecipeFormData } from '../recipe-schema';
+
 type StepRowProps = {
     index: number;
     onRemove: () => void;
-    register: UseFormRegister<FieldValues>;
+    register: UseFormRegister<RecipeFormData>;
 };
 
 export const StepRow: React.FC<StepRowProps> = ({ index, onRemove, register }) => {
-    const { watch } = useFormContext();
+    const {
+        watch,
+        formState: { errors },
+    } = useFormContext<RecipeFormData>();
 
-    const imageFieldName = `steps.${index}.image`;
-    const imageValue = watch(imageFieldName) as File | null;
+    const imageFieldName = `steps.${index}.image` as const;
+    const imageValue = watch(imageFieldName) ?? null;
 
     return (
         <Grid
@@ -35,6 +40,7 @@ export const StepRow: React.FC<StepRowProps> = ({ index, onRemove, register }) =
                         name={imageFieldName}
                         value={imageValue}
                         register={register(imageFieldName)}
+                        error={errors.steps?.[index]?.image}
                     />
                 </Box>
             </GridItem>
@@ -57,7 +63,8 @@ export const StepRow: React.FC<StepRowProps> = ({ index, onRemove, register }) =
 
                     <FormTextarea
                         placeholder='Шаг'
-                        register={register(`steps.${index}.description`)}
+                        {...register(`steps.${index}.description`)}
+                        error={errors.steps?.[index]?.description}
                         minH='5.25rem'
                     />
                 </VStack>

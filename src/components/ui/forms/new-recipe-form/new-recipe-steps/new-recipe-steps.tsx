@@ -3,11 +3,12 @@ import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import PlusIcon from '~/assets/icons/plus-icon-filled.svg?react';
 
+import { RecipeFormData } from '../recipe-schema';
 import { StepRow } from './step-row';
 
 export const NewRecipeSteps = () => {
-    const { control, register } = useFormContext();
-    const { fields, append, remove } = useFieldArray({
+    const { control, register } = useFormContext<RecipeFormData>();
+    const { fields, append, remove } = useFieldArray<RecipeFormData, 'steps', 'id'>({
         control,
         name: 'steps',
     });

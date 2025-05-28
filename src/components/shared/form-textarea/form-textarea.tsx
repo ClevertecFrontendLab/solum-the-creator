@@ -5,6 +5,7 @@ import {
     FormLabel,
     Textarea,
     TextareaProps,
+    useMergeRefs,
 } from '@chakra-ui/react';
 import { useEffect, useRef } from 'react';
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
@@ -12,19 +13,21 @@ import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 type FormTextareaProps = {
     label?: string;
     error?: FieldError;
-    register?: UseFormRegisterReturn;
     helperText?: string;
-} & TextareaProps;
+} & TextareaProps &
+    UseFormRegisterReturn;
 
 export const FormTextarea: React.FC<FormTextareaProps> = ({
     label,
     placeholder,
     error,
-    register,
     helperText,
+    ref: registerRef,
     ...props
 }) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+    const mergedRef = useMergeRefs(registerRef, textareaRef);
 
     const handleInput = () => {
         const textarea = textareaRef.current;
@@ -48,11 +51,7 @@ export const FormTextarea: React.FC<FormTextareaProps> = ({
 
             <Textarea
                 {...props}
-                {...register}
-                ref={(e) => {
-                    textareaRef.current = e;
-                    register?.ref(e);
-                }}
+                ref={mergedRef}
                 onInput={handleInput}
                 variant='custom'
                 size='lg'

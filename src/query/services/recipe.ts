@@ -1,3 +1,4 @@
+import { RecipeFormData } from '~/components/ui/forms/new-recipe-form/recipe-schema';
 import { Ingredient, NutritionValue, RecipeStep } from '~/constants/data/recipes';
 import { getValuable } from '~/utils/get-valuable-obj';
 import { transformRecipeResponse } from '~/utils/image';
@@ -274,11 +275,11 @@ export const recipeApiSlice = apiSlice
                     transformRecipeResponse(response.data),
             }),
 
-            [EndpointNames.CREATE_RECIPE]: builder.mutation<void, FormData>({
-                query: (formData) => ({
+            [EndpointNames.CREATE_RECIPE]: builder.mutation<void, RecipeFormData>({
+                query: (body) => ({
                     url: ApiEndpoints.RECIPE,
                     method: 'POST',
-                    body: formData,
+                    body,
                 }),
                 invalidatesTags: [{ type: Tags.RECIPE, id: 'LIST' }],
             }),
@@ -296,4 +297,5 @@ export const {
     useGetRecipeByIdQuery,
     useGetFilteredRecipesInfiniteQuery,
     useGetRelevantRecipesQuery,
+    useCreateRecipeMutation,
 } = recipeApiSlice;
