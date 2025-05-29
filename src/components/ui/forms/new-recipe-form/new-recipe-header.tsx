@@ -85,6 +85,7 @@ export const NewRecipeHeader = () => {
                     <FormInput
                         type='text'
                         placeholder='Название рецепта'
+                        showErrorText={false}
                         {...register('title')}
                         error={errors.title}
                     />
@@ -92,6 +93,7 @@ export const NewRecipeHeader = () => {
                     <FormTextarea
                         placeholder='Краткое описание рецепта'
                         minH='5rem'
+                        showErrorText={false}
                         {...register('description')}
                         error={errors.description}
                     />
@@ -104,11 +106,7 @@ export const NewRecipeHeader = () => {
                         </Box>
 
                         <Box maxW='5.625rem'>
-                            <FormNumberInput
-                                name='portions'
-                                register={register('portions', { valueAsNumber: true })}
-                                error={errors.portions}
-                            />
+                            <FormNumberInput name='portions' showErrorText={false} />
                         </Box>
                     </Flex>
 
@@ -120,11 +118,7 @@ export const NewRecipeHeader = () => {
                         </Box>
 
                         <Box maxW='5.625rem'>
-                            <FormNumberInput
-                                name='time'
-                                register={register('time', { valueAsNumber: true })}
-                                error={errors.time}
-                            />
+                            <FormNumberInput name='time' showErrorText={false} />
                         </Box>
                     </Flex>
                 </VStack>

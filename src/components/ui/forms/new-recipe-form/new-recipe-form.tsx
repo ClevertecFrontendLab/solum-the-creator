@@ -13,22 +13,15 @@ export const NewRecipeForm = () => {
     const methods = useForm<RecipeFormData>({
         resolver: zodResolver(recipeSchema),
         defaultValues: {
-            title: '',
-            description: '',
-            time: 0,
-            portions: 1,
-            image: '',
             categoriesIds: [],
-            steps: [{ description: '', image: undefined }],
             ingredients: [{ title: '', count: 0, measureUnit: '' }],
+            steps: [{ description: '', image: undefined }],
         },
     });
 
     const [createRecipe] = useCreateRecipeMutation();
 
     const onSubmit = async (data: RecipeFormData) => {
-        console.log('submit');
-
         const stepsWithNumbers: Step[] = data.steps.map((s, i) => ({
             ...s,
             stepNumber: i + 1,

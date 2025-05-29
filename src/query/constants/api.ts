@@ -13,6 +13,8 @@ export enum ApiEndpoints {
     AUTH_RESET_PASSWORD = '/auth/reset-password',
 
     FILE_UPLOAD = '/file/upload',
+
+    MEASURE_UNITS = '/measure-units',
 }
 
 export const API_BASE_URL = 'https://marathon-api.clevertec.ru';

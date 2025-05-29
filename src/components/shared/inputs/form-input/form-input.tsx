@@ -21,6 +21,7 @@ type FormInputProps = {
     rightIcon?: React.ReactNode;
     showPasswordToggle?: boolean;
     helperText?: string;
+    showErrorText?: boolean;
 } & InputProps;
 
 export const FormInput: React.FC<FormInputProps> = ({
@@ -32,6 +33,7 @@ export const FormInput: React.FC<FormInputProps> = ({
     leftIcon,
     rightIcon,
     helperText,
+    showErrorText = true,
     showPasswordToggle = false,
     ...props
 }) => {
@@ -93,7 +95,7 @@ export const FormInput: React.FC<FormInputProps> = ({
                 </FormHelperText>
             )}
 
-            {error && (
+            {error && showErrorText && (
                 <FormErrorMessage mt={1} fontSize='xs'>
                     {error.message}
                 </FormErrorMessage>

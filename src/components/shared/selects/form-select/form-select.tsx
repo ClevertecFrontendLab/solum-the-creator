@@ -22,6 +22,7 @@ type FormSelectProps = {
     rightIcon?: React.ReactNode;
     helperText?: string;
     placeholder?: string;
+    showErrorText?: boolean;
 } & Omit<SelectProps, 'placeholder'>;
 
 export const FormSelect: React.FC<FormSelectProps> = ({
@@ -32,6 +33,7 @@ export const FormSelect: React.FC<FormSelectProps> = ({
     leftIcon,
     rightIcon,
     helperText,
+    showErrorText = true,
     placeholder = 'Выберите…',
     ...props
 }) => {
@@ -90,7 +92,7 @@ export const FormSelect: React.FC<FormSelectProps> = ({
                 </FormHelperText>
             )}
 
-            {error && (
+            {error && showErrorText && (
                 <FormErrorMessage mt={1} fontSize='xs'>
                     {error.message}
                 </FormErrorMessage>

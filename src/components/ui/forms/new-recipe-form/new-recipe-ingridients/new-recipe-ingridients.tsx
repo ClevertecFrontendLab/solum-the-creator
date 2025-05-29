@@ -2,6 +2,7 @@ import { Box, Grid, GridItem, Hide, Icon, Text, VStack } from '@chakra-ui/react'
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import PlusIcon from '~/assets/icons/plus-icon-flat.svg?react';
+import { useGetMeasureUnitsQuery } from '~/query/services/measure-units';
 
 import { RecipeFormData } from '../recipe-schema';
 import { IngredientRow } from './ingridient-row';
@@ -12,6 +13,20 @@ export const NewRecipeIngridients = () => {
         control,
         name: 'ingredients',
     });
+
+    const { data: measureUnitOptions = [] } = useGetMeasureUnitsQuery();
+
+    const handleAddIngridient = () => {
+        append({
+            title: '',
+            count: 0,
+            measureUnit: '',
+        });
+    };
+
+    const handleRemoveIngridient = (index: number) => () => {
+        remove(index);
+    };
 
     return (
         <VStack
@@ -52,9 +67,10 @@ export const NewRecipeIngridients = () => {
                 <IngredientRow
                     key={field.id}
                     index={idx}
+                    measureUnitOptions={measureUnitOptions}
                     isLast={idx === fields.length - 1}
-                    onRemove={() => remove(idx)}
-                    onAdd={() => append({ title: '', count: 0, measureUnit: '' })}
+                    onRemove={handleRemoveIngridient(idx)}
+                    onAdd={handleAddIngridient}
                     register={register}
                 />
             ))}

@@ -63,6 +63,7 @@ export const StepRow: React.FC<StepRowProps> = ({ index, onRemove, register }) =
 
                     <FormTextarea
                         placeholder='Шаг'
+                        showErrorText={false}
                         {...register(`steps.${index}.description`)}
                         error={errors.steps?.[index]?.description}
                         minH='5.25rem'

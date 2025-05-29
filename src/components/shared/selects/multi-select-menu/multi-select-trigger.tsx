@@ -22,9 +22,15 @@ export const MultiSelectTrigger: React.FC<MultiSelectTriggerProps> = ({
     maxVisibleTags,
     dataTestId,
 }) => {
-    let borderColor = 'blackAlpha.400';
-    if (isInvalid) borderColor = 'red.500';
-    if (selected.length > 0) borderColor = 'lime.300';
+    let borderColor: string;
+
+    if (isInvalid) {
+        borderColor = 'red.500';
+    } else if (selected.length > 0) {
+        borderColor = 'lime.300';
+    } else {
+        borderColor = 'blackAlpha.400';
+    }
 
     return (
         <MenuButton

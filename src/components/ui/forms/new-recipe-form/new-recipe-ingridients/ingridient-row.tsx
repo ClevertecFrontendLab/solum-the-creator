@@ -4,11 +4,13 @@ import { useFormContext, UseFormRegister } from 'react-hook-form';
 
 import { FormInput } from '~/components/shared/inputs/form-input/form-input';
 import { FormSelect } from '~/components/shared/selects/form-select/form-select';
+import { Option } from '~/components/shared/selects/multi-select-menu/multi-select-menu';
 
 import { RecipeFormData } from '../recipe-schema';
 
 type IngredientRowProps = {
     index: number;
+    measureUnitOptions: Option[];
     isLast: boolean;
     onRemove: () => void;
     onAdd: () => void;
@@ -18,6 +20,7 @@ type IngredientRowProps = {
 export const IngredientRow: React.FC<IngredientRowProps> = ({
     index,
     isLast,
+    measureUnitOptions,
     onRemove,
     onAdd,
     register,
@@ -41,6 +44,7 @@ export const IngredientRow: React.FC<IngredientRowProps> = ({
                     type='text'
                     borderColor='blackAlpha.200'
                     placeholder='Ингредиент'
+                    showErrorText={false}
                     {...register(`ingredients.${index}.title`)}
                     error={errors.ingredients?.[index]?.title}
                 />
@@ -53,6 +57,7 @@ export const IngredientRow: React.FC<IngredientRowProps> = ({
                     placeholder='100'
                     size='md'
                     borderColor='blackAlpha.200'
+                    showErrorText={false}
                     w='100%'
                     {...register(`ingredients.${index}.count`, { valueAsNumber: true })}
                     error={errors.ingredients?.[index]?.count}
@@ -63,11 +68,8 @@ export const IngredientRow: React.FC<IngredientRowProps> = ({
                 <FormSelect
                     placeholder='Единица измерения'
                     size='md'
-                    options={[
-                        { label: 'г', value: 'g' },
-                        { label: 'мл', value: 'ml' },
-                        { label: 'шт', value: 'pcs' },
-                    ]}
+                    showErrorText={false}
+                    options={measureUnitOptions}
                     {...register(`ingredients.${index}.measureUnit`)}
                     error={errors.ingredients?.[index]?.measureUnit}
                 />

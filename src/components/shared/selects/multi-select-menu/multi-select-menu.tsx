@@ -83,7 +83,12 @@ export const MultiSelectMenu: React.FC<MultiSelectMenuProps> = ({
                         isInvalid={isInvalid}
                         maxVisibleTags={maxVisibleTags}
                     />
-                    <MenuList zIndex={3} data-test-id={menuListDataTestId}>
+                    <MenuList
+                        zIndex={3}
+                        data-test-id={menuListDataTestId}
+                        maxH='20rem'
+                        overflowY='auto'
+                    >
                         {isOpen && (
                             <MultiSelectOptions
                                 options={availableOptions}

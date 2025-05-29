@@ -13,58 +13,86 @@ import {
     NumberInputProps,
     NumberInputStepper,
 } from '@chakra-ui/react';
-import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
+import { Controller, FieldError, useFormContext } from 'react-hook-form';
 
 type FormNumberInputProps = {
+    name: string;
     label?: string;
-    error?: FieldError;
-    register?: UseFormRegisterReturn;
     leftIcon?: React.ReactNode;
     rightIcon?: React.ReactNode;
     helperText?: string;
-} & Omit<NumberInputProps, 'onChange'>;
+    showErrorText?: boolean;
+} & Omit<NumberInputProps, 'onChange' | 'value'>;
 
 export const FormNumberInput: React.FC<FormNumberInputProps> = ({
+    name,
     label,
-    error,
-    register,
     leftIcon,
     rightIcon,
     helperText,
+    showErrorText = true,
     ...props
-}) => (
-    <FormControl isInvalid={!!error}>
-        {label && (
-            <FormLabel mb={1} fontWeight={400}>
-                {label}
-            </FormLabel>
-        )}
+}) => {
+    const {
+        control,
+        formState: { errors },
+    } = useFormContext();
 
-        <InputGroup>
-            {leftIcon && <InputLeftElement>{leftIcon}</InputLeftElement>}
+    const error = errors[name as keyof typeof errors] as FieldError | undefined;
 
-            <NumberInput {...props} clampValueOnBlur={false} colorScheme='gray'>
-                <NumberInputField {...register} pr={rightIcon ? '2.5rem' : undefined} />
+    return (
+        <FormControl isInvalid={!!error}>
+            {label && (
+                <FormLabel mb={1} fontWeight={400}>
+                    {label}
+                </FormLabel>
+            )}
 
-                <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                </NumberInputStepper>
-            </NumberInput>
+            <InputGroup>
+                {leftIcon && <InputLeftElement>{leftIcon}</InputLeftElement>}
 
-            {rightIcon && <InputRightElement>{rightIcon}</InputRightElement>}
-        </InputGroup>
+                <Controller
+                    name={name}
+                    control={control}
+                    render={({ field }) => (
+                        <NumberInput
+                            {...props}
+                            value={field.value ?? ''}
+                            onChange={(value) => {
+                                const number = Number(value);
+                                field.onChange(isNaN(number) ? '' : number);
+                            }}
+                            clampValueOnBlur={false}
+                            colorScheme='gray'
+                        >
+                            <NumberInputField
+                                pr={rightIcon ? '2.5rem' : undefined}
+                                onBlur={field.onBlur}
+                                ref={field.ref}
+                            />
 
-        {helperText && (
-            <FormHelperText mt={1} fontSize='xs' color='blackAlpha.700'>
-                {helperText}
-            </FormHelperText>
-        )}
+                            <NumberInputStepper>
+                                <NumberIncrementStepper />
+                                <NumberDecrementStepper />
+                            </NumberInputStepper>
+                        </NumberInput>
+                    )}
+                />
 
-        {error && (
-            <FormErrorMessage mt={1} fontSize='xs'>
-                {error.message}
-            </FormErrorMessage>
-        )}
-    </FormControl>
-);
+                {rightIcon && <InputRightElement>{rightIcon}</InputRightElement>}
+            </InputGroup>
+
+            {helperText && (
+                <FormHelperText mt={1} fontSize='xs' color='blackAlpha.700'>
+                    {helperText}
+                </FormHelperText>
+            )}
+
+            {error && showErrorText && (
+                <FormErrorMessage mt={1} fontSize='xs'>
+                    {error.message}
+                </FormErrorMessage>
+            )}
+        </FormControl>
+    );
+};

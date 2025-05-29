@@ -14,6 +14,7 @@ type FormTextareaProps = {
     label?: string;
     error?: FieldError;
     helperText?: string;
+    showErrorText?: boolean;
 } & TextareaProps &
     UseFormRegisterReturn;
 
@@ -22,6 +23,7 @@ export const FormTextarea: React.FC<FormTextareaProps> = ({
     placeholder,
     error,
     helperText,
+    showErrorText = true,
     ref: registerRef,
     ...props
 }) => {
@@ -65,7 +67,7 @@ export const FormTextarea: React.FC<FormTextareaProps> = ({
                 </FormHelperText>
             )}
 
-            {error && (
+            {error && showErrorText && (
                 <FormErrorMessage mt={1} fontSize='xs'>
                     {error.message}
                 </FormErrorMessage>

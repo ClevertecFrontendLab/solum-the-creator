@@ -4,4 +4,5 @@ export enum Tags {
     RECIPE = 'recipe',
     FILTERED_RECIPES = 'filteredRecipes',
     FILES = 'files',
+    MEASURE_UNITS = 'measureUnits',
 }
