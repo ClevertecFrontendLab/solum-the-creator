@@ -9,7 +9,11 @@ import { LoginPage } from '~/pages/auth/login-page';
 import { SignUpPage } from '~/pages/auth/sign-up-page';
 import { CategoryPage } from '~/pages/category/category-page';
 import { SubcategoryPage } from '~/pages/category/subcategory/subcategory-page';
-import { EditRecipePage } from '~/pages/edit-recipe/edit-recipe-page';
+import {
+    EditRecipePage,
+    EditRecipePageLoader,
+    HydrateEditRecipePage,
+} from '~/pages/edit-recipe/edit-recipe-page';
 import { HomePage } from '~/pages/home-page';
 import { JuiciestPage } from '~/pages/juiciest-page';
 import { NewRecipePage } from '~/pages/new-recipe/new-recipe-page';
@@ -43,7 +47,13 @@ export const router = createBrowserRouter(
                     />
                     <Route path={pathes.newRecipe} element={<NewRecipePage />} />
 
-                    <Route path={pathes.editRecipe} element={<EditRecipePage />} />
+                    <Route
+                        path={pathes.editRecipe}
+                        element={<EditRecipePage />}
+                        loader={EditRecipePageLoader}
+                        HydrateFallback={HydrateEditRecipePage}
+                        errorElement={<RecipeError />}
+                    />
 
                     <Route path={pathes.notFound} element={<NotFoundPage />} />
                     <Route path='*' element={<Navigate to={pathes.notFound} replace />} />

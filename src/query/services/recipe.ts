@@ -281,7 +281,27 @@ export const recipeApiSlice = apiSlice
                     method: 'POST',
                     body,
                 }),
-                invalidatesTags: [{ type: Tags.RECIPE, id: 'LIST' }],
+                invalidatesTags: (result) =>
+                    result
+                        ? [
+                              { type: Tags.RECIPE, id: 'LIST' },
+                              { type: Tags.RECIPE, id: result._id },
+                          ]
+                        : [{ type: Tags.RECIPE, id: 'LIST' }],
+            }),
+            [EndpointNames.UPDATE_RECIPE]: builder.mutation<
+                Recipe,
+                { id: string; body: RecipeFormData }
+            >({
+                query: ({ id, body }) => ({
+                    url: `${ApiEndpoints.RECIPE}/${id}`,
+                    method: 'PATCH',
+                    body,
+                }),
+                invalidatesTags: (_result, _error, { id }) => [
+                    { type: Tags.RECIPE, id: 'LIST' },
+                    { type: Tags.RECIPE, id },
+                ],
             }),
         }),
         overrideExisting: false,
@@ -298,4 +318,5 @@ export const {
     useGetFilteredRecipesInfiniteQuery,
     useGetRelevantRecipesQuery,
     useCreateRecipeMutation,
+    useUpdateRecipeMutation,
 } = recipeApiSlice;

@@ -10,44 +10,54 @@ import {
 } from '~/constants/texts/notifications';
 import { useGlobalLoading } from '~/hooks/use-global-loading';
 import { useRedirectToRecipe } from '~/hooks/use-redirect-to-recipe';
-import { useCreateRecipeMutation } from '~/query/services/recipe';
+import { Recipe, useCreateRecipeMutation, useUpdateRecipeMutation } from '~/query/services/recipe';
 import { useAppDispatch } from '~/store/hooks';
 import { addNotification } from '~/store/notification/slice';
+import { mapRecipeToFormData } from '~/utils/recipe-transform';
 
 import { NewRecipeHeader } from './new-recipe-header';
 import { NewRecipeIngridients } from './new-recipe-ingridients/new-recipe-ingridients';
 import { NewRecipeSteps } from './new-recipe-steps/new-recipe-steps';
 import { RecipeFormData, recipeSchema, Step } from './recipe-schema';
 
-export const NewRecipeForm = () => {
+type NewRecipeFormProps = {
+    mode?: 'create' | 'edit';
+    recipe?: Recipe;
+};
+
+export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({ mode = 'create', recipe }) => {
     const dispatch = useAppDispatch();
+
+    const [createRecipe, { isLoading }] = useCreateRecipeMutation();
+    const [updateRecipe, { isLoading: isUpdating }] = useUpdateRecipeMutation();
+    const redirectToRecipe = useRedirectToRecipe({ showSuccessNotification: true });
 
     const methods = useForm<RecipeFormData>({
         resolver: zodResolver(recipeSchema),
-        defaultValues: {
-            categoriesIds: [],
-            ingredients: [{ title: '', count: 0, measureUnit: '' }],
-            steps: [{ description: '', image: undefined }],
-        },
+        defaultValues:
+            mode === 'edit' && recipe
+                ? mapRecipeToFormData(recipe)
+                : {
+                      categoriesIds: [],
+                      ingredients: [{ title: '', count: 0, measureUnit: '' }],
+                      steps: [{ description: '', image: undefined }],
+                  },
     });
 
-    const [createRecipe, { isLoading }] = useCreateRecipeMutation();
-    const redirectToRecipe = useRedirectToRecipe({ showSuccessNotification: true });
-
-    useGlobalLoading(isLoading);
+    useGlobalLoading(isLoading || isUpdating);
 
     const onSubmit = async (data: RecipeFormData) => {
-        const stepsWithNumbers: Step[] = data.steps.map((s, i) => ({
-            ...s,
-            stepNumber: i + 1,
-        }));
-
+        const stepsWithNumbers: Step[] = data.steps.map((s, i) => ({ ...s, stepNumber: i + 1 }));
         const body = { ...data, steps: stepsWithNumbers };
 
         try {
-            const { _id: recipeId, categoriesIds } = await createRecipe(body).unwrap();
-
-            redirectToRecipe(recipeId, categoriesIds[0]);
+            if (mode === 'edit' && recipe) {
+                await updateRecipe({ id: recipe._id, body }).unwrap();
+                redirectToRecipe(recipe._id, recipe.categoriesIds[0]);
+            } else {
+                const { _id, categoriesIds } = await createRecipe(body).unwrap();
+                redirectToRecipe(_id, categoriesIds[0]);
+            }
         } catch (err) {
             const error = err as FetchBaseQueryError;
 

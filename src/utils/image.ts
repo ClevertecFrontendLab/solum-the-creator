@@ -5,8 +5,15 @@ export const getImgUrl = (url?: string | null): string | null => {
     if (!url || typeof url !== 'string') return null;
 
     const cleaned = url.trim();
-
     if (!cleaned || cleaned === 'undefined' || cleaned === 'null') return null;
+
+    if (
+        cleaned.startsWith('http://') ||
+        cleaned.startsWith('https://') ||
+        cleaned.startsWith(IMG_BASE_URL)
+    ) {
+        return cleaned;
+    }
 
     return `${IMG_BASE_URL}${cleaned}`;
 };
