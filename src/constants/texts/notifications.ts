@@ -8,9 +8,19 @@ export const notificationServerError = {
     description: 'Попробуйте немного позже',
 };
 
+export const notifcationRecipeConflictError = {
+    title: 'Ошибка',
+    description: 'Рецепт с таким названием уже существует',
+};
+
 export const notificationServerErrorImage = {
     title: 'Ошибка сервера',
     description: 'Попробуйте сохранить фото позже',
+};
+
+export const notificationServerErrorNewRecipe = {
+    title: 'Ошибка сервера',
+    description: 'Попробуйте пока сохранить в черновик',
 };
 
 export const notificationLoginNotExists = {

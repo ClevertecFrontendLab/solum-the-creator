@@ -1,5 +1,6 @@
 import { VStack } from '@chakra-ui/react';
-import { LoaderFunction, useLoaderData } from 'react-router';
+import { useEffect } from 'react';
+import { LoaderFunction, useLoaderData, useLocation } from 'react-router';
 
 import { RecipeAuthorCard } from '~/components/cards/recipe-author-card/recipe-author-card';
 import { NewRecipesSection } from '~/components/sections/new-recipes-section/new-recipes-section';
@@ -10,6 +11,8 @@ import { RecipeTableSection } from '~/components/sections/recipe/recipe-table-se
 import { authors } from '~/constants/data/authors';
 import { Recipe, recipeApiSlice } from '~/query/services/recipe';
 import { store } from '~/store/configure-store';
+import { useAppDispatch } from '~/store/hooks';
+import { addNotification } from '~/store/notification/slice';
 
 const mockAuthor = authors[0];
 
@@ -28,6 +31,17 @@ export const HydrateRecipePage: React.FC = () => null;
 
 export const RecipePage = () => {
     const recipe = useLoaderData<Recipe>();
+
+    const location = useLocation();
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        if (location.state?.showSuccessNotification) {
+            dispatch(addNotification({ type: 'success', title: 'Рецепт успешно опубликован' }));
+
+            window.history.replaceState({ ...location.state, showSuccessNotification: false }, '');
+        }
+    }, [location, dispatch]);
 
     return (
         <VStack spacing={{ base: 6, md: 10 }} px={{ base: 4, sm: 5, md: 6 }}>

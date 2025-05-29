@@ -23,7 +23,7 @@ export const measureUnitsApiSlice = apiSlice
                 }),
                 providesTags: [Tags.MEASURE_UNITS],
                 transformResponse: (data: MeasureUnit[]) =>
-                    data.map(({ _id, name }) => ({ value: _id, label: name })),
+                    data.map(({ name }) => ({ value: name, label: name })),
             }),
         }),
     });

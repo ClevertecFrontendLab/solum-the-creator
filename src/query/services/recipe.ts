@@ -275,7 +275,7 @@ export const recipeApiSlice = apiSlice
                     transformRecipeResponse(response.data),
             }),
 
-            [EndpointNames.CREATE_RECIPE]: builder.mutation<void, RecipeFormData>({
+            [EndpointNames.CREATE_RECIPE]: builder.mutation<Recipe, RecipeFormData>({
                 query: (body) => ({
                     url: ApiEndpoints.RECIPE,
                     method: 'POST',
