@@ -8,6 +8,11 @@ export const notificationServerError = {
     description: 'Попробуйте немного позже',
 };
 
+export const notificationServerErrorImage = {
+    title: 'Ошибка сервера',
+    description: 'Попробуйте сохранить фото позже',
+};
+
 export const notificationLoginNotExists = {
     title: 'Такого логина нет',
     description: 'Попробуйте другой логин или проверьте правильность его написания',

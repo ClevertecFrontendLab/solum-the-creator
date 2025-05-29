@@ -1,7 +1,10 @@
 import { Button, Heading, VStack } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 
+import { notificationServerErrorImage } from '~/constants/texts/notifications';
 import { useUploadFileMutation } from '~/query/services/file';
+import { useAppDispatch } from '~/store/hooks';
+import { addNotification } from '~/store/notification/slice';
 
 import { ImagePreview } from '../shared/image-preview/image-preview';
 import { ModalContainer } from './modal-container';
@@ -25,6 +28,7 @@ export const ImageUploadModal: React.FC<ImageUploadModalProps> = ({
     const inputRef = useRef<HTMLInputElement>(null);
 
     const [uploadFile, { isLoading }] = useUploadFileMutation();
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         setFile(initialFile);
@@ -49,8 +53,17 @@ export const ImageUploadModal: React.FC<ImageUploadModalProps> = ({
             const { url } = await uploadFile(file).unwrap();
             setFile(url);
             onSave(url);
-        } catch (error) {
-            console.log(error);
+            onClose();
+        } catch (_err) {
+            dispatch(
+                addNotification({
+                    type: 'error',
+                    title: notificationServerErrorImage.title,
+                    description: notificationServerErrorImage.description,
+                }),
+            );
+
+            onClose();
         }
     };
 
