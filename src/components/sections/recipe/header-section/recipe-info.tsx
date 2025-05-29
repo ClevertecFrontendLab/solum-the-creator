@@ -2,6 +2,7 @@ import { Box, Flex, Heading, HStack, Text, VStack } from '@chakra-ui/react';
 
 import { CategoryBadge } from '~/components/shared/badges/category-badge/category-badge';
 import { TimeBadge } from '~/components/shared/badges/time-badge/time-badge';
+import { EditRecipeButton } from '~/components/shared/buttons/edit-recipe-button/edit-recipe-button';
 import { RateButtons } from '~/components/shared/buttons/rate-buttons/rate-buttons';
 import { selectParentCategoriesBySubIds } from '~/store/category/selectors';
 import { useAppSelector } from '~/store/hooks';
@@ -15,6 +16,7 @@ type RecipeInfoProps = {
     time: number;
     likes?: number;
     bookmarks?: number;
+    isAuthor?: boolean;
 };
 
 export const RecipeInfo: React.FC<RecipeInfoProps> = ({
@@ -24,6 +26,7 @@ export const RecipeInfo: React.FC<RecipeInfoProps> = ({
     time,
     likes,
     bookmarks,
+    isAuthor,
 }) => {
     const categories = useAppSelector(selectParentCategoriesBySubIds(categoriesIds));
 
@@ -56,7 +59,8 @@ export const RecipeInfo: React.FC<RecipeInfoProps> = ({
 
             <HStack justify='space-between' w='100%' align='flex-end' flexWrap='wrap' gap={3}>
                 <TimeBadge label={time.toString()} />
-                <ActionButtons />
+
+                {isAuthor ? <EditRecipeButton /> : <ActionButtons />}
             </HStack>
         </VStack>
     );

@@ -10,8 +10,9 @@ import { RecipeStepsSection } from '~/components/sections/recipe/recipe-steps-se
 import { RecipeTableSection } from '~/components/sections/recipe/recipe-table-section/recipe-table-section';
 import { authors } from '~/constants/data/authors';
 import { Recipe, recipeApiSlice } from '~/query/services/recipe';
+import { selectUserId } from '~/store/auth/selectors';
 import { store } from '~/store/configure-store';
-import { useAppDispatch } from '~/store/hooks';
+import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import { addNotification } from '~/store/notification/slice';
 
 const mockAuthor = authors[0];
@@ -31,6 +32,9 @@ export const HydrateRecipePage: React.FC = () => null;
 
 export const RecipePage = () => {
     const recipe = useLoaderData<Recipe>();
+    const currentUserId = useAppSelector(selectUserId);
+
+    const isAuthor = recipe.authorId === currentUserId;
 
     const location = useLocation();
     const dispatch = useAppDispatch();
@@ -53,6 +57,7 @@ export const RecipePage = () => {
                 time={recipe.time}
                 bookmarks={recipe.bookmarks}
                 likes={recipe.likes}
+                isAuthor={isAuthor}
             />
 
             <NutritionSection {...recipe.nutritionValue} />
