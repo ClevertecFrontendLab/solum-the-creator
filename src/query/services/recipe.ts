@@ -138,6 +138,18 @@ export const recipeApiSlice = apiSlice
                     apiGroupName: ApiGroupNames.RECIPE,
                     name: EndpointNames.GET_JUICIEST_RECIPES_PAGINATED,
                 }),
+                providesTags: (result) =>
+                    result
+                        ? [
+                              ...result.pages.flatMap((page) =>
+                                  page.data.map((recipe) => ({
+                                      type: Tags.RECIPE as const,
+                                      id: recipe._id,
+                                  })),
+                              ),
+                              { type: Tags.RECIPE, id: 'LIST' },
+                          ]
+                        : [{ type: Tags.RECIPE, id: 'LIST' }],
                 transformResponse: (response: RecipeResponse) => ({
                     data: transformRecipeResponse(response.data),
                     meta: response.meta,
@@ -215,6 +227,18 @@ export const recipeApiSlice = apiSlice
                     apiGroupName: ApiGroupNames.RECIPE,
                     name: EndpointNames.GET_RECIPES_BY_CATEGORY_ID_PAGINATED,
                 }),
+                providesTags: (result) =>
+                    result
+                        ? [
+                              ...result.pages.flatMap((page) =>
+                                  page.map((recipe) => ({
+                                      type: Tags.RECIPE as const,
+                                      id: recipe._id,
+                                  })),
+                              ),
+                              { type: Tags.RECIPE, id: 'LIST' },
+                          ]
+                        : [{ type: Tags.RECIPE, id: 'LIST' }],
                 transformResponse: (response: RecipeResponse): Recipe[] =>
                     transformRecipeResponse(response.data),
             }),
@@ -274,6 +298,18 @@ export const recipeApiSlice = apiSlice
                         name: EndpointNames.GET_FILTERED_RECIPES,
                     };
                 },
+                providesTags: (result) =>
+                    result
+                        ? [
+                              ...result.pages.flatMap((page) =>
+                                  page.map((recipe) => ({
+                                      type: Tags.RECIPE as const,
+                                      id: recipe._id,
+                                  })),
+                              ),
+                              { type: Tags.RECIPE, id: 'LIST' },
+                          ]
+                        : [{ type: Tags.RECIPE, id: 'LIST' }],
                 transformResponse: (response: RecipeResponse): Recipe[] =>
                     transformRecipeResponse(response.data),
             }),
@@ -332,9 +368,99 @@ export const recipeApiSlice = apiSlice
                     method: 'POST',
                 }),
                 invalidatesTags: (_result, _error, recipeId) => [
-                    { type: Tags.RECIPE, id: 'LIST' },
                     { type: Tags.RECIPE, id: recipeId },
                 ],
+            }),
+            [EndpointNames.TOGGLE_BOOKMARK_RECIPE]: builder.mutation<
+                { message: string; count: number },
+                string
+            >({
+                query: (recipeId) => ({
+                    url: `${ApiEndpoints.RECIPE}/${recipeId}/bookmark`,
+                    method: 'POST',
+                }),
+                async onQueryStarted(recipeId, { dispatch, queryFulfilled, getState }) {
+                    try {
+                        const { data: updatedBoomark } = await queryFulfilled;
+                        dispatch(
+                            recipeApiSlice.util.updateQueryData(
+                                EndpointNames.GET_RECIPE_BY_ID,
+                                recipeId,
+                                (draft) => {
+                                    draft.bookmarks = updatedBoomark.count;
+                                },
+                            ),
+                        );
+
+                        const state = getState();
+
+                        const categoryArgs = recipeApiSlice.util.selectCachedArgsForQuery(
+                            state,
+                            EndpointNames.GET_RECIPES_BY_CATEGORY_ID_PAGINATED,
+                        );
+
+                        dispatch(
+                            recipeApiSlice.util.updateQueryData(
+                                EndpointNames.GET_RECIPES_BY_CATEGORY_ID_PAGINATED,
+                                categoryArgs[categoryArgs.length - 1],
+                                (draft) => {
+                                    draft.pages = draft.pages.map((page) =>
+                                        page.map((recipe) =>
+                                            recipe._id === recipeId
+                                                ? { ...recipe, bookmarks: updatedBoomark.count }
+                                                : recipe,
+                                        ),
+                                    );
+                                },
+                            ),
+                        );
+
+                        const juiciestArgs = recipeApiSlice.util.selectCachedArgsForQuery(
+                            state,
+                            EndpointNames.GET_JUICIEST_RECIPES_PAGINATED,
+                        );
+
+                        dispatch(
+                            recipeApiSlice.util.updateQueryData(
+                                EndpointNames.GET_JUICIEST_RECIPES_PAGINATED,
+                                juiciestArgs[juiciestArgs.length - 1],
+                                (draft) => {
+                                    draft.pages = draft.pages.map(({ data, ...page }) => ({
+                                        ...page,
+                                        data: data.map((recipe) =>
+                                            recipe._id === recipeId
+                                                ? { ...recipe, bookmarks: updatedBoomark.count }
+                                                : recipe,
+                                        ),
+                                    }));
+                                },
+                            ),
+                        );
+
+                        const filteredArgs = recipeApiSlice.util.selectCachedArgsForQuery(
+                            state,
+                            EndpointNames.GET_FILTERED_RECIPES,
+                        );
+
+                        dispatch(
+                            recipeApiSlice.util.updateQueryData(
+                                EndpointNames.GET_FILTERED_RECIPES,
+                                filteredArgs[filteredArgs.length - 1],
+                                (draft) => {
+                                    draft.pages = draft.pages.map((page) =>
+                                        page.map((recipe) =>
+                                            recipe._id === recipeId
+                                                ? { ...recipe, bookmarks: updatedBoomark.count }
+                                                : recipe,
+                                        ),
+                                    );
+                                },
+                            ),
+                        );
+                    } catch {
+                        // do nothing
+                    }
+                },
             }),
         }),
         overrideExisting: false,
@@ -355,4 +481,5 @@ export const {
     useCreateRecipeDraftMutation,
     useDeleteRecipeMutation,
     useToggleLikeRecipeMutation,
+    useToggleBookmarkRecipeMutation,
 } = recipeApiSlice;
