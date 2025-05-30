@@ -1,10 +1,12 @@
-import { Button, HStack, Icon, VStack } from '@chakra-ui/react';
+import { Button, HStack, Icon, useDisclosure, VStack } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
+import { useCallback, useMemo } from 'react';
 import { FormProvider, Path, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router';
+import { BlockerFunction, useBlocker, useNavigate } from 'react-router';
 
 import EditIcon from '~/assets/icons/edit-icon.svg?react';
+import { LeavePageModal } from '~/components/modals/leave-page-modal';
 import { HttpStatusCodes } from '~/constants/data/http-status';
 import { pathes } from '~/constants/navigation/pathes';
 import {
@@ -43,17 +45,15 @@ type NewRecipeFormProps = {
 export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({ mode = 'create', recipe }) => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     const [createRecipe, { isLoading }] = useCreateRecipeMutation();
     const [updateRecipe, { isLoading: isUpdating }] = useUpdateRecipeMutation();
     const [saveDraft, { isLoading: isSavingDraft }] = useCreateRecipeDraftMutation();
     const redirectToRecipe = useRedirectToRecipe({ showSuccessNotification: true });
 
-    const methods = useForm<RecipeFormData>({
-        resolver: zodResolver(recipeSchema),
-        reValidateMode: 'onChange',
-        mode: 'onChange',
-        defaultValues:
+    const initialValues = useMemo(
+        () =>
             mode === 'edit' && recipe
                 ? mapRecipeToFormData(recipe)
                 : {
@@ -61,9 +61,36 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({ mode = 'create', r
                       ingredients: [{ title: '', count: 0, measureUnit: '' }],
                       steps: [{ description: '', image: undefined }],
                   },
+        [mode, recipe],
+    );
+
+    const methods = useForm<RecipeFormData>({
+        resolver: zodResolver(recipeSchema),
+        reValidateMode: 'onChange',
+        mode: 'onChange',
+        defaultValues: initialValues,
     });
 
+    const { dirtyFields } = methods.formState;
+    const formIsDirty = Object.keys(dirtyFields).length > 0;
+
     useGlobalLoading(isLoading || isUpdating || isSavingDraft);
+
+    const shouldBlock = useCallback<BlockerFunction>(() => {
+        if (formIsDirty) {
+            onOpen();
+        }
+        return formIsDirty;
+    }, [formIsDirty, onOpen]);
+
+    const blocker = useBlocker(shouldBlock);
+
+    const handleConfirmLeavePage = () => {
+        onClose();
+        if (blocker.state === 'blocked') {
+            blocker.proceed();
+        }
+    };
 
     const onSubmit = async (data: RecipeFormData) => {
         const stepsWithNumbers: Step[] = data.steps.map((s, i) => ({ ...s, stepNumber: i + 1 }));
@@ -152,34 +179,43 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({ mode = 'create', r
     };
 
     return (
-        <FormProvider {...methods}>
-            <VStack
-                as='form'
-                onSubmit={methods.handleSubmit(onSubmit)}
-                w='100%'
-                spacing={{ base: 8, md: 10 }}
-                align='center'
-            >
-                <NewRecipeHeader />
-                <NewRecipeIngridients />
-                <NewRecipeSteps />
+        <>
+            <FormProvider {...methods}>
+                <VStack
+                    as='form'
+                    onSubmit={methods.handleSubmit(onSubmit)}
+                    w='100%'
+                    spacing={{ base: 8, md: 10 }}
+                    align='center'
+                >
+                    <NewRecipeHeader />
+                    <NewRecipeIngridients />
+                    <NewRecipeSteps />
 
-                <HStack>
-                    <Button
-                        leftIcon={<Icon as={EditIcon} />}
-                        variant='outline'
-                        colorScheme='black'
-                        px={4}
-                        size='lg'
-                        onClick={onSaveDraft}
-                    >
-                        Сохранить черновик
-                    </Button>
-                    <Button variant='black' size='lg' type='submit'>
-                        Опубликовать рецепт
-                    </Button>
-                </HStack>
-            </VStack>
-        </FormProvider>
+                    <HStack>
+                        <Button
+                            leftIcon={<Icon as={EditIcon} />}
+                            variant='outline'
+                            colorScheme='black'
+                            px={4}
+                            size='lg'
+                            onClick={onSaveDraft}
+                        >
+                            Сохранить черновик
+                        </Button>
+                        <Button variant='black' size='lg' type='submit'>
+                            Опубликовать рецепт
+                        </Button>
+                    </HStack>
+                </VStack>
+            </FormProvider>
+
+            <LeavePageModal
+                isOpen={isOpen}
+                onClose={onClose}
+                onSaveDraft={onSaveDraft}
+                onExitWithoutSaving={handleConfirmLeavePage}
+            />
+        </>
     );
 };
