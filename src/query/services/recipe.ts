@@ -323,6 +323,19 @@ export const recipeApiSlice = apiSlice
                     { type: Tags.RECIPE, id },
                 ],
             }),
+            [EndpointNames.TOGGLE_LIKE_RECIPE]: builder.mutation<
+                { message: string; likes: number },
+                string
+            >({
+                query: (recipeId) => ({
+                    url: `${ApiEndpoints.RECIPE}/${recipeId}/like`,
+                    method: 'POST',
+                }),
+                invalidatesTags: (_result, _error, recipeId) => [
+                    { type: Tags.RECIPE, id: 'LIST' },
+                    { type: Tags.RECIPE, id: recipeId },
+                ],
+            }),
         }),
         overrideExisting: false,
     });
@@ -341,4 +354,5 @@ export const {
     useUpdateRecipeMutation,
     useCreateRecipeDraftMutation,
     useDeleteRecipeMutation,
+    useToggleLikeRecipeMutation,
 } = recipeApiSlice;

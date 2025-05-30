@@ -71,8 +71,8 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({ mode = 'create', r
         defaultValues: initialValues,
     });
 
-    const { dirtyFields } = methods.formState;
-    const formIsDirty = Object.keys(dirtyFields).length > 0;
+    const { dirtyFields, isSubmitSuccessful } = methods.formState;
+    const formIsDirty = Object.keys(dirtyFields).length > 0 && !isSubmitSuccessful;
 
     useGlobalLoading(isLoading || isUpdating || isSavingDraft);
 

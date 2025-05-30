@@ -97,7 +97,7 @@ export const RecipeInfo: React.FC<RecipeInfoProps> = ({
                         <EditRecipeButton />
                     </HStack>
                 ) : (
-                    <ActionButtons />
+                    <ActionButtons recipeId={recipeId!} />
                 )}
             </HStack>
         </VStack>

@@ -1,6 +1,6 @@
 import { VStack } from '@chakra-ui/react';
 import { useEffect } from 'react';
-import { LoaderFunction, useLoaderData, useLocation } from 'react-router';
+import { LoaderFunction, useLocation, useParams } from 'react-router';
 
 import { RecipeAuthorCard } from '~/components/cards/recipe-author-card/recipe-author-card';
 import { NewRecipesSection } from '~/components/sections/new-recipes-section/new-recipes-section';
@@ -9,7 +9,7 @@ import { NutritionSection } from '~/components/sections/recipe/nutrition-section
 import { RecipeStepsSection } from '~/components/sections/recipe/recipe-steps-section/recipe-steps-section';
 import { RecipeTableSection } from '~/components/sections/recipe/recipe-table-section/recipe-table-section';
 import { authors } from '~/constants/data/authors';
-import { Recipe, recipeApiSlice } from '~/query/services/recipe';
+import { recipeApiSlice, useGetRecipeByIdQuery } from '~/query/services/recipe';
 import { selectUserId } from '~/store/auth/selectors';
 import { store } from '~/store/configure-store';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
@@ -31,10 +31,14 @@ export const RecipePageLoader: LoaderFunction = async ({ params }) => {
 export const HydrateRecipePage: React.FC = () => null;
 
 export const RecipePage = () => {
-    const recipe = useLoaderData<Recipe>();
+    const { recipeId } = useParams<{ recipeId: string }>();
     const currentUserId = useAppSelector(selectUserId);
 
-    const isAuthor = recipe.authorId === currentUserId;
+    const { data: recipe } = useGetRecipeByIdQuery(recipeId!, {
+        refetchOnMountOrArgChange: false,
+    });
+
+    const isAuthor = recipe?.authorId === currentUserId;
 
     const location = useLocation();
     const dispatch = useAppDispatch();
@@ -46,6 +50,8 @@ export const RecipePage = () => {
             window.history.replaceState({ ...location.state, showSuccessNotification: false }, '');
         }
     }, [location, dispatch]);
+
+    if (!recipe) return null;
 
     return (
         <VStack spacing={{ base: 6, md: 10 }} px={{ base: 4, sm: 5, md: 6 }}>

@@ -15,5 +15,8 @@ export enum EndpointNames {
     UPDATE_RECIPE = 'updateRecipe',
     DELETE_RECIPE = 'deleteRecipe',
 
+    TOGGLE_LIKE_RECIPE = 'toggleLikeRecipe',
+    TOGGLE_BOOKMARK_RECIPE = 'toggleBookmarkRecipe',
+
     GET_MEASURE_UNITS = 'getMeasureUnits',
 }
