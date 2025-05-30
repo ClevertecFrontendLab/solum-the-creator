@@ -1,4 +1,7 @@
-import { RecipeFormData } from '~/components/ui/forms/new-recipe-form/recipe-schema';
+import {
+    RecipeDraftFormData,
+    RecipeFormData,
+} from '~/components/ui/forms/new-recipe-form/recipe-schema';
 import { Ingredient, NutritionValue, RecipeStep } from '~/constants/data/recipes';
 import { getValuable } from '~/utils/get-valuable-obj';
 import { transformRecipeResponse } from '~/utils/image';
@@ -289,6 +292,13 @@ export const recipeApiSlice = apiSlice
                           ]
                         : [{ type: Tags.RECIPE, id: 'LIST' }],
             }),
+            [EndpointNames.CREATE_RECIPE_DRAFT]: builder.mutation<void, RecipeDraftFormData>({
+                query: (body) => ({
+                    url: ApiEndpoints.RECIPE_DRAFT,
+                    method: 'POST',
+                    body,
+                }),
+            }),
             [EndpointNames.UPDATE_RECIPE]: builder.mutation<
                 Recipe,
                 { id: string; body: RecipeFormData }
@@ -319,4 +329,5 @@ export const {
     useGetRelevantRecipesQuery,
     useCreateRecipeMutation,
     useUpdateRecipeMutation,
+    useCreateRecipeDraftMutation,
 } = recipeApiSlice;

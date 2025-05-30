@@ -23,8 +23,25 @@ export const recipeSchema = z.object({
     ingredients: z.array(ingredientSchema).min(1),
 });
 
+export const ingredientDraftSchema = ingredientSchema.partial();
+
+export const stepDraftSchema = stepSchema.partial();
+
+export const recipeDraftSchema = z.object({
+    title: z.string().min(1).max(50),
+    description: z.string().max(500).optional(),
+    time: z.number().int().positive().max(10000).optional(),
+    portions: z.number().int().min(1).max(100).optional(),
+    image: z.string().optional(),
+    categoriesIds: z.array(z.string()).optional(),
+    ingredients: z.array(ingredientDraftSchema).optional(),
+    steps: z.array(stepDraftSchema).optional(),
+});
+
 export type Ingredient = z.infer<typeof ingredientSchema>;
 
 export type Step = z.infer<typeof stepSchema>;
 
 export type RecipeFormData = z.infer<typeof recipeSchema>;
+
+export type RecipeDraftFormData = z.infer<typeof recipeDraftSchema>;
