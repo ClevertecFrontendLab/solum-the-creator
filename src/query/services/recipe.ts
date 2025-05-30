@@ -313,6 +313,16 @@ export const recipeApiSlice = apiSlice
                     { type: Tags.RECIPE, id },
                 ],
             }),
+            [EndpointNames.DELETE_RECIPE]: builder.mutation<void, string>({
+                query: (id) => ({
+                    url: `${ApiEndpoints.RECIPE}/${id}`,
+                    method: 'DELETE',
+                }),
+                invalidatesTags: (_result, _error, id) => [
+                    { type: Tags.RECIPE, id: 'LIST' },
+                    { type: Tags.RECIPE, id },
+                ],
+            }),
         }),
         overrideExisting: false,
     });
@@ -330,4 +340,5 @@ export const {
     useCreateRecipeMutation,
     useUpdateRecipeMutation,
     useCreateRecipeDraftMutation,
+    useDeleteRecipeMutation,
 } = recipeApiSlice;

@@ -178,6 +178,11 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({ mode = 'create', r
         }
     };
 
+    const handleOnSaveDraft = () => {
+        onSaveDraft();
+        onClose();
+    };
+
     return (
         <>
             <FormProvider {...methods}>
@@ -213,7 +218,7 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({ mode = 'create', r
             <LeavePageModal
                 isOpen={isOpen}
                 onClose={onClose}
-                onSaveDraft={onSaveDraft}
+                onSaveDraft={handleOnSaveDraft}
                 onExitWithoutSaving={handleConfirmLeavePage}
             />
         </>

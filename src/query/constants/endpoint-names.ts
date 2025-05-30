@@ -13,6 +13,7 @@ export enum EndpointNames {
     CREATE_RECIPE = 'createRecipe',
     CREATE_RECIPE_DRAFT = 'createRecipeDraft',
     UPDATE_RECIPE = 'updateRecipe',
+    DELETE_RECIPE = 'deleteRecipe',
 
     GET_MEASURE_UNITS = 'getMeasureUnits',
 }

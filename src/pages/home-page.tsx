@@ -41,6 +41,15 @@ export const HomePage = () => {
                 '',
             );
         }
+
+        if (location.state?.showSuccessDeleteRecipeNotification) {
+            dispatch(addNotification({ type: 'success', title: 'Рецепт успешно удален' }));
+
+            window.history.replaceState(
+                { ...location.state, showSuccessDeleteRecipeNotification: false },
+                '',
+            );
+        }
     }, [location, dispatch]);
 
     return (

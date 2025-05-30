@@ -18,6 +18,11 @@ export const notificationServerErrorImage = {
     description: 'Попробуйте сохранить фото позже',
 };
 
+export const notificationServerErrorDeleteRecipe = {
+    title: 'Ошибка сервера',
+    description: 'Не удалось удалить рецепт',
+};
+
 export const notificationServerErrorNewRecipe = {
     title: 'Ошибка сервера',
     description: 'Попробуйте пока сохранить в черновик',
