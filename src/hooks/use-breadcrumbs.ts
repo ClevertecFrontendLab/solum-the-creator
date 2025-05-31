@@ -27,6 +27,11 @@ export const useBreadcrumbs = (): Breadcrumb[] => {
 
         let currentPath = '';
 
+        if (segments[0] === 'edit-recipe') {
+            crumbs.push({ label: 'Редактировать рецепт', href: location.pathname });
+            return crumbs;
+        }
+
         segments.forEach((seg, idx) => {
             if (idx === 0) {
                 const sp = staticPaths.find((p) => p.path === `/${seg}`);

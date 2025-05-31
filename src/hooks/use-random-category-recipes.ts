@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-import { useGetRelevantRecipesQuery } from '~/query/services/recipe';
+import { useGetRelevantRecipesQuery } from '~/query/services/recipe/recipe';
 import { selectAllCategories } from '~/store/category/selectors';
 import { useAppSelector } from '~/store/hooks';
 

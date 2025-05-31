@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 
-import { Recipe, SortParams, useGetFilteredRecipesInfiniteQuery } from '~/query/services/recipe';
+import {
+    Recipe,
+    SortParams,
+    useGetFilteredRecipesInfiniteQuery,
+} from '~/query/services/recipe/recipe';
 import { useAppSelector } from '~/store/hooks';
 import {
     selectAppliedFilters,

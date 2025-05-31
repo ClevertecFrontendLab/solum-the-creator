@@ -8,6 +8,36 @@ export const notificationServerError = {
     description: 'Попробуйте немного позже',
 };
 
+export const notificationServerErrorNotFound = {
+    title: 'Ошибка сервера',
+    description: 'Попробуйте поискать снова попозже',
+};
+
+export const notifcationRecipeConflictError = {
+    title: 'Ошибка',
+    description: 'Рецепт с таким названием уже существует',
+};
+
+export const notificationServerErrorImage = {
+    title: 'Ошибка сервера',
+    description: 'Попробуйте сохранить фото позже',
+};
+
+export const notificationServerErrorDeleteRecipe = {
+    title: 'Ошибка сервера',
+    description: 'Не удалось удалить рецепт',
+};
+
+export const notificationServerErrorNewRecipe = {
+    title: 'Ошибка сервера',
+    description: 'Попробуйте пока сохранить в черновик',
+};
+
+export const notificationServerErrorDraft = {
+    title: 'Ошибка сервера',
+    description: 'Не удалось сохранить черновик рецепта',
+};
+
 export const notificationLoginNotExists = {
     title: 'Такого логина нет',
     description: 'Попробуйте другой логин или проверьте правильность его написания',

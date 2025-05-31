@@ -9,6 +9,7 @@ type HeaderSectionProps = {
     description: string;
     time: number;
     likes?: number;
+    isAuthor?: boolean;
     bookmarks?: number;
 };
 
@@ -19,6 +20,7 @@ export const HeaderSection: React.FC<HeaderSectionProps> = ({
     description,
     time,
     likes,
+    isAuthor,
     bookmarks,
 }) => (
     <Flex
@@ -45,6 +47,7 @@ export const HeaderSection: React.FC<HeaderSectionProps> = ({
                 time={time}
                 likes={likes}
                 bookmarks={bookmarks}
+                isAuthor={isAuthor}
             />
         </Box>
     </Flex>

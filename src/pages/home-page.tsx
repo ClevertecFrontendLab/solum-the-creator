@@ -1,5 +1,7 @@
 import { Box, Flex } from '@chakra-ui/react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router';
 
 import { HeroSection } from '~/components/sections/hero-section/hero-section';
 import { CulinaryBlogsSection } from '~/components/sections/home/culinary-blogs-section';
@@ -9,8 +11,13 @@ import { RecipeHorizontalGridSection } from '~/components/sections/recipe-horizo
 import { RelevantKitchenSection } from '~/components/sections/relevant-kitchen-section/relevant-kitchen-section';
 import { fadeIn } from '~/constants/motions/motion-presets';
 import { useFilteredRecipes } from '~/hooks/use-filtered-recipes';
+import { useAppDispatch } from '~/store/hooks';
+import { addNotification } from '~/store/notification/slice';
 
 export const HomePage = () => {
+    const location = useLocation();
+    const dispatch = useAppDispatch();
+
     const {
         cachedRecipes,
         isFilterApplied,
@@ -24,6 +31,26 @@ export const HomePage = () => {
     const isSuccessResult = !!(isFilterApplied && cachedRecipes);
 
     const shouldShowRecipes = isFilterApplied && cachedRecipes && cachedRecipes.length > 0;
+
+    useEffect(() => {
+        if (location.state?.showSuccessDraftNotification) {
+            dispatch(addNotification({ type: 'success', title: 'Черновик успешно сохранен' }));
+
+            window.history.replaceState(
+                { ...location.state, showSuccessDraftNotification: false },
+                '',
+            );
+        }
+
+        if (location.state?.showSuccessDeleteRecipeNotification) {
+            dispatch(addNotification({ type: 'success', title: 'Рецепт успешно удален' }));
+
+            window.history.replaceState(
+                { ...location.state, showSuccessDeleteRecipeNotification: false },
+                '',
+            );
+        }
+    }, [location, dispatch]);
 
     return (
         <Flex direction='column' align='center'>

@@ -1,9 +1,9 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
 
-import { baseQueryWithErrorNotification } from './base-query';
+import { baseQueryWithReauthAndNotify } from './base-query-notify';
 
 export const apiSlice = createApi({
     reducerPath: 'api',
-    baseQuery: baseQueryWithErrorNotification,
+    baseQuery: baseQueryWithReauthAndNotify,
     endpoints: () => ({}),
 });

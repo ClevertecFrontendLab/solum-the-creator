@@ -8,6 +8,8 @@ type MultiSelectTriggerProps = {
     placeholder: string;
     isOpen?: boolean;
     isDisabled?: boolean;
+    isInvalid?: boolean;
+    maxVisibleTags?: number;
     dataTestId?: string;
 };
 
@@ -16,9 +18,20 @@ export const MultiSelectTrigger: React.FC<MultiSelectTriggerProps> = ({
     placeholder,
     isOpen,
     isDisabled,
+    isInvalid,
+    maxVisibleTags,
     dataTestId,
 }) => {
-    const borderColor = selected.length > 0 ? 'lime.300' : undefined;
+    let borderColor: string;
+
+    if (isInvalid) {
+        borderColor = 'red.500';
+    } else if (selected.length > 0) {
+        borderColor = 'lime.300';
+    } else {
+        borderColor = 'blackAlpha.400';
+    }
+
     return (
         <MenuButton
             as={Button}
@@ -37,7 +50,7 @@ export const MultiSelectTrigger: React.FC<MultiSelectTriggerProps> = ({
             <Box w='100%' textAlign='left'>
                 {selected.length > 0 ? (
                     <Flex flexWrap='wrap' rowGap={1} columnGap={2}>
-                        {selected.map((option) => (
+                        {selected.slice(0, maxVisibleTags ?? selected.length).map((option) => (
                             <Tag
                                 key={option.value}
                                 variant='outline'
@@ -48,6 +61,11 @@ export const MultiSelectTrigger: React.FC<MultiSelectTriggerProps> = ({
                                 <TagLabel>{option.label}</TagLabel>
                             </Tag>
                         ))}
+                        {selected.length > (maxVisibleTags ?? selected.length) && (
+                            <Tag variant='outline' size='sm' color='lime.600' colorScheme='lime'>
+                                <TagLabel>+{selected.length - (maxVisibleTags ?? 0)}</TagLabel>
+                            </Tag>
+                        )}
                     </Flex>
                 ) : (
                     <Box as='span' noOfLines={1} wordBreak='break-all'>

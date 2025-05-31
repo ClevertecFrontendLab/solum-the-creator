@@ -9,4 +9,14 @@ export enum EndpointNames {
     GET_RECIPE_BY_ID = 'getRecipeById',
     GET_FILTERED_RECIPES = 'getFilteredRecipes',
     GET_RELEVANT_RECIPES = 'getRelevantRecipes',
+
+    CREATE_RECIPE = 'createRecipe',
+    CREATE_RECIPE_DRAFT = 'createRecipeDraft',
+    UPDATE_RECIPE = 'updateRecipe',
+    DELETE_RECIPE = 'deleteRecipe',
+
+    TOGGLE_LIKE_RECIPE = 'toggleLikeRecipe',
+    TOGGLE_BOOKMARK_RECIPE = 'toggleBookmarkRecipe',
+
+    GET_MEASURE_UNITS = 'getMeasureUnits',
 }

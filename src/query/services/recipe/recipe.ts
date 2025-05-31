@@ -1,12 +1,24 @@
+import {
+    RecipeDraftFormData,
+    RecipeFormData,
+} from '~/components/ui/forms/new-recipe-form/recipe-schema';
 import { Ingredient, NutritionValue, RecipeStep } from '~/constants/data/recipes';
 import { getValuable } from '~/utils/get-valuable-obj';
 import { transformRecipeResponse } from '~/utils/image';
 
-import { ApiEndpoints } from '../constants/api';
-import { ApiGroupNames } from '../constants/api-group-names';
-import { EndpointNames } from '../constants/endpoint-names';
-import { Tags } from '../constants/tags';
-import { apiSlice } from '../create-api';
+import { ApiEndpoints } from '../../constants/api';
+import { ApiGroupNames } from '../../constants/api-group-names';
+import { EndpointNames } from '../../constants/endpoint-names';
+import { Tags } from '../../constants/tags';
+import { apiSlice } from '../../create-api';
+import {
+    invalidatesById,
+    invalidatesRecipe,
+    providesInfiniteRecipes,
+    providesInfiniteWrapperRecipes,
+    providesRecipeList,
+    providesTopRecipes,
+} from './utils/tags';
 
 export type Recipe = {
     _id: string;
@@ -75,16 +87,7 @@ export const recipeApiSlice = apiSlice
                 }),
                 transformResponse: (response: { data: Recipe[] }): Recipe[] =>
                     transformRecipeResponse(response.data),
-                providesTags: (result) =>
-                    result
-                        ? [
-                              ...result.map(({ _id }) => ({
-                                  type: Tags.RECIPE as const,
-                                  id: _id,
-                              })),
-                              { type: Tags.RECIPE, id: 'LIST' },
-                          ]
-                        : [{ type: Tags.RECIPE, id: 'LIST' }],
+                providesTags: providesRecipeList,
             }),
 
             [EndpointNames.GET_JUICIEST_RECIPES]: builder.query<Recipe[], void>({
@@ -96,13 +99,7 @@ export const recipeApiSlice = apiSlice
                     name: EndpointNames.GET_JUICIEST_RECIPES,
                 }),
                 transformResponse: (res: { data: Recipe[] }) => transformRecipeResponse(res.data),
-                providesTags: (result) =>
-                    result
-                        ? [
-                              ...result.map((r) => ({ type: Tags.RECIPE as const, id: r._id })),
-                              { type: Tags.RECIPE, id: 'TOP' as const },
-                          ]
-                        : [{ type: Tags.RECIPE, id: 'TOP' as const }],
+                providesTags: providesTopRecipes,
             }),
             [EndpointNames.GET_JUICIEST_RECIPES_PAGINATED]: builder.infiniteQuery<
                 { data: Recipe[]; meta: RecipeResponse['meta'] },
@@ -134,6 +131,7 @@ export const recipeApiSlice = apiSlice
                     apiGroupName: ApiGroupNames.RECIPE,
                     name: EndpointNames.GET_JUICIEST_RECIPES_PAGINATED,
                 }),
+                providesTags: providesInfiniteWrapperRecipes,
                 transformResponse: (response: RecipeResponse) => ({
                     data: transformRecipeResponse(response.data),
                     meta: response.meta,
@@ -156,16 +154,7 @@ export const recipeApiSlice = apiSlice
                 }),
                 transformResponse: (response: { data: Recipe[] }): Recipe[] =>
                     transformRecipeResponse(response.data),
-                providesTags: (result) =>
-                    result
-                        ? [
-                              ...result.map(({ _id }) => ({
-                                  type: Tags.RECIPE as const,
-                                  id: _id,
-                              })),
-                              { type: Tags.RECIPE, id: 'LIST' },
-                          ]
-                        : [{ type: Tags.RECIPE, id: 'LIST' }],
+                providesTags: providesRecipeList,
             }),
             [EndpointNames.GET_RELEVANT_RECIPES]: builder.query<
                 Recipe[],
@@ -211,6 +200,7 @@ export const recipeApiSlice = apiSlice
                     apiGroupName: ApiGroupNames.RECIPE,
                     name: EndpointNames.GET_RECIPES_BY_CATEGORY_ID_PAGINATED,
                 }),
+                providesTags: providesInfiniteRecipes,
                 transformResponse: (response: RecipeResponse): Recipe[] =>
                     transformRecipeResponse(response.data),
             }),
@@ -270,8 +260,146 @@ export const recipeApiSlice = apiSlice
                         name: EndpointNames.GET_FILTERED_RECIPES,
                     };
                 },
+                providesTags: providesInfiniteRecipes,
                 transformResponse: (response: RecipeResponse): Recipe[] =>
                     transformRecipeResponse(response.data),
+            }),
+
+            [EndpointNames.CREATE_RECIPE]: builder.mutation<Recipe, RecipeFormData>({
+                query: (body) => ({
+                    url: ApiEndpoints.RECIPE,
+                    method: 'POST',
+                    body,
+                }),
+                invalidatesTags: invalidatesRecipe,
+            }),
+            [EndpointNames.CREATE_RECIPE_DRAFT]: builder.mutation<void, RecipeDraftFormData>({
+                query: (body) => ({
+                    url: ApiEndpoints.RECIPE_DRAFT,
+                    method: 'POST',
+                    body,
+                }),
+            }),
+            [EndpointNames.UPDATE_RECIPE]: builder.mutation<
+                Recipe,
+                { id: string; body: RecipeFormData }
+            >({
+                query: ({ id, body }) => ({
+                    url: `${ApiEndpoints.RECIPE}/${id}`,
+                    method: 'PATCH',
+                    body,
+                }),
+                invalidatesTags: (_result, _error, { id }) => invalidatesById(id),
+            }),
+            [EndpointNames.DELETE_RECIPE]: builder.mutation<void, string>({
+                query: (id) => ({
+                    url: `${ApiEndpoints.RECIPE}/${id}`,
+                    method: 'DELETE',
+                }),
+                invalidatesTags: (_result, _error, id) => invalidatesById(id),
+            }),
+            [EndpointNames.TOGGLE_LIKE_RECIPE]: builder.mutation<
+                { message: string; likes: number },
+                string
+            >({
+                query: (recipeId) => ({
+                    url: `${ApiEndpoints.RECIPE}/${recipeId}/like`,
+                    method: 'POST',
+                }),
+                invalidatesTags: (_result, _error, recipeId) => [
+                    { type: Tags.RECIPE, id: recipeId },
+                ],
+            }),
+            [EndpointNames.TOGGLE_BOOKMARK_RECIPE]: builder.mutation<
+                { message: string; count: number },
+                string
+            >({
+                query: (recipeId) => ({
+                    url: `${ApiEndpoints.RECIPE}/${recipeId}/bookmark`,
+                    method: 'POST',
+                }),
+                async onQueryStarted(recipeId, { dispatch, queryFulfilled, getState }) {
+                    try {
+                        const { data: updatedBoomark } = await queryFulfilled;
+                        dispatch(
+                            recipeApiSlice.util.updateQueryData(
+                                EndpointNames.GET_RECIPE_BY_ID,
+                                recipeId,
+                                (draft) => {
+                                    draft.bookmarks = updatedBoomark.count;
+                                },
+                            ),
+                        );
+
+                        const state = getState();
+
+                        const categoryArgs = recipeApiSlice.util.selectCachedArgsForQuery(
+                            state,
+                            EndpointNames.GET_RECIPES_BY_CATEGORY_ID_PAGINATED,
+                        );
+
+                        dispatch(
+                            recipeApiSlice.util.updateQueryData(
+                                EndpointNames.GET_RECIPES_BY_CATEGORY_ID_PAGINATED,
+                                categoryArgs[categoryArgs.length - 1],
+                                (draft) => {
+                                    draft.pages = draft.pages.map((page) =>
+                                        page.map((recipe) =>
+                                            recipe._id === recipeId
+                                                ? { ...recipe, bookmarks: updatedBoomark.count }
+                                                : recipe,
+                                        ),
+                                    );
+                                },
+                            ),
+                        );
+
+                        const juiciestArgs = recipeApiSlice.util.selectCachedArgsForQuery(
+                            state,
+                            EndpointNames.GET_JUICIEST_RECIPES_PAGINATED,
+                        );
+
+                        dispatch(
+                            recipeApiSlice.util.updateQueryData(
+                                EndpointNames.GET_JUICIEST_RECIPES_PAGINATED,
+                                juiciestArgs[juiciestArgs.length - 1],
+                                (draft) => {
+                                    draft.pages = draft.pages.map(({ data, ...page }) => ({
+                                        ...page,
+                                        data: data.map((recipe) =>
+                                            recipe._id === recipeId
+                                                ? { ...recipe, bookmarks: updatedBoomark.count }
+                                                : recipe,
+                                        ),
+                                    }));
+                                },
+                            ),
+                        );
+
+                        const filteredArgs = recipeApiSlice.util.selectCachedArgsForQuery(
+                            state,
+                            EndpointNames.GET_FILTERED_RECIPES,
+                        );
+
+                        dispatch(
+                            recipeApiSlice.util.updateQueryData(
+                                EndpointNames.GET_FILTERED_RECIPES,
+                                filteredArgs[filteredArgs.length - 1],
+                                (draft) => {
+                                    draft.pages = draft.pages.map((page) =>
+                                        page.map((recipe) =>
+                                            recipe._id === recipeId
+                                                ? { ...recipe, bookmarks: updatedBoomark.count }
+                                                : recipe,
+                                        ),
+                                    );
+                                },
+                            ),
+                        );
+                    } catch {
+                        console.error('Error toggling bookmark');
+                    }
+                },
             }),
         }),
         overrideExisting: false,
@@ -287,4 +415,10 @@ export const {
     useGetRecipeByIdQuery,
     useGetFilteredRecipesInfiniteQuery,
     useGetRelevantRecipesQuery,
+    useCreateRecipeMutation,
+    useUpdateRecipeMutation,
+    useCreateRecipeDraftMutation,
+    useDeleteRecipeMutation,
+    useToggleLikeRecipeMutation,
+    useToggleBookmarkRecipeMutation,
 } = recipeApiSlice;

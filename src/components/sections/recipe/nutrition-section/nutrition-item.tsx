@@ -1,13 +1,13 @@
 import { Flex, Text } from '@chakra-ui/react';
 
 type NutritionSectionProps = {
-    type: 'calories' | 'proteins' | 'fats' | 'carbohydrates';
+    type: 'calories' | 'protein' | 'fats' | 'carbohydrates';
     value: number;
 };
 
 const labels = {
     calories: 'калорийность',
-    proteins: 'белки',
+    protein: 'белки',
     fats: 'жиры',
     carbohydrates: 'углеводы',
 };

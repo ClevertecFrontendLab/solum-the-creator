@@ -4,14 +4,14 @@ import { NutritionItem } from './nutrition-item';
 
 type NutritionSectionProps = {
     calories: number;
-    proteins: number;
+    protein: number;
     fats: number;
     carbohydrates: number;
 };
 
 export const NutritionSection: React.FC<NutritionSectionProps> = ({
     calories,
-    proteins,
+    protein,
     fats,
     carbohydrates,
 }) => (
@@ -30,7 +30,7 @@ export const NutritionSection: React.FC<NutritionSectionProps> = ({
             gap={{ base: 3, '2xl': 6 }}
         >
             <NutritionItem type='calories' value={calories || 0} />
-            <NutritionItem type='proteins' value={proteins || 0} />
+            <NutritionItem type='protein' value={protein || 0} />
             <NutritionItem type='fats' value={fats || 0} />
             <NutritionItem type='carbohydrates' value={carbohydrates || 0} />
         </Grid>

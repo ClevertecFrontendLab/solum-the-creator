@@ -2,7 +2,7 @@ import { createApi } from '@reduxjs/toolkit/query/react';
 
 import { SignUpRequest, SignUpResponse } from '~/types/auth';
 
-import { rawBaseQuery } from '../base-query-with-reauth';
+import { rawBaseQuery } from '../base-query';
 import { ApiEndpoints } from '../constants/api';
 
 export const authApi = createApi({

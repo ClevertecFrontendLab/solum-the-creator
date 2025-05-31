@@ -13,6 +13,7 @@ import { Switch } from './switch';
 import { Table } from './table';
 import { Tabs } from './tabs';
 import { Tag } from './tag';
+import { Textarea } from './textarea';
 
 export const components = {
     Button,
@@ -30,4 +31,5 @@ export const components = {
     Tag,
     Accordion,
     Table,
+    Textarea,
 };
