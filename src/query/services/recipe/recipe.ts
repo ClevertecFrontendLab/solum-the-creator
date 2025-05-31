@@ -397,7 +397,7 @@ export const recipeApiSlice = apiSlice
                             ),
                         );
                     } catch {
-                        // do nothing
+                        console.error('Error toggling bookmark');
                     }
                 },
             }),
