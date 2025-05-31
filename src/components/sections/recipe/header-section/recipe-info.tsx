@@ -9,7 +9,7 @@ import { RateButtons } from '~/components/shared/buttons/rate-buttons/rate-butto
 import { pathes } from '~/constants/navigation/pathes';
 import { notificationServerErrorDeleteRecipe } from '~/constants/texts/notifications';
 import { useGlobalLoading } from '~/hooks/use-global-loading';
-import { useDeleteRecipeMutation } from '~/query/services/recipe';
+import { useDeleteRecipeMutation } from '~/query/services/recipe/recipe';
 import { selectParentCategoriesBySubIds } from '~/store/category/selectors';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
 import { addNotification } from '~/store/notification/slice';

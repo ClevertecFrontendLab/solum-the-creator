@@ -6,11 +6,19 @@ import { Ingredient, NutritionValue, RecipeStep } from '~/constants/data/recipes
 import { getValuable } from '~/utils/get-valuable-obj';
 import { transformRecipeResponse } from '~/utils/image';
 
-import { ApiEndpoints } from '../constants/api';
-import { ApiGroupNames } from '../constants/api-group-names';
-import { EndpointNames } from '../constants/endpoint-names';
-import { Tags } from '../constants/tags';
-import { apiSlice } from '../create-api';
+import { ApiEndpoints } from '../../constants/api';
+import { ApiGroupNames } from '../../constants/api-group-names';
+import { EndpointNames } from '../../constants/endpoint-names';
+import { Tags } from '../../constants/tags';
+import { apiSlice } from '../../create-api';
+import {
+    invalidatesById,
+    invalidatesRecipe,
+    providesInfiniteRecipes,
+    providesInfiniteWrapperRecipes,
+    providesRecipeList,
+    providesTopRecipes,
+} from './utils/tags';
 
 export type Recipe = {
     _id: string;
@@ -79,16 +87,7 @@ export const recipeApiSlice = apiSlice
                 }),
                 transformResponse: (response: { data: Recipe[] }): Recipe[] =>
                     transformRecipeResponse(response.data),
-                providesTags: (result) =>
-                    result
-                        ? [
-                              ...result.map(({ _id }) => ({
-                                  type: Tags.RECIPE as const,
-                                  id: _id,
-                              })),
-                              { type: Tags.RECIPE, id: 'LIST' },
-                          ]
-                        : [{ type: Tags.RECIPE, id: 'LIST' }],
+                providesTags: providesRecipeList,
             }),
 
             [EndpointNames.GET_JUICIEST_RECIPES]: builder.query<Recipe[], void>({
@@ -100,13 +99,7 @@ export const recipeApiSlice = apiSlice
                     name: EndpointNames.GET_JUICIEST_RECIPES,
                 }),
                 transformResponse: (res: { data: Recipe[] }) => transformRecipeResponse(res.data),
-                providesTags: (result) =>
-                    result
-                        ? [
-                              ...result.map((r) => ({ type: Tags.RECIPE as const, id: r._id })),
-                              { type: Tags.RECIPE, id: 'TOP' as const },
-                          ]
-                        : [{ type: Tags.RECIPE, id: 'TOP' as const }],
+                providesTags: providesTopRecipes,
             }),
             [EndpointNames.GET_JUICIEST_RECIPES_PAGINATED]: builder.infiniteQuery<
                 { data: Recipe[]; meta: RecipeResponse['meta'] },
@@ -138,18 +131,7 @@ export const recipeApiSlice = apiSlice
                     apiGroupName: ApiGroupNames.RECIPE,
                     name: EndpointNames.GET_JUICIEST_RECIPES_PAGINATED,
                 }),
-                providesTags: (result) =>
-                    result
-                        ? [
-                              ...result.pages.flatMap((page) =>
-                                  page.data.map((recipe) => ({
-                                      type: Tags.RECIPE as const,
-                                      id: recipe._id,
-                                  })),
-                              ),
-                              { type: Tags.RECIPE, id: 'LIST' },
-                          ]
-                        : [{ type: Tags.RECIPE, id: 'LIST' }],
+                providesTags: providesInfiniteWrapperRecipes,
                 transformResponse: (response: RecipeResponse) => ({
                     data: transformRecipeResponse(response.data),
                     meta: response.meta,
@@ -172,16 +154,7 @@ export const recipeApiSlice = apiSlice
                 }),
                 transformResponse: (response: { data: Recipe[] }): Recipe[] =>
                     transformRecipeResponse(response.data),
-                providesTags: (result) =>
-                    result
-                        ? [
-                              ...result.map(({ _id }) => ({
-                                  type: Tags.RECIPE as const,
-                                  id: _id,
-                              })),
-                              { type: Tags.RECIPE, id: 'LIST' },
-                          ]
-                        : [{ type: Tags.RECIPE, id: 'LIST' }],
+                providesTags: providesRecipeList,
             }),
             [EndpointNames.GET_RELEVANT_RECIPES]: builder.query<
                 Recipe[],
@@ -227,18 +200,7 @@ export const recipeApiSlice = apiSlice
                     apiGroupName: ApiGroupNames.RECIPE,
                     name: EndpointNames.GET_RECIPES_BY_CATEGORY_ID_PAGINATED,
                 }),
-                providesTags: (result) =>
-                    result
-                        ? [
-                              ...result.pages.flatMap((page) =>
-                                  page.map((recipe) => ({
-                                      type: Tags.RECIPE as const,
-                                      id: recipe._id,
-                                  })),
-                              ),
-                              { type: Tags.RECIPE, id: 'LIST' },
-                          ]
-                        : [{ type: Tags.RECIPE, id: 'LIST' }],
+                providesTags: providesInfiniteRecipes,
                 transformResponse: (response: RecipeResponse): Recipe[] =>
                     transformRecipeResponse(response.data),
             }),
@@ -298,18 +260,7 @@ export const recipeApiSlice = apiSlice
                         name: EndpointNames.GET_FILTERED_RECIPES,
                     };
                 },
-                providesTags: (result) =>
-                    result
-                        ? [
-                              ...result.pages.flatMap((page) =>
-                                  page.map((recipe) => ({
-                                      type: Tags.RECIPE as const,
-                                      id: recipe._id,
-                                  })),
-                              ),
-                              { type: Tags.RECIPE, id: 'LIST' },
-                          ]
-                        : [{ type: Tags.RECIPE, id: 'LIST' }],
+                providesTags: providesInfiniteRecipes,
                 transformResponse: (response: RecipeResponse): Recipe[] =>
                     transformRecipeResponse(response.data),
             }),
@@ -320,13 +271,7 @@ export const recipeApiSlice = apiSlice
                     method: 'POST',
                     body,
                 }),
-                invalidatesTags: (result) =>
-                    result
-                        ? [
-                              { type: Tags.RECIPE, id: 'LIST' },
-                              { type: Tags.RECIPE, id: result._id },
-                          ]
-                        : [{ type: Tags.RECIPE, id: 'LIST' }],
+                invalidatesTags: invalidatesRecipe,
             }),
             [EndpointNames.CREATE_RECIPE_DRAFT]: builder.mutation<void, RecipeDraftFormData>({
                 query: (body) => ({
@@ -344,20 +289,14 @@ export const recipeApiSlice = apiSlice
                     method: 'PATCH',
                     body,
                 }),
-                invalidatesTags: (_result, _error, { id }) => [
-                    { type: Tags.RECIPE, id: 'LIST' },
-                    { type: Tags.RECIPE, id },
-                ],
+                invalidatesTags: (_result, _error, { id }) => invalidatesById(id),
             }),
             [EndpointNames.DELETE_RECIPE]: builder.mutation<void, string>({
                 query: (id) => ({
                     url: `${ApiEndpoints.RECIPE}/${id}`,
                     method: 'DELETE',
                 }),
-                invalidatesTags: (_result, _error, id) => [
-                    { type: Tags.RECIPE, id: 'LIST' },
-                    { type: Tags.RECIPE, id },
-                ],
+                invalidatesTags: (_result, _error, id) => invalidatesById(id),
             }),
             [EndpointNames.TOGGLE_LIKE_RECIPE]: builder.mutation<
                 { message: string; likes: number },

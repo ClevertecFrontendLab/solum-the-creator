@@ -1,5 +1,5 @@
 import { IMG_BASE_URL } from '~/query/constants/api';
-import { Recipe } from '~/query/services/recipe';
+import { Recipe } from '~/query/services/recipe/recipe';
 
 export const getImgUrl = (url?: string | null): string | null => {
     if (!url || typeof url !== 'string') return null;

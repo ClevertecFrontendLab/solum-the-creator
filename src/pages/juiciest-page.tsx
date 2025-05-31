@@ -5,7 +5,7 @@ import { RecipeHorizontalGridSection } from '~/components/sections/recipe-horizo
 import { RelevantKitchenSection } from '~/components/sections/relevant-kitchen-section/relevant-kitchen-section';
 import { useFilteredRecipes } from '~/hooks/use-filtered-recipes';
 import { useGlobalLoading } from '~/hooks/use-global-loading';
-import { useGetJuiciestRecipesPaginatedInfiniteQuery } from '~/query/services/recipe';
+import { useGetJuiciestRecipesPaginatedInfiniteQuery } from '~/query/services/recipe/recipe';
 
 export const JuiciestPage = () => {
     const limit = 8;

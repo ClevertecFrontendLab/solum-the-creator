@@ -4,7 +4,7 @@ import { LoaderFunction, useLoaderData } from 'react-router';
 
 import { NewRecipeForm } from '~/components/ui/forms/new-recipe-form/new-recipe-form';
 import { useLayoutConfig } from '~/context/layout-config/use-layout-config';
-import { Recipe, recipeApiSlice } from '~/query/services/recipe';
+import { Recipe, recipeApiSlice } from '~/query/services/recipe/recipe';
 import { store } from '~/store/configure-store';
 
 export const EditRecipePageLoader: LoaderFunction = async ({ params }) => {

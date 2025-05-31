@@ -2,7 +2,7 @@ import { Box, Button, Grid } from '@chakra-ui/react';
 
 import { RecipeCardHorizontal } from '~/components/cards/recipe-card-horizontal/recipe-card-horizontal';
 import { Loader } from '~/components/shared/misc/loader/loader';
-import { Recipe } from '~/query/services/recipe';
+import { Recipe } from '~/query/services/recipe/recipe';
 
 type RecipeHorizontalGridSectionProps = {
     recipes: Recipe[];

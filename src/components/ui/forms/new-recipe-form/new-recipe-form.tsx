@@ -21,7 +21,7 @@ import {
     useCreateRecipeDraftMutation,
     useCreateRecipeMutation,
     useUpdateRecipeMutation,
-} from '~/query/services/recipe';
+} from '~/query/services/recipe/recipe';
 import { useAppDispatch } from '~/store/hooks';
 import { addNotification } from '~/store/notification/slice';
 import { mapRecipeToFormData, normalizeDraft } from '~/utils/recipe-transform';

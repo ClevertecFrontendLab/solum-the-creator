@@ -9,7 +9,7 @@ import { NutritionSection } from '~/components/sections/recipe/nutrition-section
 import { RecipeStepsSection } from '~/components/sections/recipe/recipe-steps-section/recipe-steps-section';
 import { RecipeTableSection } from '~/components/sections/recipe/recipe-table-section/recipe-table-section';
 import { authors } from '~/constants/data/authors';
-import { recipeApiSlice, useGetRecipeByIdQuery } from '~/query/services/recipe';
+import { recipeApiSlice, useGetRecipeByIdQuery } from '~/query/services/recipe/recipe';
 import { selectUserId } from '~/store/auth/selectors';
 import { store } from '~/store/configure-store';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
