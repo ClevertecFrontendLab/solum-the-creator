@@ -10,6 +10,8 @@ type ImagePreviewProps = {
     width?: string;
     error?: boolean;
     onClick?: () => void;
+    dataTestId?: string;
+    dataTestIdPreview?: string;
 };
 
 export const ImagePreview: React.FC<ImagePreviewProps> = ({
@@ -19,6 +21,8 @@ export const ImagePreview: React.FC<ImagePreviewProps> = ({
     width = '100%',
     error,
     onClick,
+    dataTestId,
+    dataTestIdPreview,
 }) => {
     const isFile = value instanceof File;
     const src = isFile
@@ -39,6 +43,7 @@ export const ImagePreview: React.FC<ImagePreviewProps> = ({
             overflow='hidden'
             position='relative'
             _hover={{ bg: 'blackAlpha.300' }}
+            data-test-id={dataTestId}
         >
             {src ? (
                 <Image
@@ -49,6 +54,7 @@ export const ImagePreview: React.FC<ImagePreviewProps> = ({
                     objectFit='cover'
                     position='absolute'
                     inset={0}
+                    data-test-id={dataTestIdPreview}
                 />
             ) : (
                 <Center h='100%'>

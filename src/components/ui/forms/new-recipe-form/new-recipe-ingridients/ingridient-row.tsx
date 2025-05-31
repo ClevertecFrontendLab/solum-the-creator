@@ -47,6 +47,7 @@ export const IngredientRow: React.FC<IngredientRowProps> = ({
                     showErrorText={false}
                     {...register(`ingredients.${index}.title`)}
                     error={errors.ingredients?.[index]?.title}
+                    data-test-id={`recipe-ingredients-title-${index}`}
                 />
             </GridItem>
 
@@ -61,6 +62,7 @@ export const IngredientRow: React.FC<IngredientRowProps> = ({
                     w='100%'
                     {...register(`ingredients.${index}.count`, { valueAsNumber: true })}
                     error={errors.ingredients?.[index]?.count}
+                    data-test-id={`recipe-ingredients-count-${index}`}
                 />
             </GridItem>
 
@@ -72,6 +74,7 @@ export const IngredientRow: React.FC<IngredientRowProps> = ({
                     options={measureUnitOptions}
                     {...register(`ingredients.${index}.measureUnit`)}
                     error={errors.ingredients?.[index]?.measureUnit}
+                    data-test-id={`recipe-ingredients-measureUnit-${index}`}
                 />
             </GridItem>
 
@@ -86,6 +89,7 @@ export const IngredientRow: React.FC<IngredientRowProps> = ({
                         w='2rem'
                         h='2rem'
                         variant='black'
+                        data-test-id='recipe-ingredients-add-ingredients'
                     />
                 ) : (
                     <IconButton
@@ -97,6 +101,7 @@ export const IngredientRow: React.FC<IngredientRowProps> = ({
                         h='2rem'
                         variant='clear'
                         color='lime.600'
+                        data-test-id={`recipe-ingredients-remove-ingredients-${index}`}
                     />
                 )}
             </GridItem>

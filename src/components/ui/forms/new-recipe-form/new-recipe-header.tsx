@@ -51,6 +51,9 @@ export const NewRecipeHeader = () => {
                         register={register('image')}
                         value={watch('image')}
                         error={errors.image}
+                        dataTestId='recipe-image-block'
+                        dataTestIdInput='recipe-image-block-input-file'
+                        dataTestIdPreview='recipe-image-block-preview-image'
                     />
                 </Box>
             </Box>
@@ -76,6 +79,7 @@ export const NewRecipeHeader = () => {
                                         isInvalid={!!errors.categoriesIds}
                                         maxVisibleTags={maxVisibleTags}
                                         placeholder='Выберите из списка...'
+                                        dataTestId='recipe-categories'
                                     />
                                 )}
                             />
@@ -88,6 +92,7 @@ export const NewRecipeHeader = () => {
                         showErrorText={false}
                         {...register('title')}
                         error={errors.title}
+                        data-test-id='recipe-title'
                     />
 
                     <FormTextarea
@@ -96,6 +101,7 @@ export const NewRecipeHeader = () => {
                         showErrorText={false}
                         {...register('description')}
                         error={errors.description}
+                        data-test-id='recipe-description'
                     />
 
                     <Flex gap={{ base: 4, md: 6 }} justify='start' align='center'>
@@ -106,7 +112,11 @@ export const NewRecipeHeader = () => {
                         </Box>
 
                         <Box maxW='5.625rem'>
-                            <FormNumberInput name='portions' showErrorText={false} />
+                            <FormNumberInput
+                                name='portions'
+                                showErrorText={false}
+                                data-test-id='recipe-portions'
+                            />
                         </Box>
                     </Flex>
 
@@ -118,7 +128,11 @@ export const NewRecipeHeader = () => {
                         </Box>
 
                         <Box maxW='5.625rem'>
-                            <FormNumberInput name='time' showErrorText={false} />
+                            <FormNumberInput
+                                name='time'
+                                showErrorText={false}
+                                data-test-id='recipe-time'
+                            />
                         </Box>
                     </Flex>
                 </VStack>

@@ -10,9 +10,20 @@ type ImageFieldProps = {
     value: File | string | null;
     register: UseFormRegisterReturn;
     error?: FieldError;
+    dataTestId?: string;
+    dataTestIdInput?: string;
+    dataTestIdPreview?: string;
 };
 
-export const ImageField: React.FC<ImageFieldProps> = ({ name, value, register, error }) => {
+export const ImageField: React.FC<ImageFieldProps> = ({
+    name,
+    value,
+    register,
+    error,
+    dataTestId,
+    dataTestIdInput,
+    dataTestIdPreview,
+}) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const handleSave = (url: string) => {
@@ -25,7 +36,14 @@ export const ImageField: React.FC<ImageFieldProps> = ({ name, value, register, e
 
     return (
         <>
-            <ImagePreview name={name} value={value} error={!!error} onClick={onOpen} />
+            <ImagePreview
+                name={name}
+                value={value}
+                error={!!error}
+                onClick={onOpen}
+                dataTestId={dataTestId}
+                dataTestIdPreview={dataTestIdPreview}
+            />
 
             <ImageUploadModal
                 isOpen={isOpen}
@@ -33,6 +51,7 @@ export const ImageField: React.FC<ImageFieldProps> = ({ name, value, register, e
                 initialFile={value}
                 onSave={handleSave}
                 onDelete={handleDelete}
+                dataTestId={dataTestIdInput}
             />
         </>
     );

@@ -41,6 +41,9 @@ export const StepRow: React.FC<StepRowProps> = ({ index, onRemove, register }) =
                         value={imageValue}
                         register={register(imageFieldName)}
                         error={errors.steps?.[index]?.image}
+                        dataTestId={`recipe-steps-image-block-${index}`}
+                        dataTestIdInput={`recipe-steps-image-block-${index}-input-file`}
+                        dataTestIdPreview={`recipe-steps-image-block-${index}-preview-image`}
                     />
                 </Box>
             </GridItem>
@@ -49,16 +52,20 @@ export const StepRow: React.FC<StepRowProps> = ({ index, onRemove, register }) =
                 <VStack align='stretch' spacing={4} h='100%'>
                     <HStack justify='space-between'>
                         <StepBadge step={index + 1} />
-                        <IconButton
-                            aria-label='Удалить'
-                            icon={<DeleteIcon boxSize={4} />}
-                            onClick={onRemove}
-                            size='xs'
-                            w='2rem'
-                            h='2rem'
-                            variant='clear'
-                            color='lime.600'
-                        />
+
+                        {index !== 0 && (
+                            <IconButton
+                                aria-label='Удалить'
+                                icon={<DeleteIcon boxSize={4} />}
+                                onClick={onRemove}
+                                size='xs'
+                                w='2rem'
+                                h='2rem'
+                                variant='clear'
+                                color='lime.600'
+                                data-test-id={`recipe-steps-remove-button-${index}`}
+                            />
+                        )}
                     </HStack>
 
                     <FormTextarea
@@ -67,6 +74,7 @@ export const StepRow: React.FC<StepRowProps> = ({ index, onRemove, register }) =
                         {...register(`steps.${index}.description`)}
                         error={errors.steps?.[index]?.description}
                         minH='5.25rem'
+                        data-test-id={`recipe-steps-description-${index}`}
                     />
                 </VStack>
             </GridItem>

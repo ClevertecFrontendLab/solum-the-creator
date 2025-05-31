@@ -205,10 +205,16 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({ mode = 'create', r
                             px={4}
                             size='lg'
                             onClick={onSaveDraft}
+                            data-test-id='recipe-save-draft-button'
                         >
                             Сохранить черновик
                         </Button>
-                        <Button variant='black' size='lg' type='submit'>
+                        <Button
+                            variant='black'
+                            size='lg'
+                            type='submit'
+                            data-test-id='recipe-publish-recipe-button'
+                        >
                             Опубликовать рецепт
                         </Button>
                     </HStack>

@@ -10,6 +10,7 @@ type MenuButtonProps = {
     size?: 'sm' | 'md';
     hoverColor?: string;
     activeLabelBold?: boolean;
+    dataTestId?: string;
 };
 
 type MenuButtonSize = 'sm' | 'md';
@@ -45,6 +46,7 @@ export const MenuButton: React.FC<MenuButtonProps> = ({
     isActive = false,
     activeLabelBold = false,
     size = 'md',
+    dataTestId,
 }) => {
     const { boxSize, iconSize, textMarginTop, gradientInset } = SIZE_PROPS[size];
 
@@ -72,6 +74,7 @@ export const MenuButton: React.FC<MenuButtonProps> = ({
                     bg={bgColor}
                     _hover={{ bg: hoverColor }}
                     icon={<Icon as={icon} color={iconColor} boxSize={iconSize} />}
+                    data-test-id={dataTestId}
                 />
             </Box>
 

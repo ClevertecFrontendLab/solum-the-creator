@@ -16,6 +16,7 @@ export const PrescribeButton: React.FC = () => {
             onClick={onClick}
             label='Записать рецепт'
             icon={PrescribeIcon}
+            dataTestId='add-recipe-button'
         />
     );
 };

@@ -15,6 +15,7 @@ type ImageUploadModalProps = {
     onSave: (url: string) => void;
     onDelete: () => void;
     onClose: () => void;
+    dataTestId?: string;
 };
 
 export const ImageUploadModal: React.FC<ImageUploadModalProps> = ({
@@ -23,6 +24,7 @@ export const ImageUploadModal: React.FC<ImageUploadModalProps> = ({
     onSave,
     onDelete,
     onClose,
+    dataTestId,
 }) => {
     const [file, setFile] = useState<File | string | null>(initialFile);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -73,7 +75,7 @@ export const ImageUploadModal: React.FC<ImageUploadModalProps> = ({
     };
 
     return (
-        <ModalContainer isOpen={isOpen} onClose={onClose}>
+        <ModalContainer isOpen={isOpen} onClose={onClose} dataTestId='recipe-image-modal'>
             <VStack align='center' spacing={8}>
                 <Heading as='h2' fontSize='2xl' textAlign='center' fontWeight='700'>
                     Изоброжение
@@ -85,6 +87,8 @@ export const ImageUploadModal: React.FC<ImageUploadModalProps> = ({
                     onClick={pickFile}
                     height='12.875rem'
                     width='12.875rem'
+                    dataTestId='recipe-image-modal-image-block'
+                    dataTestIdPreview='recipe-image-modal-preview-image'
                 />
 
                 <input
@@ -93,6 +97,7 @@ export const ImageUploadModal: React.FC<ImageUploadModalProps> = ({
                     ref={inputRef}
                     onChange={handleChange}
                     style={{ display: 'none' }}
+                    data-test-id={dataTestId}
                 />
 
                 <VStack spacing={4}>

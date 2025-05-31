@@ -18,7 +18,7 @@ export const LeavePageModal: React.FC<LeavePageModalProps> = ({
     onSaveDraft,
     onExitWithoutSaving,
 }) => (
-    <ModalContainer isOpen={isOpen} onClose={onClose}>
+    <ModalContainer isOpen={isOpen} onClose={onClose} dataTestId='recipe-preventive-modal'>
         <ModalBody p={0}>
             <VStack spacing={8}>
                 <Image

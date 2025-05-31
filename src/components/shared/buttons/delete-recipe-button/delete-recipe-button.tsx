@@ -14,5 +14,6 @@ export const DeleteRecipeButton: React.FC<DeleteRecipeButtonProps> = ({ onClick 
         w={{ base: '1.5rem', md: '3rem' }}
         h={{ base: '1.25rem', md: '3rem' }}
         variant='clear'
+        data-test-id='recipe-delete-button'
     />
 );

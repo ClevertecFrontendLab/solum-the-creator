@@ -34,7 +34,7 @@ export const Logo: React.FC<LogoProps> = ({
     };
 
     return (
-        <Box>
+        <Box data-test-id='header-logo'>
             <Link to={to} onClick={onClick}>
                 <Flex alignItems='end' gap={1}>
                     <Icon as={LogoIcon} boxSize={logoBoxSize[size]} />
