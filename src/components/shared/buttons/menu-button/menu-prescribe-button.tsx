@@ -22,7 +22,6 @@ export const MenuPrescribeButton: React.FC<MenuPrescribeButtonProps> = ({ isActi
             icon={PrescribeIcon}
             activeLabelBold={true}
             isActive={isActive}
-            dataTestId='add-recipe-button'
         />
     );
 };

@@ -72,6 +72,7 @@ export const ImageUploadModal: React.FC<ImageUploadModalProps> = ({
     const handleDelete = () => {
         setFile(null);
         onDelete();
+        onClose();
     };
 
     return (

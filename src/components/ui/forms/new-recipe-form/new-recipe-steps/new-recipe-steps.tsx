@@ -37,7 +37,7 @@ export const NewRecipeSteps = () => {
             <Button
                 alignSelf='end'
                 rightIcon={<Icon as={PlusIcon} boxSize={4} />}
-                onClick={() => append({ description: '', image: undefined })}
+                onClick={() => append({ description: '', image: null })}
                 size='sm'
                 variant='outline'
                 colorScheme='black'

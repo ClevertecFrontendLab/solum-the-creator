@@ -1,7 +1,7 @@
 import { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
 
 import { HttpStatusCodes } from '~/constants/data/http-status';
-import { notificationServerError } from '~/constants/texts/notifications';
+import { notificationServerErrorNotFound } from '~/constants/texts/notifications';
 import { addNotification } from '~/store/notification/slice';
 
 import { baseQueryWithReauth } from './base-query-with-reauth';
@@ -17,8 +17,8 @@ export const baseQueryWithReauthAndNotify: BaseQueryFn<
     if (result.error && method === 'GET' && result.error.status !== HttpStatusCodes.FORBIDDEN) {
         api.dispatch(
             addNotification({
-                title: notificationServerError.title,
-                description: notificationServerError.description,
+                title: notificationServerErrorNotFound.title,
+                description: notificationServerErrorNotFound.description,
             }),
         );
     }

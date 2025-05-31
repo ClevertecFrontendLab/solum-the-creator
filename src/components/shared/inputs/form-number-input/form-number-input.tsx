@@ -22,6 +22,7 @@ type FormNumberInputProps = {
     rightIcon?: React.ReactNode;
     helperText?: string;
     showErrorText?: boolean;
+    dataTestid?: string;
 } & Omit<NumberInputProps, 'onChange' | 'value'>;
 
 export const FormNumberInput: React.FC<FormNumberInputProps> = ({
@@ -31,6 +32,7 @@ export const FormNumberInput: React.FC<FormNumberInputProps> = ({
     rightIcon,
     helperText,
     showErrorText = true,
+    dataTestid,
     ...props
 }) => {
     const {
@@ -39,6 +41,14 @@ export const FormNumberInput: React.FC<FormNumberInputProps> = ({
     } = useFormContext();
 
     const error = errors[name as keyof typeof errors] as FieldError | undefined;
+
+    const handleChange =
+        (onChange: (value: string | number) => void) =>
+        (valueAsString: string, valueAsNumber: number) => {
+            const isIntermediate =
+                valueAsString === '' || valueAsString === '-' || isNaN(valueAsNumber);
+            onChange(isIntermediate ? valueAsString : valueAsNumber);
+        };
 
     return (
         <FormControl isInvalid={!!error}>
@@ -58,17 +68,17 @@ export const FormNumberInput: React.FC<FormNumberInputProps> = ({
                         <NumberInput
                             {...props}
                             value={field.value ?? ''}
-                            onChange={(value) => {
-                                const number = Number(value);
-                                field.onChange(isNaN(number) ? '' : number);
-                            }}
+                            onChange={handleChange(field.onChange)}
                             clampValueOnBlur={false}
                             colorScheme='gray'
+                            focusBorderColor={error ? 'red.500' : 'gray.200'}
                         >
                             <NumberInputField
                                 pr={rightIcon ? '2.5rem' : undefined}
                                 onBlur={field.onBlur}
                                 ref={field.ref}
+                                data-test-id={dataTestid}
+                                borderColor={error ? 'red.500' : 'gray.200'}
                             />
 
                             <NumberInputStepper>

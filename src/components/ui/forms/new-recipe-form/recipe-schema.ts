@@ -9,7 +9,7 @@ export const ingredientSchema = z.object({
 export const stepSchema = z.object({
     stepNumber: z.number().int().min(1).optional(),
     description: z.string().min(1).max(300),
-    image: z.string().optional(),
+    image: z.union([z.string(), z.null()]).optional(),
 });
 
 export const recipeSchema = z.object({

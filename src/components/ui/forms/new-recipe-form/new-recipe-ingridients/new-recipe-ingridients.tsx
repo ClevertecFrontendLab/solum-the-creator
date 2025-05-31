@@ -14,7 +14,7 @@ export const NewRecipeIngridients = () => {
         name: 'ingredients',
     });
 
-    const { data: measureUnitOptions = [] } = useGetMeasureUnitsQuery();
+    const { data: measureUnitOptions = [], isLoading } = useGetMeasureUnitsQuery();
 
     const handleAddIngridient = () => {
         append({
@@ -63,17 +63,18 @@ export const NewRecipeIngridients = () => {
                 </Grid>
             </Hide>
 
-            {fields.map((field, idx) => (
-                <IngredientRow
-                    key={field.id}
-                    index={idx}
-                    measureUnitOptions={measureUnitOptions}
-                    isLast={idx === fields.length - 1}
-                    onRemove={handleRemoveIngridient(idx)}
-                    onAdd={handleAddIngridient}
-                    register={register}
-                />
-            ))}
+            {!isLoading &&
+                fields.map((field, idx) => (
+                    <IngredientRow
+                        key={field.id}
+                        index={idx}
+                        measureUnitOptions={measureUnitOptions}
+                        isLast={idx === fields.length - 1}
+                        onRemove={handleRemoveIngridient(idx)}
+                        onAdd={handleAddIngridient}
+                        register={register}
+                    />
+                ))}
         </VStack>
     );
 };

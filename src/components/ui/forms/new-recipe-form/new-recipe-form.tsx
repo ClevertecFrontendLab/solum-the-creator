@@ -1,7 +1,7 @@
 import { Button, HStack, Icon, useDisclosure, VStack } from '@chakra-ui/react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query/react';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import { FormProvider, Path, useForm } from 'react-hook-form';
 import { BlockerFunction, useBlocker, useNavigate } from 'react-router';
 
@@ -50,6 +50,7 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({ mode = 'create', r
     const [createRecipe, { isLoading }] = useCreateRecipeMutation();
     const [updateRecipe, { isLoading: isUpdating }] = useUpdateRecipeMutation();
     const [saveDraft, { isLoading: isSavingDraft }] = useCreateRecipeDraftMutation();
+
     const redirectToRecipe = useRedirectToRecipe({ showSuccessNotification: true });
 
     const initialValues = useMemo(
@@ -59,7 +60,7 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({ mode = 'create', r
                 : {
                       categoriesIds: [],
                       ingredients: [{ title: '', count: 0, measureUnit: '' }],
-                      steps: [{ description: '', image: undefined }],
+                      steps: [{ description: '', image: null }],
                   },
         [mode, recipe],
     );
@@ -71,16 +72,23 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({ mode = 'create', r
         defaultValues: initialValues,
     });
 
-    const { dirtyFields, isSubmitSuccessful } = methods.formState;
-    const formIsDirty = Object.keys(dirtyFields).length > 0 && !isSubmitSuccessful;
+    const ignoreBlockerRef = useRef(false);
+    const { dirtyFields, isSubmitting } = methods.formState;
+    const formIsDirty = Object.keys(dirtyFields).length > 0 && !isSubmitting;
 
     useGlobalLoading(isLoading || isUpdating || isSavingDraft);
 
     const shouldBlock = useCallback<BlockerFunction>(() => {
+        if (ignoreBlockerRef.current) {
+            ignoreBlockerRef.current = false;
+            return false;
+        }
+
         if (formIsDirty) {
             onOpen();
+            return true;
         }
-        return formIsDirty;
+        return false;
     }, [formIsDirty, onOpen]);
 
     const blocker = useBlocker(shouldBlock);
@@ -95,6 +103,8 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({ mode = 'create', r
     const onSubmit = async (data: RecipeFormData) => {
         const stepsWithNumbers: Step[] = data.steps.map((s, i) => ({ ...s, stepNumber: i + 1 }));
         const body = { ...data, steps: stepsWithNumbers };
+
+        console.log(body);
 
         try {
             if (mode === 'edit' && recipe) {
@@ -149,7 +159,10 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({ mode = 'create', r
 
     const onSaveDraft = async () => {
         const draftBody = validateDraft();
-        if (!draftBody) return;
+        if (!draftBody) {
+            onClose();
+            return;
+        }
 
         try {
             await saveDraft(draftBody).unwrap();
@@ -178,9 +191,13 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({ mode = 'create', r
         }
     };
 
-    const handleOnSaveDraft = () => {
-        onSaveDraft();
-        onClose();
+    const handleOnSaveDraft = async () => {
+        ignoreBlockerRef.current = true;
+        try {
+            await onSaveDraft();
+        } finally {
+            ignoreBlockerRef.current = false;
+        }
     };
 
     return (
@@ -192,6 +209,7 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({ mode = 'create', r
                     w='100%'
                     spacing={{ base: 8, md: 10 }}
                     align='center'
+                    data-test-id='recipe-form'
                 >
                     <NewRecipeHeader />
                     <NewRecipeIngridients />
@@ -204,7 +222,7 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({ mode = 'create', r
                             colorScheme='black'
                             px={4}
                             size='lg'
-                            onClick={onSaveDraft}
+                            onClick={handleOnSaveDraft}
                             data-test-id='recipe-save-draft-button'
                         >
                             Сохранить черновик

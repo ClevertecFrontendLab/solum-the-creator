@@ -8,6 +8,11 @@ export const notificationServerError = {
     description: 'Попробуйте немного позже',
 };
 
+export const notificationServerErrorNotFound = {
+    title: 'Ошибка сервера',
+    description: 'Попробуйте поискать снова попозже',
+};
+
 export const notifcationRecipeConflictError = {
     title: 'Ошибка',
     description: 'Рецепт с таким названием уже существует',

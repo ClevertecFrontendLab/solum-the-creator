@@ -115,7 +115,7 @@ export const NewRecipeHeader = () => {
                             <FormNumberInput
                                 name='portions'
                                 showErrorText={false}
-                                data-test-id='recipe-portions'
+                                dataTestid='recipe-portions'
                             />
                         </Box>
                     </Flex>
@@ -131,7 +131,7 @@ export const NewRecipeHeader = () => {
                             <FormNumberInput
                                 name='time'
                                 showErrorText={false}
-                                data-test-id='recipe-time'
+                                dataTestid='recipe-time'
                             />
                         </Box>
                     </Flex>
