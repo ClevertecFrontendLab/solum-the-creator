@@ -53,19 +53,17 @@ export const StepRow: React.FC<StepRowProps> = ({ index, onRemove, register }) =
                     <HStack justify='space-between'>
                         <StepBadge step={index + 1} />
 
-                        {index !== 0 && (
-                            <IconButton
-                                aria-label='Удалить'
-                                icon={<DeleteIcon boxSize={4} />}
-                                onClick={onRemove}
-                                size='xs'
-                                w='2rem'
-                                h='2rem'
-                                variant='clear'
-                                color='lime.600'
-                                data-test-id={`recipe-steps-remove-button-${index}`}
-                            />
-                        )}
+                        <IconButton
+                            aria-label='Удалить'
+                            icon={<DeleteIcon boxSize={4} />}
+                            onClick={onRemove}
+                            size='xs'
+                            w='2rem'
+                            h='2rem'
+                            variant='clear'
+                            color='lime.600'
+                            data-test-id={`recipe-steps-remove-button-${index}`}
+                        />
                     </HStack>
 
                     <FormTextarea

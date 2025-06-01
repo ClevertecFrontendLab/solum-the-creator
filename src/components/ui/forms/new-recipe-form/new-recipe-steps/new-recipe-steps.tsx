@@ -2,16 +2,26 @@ import { Button, Icon, Text, VStack } from '@chakra-ui/react';
 import { useFieldArray, useFormContext } from 'react-hook-form';
 
 import PlusIcon from '~/assets/icons/plus-icon-filled.svg?react';
+import { emptyRecipeFormStep } from '~/constants/data/recipe-form';
 
 import { RecipeFormData } from '../recipe-schema';
 import { StepRow } from './step-row';
 
 export const NewRecipeSteps = () => {
     const { control, register } = useFormContext<RecipeFormData>();
-    const { fields, append, remove } = useFieldArray<RecipeFormData, 'steps', 'id'>({
+    const { fields, append, remove, update } = useFieldArray<RecipeFormData, 'steps', 'id'>({
         control,
         name: 'steps',
     });
+
+    const handleRemove = (index: number) => {
+        if (fields.length === 1) {
+            update(0, emptyRecipeFormStep);
+            return;
+        }
+
+        remove(index);
+    };
 
     return (
         <VStack
@@ -29,7 +39,7 @@ export const NewRecipeSteps = () => {
                 <StepRow
                     key={field.id}
                     index={idx}
-                    onRemove={() => remove(idx)}
+                    onRemove={() => handleRemove(idx)}
                     register={register}
                 />
             ))}
@@ -37,7 +47,7 @@ export const NewRecipeSteps = () => {
             <Button
                 alignSelf='end'
                 rightIcon={<Icon as={PlusIcon} boxSize={4} />}
-                onClick={() => append({ description: '', image: null })}
+                onClick={() => append(emptyRecipeFormStep)}
                 size='sm'
                 variant='outline'
                 colorScheme='black'

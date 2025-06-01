@@ -8,6 +8,7 @@ import { BlockerFunction, useBlocker, useNavigate } from 'react-router';
 import EditIcon from '~/assets/icons/edit-icon.svg?react';
 import { LeavePageModal } from '~/components/modals/leave-page-modal';
 import { HttpStatusCodes } from '~/constants/data/http-status';
+import { emptyRecipeFormValues } from '~/constants/data/recipe-form';
 import { pathes } from '~/constants/navigation/pathes';
 import {
     notifcationRecipeConflictError,
@@ -54,14 +55,7 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({ mode = 'create', r
     const redirectToRecipe = useRedirectToRecipe({ showSuccessNotification: true });
 
     const initialValues = useMemo(
-        () =>
-            mode === 'edit' && recipe
-                ? mapRecipeToFormData(recipe)
-                : {
-                      categoriesIds: [],
-                      ingredients: [{ title: '', count: 0, measureUnit: '' }],
-                      steps: [{ description: '', image: null }],
-                  },
+        () => (mode === 'edit' && recipe ? mapRecipeToFormData(recipe) : emptyRecipeFormValues),
         [mode, recipe],
     );
 
@@ -103,8 +97,6 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({ mode = 'create', r
     const onSubmit = async (data: RecipeFormData) => {
         const stepsWithNumbers: Step[] = data.steps.map((s, i) => ({ ...s, stepNumber: i + 1 }));
         const body = { ...data, steps: stepsWithNumbers };
-
-        console.log(body);
 
         try {
             if (mode === 'edit' && recipe) {

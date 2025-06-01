@@ -1,4 +1,5 @@
 import { Box, Center, Icon, Image } from '@chakra-ui/react';
+import { useMemo } from 'react';
 
 import ImageIcon from '~/assets/icons/image-icon.svg?react';
 import { getImgUrl } from '~/utils/image';
@@ -24,12 +25,17 @@ export const ImagePreview: React.FC<ImagePreviewProps> = ({
     dataTestId,
     dataTestIdPreview,
 }) => {
-    const isFile = value instanceof File;
-    const src = isFile
-        ? URL.createObjectURL(value)
-        : typeof value === 'string' && value
-          ? getImgUrl(value)
-          : null;
+    const src = useMemo(() => {
+        if (value instanceof File) {
+            return URL.createObjectURL(value);
+        }
+
+        if (typeof value === 'string' && value) {
+            return getImgUrl(value);
+        }
+
+        return null;
+    }, [value]);
 
     return (
         <Box
