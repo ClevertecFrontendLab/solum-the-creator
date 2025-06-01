@@ -1,6 +1,5 @@
 import { Tags } from '~/query/constants/tags';
-
-import { Recipe } from '../recipe';
+import { Recipe } from '~/types/recipe';
 
 export const providesRecipeList = (result?: Recipe[]) =>
     result

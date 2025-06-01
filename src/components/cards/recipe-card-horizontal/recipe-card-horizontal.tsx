@@ -121,6 +121,8 @@ export const RecipeCardHorizontal: React.FC<RecipeCardHorizontalProps> = ({
                                 colorScheme='black'
                                 aria-label='Сохранить'
                                 display={{ base: 'block', lg: 'none' }}
+                                isLoading={isLoading}
+                                onClick={handleToggleBookmark}
                             />
 
                             <Button
@@ -129,7 +131,7 @@ export const RecipeCardHorizontal: React.FC<RecipeCardHorizontalProps> = ({
                                 variant='outline'
                                 colorScheme='black'
                                 color='blackAlpha.800'
-                                display={{ base: 'none', lg: 'block' }}
+                                display={{ base: 'none', lg: 'flex' }}
                                 onClick={handleToggleBookmark}
                                 isLoading={isLoading}
                             >

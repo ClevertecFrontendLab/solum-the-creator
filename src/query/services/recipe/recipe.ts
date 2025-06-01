@@ -18,7 +18,6 @@ import {
     providesInfiniteRecipes,
     providesInfiniteWrapperRecipes,
     providesRecipeList,
-    providesTopRecipes,
 } from './utils/tags';
 
 export const recipeApiSlice = apiSlice
@@ -49,7 +48,7 @@ export const recipeApiSlice = apiSlice
                     name: EndpointNames.GET_JUICIEST_RECIPES,
                 }),
                 transformResponse: (res: { data: Recipe[] }) => transformRecipeResponse(res.data),
-                providesTags: providesTopRecipes,
+                providesTags: providesRecipeList,
             }),
             [EndpointNames.GET_JUICIEST_RECIPES_PAGINATED]: builder.infiniteQuery<
                 { data: Recipe[]; meta: RecipeResponse['meta'] },
@@ -246,7 +245,7 @@ export const recipeApiSlice = apiSlice
                     url: `${ApiEndpoints.RECIPE}/${id}`,
                     method: 'DELETE',
                 }),
-                invalidatesTags: (_result, _error, id) => invalidatesById(id),
+                invalidatesTags: () => [{ type: Tags.RECIPE as const, id: 'LIST' }],
             }),
             [EndpointNames.TOGGLE_LIKE_RECIPE]: builder.mutation<
                 { message: string; likes: number },
@@ -325,6 +324,27 @@ export const recipeApiSlice = apiSlice
                                 },
                             ),
                         );
+
+                        const juiciestTopArgs = recipeApiSlice.util.selectCachedArgsForQuery(
+                            state,
+                            EndpointNames.GET_JUICIEST_RECIPES,
+                        );
+
+                        juiciestTopArgs.forEach((args) => {
+                            dispatch(
+                                recipeApiSlice.util.updateQueryData(
+                                    EndpointNames.GET_JUICIEST_RECIPES,
+                                    args,
+                                    (draft) => {
+                                        draft.forEach((recipe) => {
+                                            if (recipe._id === recipeId) {
+                                                recipe.bookmarks = updatedBoomark.count;
+                                            }
+                                        });
+                                    },
+                                ),
+                            );
+                        });
 
                         const filteredArgs = recipeApiSlice.util.selectCachedArgsForQuery(
                             state,
