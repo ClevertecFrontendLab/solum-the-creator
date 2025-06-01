@@ -1,4 +1,5 @@
 import { VStack } from '@chakra-ui/react';
+import { skipToken } from '@reduxjs/toolkit/query';
 import { useEffect } from 'react';
 import { LoaderFunction, useLocation, useParams } from 'react-router';
 
@@ -34,7 +35,7 @@ export const RecipePage = () => {
     const { recipeId } = useParams<{ recipeId: string }>();
     const currentUserId = useAppSelector(selectUserId);
 
-    const { data: recipe } = useGetRecipeByIdQuery(recipeId!, {
+    const { data: recipe } = useGetRecipeByIdQuery(recipeId ?? skipToken, {
         refetchOnMountOrArgChange: false,
     });
 
