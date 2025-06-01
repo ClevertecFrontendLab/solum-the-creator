@@ -2,6 +2,7 @@ import { Box, Hide, Show } from '@chakra-ui/react';
 import { Outlet } from 'react-router';
 
 import { Header } from '~/components/layouts/header';
+import { useLayoutConfig } from '~/context/layout-config/use-layout-config';
 import { useGlobalLoading } from '~/hooks/use-global-loading';
 import { useResetAllFiltersOnRouteChange } from '~/hooks/use-reset-all-filters-on-route-change';
 import { useGetCategoriesQuery } from '~/query/services/category';
@@ -12,6 +13,7 @@ import { Sidebar } from './sidebar/sidebar';
 
 export const MainLayout: React.FC = () => {
     const { isLoading } = useGetCategoriesQuery();
+    const { showRightSidebar } = useLayoutConfig();
 
     useGlobalLoading(isLoading);
     useResetAllFiltersOnRouteChange();
@@ -36,19 +38,21 @@ export const MainLayout: React.FC = () => {
                 </Box>
             </Hide>
 
-            <Show above='md'>
-                <Box
-                    as='aside'
-                    position='fixed'
-                    top={{ base: '4rem', md: '5rem' }}
-                    right={0}
-                    bottom={0}
-                    w='13rem'
-                    zIndex={1}
-                >
-                    <RightSidebar />
-                </Box>
-            </Show>
+            {showRightSidebar && (
+                <Show above='md'>
+                    <Box
+                        as='aside'
+                        position='fixed'
+                        top={{ base: '4rem', md: '5rem' }}
+                        right={0}
+                        bottom={0}
+                        w='13rem'
+                        zIndex={1}
+                    >
+                        <RightSidebar />
+                    </Box>
+                </Show>
+            )}
 
             <Box
                 as='main'
@@ -58,7 +62,7 @@ export const MainLayout: React.FC = () => {
                 mr={{ base: 0, md: '13rem', '3xl': 'auto' }}
                 minH='100vh'
                 overflowY='auto'
-                maxW={{ base: '100%', lg: '58rem', '2xl': '88rem' }}
+                maxW={{ base: '100%', lg: '61rem', '2xl': '88rem' }}
                 display='flex'
                 flexDir='column'
             >

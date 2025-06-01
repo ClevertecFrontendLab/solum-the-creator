@@ -3,22 +3,26 @@ import { Box, Flex, Image } from '@chakra-ui/react';
 import { RecipeInfo } from './recipe-info';
 
 type HeaderSectionProps = {
+    recipeId: string;
     title: string;
     image: string;
     categoriesIds: string[];
     description: string;
     time: number;
     likes?: number;
+    isAuthor?: boolean;
     bookmarks?: number;
 };
 
 export const HeaderSection: React.FC<HeaderSectionProps> = ({
+    recipeId,
     title,
     image,
     categoriesIds,
     description,
     time,
     likes,
+    isAuthor,
     bookmarks,
 }) => (
     <Flex
@@ -39,12 +43,14 @@ export const HeaderSection: React.FC<HeaderSectionProps> = ({
         </Box>
         <Box flex={{ base: 1, sm: 2, lg: 7 }}>
             <RecipeInfo
+                recipeId={recipeId}
                 title={title}
                 categoriesIds={categoriesIds}
                 description={description}
                 time={time}
                 likes={likes}
                 bookmarks={bookmarks}
+                isAuthor={isAuthor}
             />
         </Box>
     </Flex>

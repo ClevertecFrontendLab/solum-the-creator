@@ -11,6 +11,7 @@ import { Notification } from '~/components/shared/notification/notification';
 import { theme } from '~/constants/theme/theme';
 import { persistor, store } from '~/store/configure-store.ts';
 
+import { LayoutConfigProvider } from './context/layout-config/layout-config-provider';
 import { router } from './router/router';
 
 createRoot(document.getElementById('root')!).render(
@@ -18,8 +19,10 @@ createRoot(document.getElementById('root')!).render(
         <ChakraProvider theme={theme}>
             <Provider store={store}>
                 <PersistGate loading={null} persistor={persistor}>
-                    <Notification />
-                    <RouterProvider router={router} />
+                    <LayoutConfigProvider>
+                        <Notification />
+                        <RouterProvider router={router} />
+                    </LayoutConfigProvider>
                 </PersistGate>
             </Provider>
         </ChakraProvider>

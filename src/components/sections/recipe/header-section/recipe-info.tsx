@@ -1,31 +1,63 @@
 import { Box, Flex, Heading, HStack, Text, VStack } from '@chakra-ui/react';
+import { useNavigate } from 'react-router';
 
 import { CategoryBadge } from '~/components/shared/badges/category-badge/category-badge';
 import { TimeBadge } from '~/components/shared/badges/time-badge/time-badge';
+import { DeleteRecipeButton } from '~/components/shared/buttons/delete-recipe-button/delete-recipe-button';
+import { EditRecipeButton } from '~/components/shared/buttons/edit-recipe-button/edit-recipe-button';
 import { RateButtons } from '~/components/shared/buttons/rate-buttons/rate-buttons';
+import { pathes } from '~/constants/navigation/pathes';
+import { notificationServerErrorDeleteRecipe } from '~/constants/texts/notifications';
+import { useGlobalLoading } from '~/hooks/use-global-loading';
+import { useDeleteRecipeMutation } from '~/query/services/recipe/slices/mutations';
 import { selectParentCategoriesBySubIds } from '~/store/category/selectors';
-import { useAppSelector } from '~/store/hooks';
+import { useAppDispatch, useAppSelector } from '~/store/hooks';
+import { addNotification } from '~/store/notification/slice';
 
 import { ActionButtons } from './action-buttons';
 
 type RecipeInfoProps = {
+    recipeId: string;
     title: string;
     categoriesIds: string[];
     description: string;
     time: number;
     likes?: number;
     bookmarks?: number;
+    isAuthor?: boolean;
 };
 
 export const RecipeInfo: React.FC<RecipeInfoProps> = ({
+    recipeId,
     title,
     categoriesIds,
     description,
     time,
     likes,
     bookmarks,
+    isAuthor,
 }) => {
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const categories = useAppSelector(selectParentCategoriesBySubIds(categoriesIds));
+
+    const [deleteRecipe, { isLoading }] = useDeleteRecipeMutation();
+    useGlobalLoading(isLoading);
+
+    const handleDelete = async () => {
+        try {
+            await deleteRecipe(recipeId).unwrap();
+            navigate(pathes.home, { state: { showSuccessDeleteRecipeNotification: true } });
+        } catch (_err) {
+            dispatch(
+                addNotification({
+                    type: 'error',
+                    title: notificationServerErrorDeleteRecipe.title,
+                    description: notificationServerErrorDeleteRecipe.description,
+                }),
+            );
+        }
+    };
 
     return (
         <VStack w='100%' justify='space-between' h='100%' spacing={6}>
@@ -56,7 +88,15 @@ export const RecipeInfo: React.FC<RecipeInfoProps> = ({
 
             <HStack justify='space-between' w='100%' align='flex-end' flexWrap='wrap' gap={3}>
                 <TimeBadge label={time.toString()} />
-                <ActionButtons />
+
+                {isAuthor ? (
+                    <HStack spacing={4}>
+                        <DeleteRecipeButton onClick={handleDelete} />
+                        <EditRecipeButton />
+                    </HStack>
+                ) : (
+                    <ActionButtons recipeId={recipeId} />
+                )}
             </HStack>
         </VStack>
     );

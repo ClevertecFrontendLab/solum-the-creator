@@ -3,7 +3,7 @@ import { Box, Heading } from '@chakra-ui/react';
 import { RecipeCardVertical } from '~/components/cards/recipe-card-vertical/recipe-card-vertical';
 import { FullBleed } from '~/components/shared/misc/full-bleed/full-bleed';
 import { HorizontalSlider } from '~/components/ui/horizontal-slider/horizontal-slider';
-import { useGetRecipesQuery } from '~/query/services/recipe';
+import { useGetRecipesQuery } from '~/query/services/recipe/slices/quaries';
 
 export const NewRecipesSection = () => {
     const recipesCount = 10;

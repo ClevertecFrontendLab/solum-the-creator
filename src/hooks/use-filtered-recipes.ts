@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 
-import { Recipe, SortParams, useGetFilteredRecipesInfiniteQuery } from '~/query/services/recipe';
+import { useGetFilteredRecipesInfiniteQuery } from '~/query/services/recipe/slices/quaries';
+import { SortParams } from '~/query/services/recipe/types';
 import { useAppSelector } from '~/store/hooks';
 import {
     selectAppliedFilters,
     selectAppliedFilterVersion,
     selectIsFilterActive,
 } from '~/store/recipes-filters/selectors';
+import { Recipe } from '~/types/recipe';
 
 type FilteredRecipesParams = Partial<{
     subcategoriesIds: string[];

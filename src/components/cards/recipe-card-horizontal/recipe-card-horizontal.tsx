@@ -15,6 +15,7 @@ import {
 
 import SavedIcon from '~/assets/icons/bookmarkHeart-icon.svg?react';
 import { useNavigationToRecipe } from '~/hooks/use-navigation-to-recipe';
+import { useRecipeBookmark } from '~/hooks/use-recipe-bookmark';
 import { selectParentCategoriesBySubIds } from '~/store/category/selectors';
 import { useAppSelector } from '~/store/hooks';
 import { selectSearchStringFilter } from '~/store/recipes-filters/selectors';
@@ -56,6 +57,7 @@ export const RecipeCardHorizontal: React.FC<RecipeCardHorizontalProps> = ({
         recipeId: id,
         subCategoryId: categoriesIds[0],
     });
+    const { handleToggleBookmark, isLoading } = useRecipeBookmark(id);
 
     const searchQuery = useAppSelector(selectSearchStringFilter);
 
@@ -119,6 +121,8 @@ export const RecipeCardHorizontal: React.FC<RecipeCardHorizontalProps> = ({
                                 colorScheme='black'
                                 aria-label='Сохранить'
                                 display={{ base: 'block', lg: 'none' }}
+                                isLoading={isLoading}
+                                onClick={handleToggleBookmark}
                             />
 
                             <Button
@@ -127,7 +131,9 @@ export const RecipeCardHorizontal: React.FC<RecipeCardHorizontalProps> = ({
                                 variant='outline'
                                 colorScheme='black'
                                 color='blackAlpha.800'
-                                display={{ base: 'none', lg: 'block' }}
+                                display={{ base: 'none', lg: 'flex' }}
+                                onClick={handleToggleBookmark}
+                                isLoading={isLoading}
                             >
                                 Сохранить
                             </Button>

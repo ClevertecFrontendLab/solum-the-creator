@@ -15,5 +15,23 @@ export const Select: ComponentStyleConfig = {
                 },
             },
         },
+        custom: {
+            field: {
+                bg: 'white',
+                borderColor: 'blackAlpha.200',
+                borderWidth: '1px',
+                _hover: {
+                    borderColor: '#c1f07f',
+                },
+                _focus: {
+                    borderColor: '#d7ff94',
+                    boxShadow: '0 0 0 1px #d7ff94',
+                },
+                _invalid: {
+                    border: '2px solid #e53e3e',
+                    boxShadow: 'none',
+                },
+            },
+        },
     },
 };

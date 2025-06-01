@@ -20,7 +20,7 @@ const custom = definePartsStyle({
             boxShadow: 'none',
         },
         _placeholder: {
-            color: 'lime.800',
+            color: 'blackAlpha.700',
         },
         fontFamily: 'inherit',
     },

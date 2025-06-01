@@ -1,12 +1,12 @@
 import { useMemo } from 'react';
 import { useLocation, useMatches } from 'react-router';
 
-import { Recipe } from '~/constants/data/recipes';
 import { getRecipeFromUrlRegexp } from '~/constants/data/regexp';
 import { staticPaths } from '~/constants/navigation/pathes';
 import { Breadcrumb } from '~/constants/navigation/route-tree';
 import { selectSidebarCategories } from '~/store/category/selectors';
 import { useAppSelector } from '~/store/hooks';
+import { Recipe } from '~/types/recipe';
 
 export const useBreadcrumbs = (): Breadcrumb[] => {
     const location = useLocation();
@@ -26,6 +26,11 @@ export const useBreadcrumbs = (): Breadcrumb[] => {
         crumbs.push({ label: staticPaths[0].label, href: staticPaths[0].path });
 
         let currentPath = '';
+
+        if (segments[0] === 'edit-recipe') {
+            crumbs.push({ label: 'Редактировать рецепт', href: location.pathname });
+            return crumbs;
+        }
 
         segments.forEach((seg, idx) => {
             if (idx === 0) {

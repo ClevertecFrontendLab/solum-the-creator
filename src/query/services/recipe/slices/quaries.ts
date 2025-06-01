@@ -1,65 +1,20 @@
-import { Ingredient, NutritionValue, RecipeStep } from '~/constants/data/recipes';
+import { ApiEndpoints } from '~/query/constants/api';
+import { ApiGroupNames } from '~/query/constants/api-group-names';
+import { EndpointNames } from '~/query/constants/endpoint-names';
+import { Tags } from '~/query/constants/tags';
+import { apiSlice } from '~/query/create-api';
+import { Recipe } from '~/types/recipe';
 import { getValuable } from '~/utils/get-valuable-obj';
 import { transformRecipeResponse } from '~/utils/image';
 
-import { ApiEndpoints } from '../constants/api';
-import { ApiGroupNames } from '../constants/api-group-names';
-import { EndpointNames } from '../constants/endpoint-names';
-import { Tags } from '../constants/tags';
-import { apiSlice } from '../create-api';
+import { FilterParams, RecipeResponse, RecipesInitialPageParam, SortParams } from '../types';
+import {
+    providesInfiniteRecipes,
+    providesInfiniteWrapperRecipes,
+    providesRecipeList,
+} from '../utils/tags';
 
-export type Recipe = {
-    _id: string;
-    createdAt: string;
-    title: string;
-    description: string;
-    time: number;
-    image: string;
-    likes: number;
-    bookmarks: number;
-    views: number;
-    portions: number;
-    authorId: string;
-    categoriesIds: string[];
-    steps: RecipeStep[];
-    nutritionValue: NutritionValue;
-    ingredients: Ingredient[];
-    garnish?: string;
-    meat?: string;
-};
-
-type RecipeResponse = {
-    data: Recipe[];
-    meta: {
-        total: number;
-        page: number;
-        limit: number;
-        totalPages: number;
-    };
-};
-
-export type RecipesInitialPageParam = {
-    page: number;
-    limit: number;
-};
-
-export type FilterParams = {
-    page: number;
-    limit: number;
-    searchString?: string;
-    subcategoriesIds?: string[];
-    meat?: string[];
-    garnish?: string[];
-    allergens?: string[];
-    excludeAllergens?: boolean;
-};
-
-export type SortParams = Partial<{
-    sortBy: 'likes' | 'createdAt';
-    sortOrder: 'asc' | 'desc';
-}>;
-
-export const recipeApiSlice = apiSlice
+export const recipeApiQuaries = apiSlice
     .enhanceEndpoints({
         addTagTypes: [Tags.RECIPE],
     })
@@ -75,16 +30,7 @@ export const recipeApiSlice = apiSlice
                 }),
                 transformResponse: (response: { data: Recipe[] }): Recipe[] =>
                     transformRecipeResponse(response.data),
-                providesTags: (result) =>
-                    result
-                        ? [
-                              ...result.map(({ _id }) => ({
-                                  type: Tags.RECIPE as const,
-                                  id: _id,
-                              })),
-                              { type: Tags.RECIPE, id: 'LIST' },
-                          ]
-                        : [{ type: Tags.RECIPE, id: 'LIST' }],
+                providesTags: providesRecipeList,
             }),
 
             [EndpointNames.GET_JUICIEST_RECIPES]: builder.query<Recipe[], void>({
@@ -96,13 +42,7 @@ export const recipeApiSlice = apiSlice
                     name: EndpointNames.GET_JUICIEST_RECIPES,
                 }),
                 transformResponse: (res: { data: Recipe[] }) => transformRecipeResponse(res.data),
-                providesTags: (result) =>
-                    result
-                        ? [
-                              ...result.map((r) => ({ type: Tags.RECIPE as const, id: r._id })),
-                              { type: Tags.RECIPE, id: 'TOP' as const },
-                          ]
-                        : [{ type: Tags.RECIPE, id: 'TOP' as const }],
+                providesTags: providesRecipeList,
             }),
             [EndpointNames.GET_JUICIEST_RECIPES_PAGINATED]: builder.infiniteQuery<
                 { data: Recipe[]; meta: RecipeResponse['meta'] },
@@ -134,6 +74,7 @@ export const recipeApiSlice = apiSlice
                     apiGroupName: ApiGroupNames.RECIPE,
                     name: EndpointNames.GET_JUICIEST_RECIPES_PAGINATED,
                 }),
+                providesTags: providesInfiniteWrapperRecipes,
                 transformResponse: (response: RecipeResponse) => ({
                     data: transformRecipeResponse(response.data),
                     meta: response.meta,
@@ -156,16 +97,7 @@ export const recipeApiSlice = apiSlice
                 }),
                 transformResponse: (response: { data: Recipe[] }): Recipe[] =>
                     transformRecipeResponse(response.data),
-                providesTags: (result) =>
-                    result
-                        ? [
-                              ...result.map(({ _id }) => ({
-                                  type: Tags.RECIPE as const,
-                                  id: _id,
-                              })),
-                              { type: Tags.RECIPE, id: 'LIST' },
-                          ]
-                        : [{ type: Tags.RECIPE, id: 'LIST' }],
+                providesTags: providesRecipeList,
             }),
             [EndpointNames.GET_RELEVANT_RECIPES]: builder.query<
                 Recipe[],
@@ -211,6 +143,7 @@ export const recipeApiSlice = apiSlice
                     apiGroupName: ApiGroupNames.RECIPE,
                     name: EndpointNames.GET_RECIPES_BY_CATEGORY_ID_PAGINATED,
                 }),
+                providesTags: providesInfiniteRecipes,
                 transformResponse: (response: RecipeResponse): Recipe[] =>
                     transformRecipeResponse(response.data),
             }),
@@ -270,6 +203,7 @@ export const recipeApiSlice = apiSlice
                         name: EndpointNames.GET_FILTERED_RECIPES,
                     };
                 },
+                providesTags: providesInfiniteRecipes,
                 transformResponse: (response: RecipeResponse): Recipe[] =>
                     transformRecipeResponse(response.data),
             }),
@@ -287,4 +221,4 @@ export const {
     useGetRecipeByIdQuery,
     useGetFilteredRecipesInfiniteQuery,
     useGetRelevantRecipesQuery,
-} = recipeApiSlice;
+} = recipeApiQuaries;

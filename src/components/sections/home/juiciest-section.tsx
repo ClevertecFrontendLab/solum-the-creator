@@ -2,7 +2,7 @@ import { Heading, HStack, SimpleGrid, VStack } from '@chakra-ui/react';
 
 import { RecipeCardHorizontal } from '~/components/cards/recipe-card-horizontal/recipe-card-horizontal';
 import { JuiciestButton } from '~/components/shared/buttons/juiciest-button';
-import { useGetJuiciestRecipesQuery } from '~/query/services/recipe';
+import { useGetJuiciestRecipesQuery } from '~/query/services/recipe/slices/quaries';
 
 export const JuiciestSection = () => {
     const { data: recipes, isLoading } = useGetJuiciestRecipesQuery();
