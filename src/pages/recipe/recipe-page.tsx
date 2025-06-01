@@ -20,8 +20,11 @@ const mockAuthor = authors[0];
 
 export const RecipePageLoader: LoaderFunction = async ({ params }) => {
     const { recipeId } = params;
+
+    if (!recipeId) return null;
+
     const result = await store.dispatch(
-        recipeApiQuaries.endpoints.getRecipeById.initiate(recipeId!),
+        recipeApiQuaries.endpoints.getRecipeById.initiate(recipeId),
     );
 
     if (result.error) {
@@ -54,12 +57,12 @@ export const RecipePage = () => {
         }
     }, [location, dispatch]);
 
-    if (!recipe) return null;
+    if (!recipe || !recipeId) return null;
 
     return (
         <VStack spacing={{ base: 6, md: 10 }} px={{ base: 4, sm: 5, md: 6 }}>
             <HeaderSection
-                recipeId={recipe._id}
+                recipeId={recipeId}
                 title={recipe.title}
                 image={recipe.image}
                 description={recipe.description}
