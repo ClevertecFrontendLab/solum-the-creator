@@ -56,6 +56,7 @@ export const RecipePage = () => {
     return (
         <VStack spacing={{ base: 6, md: 10 }} px={{ base: 4, sm: 5, md: 6 }}>
             <HeaderSection
+                recipeId={recipe._id}
                 title={recipe.title}
                 image={recipe.image}
                 description={recipe.description}

@@ -1,5 +1,5 @@
 import { Box, Flex, Heading, HStack, Text, VStack } from '@chakra-ui/react';
-import { useNavigate, useParams } from 'react-router';
+import { useNavigate } from 'react-router';
 
 import { CategoryBadge } from '~/components/shared/badges/category-badge/category-badge';
 import { TimeBadge } from '~/components/shared/badges/time-badge/time-badge';
@@ -17,6 +17,7 @@ import { addNotification } from '~/store/notification/slice';
 import { ActionButtons } from './action-buttons';
 
 type RecipeInfoProps = {
+    recipeId: string;
     title: string;
     categoriesIds: string[];
     description: string;
@@ -27,6 +28,7 @@ type RecipeInfoProps = {
 };
 
 export const RecipeInfo: React.FC<RecipeInfoProps> = ({
+    recipeId,
     title,
     categoriesIds,
     description,
@@ -39,16 +41,12 @@ export const RecipeInfo: React.FC<RecipeInfoProps> = ({
     const navigate = useNavigate();
     const categories = useAppSelector(selectParentCategoriesBySubIds(categoriesIds));
 
-    const { recipeId } = useParams<{
-        recipeId: string;
-    }>();
-
     const [deleteRecipe, { isLoading }] = useDeleteRecipeMutation();
     useGlobalLoading(isLoading);
 
     const handleDelete = async () => {
         try {
-            await deleteRecipe(recipeId!).unwrap();
+            await deleteRecipe(recipeId).unwrap();
             navigate(pathes.home, { state: { showSuccessDeleteRecipeNotification: true } });
         } catch (_err) {
             dispatch(
@@ -97,7 +95,7 @@ export const RecipeInfo: React.FC<RecipeInfoProps> = ({
                         <EditRecipeButton />
                     </HStack>
                 ) : (
-                    <ActionButtons recipeId={recipeId!} />
+                    <ActionButtons recipeId={recipeId} />
                 )}
             </HStack>
         </VStack>
