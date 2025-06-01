@@ -18,13 +18,13 @@ import {
 import { useGlobalLoading } from '~/hooks/use-global-loading';
 import { useRedirectToRecipe } from '~/hooks/use-redirect-to-recipe';
 import {
-    Recipe,
     useCreateRecipeDraftMutation,
     useCreateRecipeMutation,
     useUpdateRecipeMutation,
 } from '~/query/services/recipe/recipe';
 import { useAppDispatch } from '~/store/hooks';
 import { addNotification } from '~/store/notification/slice';
+import { Recipe } from '~/types/recipe';
 import { mapRecipeToFormData, normalizeDraft } from '~/utils/recipe-transform';
 
 import { NewRecipeHeader } from './new-recipe-header';
