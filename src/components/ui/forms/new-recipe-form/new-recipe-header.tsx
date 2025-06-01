@@ -40,7 +40,6 @@ export const NewRecipeHeader = () => {
         <Flex
             as='section'
             direction={{ base: 'column', sm: 'row', md: 'column', lg: 'row' }}
-            mt={{ base: 4, lg: 14 }}
             gap={{ base: 4, lg: 6 }}
             width='100%'
         >

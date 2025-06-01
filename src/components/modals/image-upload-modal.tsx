@@ -101,13 +101,23 @@ export const ImageUploadModal: React.FC<ImageUploadModalProps> = ({
                     data-test-id={dataTestId}
                 />
 
-                <VStack spacing={4}>
+                <VStack spacing={4} w='100%' align='stretch'>
                     {file && (
                         <>
-                            <Button variant='black' onClick={handleSave} isLoading={isLoading}>
+                            <Button
+                                variant='black'
+                                size='lg'
+                                onClick={handleSave}
+                                isLoading={isLoading}
+                            >
                                 Сохранить
                             </Button>
-                            <Button variant='outline' colorScheme='black' onClick={handleDelete}>
+                            <Button
+                                variant='outline'
+                                size='lg'
+                                colorScheme='black'
+                                onClick={handleDelete}
+                            >
                                 Удалить
                             </Button>
                         </>
