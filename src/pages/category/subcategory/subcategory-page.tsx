@@ -4,7 +4,7 @@ import { useParams } from 'react-router';
 import { RecipeHorizontalGridSection } from '~/components/sections/recipe-horizontal-grid-section/recipe-horizontal-grid-section';
 import { Loader } from '~/components/shared/misc/loader/loader';
 import { useGlobalLoading } from '~/hooks/use-global-loading';
-import { useGetRecipesByCategoryIdPaginatedInfiniteQuery } from '~/query/services/recipe/recipe';
+import { useGetRecipesByCategoryIdPaginatedInfiniteQuery } from '~/query/services/recipe/slices/quaries';
 import { selectSubcategoryBySlug } from '~/store/category/selectors';
 import { useAppSelector } from '~/store/hooks';
 

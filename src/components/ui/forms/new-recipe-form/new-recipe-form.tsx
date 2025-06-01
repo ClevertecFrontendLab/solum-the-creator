@@ -21,7 +21,7 @@ import {
     useCreateRecipeDraftMutation,
     useCreateRecipeMutation,
     useUpdateRecipeMutation,
-} from '~/query/services/recipe/recipe';
+} from '~/query/services/recipe/slices/mutations';
 import { useAppDispatch } from '~/store/hooks';
 import { addNotification } from '~/store/notification/slice';
 import { Recipe } from '~/types/recipe';

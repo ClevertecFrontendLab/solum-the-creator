@@ -4,12 +4,15 @@ import { LoaderFunction, useLoaderData } from 'react-router';
 
 import { NewRecipeForm } from '~/components/ui/forms/new-recipe-form/new-recipe-form';
 import { useLayoutConfig } from '~/context/layout-config/use-layout-config';
-import { Recipe, recipeApiSlice } from '~/query/services/recipe/recipe';
+import { recipeApiQuaries } from '~/query/services/recipe/slices/quaries';
 import { store } from '~/store/configure-store';
+import { Recipe } from '~/types/recipe';
 
 export const EditRecipePageLoader: LoaderFunction = async ({ params }) => {
     const { recipeId } = params;
-    const result = await store.dispatch(recipeApiSlice.endpoints.getRecipeById.initiate(recipeId!));
+    const result = await store.dispatch(
+        recipeApiQuaries.endpoints.getRecipeById.initiate(recipeId!),
+    );
 
     if (result.error) {
         throw new Response('Failed to fetch recipe', { status: 500 });

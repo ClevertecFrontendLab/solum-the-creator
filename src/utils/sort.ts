@@ -1,4 +1,4 @@
-import { Recipe } from '~/query/services/recipe/recipe';
+import { Recipe } from '~/types/recipe';
 
 export const getNewestRecipes = (recipes: Recipe[] = [], count = 10) =>
     [...recipes]

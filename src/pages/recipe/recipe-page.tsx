@@ -10,7 +10,7 @@ import { NutritionSection } from '~/components/sections/recipe/nutrition-section
 import { RecipeStepsSection } from '~/components/sections/recipe/recipe-steps-section/recipe-steps-section';
 import { RecipeTableSection } from '~/components/sections/recipe/recipe-table-section/recipe-table-section';
 import { authors } from '~/constants/data/authors';
-import { recipeApiSlice, useGetRecipeByIdQuery } from '~/query/services/recipe/recipe';
+import { recipeApiQuaries, useGetRecipeByIdQuery } from '~/query/services/recipe/slices/quaries';
 import { selectUserId } from '~/store/auth/selectors';
 import { store } from '~/store/configure-store';
 import { useAppDispatch, useAppSelector } from '~/store/hooks';
@@ -20,7 +20,9 @@ const mockAuthor = authors[0];
 
 export const RecipePageLoader: LoaderFunction = async ({ params }) => {
     const { recipeId } = params;
-    const result = await store.dispatch(recipeApiSlice.endpoints.getRecipeById.initiate(recipeId!));
+    const result = await store.dispatch(
+        recipeApiQuaries.endpoints.getRecipeById.initiate(recipeId!),
+    );
 
     if (result.error) {
         throw new Response('Failed to fetch recipe', { status: 500 });

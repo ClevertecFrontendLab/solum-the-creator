@@ -1,12 +1,12 @@
 import { useMemo } from 'react';
 import { useLocation, useMatches } from 'react-router';
 
-import { Recipe } from '~/constants/data/recipes';
 import { getRecipeFromUrlRegexp } from '~/constants/data/regexp';
 import { staticPaths } from '~/constants/navigation/pathes';
 import { Breadcrumb } from '~/constants/navigation/route-tree';
 import { selectSidebarCategories } from '~/store/category/selectors';
 import { useAppSelector } from '~/store/hooks';
+import { Recipe } from '~/types/recipe';
 
 export const useBreadcrumbs = (): Breadcrumb[] => {
     const location = useLocation();

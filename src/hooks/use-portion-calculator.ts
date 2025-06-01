@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import { Ingredient } from '~/constants/data/recipes';
+import { Ingredient } from '~/types/recipe';
 import { calculatePortions } from '~/utils/calculate-portions';
 
 export const usePortionCalculator = (initialPortions: number) => {

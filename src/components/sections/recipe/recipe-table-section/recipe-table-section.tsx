@@ -1,8 +1,8 @@
 import { Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 
 import { PortionInput } from '~/components/shared/inputs/portion-input/portion-input';
-import { Ingredient } from '~/constants/data/recipes';
 import { usePortionCalculator } from '~/hooks/use-portion-calculator';
+import { Ingredient } from '~/types/recipe';
 
 type RecipeTableSectionProps = {
     ingredients: Ingredient[];

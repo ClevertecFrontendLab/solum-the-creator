@@ -2,7 +2,7 @@ import {
     RecipeDraftFormData,
     RecipeFormData,
 } from '~/components/ui/forms/new-recipe-form/recipe-schema';
-import { Recipe } from '~/query/services/recipe/recipe';
+import { Recipe } from '~/types/recipe';
 
 export const mapRecipeToFormData = (recipe: Recipe): RecipeFormData => ({
     title: recipe.title,

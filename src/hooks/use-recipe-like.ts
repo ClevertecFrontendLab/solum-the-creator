@@ -1,5 +1,5 @@
 import { notificationServerError } from '~/constants/texts/notifications';
-import { useToggleLikeRecipeMutation } from '~/query/services/recipe/recipe';
+import { useToggleLikeRecipeMutation } from '~/query/services/recipe/slices/mutations';
 import { useAppDispatch } from '~/store/hooks';
 import { addNotification } from '~/store/notification/slice';
 

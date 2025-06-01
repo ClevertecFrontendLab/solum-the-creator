@@ -67,6 +67,6 @@ export const transformCategories = (raw: RawItem[]): Category[] => {
 
     return roots.map((item) => ({
         ...item,
-        icon: getImgUrl(item.icon),
+        icon: getImgUrl(item.icon) ?? '',
     }));
 };

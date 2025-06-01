@@ -1,4 +1,4 @@
-import { Ingredient } from '~/constants/data/recipes';
+import { Ingredient } from '~/types/recipe';
 
 export const calculatePortions = (
     ingridient: Ingredient,

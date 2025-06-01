@@ -1,7 +1,7 @@
 import { Heading, VStack } from '@chakra-ui/react';
 
 import { RecipeStepCard } from '~/components/cards/recipe-step-card/recipe-step-card';
-import { RecipeStep } from '~/constants/data/recipes';
+import { RecipeStep } from '~/types/recipe';
 
 type RecipeStepsSectionProps = {
     steps: RecipeStep[];
